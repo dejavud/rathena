@@ -23,7 +23,7 @@ enum lang_types {
 // Multilanguage System.
 // Define which languages to enable (bitmask).
 // 0xFFF will enable all, while 0x000 will enable English only.
-#define LANG_ENABLE 0x000
+#define LANG_ENABLE 0x008
 
 //read msg in table
 const char* _msg_txt(int msg_number,int size, char ** msg_table);
