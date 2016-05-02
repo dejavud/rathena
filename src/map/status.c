@@ -11488,6 +11488,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					status_change_end(tbl, SC_STOP, INVALID_TIMER);
 			}
 			break;
+		case SC_TENSIONRELAX:
+			if (sc && (sc->data[SC_WEIGHT50] || sc->data[SC_WEIGHT90]))
+				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
+			break;
 		case SC_MONSTER_TRANSFORM:
 			if (sce->val2)
 				status_change_end(bl, (sc_type)sce->val2, INVALID_TIMER);
@@ -12753,7 +12757,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, status->max_hp / 100, 0, 2);
+			status_heal(bl, status->max_hp * 4 / 100, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
 		}
 		break;

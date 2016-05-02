@@ -470,8 +470,15 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
 	Rental System
  *------------------------------------------*/
 
-/** Ends rental */
-static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
+/**
+ * Ends a rental and removes the item/effect
+ * @param tid: Tick ID
+ * @param tick: Timer
+ * @param id: Timer ID
+ * @param data: Data
+ * @return false - failure, true - success
+ */
+int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 
@@ -486,6 +493,10 @@ static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t 
 	return 1;
 }
 
+/**
+ * Removes the rental timer from the player
+ * @param sd: Player data
+ */
 void pc_inventory_rental_clear(struct map_session_data *sd)
 {
 	if( sd->rental_timer != INVALID_TIMER ) {
@@ -494,6 +505,10 @@ void pc_inventory_rental_clear(struct map_session_data *sd)
 	}
 }
 
+/**
+ * Check for items in the player's inventory that are rental type
+ * @param sd: Player data
+ */
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;
@@ -523,6 +538,11 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		sd->rental_timer = INVALID_TIMER;
 }
 
+/**
+ * Add a rental item to the player and adjusts the rental timer appropriately
+ * @param sd: Player data
+ * @param seconds: Rental time
+ */
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 {
 	unsigned int tick = seconds * 1000;
@@ -1175,11 +1195,11 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->qi_count = 0;
 
 	//warp player
-	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
+	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != SETPOS_OK) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
 
 		// try warping to a default map instead (church graveyard)
-		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, CLR_OUTSIGHT) != 0) {
+		if (pc_setpos(sd, mapindex_name2id(MAP_PRONTERA), 273, 354, CLR_OUTSIGHT) != SETPOS_OK) {
 			// if we fail again
 			clif_authfail_fd(sd->fd, 0);
 			return false;
@@ -5218,21 +5238,24 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  * @param x
  * @param y
  * @param clrtype
- * @return 0 - Success; 1 - Invalid map index; 2 - Map not in this map-server, and failed to locate alternate map-server.
+ * @return	SETPOS_OK			Success
+ *			SETPOS_MAPINDEX		Invalid map index
+ *			SETPOS_NO_MAPSERVER	Map not in this map-server, and failed to locate alternate map-server.
+ *			SETPOS_AUTOTRADE	Player is in autotrade state
  *------------------------------------------*/
-char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
+enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
 {
 	int16 m;
 
-	nullpo_ret(sd);
+	nullpo_retr(SETPOS_OK,sd);
 
 	if( !mapindex || !mapindex_id2name(mapindex) ) {
 		ShowDebug("pc_setpos: Passed mapindex(%d) is invalid!\n", mapindex);
-		return 1;
+		return SETPOS_MAPINDEX;
 	}
 
 	if ( sd->state.autotrade && (sd->vender_id || sd->buyer_id) ) // Player with autotrade just causes clif glitch! @ FIXME
-		return 1;
+		return SETPOS_AUTOTRADE;
 
 	if( battle_config.revive_onwarp && pc_isdead(sd) ) { //Revive dead people before warping them
 		pc_setstand(sd, true);
@@ -5254,7 +5277,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
-				return 1; //You may not get out!
+				return SETPOS_MAPINDEX; //You may not get out!
 			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
@@ -5298,7 +5321,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		uint16 port;
 		//if can't find any map-servers, just abort setting position.
 		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
-			return 2;
+			return SETPOS_NO_MAPSERVER;
 
 		if (sd->npc_id)
 			npc_event_dequeue(sd);
@@ -5315,7 +5338,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		//Free session data from this map server [Kevin]
 		unit_free_pc(sd);
 
-		return 0;
+		return SETPOS_OK;
 	}
 
 	if( x < 0 || x >= map[m].xs || y < 0 || y >= map[m].ys )
@@ -5333,7 +5356,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 			
 			if(c > (map[m].xs * map[m].ys)*3){ //force out
 				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
-				return 0; //preventing warp
+				return SETPOS_OK; //preventing warp
 				//break; //allow warp anyway
 			}
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1)));
@@ -5402,7 +5425,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	else 
 		sd->count_rewarp = 0;
 	
-	return 0;
+	return SETPOS_OK;
 }
 
 /*==========================================
@@ -7285,7 +7308,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 
 	pc_setstand(sd, true);
 	pc_setrestartvalue(sd,3);
-	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) )
+	if( pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, clrtype) != SETPOS_OK )
 		clif_resurrection(&sd->bl, 1); //If warping fails, send a normal stand up packet.
 }
 

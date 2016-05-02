@@ -4344,9 +4344,7 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
-#ifdef RENEWAL
 	struct status_data *tstatus = status_get_status_data(target);
-#endif
 	int inf3 = skill_get_inf3(skill_id);
 
 	// Kagerou/Oboro Earth Charm effect +15% wATK
@@ -4431,6 +4429,22 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 					ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EDP]->val3);
 
 #endif
+			}
+		}
+		if (!skill_id) {
+			if (sc->data[SC_ENCHANTBLADE]) {
+				//[((Skill Lv x 20) + 100) x (casterBaseLevel / 150)] + casterInt
+				int64 enchant_dmg = (sc->data[SC_ENCHANTBLADE]->val1 * 20 + 100) * status_get_lv(src) / 150 + status_get_int(src);
+
+				enchant_dmg = enchant_dmg - (tstatus->mdef + tstatus->mdef2);
+				if (sstatus->matk_max > sstatus->matk_min)
+					enchant_dmg = enchant_dmg + sstatus->matk_min + rnd()%(sstatus->matk_max - sstatus->matk_min);
+				else
+					enchant_dmg = enchant_dmg + sstatus->matk_min;
+				if (enchant_dmg > 0) {
+					ATK_ADD(wd.damage, wd.damage2, enchant_dmg);
+					RE_ALLATK_ADD(wd, enchant_dmg);
+				}
 			}
 		}
 		if (sc->data[SC_GLOOMYDAY_SK] && (inf3&INF3_SC_GLOOMYDAY_SK)) {
@@ -4994,13 +5008,6 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 			} else
 				hp = 2*hp/100; //2% hp loss per hit
 			status_zap(src, hp, 0);
-		}
-		// affecting non-skills
-		if( !skill_id ) {
-			if( sc->data[SC_ENCHANTBLADE] && sd && ( (is_attack_right_handed(src, skill_id) && sd->weapontype1) || (is_attack_left_handed(src, skill_id) && sd->weapontype2) ) ) {
-				//[( ( Skill Lv x 20 ) + 100 ) x ( casterBaseLevel / 150 )] + casterInt
-				ATK_ADD(wd.damage, wd.damage2, ( sc->data[SC_ENCHANTBLADE]->val1*20+100 ) * status_get_lv(src) / 150 + status_get_int(src) );
-			}
 		}
 		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 	}

@@ -57,8 +57,8 @@
 	#error GD_SKILLRANGEMAX is greater than 999
 #endif
 
-
-static DBMap *skilldb_id2idx;			 /// Skill ID to Index lookup: skill_index = skill_get_index(skill_id)
+DBMap* skilldb_name2id = NULL;
+static uint16 skilldb_id2idx[UINT16_MAX];/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
 struct s_skill_db **skill_db;			 /// Skill DB
 static uint16 skill_num;				 /// Skill count, also as last index
 #define skill_next_idx() ( skill_num++ ) /// Macro to get&increase last skill number/index
@@ -174,7 +174,7 @@ uint16 skill_idx2id(uint16 idx) {
  * @return Skill Index or 0 if not found/unset
  **/
 int skill_get_index_( uint16 skill_id, bool silent, const char *func, const char *file, int line ) {
-	uint16 idx = (uint16)uidb_iget(skilldb_id2idx, skill_id);
+	uint16 idx = skilldb_id2idx[skill_id];
 	if (!idx && skill_id != 0 && !silent)
 		ShowError("Skill '%d' is undefined! %s:%d::%s\n", skill_id, file, line, func);
 	return idx;
@@ -995,7 +995,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
 	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
 		if( chorusbonus > 7 )
 			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
 		else if( chorusbonus > 2 )
@@ -5887,7 +5887,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
 	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
 		if( chorusbonus > 7 )
 			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
 		else if( chorusbonus > 2 )
@@ -17663,6 +17663,7 @@ int skill_delunit(struct skill_unit* unit)
 	return 0;
 }
 
+
 static DBMap* skillunit_group_db = NULL; /// Skill unit group DB. Key int group_id -> struct skill_unit_group*
 
 /// Returns the target skill_unit_group or NULL if not found.
@@ -21186,7 +21187,7 @@ static uint16 skill_db_create(uint16 skill_id) {
 		safestrncpy(skill_db[skill_num]->desc, "Unknown Skill", sizeof(skill_db[skill_num]->desc));
 	}
 	skill_db[skill_num]->nameid = skill_id;
-	uidb_iput(skilldb_id2idx, skill_id, skill_num);
+	skilldb_id2idx[skill_id] = skill_num;
 	return skill_next_idx();
 }
 
@@ -21226,7 +21227,8 @@ static void skill_readdb(void)
 	};
 	
 	db_clear(skilldb_name2id);
-	db_clear(skilldb_id2idx);
+	for(i = 0; i < UINT16_MAX; i++)
+		skilldb_id2idx[i] = 0;
 
 	skill_db_destroy();
 	skill_db_create(0);
@@ -21303,7 +21305,6 @@ void skill_reload (void) {
 void do_init_skill(void)
 {
 	skilldb_name2id = strdb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, 0);
-	skilldb_id2idx = uidb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA);
 
 	skill_readdb();
 
@@ -21329,7 +21330,6 @@ void do_init_skill(void)
 void do_final_skill(void)
 {
 	db_destroy(skilldb_name2id);
-	db_destroy(skilldb_id2idx);
 	db_destroy(skillunit_group_db);
 	db_destroy(skillunit_db);
 	db_destroy(skillusave_db);
