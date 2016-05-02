@@ -4,6 +4,8 @@
 #ifndef MSG_CONF_H
 #define	MSG_CONF_H
 
+#include "..\config\dejavud.h"
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -23,7 +25,11 @@ enum lang_types {
 // Multilanguage System.
 // Define which languages to enable (bitmask).
 // 0xFFF will enable all, while 0x000 will enable English only.
+#ifdef DEJAVUD_MOD
 #define LANG_ENABLE 0x008
+#else
+#define LANG_ENABLE 0x000
+#endif  // DEJAVUD_MOD
 
 //read msg in table
 const char* _msg_txt(int msg_number,int size, char ** msg_table);

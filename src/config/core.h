@@ -3,6 +3,8 @@
 #ifndef _CONFIG_CORE_H_
 #define _CONFIG_CORE_H_
 
+#include ".\dejavud.h"
+
 /**
  * rAthena configuration file (http://rathena.org)
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
@@ -84,7 +86,11 @@
 /// When enabled, make sure there is value for 'packet_keys' of used packet version or
 /// defined 'packet_keys_use' in db/[import/]packet_db.txt.
 /// This requires PACKETVER 2011-08-17 or newer.
+#ifdef DEJAVUD_MOD
+//#define PACKET_OBFUSCATION
+#else
 #define PACKET_OBFUSCATION
+#endif  // DEJAVUD_MOD
 
 /**
  * No settings past this point
