@@ -7609,6 +7609,10 @@ ACMD_FUNC(iteminfo)
 		sprintf(atcmd_output, msg_txt(sd,1280), item_data->value_buy, item_data->value_sell, item_data->weight/10. ); // NPC Buy:%dz, Sell:%dz | Weight: %.1f
 		clif_displaymessage(fd, atcmd_output);
 
+#ifdef DEJAVUD_MOD
+		atcmd_output[0] = '\0';  // fix display item price twice if the following conditional statement is not satisfied
+#endif
+
 		if (item_data->maxchance == -1)
 			strcpy(atcmd_output, msg_txt(sd,1281)); //  - Available in the shops only.
 		else if (!battle_config.atcommand_mobinfo_type) {
