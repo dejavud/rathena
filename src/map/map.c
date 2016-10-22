@@ -111,8 +111,9 @@ int map_port=0;
 int autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 int minsave_interval = 100;
 unsigned char save_settings = CHARSAVE_ALL;
-int agit_flag = 0;
-int agit2_flag = 0;
+bool agit_flag = false;
+bool agit2_flag = false;
+bool agit3_flag = false;
 int night_flag = 0; // 0=day, 1=night [Yor]
 
 #ifdef ADJUST_SKILL_DAMAGE
@@ -2554,7 +2555,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, int id)
+int map_addinstancemap(const char *name, unsigned short instance_id)
 {
 	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
@@ -2594,9 +2595,9 @@ int map_addinstancemap(const char *name, int id)
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
 		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%d#%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%hu#%s", instance_id, iname);
 	} else
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3hu%s", instance_id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
 	// Mimic questinfo
@@ -2607,7 +2608,7 @@ int map_addinstancemap(const char *name, int id)
 	}
 
 	map[dst_m].m = dst_m;
-	map[dst_m].instance_id = id;
+	map[dst_m].instance_id = instance_id;
 	map[dst_m].instance_src_map = src_m;
 	map[dst_m].users = 0;
 
@@ -2823,11 +2824,11 @@ const char* map_mapid2mapname(int m)
 		if (!im) // This shouldn't happen but if it does give them the map we intended to give
 			return map[m].name;
 		else {
-			int i;
+			uint8 i;
 
-			for (i = 0; i < MAX_MAP_PER_INSTANCE; i++) { // Loop to find the src map we want
-				if (im->map[i].m == m)
-					return map[im->map[i].src_m].name;
+			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
+				if (im->map[i]->m == m)
+					return map[im->map[i]->src_m].name;
 			}
 		}
 	}
@@ -4411,6 +4412,7 @@ void do_final(void)
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();
+	do_final_path();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -4716,6 +4718,7 @@ int do_init(int argc, char *argv[])
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 	
 	map_do_init_msg();
+	do_init_path();
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();
