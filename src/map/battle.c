@@ -3524,7 +3524,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 50 * skill_lv;
 			break;
 		case MO_INVESTIGATE:
-			skillratio += 100 + 150 * skill_lv;
+			skillratio += 75 * skill_lv;
 			break;
 		case MO_EXTREMITYFIST:
 			skillratio += 100 * (7 + sstatus->sp / 10);
@@ -4661,8 +4661,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
 		def1 = -399;
 	ATK_ADD2(wd.damage, wd.damage2,
-		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1/2) : 0,
-		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (def1/2) : 0
+		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0,
+		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_L) ? (def1*battle_calc_attack_skill_ratio(wd, src, target, skill_id, skill_lv))/200 : 0
 	);
 	if( !attack_ignores_def(wd, src, target, skill_id, skill_lv, EQI_HAND_R) && !is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) )
 		wd.damage = wd.damage * (4000+def1) / (4000+10*def1) - vit_def;
@@ -6317,15 +6317,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	s_ele = skill_get_ele(skill_id, skill_lv);
 	if (s_ele < 0 && s_ele != -3) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
-	else if (s_ele == -3) { //Use random element
-		if (skill_id == SN_FALCONASSAULT) {
-			if (sstatus->rhw.ele && !status_get_attack_sc_element(src, status_get_sc(src)))
-				s_ele = sstatus->rhw.ele;
-			else
-				s_ele = status_get_attack_sc_element(src, status_get_sc(src));
-		} else
-			s_ele = rnd()%ELE_ALL;
-	}
+	else if (s_ele == -3) //Use random element
+		s_ele = rnd()%ELE_ALL;
 
 	//Skill Range Criteria
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
