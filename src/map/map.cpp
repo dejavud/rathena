@@ -57,6 +57,7 @@ using namespace rathena;
 using namespace rathena::server_map;
 
 std::string default_codepage = "";
+static bool console_utf8_flag = true; // Default enabled on Linux
 
 int32 map_server_port = 3306;
 std::string map_server_ip = "127.0.0.1";
@@ -4348,6 +4349,9 @@ int32 inter_config_read(const char *cfgName)
 		if(strcmpi(w1,"default_codepage")==0)
 			default_codepage = w2;
 		else
+		if(strcmpi(w1,"console_utf8")==0)
+			console_utf8_flag = config_switch(w2);
+		else
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
@@ -4418,6 +4422,7 @@ int32 map_sql_init(void)
 			Sql_ShowDebug(mmysql_handle);
 		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage.c_str()) )
 			Sql_ShowDebug(qsmysql_handle);
+		set_console_encoding(default_codepage.c_str(), console_utf8_flag);
 	}
 	return 0;
 }

@@ -22,6 +22,8 @@
 	#endif
 #else
 	#include <unistd.h>
+	#include <iconv.h>
+	#include <cstring>
 
 	#ifdef DEBUGLOGMAP
 		#define DEBUGLOGPATH "log/map-server.log"
@@ -50,6 +52,53 @@ int32 stdout_with_ansisequence = 0;
 int32 msg_silent = 0; //Specifies how silent the console is.
 int32 console_msg_log = 0;//[Ind] msg error logging
 char console_log_filepath[32] = "./log/unknown.log";
+
+#ifndef _WIN32
+static bool console_utf8_enabled = false;
+static char console_source_encoding[32] = "";
+static iconv_t console_cd = (iconv_t)-1;
+
+void set_console_encoding(const char* source_encoding, bool enable) {
+	console_utf8_enabled = enable;
+	if (!enable || !source_encoding || !*source_encoding) {
+		return;
+	}
+	strncpy(console_source_encoding, source_encoding, sizeof(console_source_encoding) - 1);
+	console_source_encoding[sizeof(console_source_encoding) - 1] = '\0';
+	if (console_cd != (iconv_t)-1) {
+		iconv_close(console_cd);
+	}
+	console_cd = iconv_open("UTF-8", console_source_encoding);
+	if (console_cd == (iconv_t)-1) {
+		console_utf8_enabled = false;
+	}
+}
+
+/// Convert a string from source encoding to UTF-8.
+/// Returns the converted string in a static buffer, or the original if conversion fails.
+static const char* convert_to_utf8(const char* input, size_t input_len) {
+	static char outbuf[8192];
+	char* in_ptr = const_cast<char*>(input);
+	char* out_ptr = outbuf;
+	size_t in_left = input_len;
+	size_t out_left = sizeof(outbuf) - 1;
+
+	if (console_cd == (iconv_t)-1) {
+		return input;
+	}
+
+	iconv(console_cd, nullptr, nullptr, nullptr, nullptr); // reset state
+	if (iconv(console_cd, &in_ptr, &in_left, &out_ptr, &out_left) == (size_t)-1) {
+		return input; // conversion failed, return original
+	}
+	*out_ptr = '\0';
+	return outbuf;
+}
+#else
+void set_console_encoding(const char*, bool) {
+	// Windows: no conversion needed
+}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 /// static/dynamic buffer for the messages
@@ -538,12 +587,61 @@ int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 
 	if( is_console(file) || stdout_with_ansisequence )
 	{
-		vfprintf(file, fmt, argptr);
+		if (console_utf8_enabled) {
+			BUFVPRINTF(tempbuf, fmt, argptr);
+			const char* converted = convert_to_utf8(BUFVAL(tempbuf), BUFLEN(tempbuf));
+			fputs(converted, file);
+			FREEBUF(tempbuf);
+		} else {
+			vfprintf(file, fmt, argptr);
+		}
 		return 0;
 	}
 
 	// Print everything to the buffer
 	BUFVPRINTF(tempbuf,fmt,argptr);
+
+	if (console_utf8_enabled) {
+		// Strip ANSI sequences into a clean buffer, then convert to UTF-8
+		static char cleanbuf[8192];
+		size_t clean_len = 0;
+		p = BUFVAL(tempbuf);
+		while ((q = strchr(p, 0x1b)) != nullptr) {
+			size_t chunk_len = (size_t)(q - p);
+			if (clean_len + chunk_len < sizeof(cleanbuf) - 1) {
+				memcpy(cleanbuf + clean_len, p, chunk_len);
+				clean_len += chunk_len;
+			}
+			if (q[1] != '[') {
+				if (clean_len < sizeof(cleanbuf) - 1) {
+					cleanbuf[clean_len++] = *q;
+				}
+				p = q + 1;
+			} else {
+				q = q + 2;
+				while (1) {
+					if (ISDIGIT(*q) || *q == ';') { ++q; continue; }
+					else if (*q == 'm' || *q == 'J' || *q == 'K' || *q == 'H' || *q == 'f' ||
+						*q == 's' || *q == 'u' || *q == 'A' || *q == 'B' || *q == 'C' ||
+						*q == 'D' || *q == 'E' || *q == 'F' || *q == 'G' ||
+						*q == 'L' || *q == 'M' || *q == '@' || *q == 'P') { }
+					else { --q; }
+					p = q + 1;
+					break;
+				}
+			}
+		}
+		if (*p && clean_len + strlen(p) < sizeof(cleanbuf) - 1) {
+			size_t remaining = strlen(p);
+			memcpy(cleanbuf + clean_len, p, remaining);
+			clean_len += remaining;
+		}
+		cleanbuf[clean_len] = '\0';
+		const char* converted = convert_to_utf8(cleanbuf, clean_len);
+		fputs(converted, file);
+		FREEBUF(tempbuf);
+		return 0;
+	}
 
 	// start with processing
 	p = BUFVAL(tempbuf);

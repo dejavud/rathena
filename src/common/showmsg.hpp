@@ -75,6 +75,11 @@ extern int32 console_msg_log; //Specifies what error messages to log. [Ind]
 extern char console_log_filepath[32]; ///< Filepath to save console_msg_log. [Cydh]
 extern char timestamp_format[20]; //For displaying Timestamps [Skotlex]
 
+/// Sets the console output encoding conversion.
+/// @param source_encoding The source encoding name (e.g., "gbk", "euc-kr")
+/// @param enable Whether to enable conversion to UTF-8
+extern void set_console_encoding(const char* source_encoding, bool enable);
+
 enum msg_type {
 	MSG_NONE,
 	MSG_STATUS,
