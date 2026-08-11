@@ -170,6 +170,11 @@ struct map_cache_map_info {
 char motd_txt[256] = "conf/motd.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
 char channel_conf[256] = "conf/channels.conf";
+#ifdef RENEWAL
+char npc_scripts_main_conf[256] = "npc/re/scripts_main.conf"; // myro: NPC script entry file, override via 'npc_scripts_main' in map conf
+#else
+char npc_scripts_main_conf[256] = "npc/pre-re/scripts_main.conf"; // myro: NPC script entry file, override via 'npc_scripts_main' in map conf
+#endif
 
 const char *MSG_CONF_NAME_RUS;
 const char *MSG_CONF_NAME_SPN;
@@ -4190,6 +4195,8 @@ int32 map_config_read(const char *cfgName)
 			safestrncpy(charhelp_txt, w2, sizeof(charhelp_txt));
 		else if (strcmpi(w1, "channel_conf") == 0)
 			safestrncpy(channel_conf, w2, sizeof(channel_conf));
+		else if (strcmpi(w1, "npc_scripts_main") == 0) // NPC script entry file (scripts_main.conf) path
+			safestrncpy(npc_scripts_main_conf, w2, sizeof(npc_scripts_main_conf));
 		else if(strcmpi(w1,"db_path") == 0)
 			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
@@ -4261,11 +4268,17 @@ void map_reloadnpc(bool clear)
 	if (clear)
 		npc_addsrcfile("clear", false); // this will clear the current script list
 
+	// myro: entry file configurable via 'npc_scripts_main' in map conf
+	if (!exists(npc_scripts_main_conf)) {
+		ShowError("map_reloadnpc: NPC script entry file '%s' not found, falling back to default.\n", npc_scripts_main_conf);
 #ifdef RENEWAL
-	map_reloadnpc_sub("npc/re/scripts_main.conf");
+		safestrncpy(npc_scripts_main_conf, "npc/re/scripts_main.conf", sizeof(npc_scripts_main_conf));
 #else
-	map_reloadnpc_sub("npc/pre-re/scripts_main.conf");
+		safestrncpy(npc_scripts_main_conf, "npc/pre-re/scripts_main.conf", sizeof(npc_scripts_main_conf));
 #endif
+	}
+
+	map_reloadnpc_sub(npc_scripts_main_conf);
 }
 
 int32 inter_config_read(const char *cfgName)

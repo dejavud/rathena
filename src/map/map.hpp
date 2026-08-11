@@ -1114,6 +1114,7 @@ private:
 extern char motd_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
+extern char npc_scripts_main_conf[]; // myro: NPC script entry file path
 
 extern char wisp_server_name[];
 
