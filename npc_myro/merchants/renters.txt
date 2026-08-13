@@ -1,0 +1,189 @@
+//===== rAthena Script ======================================= 
+//= Renters
+//===== By: ================================================== 
+//= kobra_k88, mod by Lupus
+//===== Current Version: ===================================== 
+//= 2.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Knight and Crusader Peco Peco Breeders, Falcon Breeder scripts
+//===== Additional Comments: ================================= 
+//= Fully working
+//= Added another Falcon Master into the Hunters Guild [Lupus]
+//= 1.2: replaced checkoption(x) with checkriding,checkfalcon [Lupus]
+//= 1.3: Added support Adv Classes + Baby Class [Lupus]
+//= 1.4: Added different prices for normal, advanced and baby classes
+//= but you could set them to the same [Lupus]
+//= 1.5: Fixed spelling mistakes [Nexon]
+//= 1.5a: Small fix (Falcon Taming -> Falcon Mastery) [Komurka]
+//= 1.6: Moved the Falcon Master to Hugel [Poki#3]
+//= 1.7 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.8 Added 3rd Job creature NPCs (Dragon/Gryphon) [L0ne_W0lf]
+//= 1.9 Enabled Gryphon Renter NPC and added Mado Gear NPC. [Masao]
+//= 2.0 Fixed problems with third classes and new mounts. [Euphy]
+//= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
+//= 2.2 Added warg checks. [Euphy]
+//============================================================ 
+
+// PecoPeco Breeder (for Knights) :: breeder
+//============================================================
+prontera,55,350,5	script	大嘴鸟管理员#knt	105,{
+	if(Upper==0) set .@price,2500; //Normal Peco - default price
+	if(Upper==1) set .@price,2500; //Armored Peco
+	if(Upper==2) set .@price,2500; //Baby Peco
+
+	mes "[大嘴鸟管理员]";
+	if (BaseJob == Job_Knight && Class < Job_Rune_Knight) {
+		mes "欢迎，尊敬的骑士。";
+		mes "要租一只大嘴鸟吗？租金是 "+.@price+" Zeny。";
+		next;
+		switch(select("租大嘴鸟:取消")) {
+		case 1:
+			if (Zeny < .@price) {
+				mes "[大嘴鸟管理员]";
+				mes "您的 Zeny 不够。";
+				mes "难道您……破产了？";
+				close;
+			}
+			else if(getskilllv("KN_RIDING") == 0) {
+				mes "[大嘴鸟管理员]";
+				mes "抱歉，您还不符合使用本服务的条件。";
+				mes "请先去学会大嘴鸟骑乘技能。";
+				close;
+			}
+			else if(checkriding()) {
+				mes "[大嘴鸟管理员]";
+				mes "您已经骑着大嘴鸟了。";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[大嘴鸟管理员]";
+				mes "请先解除您的商城坐骑。";
+				close;
+			}
+			set Zeny, Zeny-.@price;
+			setriding;
+			close;
+		case 2:
+			mes "[大嘴鸟管理员]";
+			mes "是吗。那么，祝您愉快。";
+			close;
+		}
+	} else {
+		mes "抱歉，这些大嘴鸟只租给骑士和骑士领主。";
+		close;
+	}
+}
+
+// Grand PecoPeco Breeder (for Crusaders)
+//============================================================
+prontera,232,318,3	script	大嘴鸟管理员#cru	105,{
+	if(Upper==0) set .@price,3500; //Normal Peco - default price
+	if(Upper==1) set .@price,3500; //Armored Peco
+	if(Upper==2) set .@price,3500; //Baby Peco
+
+	mes "[大嘴鸟管理员]";
+	if (BaseJob == Job_Crusader && Class < Job_Rune_Knight) {
+		if(Upper != 1 ) mes "欢迎，十字军。";
+		else mes "欢迎，圣殿十字军。";
+		mes "我们为您准备了特制的大嘴鸟。租金是 "+.@price+" Zeny。";
+		next;
+		switch(select("租大嘴鸟:离开")) {
+		case 1:
+			if (Zeny < .@price) {
+				mes "[大嘴鸟管理员]";
+				mes "您的 Zeny 不够。";
+				mes "想租大嘴鸟的话，请带 "+.@price+" Zeny 来……";
+				close;
+			}
+			else if(getskilllv("KN_RIDING") == 0) {
+				mes "[大嘴鸟管理员]";
+				mes "您必须先学会骑乘大嘴鸟，我才能租给您。";
+				close;
+			}
+			else if(checkriding()) {
+				mes "[大嘴鸟管理员]";
+				mes "您已经骑着大嘴鸟了。";
+				close;
+			}
+			else if(ismounting()) {
+				mes "[大嘴鸟管理员]";
+				mes "请先解除您的商城坐骑。";
+				close;
+			}
+			set Zeny, Zeny-.@price;
+			setriding;
+			close;
+		case 2:
+			mes "[大嘴鸟管理员]";
+			mes "后会有期。";
+			close;
+		}
+	} else {
+		mes "有什么可以帮您？";
+		mes "请注意，";
+		mes "本大嘴鸟租赁服务只面向十字军和圣殿十字军。";
+		close;
+	}
+}
+
+// Falcon Master :: breeder
+//============================================================
+hu_in01,381,304,5	script	猎鹰管理员#hnt	105,{
+	if(Upper==0) set .@price,2500; //Normal Falcon - default price
+	if(Upper==1) set .@price,2500; //Scarf Falcon
+	if(Upper==2) set .@price,2500; //Baby Falcon
+
+	mes "[猎鹰管理员]";
+	if (BaseJob == Job_Hunter) {
+		if (checkwug()) {
+			mes "嗯……你得先把狼收回，才能租猎鹰！";
+			close;
+		}
+		mes "你需要猎鹰吗？";
+		mes "只要 "+.@price+" Zeny，就能租到一只属于你的可靠猛禽~";
+		next;
+		switch(select("租猎鹰:取消")) {
+		case 1:
+			if (checkwug()) {
+				mes "[猎鹰管理员]";
+				mes "嗯……你得先把狼收回，才能租猎鹰！";
+				close;
+			}
+			if (Zeny < .@price) {
+				mes "[猎鹰管理员]";
+				mes "这是什么情况？";
+				mes "你的 Zeny 不够？！";
+				mes "与其打怪物，不如先去打点钱吧~";
+				close;
+			}
+			else if(getskilllv("HT_FALCON") == 0) {
+				mes "[猎鹰管理员]";
+				mes "天哪~ 先去学会怎么驾驭猎鹰吧！";
+				mes "不会驾驭的话，我可不能租给你。";
+				close;
+			}
+			else if(checkfalcon()) {
+				mes "[猎鹰管理员]";
+				mes "嗯……你已经带着猎鹰了。";
+				mes "就在那儿呢，看不见吗？";
+				close;
+			}
+			set Zeny, Zeny-.@price;
+			setfalcon;
+			close;
+		case 2:
+			mes "[猎鹰管理员]";
+			mes "等、等等，你要去哪？";
+			mes "这些猎鹰可都是顶级货，我敢保证！";
+			mes "喂，别走啊~";
+			close;
+		}
+	} else {
+		mes "年轻人，真无知！";
+		mes "猎鹰只有猎人和神射手才能用，懂吗？……";
+		mes "嘿嘿，羡慕了？";
+		close;
+	}
+}

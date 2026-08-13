@@ -1,0 +1,352 @@
+//===== rAthena Script =======================================
+//= BattleGround System - Tierra Gorge Entrance NPCs
+//===== Description: =========================================
+//= [Official Conversion]
+//= Tierra Gorge Battleground Entrance NPCs
+//===== Additional Comments: =================================
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Fixed silly copy paste errors. (bugreport:4401)
+//= 1.2 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
+
+// First Tierra Gorge Officers - Guillaume
+//============================================================
+bat_room,124,178,5	script	特拉峡谷军官#01a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[纪尧姆军军官]";
+	mes "让那些臭克罗伊的家伙见识一下纪尧姆军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[纪尧姆军军官]";
+			mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[纪尧姆军军官]";
+				mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[纪尧姆军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a01");
+					if (.@mapcount > 0) {
+						mes "[纪尧姆军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与克罗伊军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@TierraBG1) {
+							mes "[纪尧姆军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[纪尧姆军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让克罗伊的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",57,223;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[纪尧姆军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,140,178,5	script	特拉峡谷军官#02a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[纪尧姆军军官]";
+	mes "让那些臭克罗伊的家伙见识一下纪尧姆军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[纪尧姆军军官]";
+			mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[纪尧姆军军官]";
+				mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if (.@chk_urtime == 1) {
+					mes "[纪尧姆军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[纪尧姆军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与克罗伊军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@TierraBG2) {
+							mes "[纪尧姆军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[纪尧姆军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让克罗伊的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",114,223;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[纪尧姆军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,127,178,5	script	纪尧姆骑士#1	417,{
+	mes "[纪尧姆骑士]";
+	mes "特拉峡谷两侧是陡峭的崖壁，纪尧姆军和克罗伊军的粮仓分别设在11点钟和7点钟方向。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "战斗从己方的军船开始，目标是抢在敌人摧毁我方粮仓之前，推进并摧毁敌方的粮仓。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "战场治疗师每25秒复活一次士兵，让他们重返战斗。";
+	mes "占领战场中央中立旗帜的一方将获得额外的再生点数，士兵复活次数多于对方，从而占据优势。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "两座粮仓之间有短而窄的小道相连，但大门被路障挡住了。";
+	mes "尽快思考、尽快行动。我军的胜利取决于你的贡献。";
+	next;
+	mes "[纪尧姆骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "如果准备好了，就点击^0000FF界面上的战斗按钮^000000开始。";
+	else {
+		mes "请记住：参战时你会获得一个凭证，上面记录着你不能参加同类战斗的剩余时间。";
+		mes "按 Alt+U 键可以查看剩余时间。";
+	}
+	next;
+	mes "[纪尧姆骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000！";
+	else
+		mes "准备好战斗了吗？那就向我旁边的招募员申请吧！";
+	close;
+}
+
+bat_room,143,178,5	duplicate(纪尧姆骑士#1)	纪尧姆骑士#2	417
+
+bat_room,127,121,1	script	克罗伊骑士#1	413,{
+	mes "[克罗伊骑士]";
+	mes "特拉峡谷两侧是陡峭的崖壁，纪尧姆军和克罗伊军的粮仓分别设在11点钟和7点钟方向。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "战斗从己方的军船开始，目标是抢在敌人摧毁我方粮仓之前，推进并摧毁敌方的粮仓。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "战场治疗师每25秒复活一次士兵，让他们重返战斗。";
+	mes "占领战场中央中立旗帜的一方将获得额外的再生点数，士兵复活次数多于对方，从而占据优势。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "两座粮仓之间有短而窄的小道相连，但大门被路障挡住了。";
+	mes "尽快思考、尽快行动。我军的胜利取决于你的贡献。";
+	next;
+	mes "[克罗伊骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "如果准备好了，就点击^0000FF界面上的战斗按钮^000000开始。";
+	else {
+		mes "请记住：参战时你会获得一个凭证，上面记录着你不能参加同类战斗的剩余时间。";
+		mes "按 Alt+U 键可以查看剩余时间。";
+	}
+	next;
+	mes "[克罗伊骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000！";
+	else
+		mes "准备好战斗了吗？那就向我旁边的招募员申请吧！";
+	close;
+}
+
+bat_room,143,121,1	duplicate(克罗伊骑士#1)	克罗伊骑士#2	413
+
+// Second Tierra Gorge Officers - Croix
+//============================================================
+bat_room,125,121,1	script	特拉峡谷军官#01b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[克罗伊军军官]";
+	mes "让那些臭纪尧姆的家伙见识一下克罗伊军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[克罗伊军军官]";
+			mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[克罗伊军军官]";
+				mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[克罗伊军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[克罗伊军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与纪尧姆军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@TierraBG1) {
+							mes "[克罗伊军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[克罗伊军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让纪尧姆的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",57,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[克罗伊军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,140,121,1	script	特拉峡谷军官#02b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[克罗伊军军官]";
+	mes "让那些臭纪尧姆的家伙见识一下克罗伊军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[克罗伊军军官]";
+			mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[克罗伊军军官]";
+				mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2069,PLAYTIME);
+				if (.@chk_urtime == 1) {
+					mes "[克罗伊军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2069;
+					set .@mapcount,getmapusers("bat_a02");
+					if (.@mapcount > 0) {
+						mes "[克罗伊军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与纪尧姆军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@TierraBG2) {
+							mes "[克罗伊军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[克罗伊军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让纪尧姆的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",114,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[克罗伊军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}

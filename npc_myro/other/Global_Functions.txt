@@ -1,0 +1,763 @@
+//===== rAthena Script ======================================= 
+//= 全局函数
+//===== Description: ========================================= 
+//= 通用脚本函数。
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lupus] [kobra_k88]
+//= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
+//= Removed individual job check functions as they were redundant [kobra_k88]
+//= 1.3 Added Job Change Function for Baby/Normal Classes
+//= 1.3b a fix, due to const.txt change [Lupus]
+//= 1.4 Added Is_Taekwon_Class: Taekwondo, Star Knight(Gladiator),Soul Linker [Lupus]
+//= 1.5 Added clear of Bard Quest variables. 1.5a updated [Lupus]
+//= 1.6 Added F_RandMes, F_SexMes, F_Hi, F_Bye functions [Lupus]
+//=     Moved here useful function 'getJobName'
+//= 1.7 Added "F_ItemName" function, added a great sample for "F_ItemName"
+//= 1.8 Added Job Vars clear for Extended classes: TK,SL,SG [Lupus]
+//= 1.9 Added "F_ClearGarbage" func that clears outdated, wasted variables [Lupus]
+//= 1.91 Added "F_SaveQuestSkills","F_Load?Skills" functions [Lupus]
+//= 2.0 Fixed F_Save/LoadQuestSkills functions. Had to split in into 2 vars [Lupus]
+//= 2.01 Added $talk to F_ClearGarbage [Evera]
+//= 2.02 Added $dtsglobalelig and $dts|(1<<6) to F_ClearGarbage [Evera]
+//= 2.03 Added Gunslinger vars to F_ClearJobVar [Lupus]
+//= 2.04 Added dtseligible 2 (becomes MISC_QUEST|128) to F_ClearGarbage [Evera]
+//= 2.05 Book of Devil -> MISC_QUEST|256, clear other Niflheim garbage vars [Lupus]
+//=     +more garbage clean
+//= 2.06 Pass to Bio-Lab -> MISC_QUEST|512 [Lupus]
+//= 2.07 Added TK_Q variable clear. 2.08 Added NINJ_Q variable clear [Lupus]
+//= 2.09 Cleared F_ClearGarbage [Lupus]
+//= 2.10 Added F_CheckMaxCount to check count of carrid items. [L0ne_w0lf]
+//= 2.10a Removed function F_CheckMaxCount. Not needed. [L0ne_W0lf]
+//= 2.11 Updated function Job_Change to jobchange based on Upper value. [Paradox924X]
+//= 2.12 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2.13 Added more unused vars to F_ClearGarbage [Lupus]
+//= 2.14 Added old novice variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.15 Added no unused DTS variables to F_ClearGarbage. [L0ne_W0lf]
+//= 2.16 Added F_GetWeaponType, and F_GetArmorType. [L0ne_W0lf]
+//= 2.17 Renamed 'F_RandMes' to 'F_Rand'. [Euphy]
+//= 2.18 Removed useless 'getJobName' function. [Euphy]
+//= 2.2 Added "F_GetPlural", "F_InsertPlural", "F_InsertArticle", "F_InsertComma", "F_GetNumSuffix". [Euphy]
+//=     Standardized descriptions, updated 'F_GetArmorType'.
+//= 2.21 Added format string to "F_InsertPlural" and more checks to "F_GetPlural". [Euphy]
+//= 2.22 Further improvements to "F_GetPlural". [Euphy]
+//= 2.23 Completed article function and added "F_GetArticle". [Euphy]
+//= 2.24 Added functions to check for equipment swap hacks. [Euphy]
+//= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
+//= 2.26 Added "F_getpositionname". [Capuche]
+//= 2.27 Added "F_GetPlatinumSkills". [mazvi]
+//= 2.28 Added "close3". [Capuche]
+//= 2.29 Updated "F_IsCharm" to support all latest enchants [Everade]
+//============================================================ 
+
+//////////////////////////////////////////////////////////////////////////////////
+// 清除职业任务变量。
+// -- callfunc "F_ClearJobVar"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ClearJobVar	{
+	// 杂项 ---------------------------------
+	set JBLVL,0;
+	set FIRSTAID,0;
+	set PLAYDEAD,0;
+	set got_bandage,0;
+	set got_novnametag,0;
+	// 一转职业 ---------------------
+	set job_acolyte_q,0; set job_acolyte_q2,0;
+	set job_archer_q,0;
+	set job_magician_q,0;
+	set job_merchant_q,0; set job_merchant_q2,0; set job_merchant_q3,0;
+	set job_sword_q,0; set SWTEST, 0;
+	set job_thief_q,0;
+	// 超级初心者
+	set SUPNOV_Q,0;
+	// 2-1 职业 ------------------------------
+	set ASSIN_Q,0; set ASSIN_Q2,0; set ASSIN_Q3,0;
+	set BSMITH_Q,0; set BSMITH_Q2,0;
+	set HNTR_Q,0; set HNTR_Q2,0;
+	set KNIGHT_Q,0; set KNIGHT_Q2,0;
+	set PRIEST_Q,0; set PRIEST_Q2,0; set PRIEST_Q3,0;
+	set WIZ_Q,0; set WIZ_Q2,0;
+	// 2-2 职业 ------------------------------
+	set ROGUE_Q,0; set ROGUE_Q2,0;
+	set ALCH_Q,0; set ALCH_Q2,0;
+	set CRUS_Q,0;
+	set MONK_Q,0; set JOB_MONK_C,0;
+	set SAGE_Q,0; set SAGE_Q2,0;
+	set DANC_Q,0;
+	set BARD_Q,0;
+	// 进阶职业
+	set TAEK_Q,0; set TK_Q,0;
+	set STGL_Q,0;
+	set SOUL_Q,0;
+	set GUNS_Q,0;
+	set NINJ_Q,0;
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 清除其他未使用的变量。
+// -- callfunc "F_ClearGarbage"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ClearGarbage	{
+	// 清除过期的全局变量
+	// 如果乌龟岛任务已经完成，清除 TURTLE 变量
+		if(TURTLE==20) set MISC_QUEST,MISC_QUEST | 65536;
+		if(MISC_QUEST & 65536) set TURTLE,0; // 任务结束后清除该变量
+	// 清除之前保存的任务技能（现已不再使用）
+		set ADV_QSK,0;
+		set ADV_QSK2,0;
+	// 旧的洗技能活动曾使用 RES_SKILL 变量
+		set RES_SKILL,0;
+	// 在这里放置你过期活动中的过期变量
+	// 例如：XMAS 结束了吗？在这里添加活动变量的清除代码。
+	
+	// 由于铁匠任务中的 bug：
+	set wizard_m2,0;
+	
+	// 旧的初心者训练场变量。
+	set NEW_MES_FLAG0,0;
+	set NEW_MES_FLAG1,0;
+	set NEW_MES_FLAG2,0;
+	set NEW_MES_FLAG3,0;
+	set NEW_MES_FLAG4,0;
+	set NEW_MES_FLAG5,0;
+	set NEW_LVUP0,0;
+	set NEW_LVUP1,0;
+	set NEW_JOBLVUP,0;
+	
+	// 不再使用的旧 DTS 变量。
+	set dtseligible,0;
+	set MISC_QUEST,MISC_QUEST & ~128;
+	
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 根据 Upper 值（普通、进阶、养子）转职。
+// -- callfunc "Job_Change",<Class value>;
+// Class 值参见 'db/const.txt' 中的 Job_* 常量。
+//////////////////////////////////////////////////////////////////////////////////
+function	script	Job_Change	{
+	jobchange getarg(0),Upper;
+//	logmes "CLASS CHANGE: " +strcharinfo(0)+ " become a "+jobname(Class);
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 用于美化对话的函数 [Lupus]
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// 随机返回一个参数。
+// -- callfunc "F_Rand",arg0,arg1,...
+// 示例：
+//    // 可以用它从列表中随机选取一个：
+//    set @itemIDfromList, callfunc("F_Rand",1129,1222,1163,1357,1360,1522,1811,1410);
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_Rand	{
+	return getarg(rand(getargcount()));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 女性返回第 1 个参数，男性返回第 2 个参数。
+// -- callfunc "F_SexMes",argFemale,argMale
+// 示例：
+//     mes callfunc("F_SexMes","What a beautiful lady!","What a handsome man!");
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_SexMes	{
+	return getarg(Sex);
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 随机返回打招呼/道别的话。
+// -- callfunc "F_Hi"
+// -- callfunc "F_Bye"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_Hi	{
+	return callfunc("F_Rand","你好！","您好！","日安！","最近怎么样？","你好啊。");
+}
+function	script	F_Bye	{
+	return callfunc("F_Rand","再见，后会有期。","回头见。","再见。","祝你好运！","祝你愉快！","拜拜！！！");
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 返回展开的物品名称字符串。
+// -- callfunc "F_ItemName",<item ID>,{<element>{,<VVS meter 0..3>{,<refine rate>}}}
+//    属性：0=无, 1=冰, 2=地, 3=火, 4=风
+// 示例：
+//    // 显示 "让我看看你的 ^000090+5 VVS 火属性 小刀^000000……"
+//    mes "让我看看你的 "+callfunc("F_ItemName",1201,1,2,5)+"……";
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_ItemName	{
+	if (getarg(3,0))
+		set .@t$,"+"+getarg(3)+" ";
+	switch (getarg(2,0)) {
+		case 0: break;
+		case 1: set .@t$,.@t$+"VS "; break;
+		case 2: set .@t$,.@t$+"VVS "; break;
+		case 3: set .@t$,.@t$+"VVVS "; break;
+		default: set .@t$,.@t$+getarg(2)+"xVS "; break;
+	}
+	switch (getarg(1,0)) {
+		case 0: break;
+		case 1: set .@t$,.@t$+"冰属性"; break;
+		case 2: set .@t$,.@t$+"地属性"; break;
+		case 3: set .@t$,.@t$+"火属性"; break;
+		case 4: set .@t$,.@t$+"风属性"; break;
+		default: set .@t$,.@t$+"奇异"; break;
+	}
+	return "^000090"+.@t$+getitemname(getarg(0))+"^000000";
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 将已学会的任务技能保存为变量 ADV_QSK 和 ADV_QSK2。
+// -- callfunc "F_SaveQuestSkills"
+//
+// 恢复已学会的一转任务技能。
+// -- callfunc "F_Load1Skills"
+//
+// 恢复已学会的二转任务技能。
+// -- callfunc "F_Load2Skills"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_SaveQuestSkills	{
+	set ADV_QSK,0; set ADV_QSK2,0;
+	// 一转任务技能
+	for(set .@i, 0; .@i < 14; set .@i, .@i + 1){
+		if(getskilllv(144+.@i)) set ADV_QSK,ADV_QSK|pow(2,.@i);
+	}
+	// 二转任务技能
+	for(set .@i, 0; .@i < 19; set .@i, .@i + 1){
+		if(getskilllv(1001+.@i)) set ADV_QSK2,ADV_QSK2|pow(2,.@i);
+	}
+	return;
+}
+function	script	F_Load1Skills	{
+	for(set .@i, 0; .@i < 14; set .@i, .@i + 1){
+		if(ADV_QSK|pow(2,.@i) == ADV_QSK) skill 144+.@i,1,0;
+	}
+	set ADV_QSK,0; // 清除变量
+	return;
+}
+function	script	F_Load2Skills	{
+	for(set .@i, 0; .@i < 19; set .@i, .@i + 1){
+		if(ADV_QSK2|pow(2,.@i) == ADV_QSK2) skill 1001+.@i,1,0;
+	}
+	set ADV_QSK2,0; // 清除变量
+	return;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 根据外观返回武器类型。
+// -- callfunc "F_GetWeaponType",<weapon ID>
+//
+// 根据装备位置返回装备类型。
+// -- callfunc "F_GetArmorType",<item ID>
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetWeaponType	{
+	switch(getiteminfo(getarg(0), ITEMINFO_VIEW)) {
+		case 1: return "短剑"; break;
+		case 2: return "单手剑"; break;
+		case 3: return "双手剑"; break;
+		case 4: return "单手矛"; break;
+		case 5: return "双手矛"; break;
+		case 6: return "单手斧"; break;
+		case 7: return "双手斧"; break;
+		case 8: return "钝器"; break;
+		//case 9: return "未使用"; break;
+		case 10: return "法杖"; break;
+		case 11: return "弓"; break;
+		case 12: return "拳套"; break;
+		case 13: return "乐器"; break;
+		case 14: return "鞭子"; break;
+		case 15: return "书籍"; break;
+		case 16: return "拳刃"; break;
+		case 17: return "左轮手枪"; break;
+		case 18: return "步枪"; break;
+		case 19: return "机关枪"; break;
+		case 20: return "霰弹枪"; break;
+		case 21: return "榴弹发射器"; break;
+		case 22: return "手里剑"; break;
+		default: return "未知武器"; break;
+	}
+	end;
+}
+function	script	F_GetArmorType	{
+	switch(getiteminfo(getarg(0), ITEMINFO_LOCATIONS)) {
+		case EQP_HEAD_LOW:
+			return "下段头饰";
+		case EQP_HAND_R:
+			return callfunc("F_GetWeaponType",getarg(0));
+		case EQP_GARMENT:
+			return "披肩";
+		case EQP_ACC_L:
+		case EQP_ACC_R:
+		case EQP_ACC_RL:
+			return "饰品";
+		case EQP_ARMOR:
+			return "铠甲";
+		case EQP_HAND_L:
+			return "盾牌";
+		case EQP_SHOES:
+			return "鞋子";
+		case EQP_HEAD_TOP:
+			return "上段头饰";
+		case EQP_HEAD_MID:
+			return "中段头饰";
+		case EQP_COSTUME_HEAD_TOP:
+			return "时装上段头饰";
+		case EQP_COSTUME_HEAD_MID:
+			return "时装中段头饰";
+		case EQP_COSTUME_HEAD_LOW:
+			return "时装下段头饰";
+		case EQP_COSTUME_GARMENT:
+			return "时装披肩";
+		case EQP_AMMO:
+			return "弹药";
+		case EQP_SHADOW_ARMOR:
+			return "影子铠甲";
+		case EQP_SHADOW_WEAPON:
+			return "影子武器";
+		case EQP_SHADOW_SHIELD:
+			return "影子盾牌";
+		case EQP_SHADOW_SHOES:
+			return "影子鞋子";
+		case EQP_SHADOW_ACC_R:
+		case EQP_SHADOW_ACC_L:
+		case EQP_SHADOW_ACC_RL:
+			return "影子饰品";
+		default:
+			return "未知装备";
+	}
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 以易读的格式返回剩余时间。
+// 参数为 UNIX 纪元时间，或减去 'gettimetick(2)' 后的值。
+// -- callfunc "Time2Str",<tick in UNIX epoch time>
+// 示例：
+//    // 显示 "剩余时间：1 天 1 小时 8 分 20 秒"
+//    set .@Timer, gettimetick(2) + 90500;
+//    mes "剩余时间：" + callfunc("Time2Str",.@Timer);
+//////////////////////////////////////////////////////////////////////////////////
+function	script	Time2Str	{
+	set .@Time_Left, getarg(0) - gettimetick(2);
+	
+	set .@Days, .@Time_Left / 86400;
+	set .@Time_Left, .@Time_Left - (.@Days * 86400);
+	set .@Hours, .@Time_Left / 3600;
+	set .@Time_Left, .@Time_Left - (.@Hours * 3600);
+	set .@Minutes, .@Time_Left / 60;
+	set .@Time_Left, .@Time_Left - (.@Minutes * 60);
+	
+	set .@Time$, "";
+	if( .@Days > 1 )
+		set .@Time$, .@Time$ + .@Days + " 天 ";
+	else if( .@Days > 0 )
+		set .@Time$, .@Time$ + .@Days + " 天 ";
+
+	if( .@Hours > 1 )
+		set .@Time$, .@Time$ + .@Hours + " 小时 ";
+	else if( .@Hours > 0 )
+		set .@Time$, .@Time$ + .@Hours + " 小时 ";
+
+	if( .@Minutes > 1 )
+		set .@Time$, .@Time$ + .@Minutes + " 分钟 ";
+	else if( .@Minutes > 0 )
+		set .@Time$, .@Time$ + .@Minutes + " 分钟 ";
+
+	if( .@Time_Left > 1 || .@Time_Left == 0 )
+		set .@Time$, .@Time$ + .@Time_Left + " 秒";
+	else if( .@Time_Left == 1 )
+		set .@Time$, .@Time$ + .@Time_Left + " 秒";
+	
+	return .@Time$;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 检查装备是否被调换（例如通过外挂）。
+// 该函数将某个位置的当前装备与提供的值进行比对，
+// 并记录任何不匹配的情况。
+// 匹配返回 0，不匹配返回 1。
+// -- callfunc "F_IsEquipIDHack",<equip position>,<equip ID>
+// -- callfunc "F_IsEquipRefineHack",<equip position>,<refine>
+// -- callfunc "F_IsEquipCardHack",<equip position>,<card 0>,<card 1>,<card 2>,<card 3>
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsEquipIDHack	{
+	set .@id_chk, getequipid(getarg(0));
+	set .@id, getarg(1);
+	if (.@id != .@id_chk) {
+		logmes "Hack: Tried to swap equip " + getitemname(.@id) + " for " + getitemname(.@id_chk) + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipRefineHack	{
+	set .@refine_chk, getequiprefinerycnt(getarg(0));
+	set .@refine, getarg(1);
+	if (.@refine != .@refine_chk) {
+		logmes "Hack: Tried to swap equip with refine +" + .@refine + " for +" + .@refine_chk + ".";
+		return 1;
+	}
+	return 0;
+}
+function	script	F_IsEquipCardHack	{
+	set .@pos, getarg(0);
+	for (set .@i,0; .@i < 4; set .@i, .@i+1) {
+		set .@card, getarg(.@i + 1);
+		set .@card_chk, getequipcardid(.@pos, .@i);
+		if (.@card != .@card_chk) {
+			logmes "Hack: Tried to swap card " + getitemname(.@card) + " for " + getitemname(.@card_chk) + ".";
+			return 1;
+		}
+	}
+	return 0;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 文本处理函数 [Euphy]
+// 注：以下英语语法函数（复数/冠词/序数）对中文无效，
+// 保留原逻辑仅为兼容调用方。
+//////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////
+// 返回名词的复数形式——大多数情况有效，但并非万能！
+// -- callfunc "F_GetPlural","<noun>"{,<0:normal/1:uppercase>}
+// 示例：
+//    callfunc("F_GetPlural","dog")            // 返回 "dogs"
+//    callfunc("F_GetPlural","fox",1)          // 返回 "FOXES"
+//    callfunc("F_GetPlural","knife")          // 返回 "knives"
+//    callfunc("F_GetPlural","Piece of Cake")  // 返回 "Pieces of Cake"
+//
+// 如果给定数字不为 1，返回名词的复数形式。
+// -- callfunc "F_InsertPlural",<number>,"<noun>"{,<0:normal/1:uppercase>{,"<format string>"}}
+// 格式字符串使用 sprintf()，且必须按顺序包含 %d (arg0) 和 %s (arg1)。
+// 示例：
+//    callfunc("F_InsertPlural",1,"dog")    // 返回 "1 dog"
+//    callfunc("F_InsertPlural",3,"fox",1)  // 返回 "3 FOXES"
+//    // 返回 "^FF00005^000000 knives"
+//    callfunc("F_InsertPlural",5,"knife",0,"^FF0000%d^000000 %s")
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetPlural	{
+	set .@str$, getarg(0);
+
+	if (countstr(.@str$," ")) {  // 多个单词
+		explode(.@tmp$,.@str$," ");
+		set .@size, getarraysize(.@tmp$);
+
+		// 如果格式为 "... of|in|on ..."，复数化前面的单词；否则复数化最后一个单词
+		if (compare(.@str$," of ") || compare(.@str$," in ") || compare(.@str$," on ")) {
+			for (set .@i,1; .@i<.@size; set .@i,.@i+1) {
+				if (getstrlen(.@tmp$[.@i]) == 2 && compare("of|in|on",.@tmp$[.@i]))
+					break;
+				set .@index, .@index + 1;
+			}
+		} else
+			set .@index, .@size - 1;
+
+		set .@str$, .@tmp$[.@index];
+		set .@tmp$[.@index],"%s";
+		set .@format$, implode(.@tmp$," ");
+	} else
+		set .@format$, "%s";
+
+	set .@strlen, getstrlen(.@str$);
+	if (.@strlen < 3)  // 防止出错
+		return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@str$)) : sprintf(.@format$,.@str$));
+
+	setarray .@suffix$[0], charat(.@str$,.@strlen - 1), substr(.@str$,.@strlen - 2,.@strlen - 1);
+	if (!compare("abcdefghijklmnopqrstuvwxyz",.@suffix$[0])) {  // 最后一个字符不是字母
+		set .@result$, .@str$;
+	}
+
+	// 常见例外 --> 单数形式 == 复数形式
+	else if (compare("fish|glasses|sunglasses|clothes|boots|shoes|greaves|sandals|wings|ears",.@str$)) {
+		set .@result$, .@str$;
+	}
+
+	// 以 -s, -x, -z, -ch, -sh 结尾 --> 加 -es
+	else if (.@suffix$[0] == "s" || .@suffix$[0] == "x" || .@suffix$[0] == "z" ||
+	    .@suffix$[1] == "ch" || .@suffix$[1] == "sh") {
+		set .@result$, .@str$ + "es";
+	}
+
+	// 以 -f, -fe 结尾 --> 去掉 -f, -fe --> 加 -ves
+	else if ((.@suffix$[0] == "f" || .@suffix$[1] == "fe") && .@suffix$[1] != "ff") {
+		if (compare("belief|cliff|chief|dwarf|grief|gulf|proof|roof",.@str$))
+			set .@result$, .@str$ + "s";  // 例外 --> 加 -s
+		else
+			set .@result$, substr(.@str$,0,.@strlen - 2 - (.@suffix$[1] == "fe")) + "ves";
+	}
+	
+	// 以辅音 + -y 结尾 --> 去掉 -y --> 加 -ies
+	else if (.@suffix$[0] == "y" && !compare("aeiou",charat(.@suffix$[1],0))) {
+		set .@result$, delchar(.@str$,.@strlen - 1) + "ies";
+	}
+
+	// 以 -o 结尾 --> 例外 --> 加 -es
+	else if (.@suffix$[0] == "o" &&
+	         compare("buffalo|domino|echo|grotto|halo|hero|mango|mosquito|potato|tomato|tornado|torpedo|veto|volcano",.@str$)) {
+		set .@result$, .@str$ + "es";
+	}
+
+	// 默认 --> 加 -s
+	else {
+		set .@result$, .@str$ + "s";
+	}
+
+	return ((getarg(1,0)) ? strtoupper(sprintf(.@format$,.@result$)) : sprintf(.@format$,.@result$));
+}
+function	script	F_InsertPlural	{
+	return sprintf(getarg(3,"%d %s"), getarg(0), ((getarg(0) == 1) ? getarg(1) : callfunc("F_GetPlural",getarg(1),getarg(2,0))));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 根据单词返回 'a' 或 'an'。
+// -- callfunc "F_GetArticle","<noun>";
+// 示例：
+//    callfunc("F_GetArticle","Apple")  // 返回 "an"
+//    callfunc("F_GetArticle","dog")    // 返回 "a"
+//
+// 根据单词返回 'a' 或 'an'，后跟该单词。
+// -- callfunc "F_InsertArticle","<word>"{,<0:lowercase a/1:uppercase A>}
+// 示例：
+//    callfunc("F_InsertArticle","Apple")  // 返回 "an Apple"
+//    callfunc("F_InsertArticle","dog",1)  // 返回 "A dog"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetArticle	{
+	set .@str$, strtolower(getarg(0));
+
+	// 不是单词
+	if (!charisalpha(.@str$,0))
+		return "a";
+
+	// 单个字母的单词
+	if (getstrlen(.@str$) == 1) {
+		if (strpos("aefhilmnorsx",.@str$) > -1)
+			return "an";
+		else
+			return "a";
+	}
+
+	// 特殊情况
+	if (preg_match("(euler|hour(?!i)|heir|honest|hono)",.@str$))
+		return "an";
+
+	// 辅音
+	if (preg_match("^[^aeiouy]",.@str$))
+		return "a";
+
+	// 特殊元音形式
+	if (preg_match("^e[uw]",.@str$) || preg_match("^onc?e\b",.@str$) || preg_match("^uni([^nmd]|mo)",.@str$) || preg_match("^u[bcfhjkqrst][aeiou]",.@str$))
+		return "a";
+	if (preg_match("^ut[th]",.@str$))
+		return "an";
+
+	// 特殊大写（罕见）
+	//if (preg_match("^U[NK][AIEO]?",getarg(0)))
+	//	return "a";
+
+	// 元音
+	if (preg_match("^[aeiou]",.@str$))
+		return "an";
+
+	// y...（罕见）
+	//if (preg_match("^(y(b[lor]|cl[ea]|fere|gg|p[ios]|rou|tt))",.@str$))
+	//	return "an";
+
+	return "a";
+}
+function	script	F_InsertArticle	{
+	set .@article$, callfunc("F_GetArticle",getarg(0));
+	return sprintf("%s %s", ((getarg(1,0)) ? replacestr(.@article$,"a","A") : .@article$), getarg(0));
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 返回每三位加一个逗号的数字。
+// -- callfunc "F_InsertComma",<number>
+// 示例：
+//    callfunc("F_InsertComma",7777777)  // 返回 "7,777,777"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_InsertComma	{
+	set .@str$, getarg(0);
+	for (set .@i,getstrlen(.@str$)-3; .@i>0; set .@i,.@i-3)
+		set .@str$, insertchar(.@str$,",",.@i);
+	return .@str$;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+// 返回带 '-st'、'-nd'、'-rd' 或 '-th' 后缀的数字。
+// -- callfunc "F_GetNumSuffix",<number>
+// 示例：
+//    callfunc("F_GetNumSuffix",1)   // 返回 "1st"
+//    callfunc("F_GetNumSuffix",11)  // 返回 "11th"
+//    callfunc("F_GetNumSuffix",32)  // 返回 "32nd"
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetNumSuffix	{
+	set .@n, getarg(0);
+	set .@mod, .@n % 10;
+	if      (.@mod == 1 && .@n != 11) return .@n+"st";
+	else if (.@mod == 2 && .@n != 12) return .@n+"nd";
+	else if (.@mod == 3 && .@n != 13) return .@n+"rd";
+	else return .@n+"th";
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 判断附身的玩家是否可以打开仓库
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanOpenStorage	{
+	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 通过检查基本技能等级 9，判断附身的玩家
+// 是否可以转职为一转职业。
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanChangeJob	{
+	return (!basicskillcheck() || getskilllv("NV_BASIC") > 8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 返回 EQI_* 装备栏位的名称。
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_getpositionname	{
+	switch( getarg(0,999) ) {
+		case EQI_ACC_L:		return "饰品 1";
+		case EQI_ACC_R:		return "饰品 2";
+		case EQI_SHOES:		return "鞋子";
+		case EQI_GARMENT:	return "披肩";
+		case EQI_HEAD_LOW:	return "头部 3";
+		case EQI_HEAD_MID:	return "头部 2";
+		case EQI_HEAD_TOP:	return "头部";
+		case EQI_ARMOR:		return "身体";
+		case EQI_HAND_L:	return "左手";
+		case EQI_HAND_R:	return "右手";
+		case EQI_COSTUME_HEAD_TOP:	return "时装上段头饰";
+		case EQI_COSTUME_HEAD_MID:	return "时装中段头饰";
+		case EQI_COSTUME_HEAD_LOW:	return "时装下段头饰";
+		case EQI_COSTUME_GARMENT:	return "时装披肩";
+		case EQI_AMMO:			return "箭矢/弹药";
+		case EQI_SHADOW_ARMOR:	return "影子铠甲";
+		case EQI_SHADOW_WEAPON:	return "影子武器";
+		case EQI_SHADOW_SHIELD:	return "影子盾牌";
+		case EQI_SHADOW_SHOES:	return "影子鞋子";
+		case EQI_SHADOW_ACC_R:	return "影子饰品 2";
+		case EQI_SHADOW_ACC_L:	return "影子饰品 1";
+		default:
+			return "未知";
+	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 根据职业赋予附身玩家白金技能。
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetPlatinumSkills	{
+	skill "NV_FIRSTAID",1,SKILL_PERM;
+	switch (BaseClass) {
+	case Job_Novice:
+		if (Class != Job_Super_Novice)
+			skill "NV_TRICKDEAD",1,SKILL_PERM;
+		break;
+	case Job_Swordman:
+		skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+		skill "SM_FATALBLOW",1,SKILL_PERM;
+		skill "SM_AUTOBERSERK",1,SKILL_PERM;
+		break;
+	case Job_Mage:
+		skill "MG_ENERGYCOAT",1,SKILL_PERM;
+		break;
+	case Job_Archer:
+		skill "AC_MAKINGARROW",1,SKILL_PERM;
+		skill "AC_CHARGEARROW",1,SKILL_PERM;
+		break;
+	case Job_Acolyte:
+		skill "AL_HOLYLIGHT",1,SKILL_PERM;
+		break;
+	case Job_Merchant:
+		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+		skill "MC_CHANGECART",1,SKILL_PERM;
+		skill "MC_LOUD",1,SKILL_PERM;
+		if(PACKETVER >= 20150826)
+			skill "MC_CARTDECORATE",1,SKILL_PERM;
+		break;
+	case Job_Thief:
+		skill "TF_SPRINKLESAND",1,SKILL_PERM;
+		skill "TF_BACKSLIDING",1,SKILL_PERM;
+		skill "TF_PICKSTONE",1,SKILL_PERM;
+		skill "TF_THROWSTONE",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	switch (BaseJob) {
+	case Job_Knight:
+		skill "KN_CHARGEATK",1,SKILL_PERM;
+		break;
+	case Job_Priest:
+		skill "PR_REDEMPTIO",1,SKILL_PERM;
+		break;
+	case Job_Wizard:
+		skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
+		break;
+	case Job_Blacksmith:
+		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+		skill "BS_GREED",1,SKILL_PERM;
+		break;
+	case Job_Hunter:
+		skill "HT_PHANTASMIC",1,SKILL_PERM;
+		break;
+	case Job_Assassin:
+		skill "AS_SONICACCEL",1,SKILL_PERM;
+		skill "AS_VENOMKNIFE",1,SKILL_PERM;
+		break;
+	case Job_Crusader:
+		skill "CR_SHRINK",1,SKILL_PERM;
+		break;
+	case Job_Monk:
+		skill "MO_KITRANSLATION",1,SKILL_PERM;
+		skill "MO_BALKYOUNG",1,SKILL_PERM;
+		break;
+	case Job_Sage:
+		skill "SA_CREATECON",1,SKILL_PERM;
+		skill "SA_ELEMENTWATER",1,SKILL_PERM;
+		skill "SA_ELEMENTGROUND",1,SKILL_PERM;
+		skill "SA_ELEMENTFIRE",1,SKILL_PERM;
+		skill "SA_ELEMENTWIND",1,SKILL_PERM;
+		break;
+	case Job_Rogue:
+		skill "RG_CLOSECONFINE",1,SKILL_PERM;
+		break;
+	case Job_Alchemist:
+		skill "AM_BIOETHICS",1,SKILL_PERM;
+		break;
+	case Job_Bard:
+		skill "BA_PANGVOICE",1,SKILL_PERM;
+		break;
+	case Job_Dancer:
+		skill "DC_WINKCHARM",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 如果该卡片是附魔卡片则返回 true，否则返回 false。
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsCharm	{
+	.@id = getarg(0);
+	return ((.@id >= 4700 && .@id <= 4999) || (.@id >= 29000 && .@id <= 29689) || (.@id >= 310000 && .@id <= 311091 ));
+}

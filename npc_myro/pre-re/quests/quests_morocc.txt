@@ -1,0 +1,3779 @@
+//===== rAthena Script =======================================
+//= Morocc Quest NPCs
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quest NPCs related to Morocc.
+//===== Changelogs: ==========================================
+//= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
+//= 1.1 Moved renewal specific npcs [zackdreaver]
+//============================================================
+
+// Stop Post Quest
+// ============================================================
+moc_ruins,113,181,4	duplicate(威廉)	威廉#moc	89
+
+// Binoculars Quest
+// ============================================================
+moc_ruins,118,176,4	duplicate(马里乌斯)	马里乌斯#moc	64
+
+// Resurrection of Satan Morocc
+// ============================================================
+
+morocc,176,103,3	duplicate(大陆卫队 行政官)	大陆行政官#mor	754
+
+// Succession of the Prince
+// ============================================================
+prontera,153,353,4	script	传令官#prince1	105,{
+	if (nk_prince == 0) {
+		if (rebirth_moc_edq > 1) {
+			mes "[传令官]";
+			mes "我是来自王宫的传令官，";
+			mes "正在寻找一位可靠的冒险家。";
+			mes "这关系到国家非常重要的事情。";
+			next;
+			if (aru_monas > 23) {
+				mes "[传令官]";
+				mes "这件事本可能引起国家动荡，";
+				mes "但人们都在警惕恶魔的复活。";
+				mes "现在正是处理此事而不引起额外骚动的好时机。";
+				next;
+				mes "[传令官]";
+				mes "哦，我不想让你太惊慌……";
+				mes "嗯……我想说的是，";
+				mes "卢恩·米德加兹的统治者，特里斯坦三世……";
+				next;
+				switch(select("逝世了？:又来举行庆典了？")) {
+				case 1:
+					emotion ET_SURPRISE;
+					mes "[传令官]";
+					mes "你已经知道那件事了……";
+					mes "那我就不需要";
+					mes "再多作解释了。";
+					next;
+					mes "[传令官]";
+					mes "王位不能空缺太久。";
+					mes "现在，关于选出下一任国王的讨论";
+					mes "正在积极进行。为了卢恩·米德加兹的明天，";
+					mes "请助我们一臂之力。";
+					set nk_prince,1;
+					setquest 10000;
+					close;
+				case 2:
+					mes "[传令官]";
+					mes "……";
+					next;
+					mes "[传令官]";
+					mes "你在想什么？";
+					mes "你真的觉得现在举行庆典";
+					mes "对国家很重要吗？";
+					next;
+					mes "[传令官]";
+					mes "是啊……";
+					mes "你没什么可期待的，这也很正常。";
+					mes "我还不知道该怎么向你开口。别太困惑。";
+					next;
+					mes "[传令官]";
+					mes "卢恩·米德加兹的统治者，";
+					mes "特里斯坦三世……";
+					next;
+					mes "[传令官]";
+					mes "……";
+					mes "已经逝世了。";
+					next;
+					mes "[传令官]";
+					mes "为了防止民心动荡，消息暂时不会公布。";
+					mes "宫廷正专注于挑选下一任国王，";
+					mes "他们正在紧张地商议。";
+					next;
+					mes "[传令官]";
+					mes "更多细节你可以到宫廷里了解。";
+					mes "我的使命只是把这个消息";
+					mes "传达给可靠而勇敢的冒险家。";
+					next;
+					mes "[传令官]";
+					mes "拜托……拜托了……";
+					mes "请为卢恩·米德加兹王国的";
+					mes "未来出一份力。";
+					set nk_prince,1;
+					setquest 10000;
+					close;
+				}
+			}
+			else {
+				mes "[传令官]";
+				mes "这件事本可能引起国家动荡，";
+				mes "但人们都在警惕恶魔的复活。";
+				mes "现在正是处理此事而不引起额外骚动的好时机。";
+				next;
+				mes "[传令官]";
+				mes "国王已经有一段时间";
+				mes "没有公开露面了。";
+				mes "很多人都对情况感到好奇。";
+				next;
+				mes "[传令官]";
+				mes "我讨厌自己这份差事，";
+				mes "要把悲痛的现实传达给别人。";
+				mes "我想你已经从我的话里猜到些什么了……";
+				next;
+				mes "[传令官]";
+				mes "特里斯坦国王……";
+				next;
+				mes "[传令官]";
+				mes "特里斯坦国王……";
+				mes "……逝世了……";
+				mes "……在长期深受病痛折磨之后。";
+				next;
+				mes "[传令官]";
+				mes "宫廷正在挑选下一任国王。";
+				mes "我的使命是找到一位忠诚的冒险家，";
+				mes "并送他去宫廷。";
+				next;
+				mes "[传令官]";
+				mes "到了宫廷，他们会告诉你";
+				mes "该做什么。";
+				mes "希望你能帮助卢恩·米德加兹";
+				mes "带来和平。";
+				set nk_prince,1;
+				setquest 10000;
+				close;
+			}
+		}
+		else {
+			mes "[传令官]";
+			mes "我是卢恩·米德加兹的传令官。";
+			mes "这个国家有什么";
+			mes "特别的事情吗？";
+			next;
+			mes "[传令官]";
+			mes "你没看到什么奇怪的事吗？或者听到什么传闻？";
+			close;
+		}
+	}
+	else if (nk_prince == 1) {
+		mes "[传令官]";
+		mes "我希望你去普隆德拉王宫，";
+		mes "协助挑选下一任国王。";
+		next;
+		mes "[传令官]";
+		mes "我会留在这里继续寻找其他冒险家。";
+		mes "愿你的心意能为卢恩·米德加兹带来巨大的荣耀！";
+		close;
+	}
+	else {
+		mes "[传令官]";
+		mes "我现在有使命在身。你想找的可能是别的地方。";
+		mes "去问问别人吧。";
+		close;
+	}
+}
+
+prt_castle,117,163,5	script	审查官#prince	755,{
+	if (checkquest(10004) == 0 || checkquest(10004) == 1) {
+		mes "[审查官]";
+		mes "评审员！";
+		mes "进展如何？要见七位候选人并评价他们，可不是件容易的事。";
+		next;
+		mes "[审查官]";
+		mes "哈，完成了吗？";
+		mes "你做事真麻利！";
+		next;
+		mes "[审查官]";
+		mes "跟我说说候选人的情况吧～";
+		next;
+		mes "-我立刻向审查官讲述了";
+		mes "我对各位候选人的印象。";
+		mes "我相信，我告诉他的";
+		mes "都是清晰而简明的实情。-";
+		next;
+		mes "[审查官]";
+		mes "嗯……是这样吗？你所说的对我帮助很大。辛苦你了。";
+		next;
+		mes "[审查官]";
+		mes "对了，我碰巧听到了";
+		mes "关于沃尔特家族艾伦王子的传闻。";
+		mes "你能再对所有候选人做一次评价吗？这件事很急。";
+		next;
+		mes "[审查官]";
+		mes "现在整个局面可能会改变……其他人大概也一样。";
+		mes "但我担心艾伦王子，因为我不能忽视任何关于候选人的传闻。";
+		next;
+		mes "[审查官]";
+		mes "好了，那么……请再去那里一趟吧。";
+		completequest 10004;
+		setquest 10018;
+		setquest 10019;
+		setquest 10020;
+		setquest 10021;
+		setquest 10022;
+		close;
+	}
+	if (nk_prince < 2) {
+		mes "[审查官]";
+		mes "你怎么回事？";
+		mes "这里不是对外开放的地方！";
+		next;
+		switch(select("好吧，好吧。:是传令官让我来的。")) {
+		case 1:
+			mes "[审查官]";
+			mes "既然知道，你还来这里干什么？快出去！";
+			close2;
+			warp "prontera",155,353;
+			end;
+		case 2:
+			if (nk_prince == 0) {
+				mes "[审查官]";
+				mes "我看他不像个";
+				mes "经验丰富的鉴定师……";
+				close;
+			}
+			mes "[审查官]";
+			mes "……";
+			next;
+			if (BaseLevel > 89) {
+				mes "[审查官]";
+				mes "传令官只检查了你的身体素质，就把战士送进宫廷。";
+				mes "他的职责仅此而已。";
+				next;
+				mes "[审查官]";
+				mes "审查你的资格，是我的职责所在。";
+				next;
+				mes "[审查官]";
+				mes "嗯……";
+				next;
+				mes "[审查官]";
+				mes "你是一位经验丰富的旅行者，实力也不俗，但是……";
+				mes "宫廷选人并不只看力量和战斗经验。";
+				next;
+				mes "[审查官]";
+				mes "要考察一个人的品质，";
+				mes "你自己首先要有";
+				mes "足够的修养。";
+				next;
+				mes "[审查官]";
+				mes "从这个意义上说，我想做一个简单的试验。";
+				mes "让我们来考考你。";
+				next;
+				mes "[审查官]";
+				mes "这不会很复杂。你只需要在每个情境下，坦率地给出简短的回答。";
+				next;
+				mes "[审查官]";
+				mes "好，我们开始。做好准备，仔细听题并回答。";
+				next;
+				mes "[审查官]";
+				mes "作为狩猎队的领导者，";
+				mes "你认为最需要考虑的";
+				mes "是什么？";
+				next;
+				switch(select("怪物的实力和特性。:狩猎的效率。:我们能从狩猎中获得什么。")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "如果我们在战斗中";
+				mes "失去了一名队员，怎么办？";
+				next;
+				switch(select("继续战斗直到取胜。:换个地方另想办法。:停止狩猎，补充休整。")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "狩猎获得的成果……";
+				next;
+				switch(select("按事先约定分配。:我不想管分配的事。:给最需要的队员。")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "敌人还活着时，必须优先治疗";
+				mes "哪种职业的队员？";
+				next;
+				switch(select("牧师，治疗职业。:猎人，输出职业。:骑士领主，坦克职业。")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你最想和什么样的人交朋友？";
+				next;
+				switch(select("强大的人。:经验丰富的人。:善良的人。")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "在你的修行中，哪种能力";
+				mes "对你的帮助最大？";
+				next;
+				switch(select("人际关系。:充分的情报收集。:洞察力与行动力。")) {
+				case 1:
+					set .@solid,.@solid+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你平时如何鼓励别人？";
+				next;
+				switch(select("提及过去的失败。:犹豫是最糟糕的。:你并不孤单。")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你人生中最重要的";
+				mes "美德是什么？";
+				next;
+				switch(select("自我的成长。:世界和平。:追求真理。")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@int,.@int+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "如果你流落荒岛，";
+				mes "最想留下什么？";
+				next;
+				switch(select("地图:打火石:武器")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你最喜欢什么类型的故事？";
+				next;
+				switch(select("爱情故事。:英雄史诗。:宗教故事。")) {
+				case 1:
+					set .@solid,.@solid+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@int,.@int+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你来到一个新地区，";
+				mes "要对付新的怪物。";
+				mes "你会怎么做？";
+				next;
+				switch(select("先下手为强。:从远处观察。:赶紧逃走。")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "治理卢恩·米德加兹王国，";
+				mes "首先要做什么？";
+				next;
+				switch(select("强化军队以威慑各国。:发展经济与科技。:维持治安稳定。")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[审查官]";
+				mes "你的品行测试结束了。";
+				mes "一直以来，你都活得……";
+				next;
+				if (.@brave > 50) {
+					if (.@int > 30) {
+						mes "[审查官]";
+						mes "带着坚定的信念，";
+						mes "和理性的判断。";
+						next;
+					}
+					else if (.@solid > 30) {
+						mes "[审查官]";
+						mes "勇敢无畏，";
+						mes "同时也过着";
+						mes "温和的生活。";
+						next;
+					}
+					else {
+						mes "[审查官]";
+						mes "带着果断的心志。";
+						mes "你能凭它克服艰难险阻。";
+						next;
+					}
+				}
+				else if (.@int > 50) {
+					if (.@brave > 30) {
+						mes "[审查官]";
+						mes "带着坚定的意志，";
+						mes "和理性的判断。";
+						next;
+					}
+					else if (.@solid > 30) {
+						mes "[审查官]";
+						mes "带着理性的判断，";
+						mes "与平和的心境。";
+						next;
+					}
+					else {
+						mes "[审查官]";
+						mes "带着冷静而审慎的决断。";
+						mes "我想你也一定有过许多美好的经历。";
+						next;
+					}
+				}
+				else if (.@solid > 50) {
+					if (.@brave > 30) {
+						mes "[审查官]";
+						mes "勇敢无畏，";
+						mes "同时也过着";
+						mes "温和的生活。";
+						next;
+					}
+					else if (.@int > 30) {
+						mes "[审查官]";
+						mes "带着理性的判断，";
+						mes "与爱好和平的心境。";
+						next;
+					}
+					else {
+						mes "[审查官]";
+						mes "……呃，其实……";
+						mes "你没有偏向任何一方……";
+						mes "稳定与和谐";
+						mes "是你人生中重要的美德。";
+						next;
+					}
+				}
+				mes "[审查官]";
+				mes "我认为你完全有资格评价他人。";
+				mes "为开始时我对你的无礼道歉。";
+				next;
+				mes "[审查官]";
+				mes "所以，我想请你帮个忙。你已经成为正式的冒险家鉴定师了。";
+				next;
+				mes "[审查官]";
+				mes "啊，你在我这里花了很长时间，一定很累了。";
+				mes "开始工作前如果需要准备，就先走吧，之后再回来找我。";
+				mes "我会在这里等你。";
+				next;
+				set nk_prince,4;
+				changequest 10000,10003;
+				close;
+			}
+			else {
+				mes "[审查官]";
+				mes "我看你不像是";
+				mes "经验丰富的冒险家……";
+				mes "这是国家大事，我不能把这份工作交给你这样的人。";
+				next;
+				mes "[审查官]";
+				mes "不过，如果你能证明自己是强大的冒险家，";
+				mes "我就让你通过第一项资格考试。";
+				next;
+				mes "[审查官]";
+				mes "你听说过克雷斯特汉姆吗？那里有一种叫深渊骑士的怪物。";
+				next;
+				mes "[审查官]";
+				mes "击败深渊骑士后，";
+				mes "带 2 个^ff0000缰绳^000000来。";
+				mes "如果你能完成这个任务，";
+				mes "我就认可你的实力。";
+				set nk_prince,2;
+				changequest 10000,10001;
+				next;
+				mes "[审查官]";
+				mes "等你拿到 2 个缰绳，";
+				mes "我们再继续谈。";
+				mes "再见……";
+				close;
+			}
+		}
+	}
+	else if (nk_prince == 2) {
+		mes "[审查官]";
+		mes "啊，你之前来见过我吧？我猜你已经去过克雷斯特汉姆了。";
+		next;
+		mes "[审查官]";
+		mes "我说的 2 个缰绳带来了吗？";
+		next;
+		if (countitem(1064) > 1) {
+			mes "[审查官]";
+			mes "哦！";
+			mes "坦白说，我没想到你真能带来。你很了不起。";
+			next;
+			mes "[审查官]";
+			mes "好，很好。你证明了自己的实力。";
+			mes "现在你通过了一项考试，只剩一项了。";
+			delitem 1064,2; //Reins
+			set nk_prince,3;
+			changequest 10001,10002;
+			next;
+			mes "[审查官]";
+			mes "评价王子的评审员也必须修养自身的品格。";
+			mes "力量不能涵盖一切，人格同样重要。";
+			next;
+			mes "[审查官]";
+			mes "从某种意义上说，下一项考试是测试你的品格。";
+			mes "只是一系列简单的问题，但先放松一下，";
+			mes "做好心理准备……然后再来找我谈。";
+			close;
+		}
+		else {
+			mes "[审查官]";
+			mes "你连这样危险的任务都没完成过！怎么敢想到这里来？";
+			mes "我认为你胜任不了评价王子的工作。";
+			next;
+			mes "[审查官]";
+			mes "现在，你先回去吧，以后再来。";
+			close;
+		}
+	}
+	else if (nk_prince == 3) {
+		mes "[审查官]";
+		mes "现在准备好了吗？";
+		mes "这次考试虽然不会太难……";
+		next;
+		mes "[审查官]";
+		mes "这是为了了解你在特定情境下的态度和行为。";
+		mes "仔细听我的问题，坦率地回答你旅途中的经历。";
+		next;
+		mes "[审查官]";
+		mes "那么，我开始提问了。";
+		next;
+		mes "[审查官]";
+		mes "作为狩猎队的领导者，";
+		mes "你认为最需要考虑的";
+		mes "是什么？";
+		next;
+		switch(select("怪物的实力和特性。:狩猎的效率。:我们能从狩猎中获得什么。")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "如果我们在战斗中";
+		mes "失去了一名队员，怎么办？";
+		next;
+		switch(select("继续战斗直到取胜。:换个地方另想办法。:停止狩猎，补充休整。")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "狩猎获得的成果……";
+		next;
+		switch(select("按事先约定分配。:我不想管分配的事。:给最需要的队员。")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "敌人还活着时，必须优先治疗";
+		mes "哪种职业的队员？";
+		next;
+		switch(select("牧师，治疗职业。:猎人，输出职业。:骑士领主，坦克职业。")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你最想和什么样的人交朋友？";
+		next;
+		switch(select("强大的人。:经验丰富的人。:善良的人。")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "在你的修行中，哪种能力";
+		mes "对你的帮助最大？";
+		next;
+		switch(select("人际关系。:充分的情报收集。:洞察力与行动力。")) {
+		case 1:
+			set .@solid,.@solid+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你平时如何鼓励别人？";
+		next;
+		switch(select("提及过去的失败。:犹豫是最糟糕的。:你并不孤单。")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你人生中最重要的";
+		mes "美德是什么？";
+		next;
+		switch(select("自我的成长。:世界和平。:追求真理。")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@int,.@int+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "如果你流落荒岛，";
+		mes "最想留下什么？";
+		next;
+		switch(select("地图:打火石:武器")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你最喜欢什么类型的故事？";
+		next;
+		switch(select("爱情故事。:英雄史诗。:宗教故事。")) {
+		case 1:
+			set .@solid,.@solid+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@int,.@int+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你来到一个新地区，";
+		mes "要对付新的怪物。";
+		mes "你会怎么做？";
+		next;
+		switch(select("先下手为强。:从远处观察。:赶紧逃走。")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "治理卢恩·米德加兹王国，";
+		mes "首先要做什么？";
+		next;
+		switch(select("强化军队以威慑各国。:发展经济与科技。:维持治安稳定。")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[审查官]";
+		mes "你的品行测试结束了。";
+		mes "一直以来，你都活得……";
+		next;
+		if (.@brave > 50) {
+			if (.@int > 30) {
+				mes "[审查官]";
+				mes "带着坚定的信念，";
+				mes "和理性的判断。";
+				next;
+			}
+			else if (.@solid > 30) {
+				mes "[审查官]";
+				mes "勇敢无畏，";
+				mes "同时也过着";
+				mes "温和的生活。";
+				next;
+			}
+			else {
+				mes "[审查官]";
+				mes "带着果断的心志。";
+				mes "你能凭它克服艰难险阻。";
+				next;
+			}
+		}
+		else if (.@int > 50) {
+			if (.@brave > 30) {
+				mes "[审查官]";
+				mes "带着坚定的意志，";
+				mes "和理性的判断。";
+				next;
+			}
+			else if (.@solid > 30) {
+				mes "[审查官]";
+				mes "带着理性的判断，";
+				mes "与平和的心境。";
+				next;
+			}
+			else {
+				mes "[审查官]";
+				mes "带着冷静而审慎的决断。";
+				mes "我想你也一定有过许多美好的经历。";
+				next;
+			}
+		}
+		else if (.@solid > 50) {
+			if (.@brave > 30) {
+				mes "[审查官]";
+				mes "勇敢无畏，";
+				mes "同时也过着";
+				mes "温和的生活。";
+				next;
+			}
+			else if (.@int > 30) {
+				mes "[审查官]";
+				mes "带着理性的判断，";
+				mes "与爱好和平的心境。";
+				next;
+			}
+			else {
+				mes "[审查官]";
+				mes "……呃，其实……";
+				mes "你没有偏向任何一方……";
+				mes "稳定与和谐";
+				mes "是你人生中重要的美德。";
+				next;
+			}
+		}
+		mes "[审查官]";
+		mes "我认为你完全有资格评价他人。";
+		mes "为开始时我对你的无礼道歉。";
+		next;
+		mes "[审查官]";
+		mes "所以，我想请你帮个忙。你已经成为正式的冒险家鉴定师了。";
+		next;
+		mes "[审查官]";
+		mes "啊，你在我这里花了很长时间，一定很累了。";
+		mes "开始工作前如果需要准备，就先走吧，之后再回来找我。";
+		mes "我会在这里等你。";
+		next;
+		set nk_prince,4;
+		changequest 10002,10003;
+		close;
+	}
+	else if (nk_prince == 4) {
+		mes "[审查官]";
+		mes "欢迎……";
+		mes "我会告诉你该做什么，";
+		mes "以及与王子们打交道时";
+		mes "要注意什么。请专心听我说。";
+		next;
+		mes "[审查官]";
+		mes "我先回答你的问题。";
+		next;
+		while(1) {
+			switch(select("我具体该做什么？:国王是病逝的吗？:我的任务是保密的吗？:我没有问题了。")) {
+			case 1:
+				mes "[审查官]";
+				mes "我们有来自七大家族的七位候选人，每个家族一位。";
+				mes "候选人都住在同一个地方，我会在那里把他们介绍给你。";
+				next;
+				mes "[审查官]";
+				mes "你必须逐一会见候选人，问一些关于他们品质的问题，";
+				mes "或者观察他们的言行，然后回来向我详细汇报你观察到的一切。";
+				next;
+				mes "[审查官]";
+				mes "原本的规矩是，王子的品质要由王室家族长期考察，";
+				mes "并按内部条例推选。";
+				next;
+				mes "[审查官]";
+				mes "因为恶魔撒旦梦罗克的复活，人心惶惶，无法按常规发布公告，";
+				mes "王国的气氛也不稳定。";
+				next;
+				mes "[审查官]";
+				mes "各个王国也都在忙着防范撒旦梦罗克的干涉。";
+				next;
+				mes "[审查官]";
+				mes "所以这一次，宫廷决定改变做法，";
+				mes "把评价候选人的机会交给像你这样著名而忠诚的冒险家。";
+				mes "这就是你来到这里的原因。";
+				next;
+				set .@prince,1;
+				break;
+			case 2:
+				mes "[审查官]";
+				mes "你问这种问题真是荒谬！";
+				mes "我已经明确告诉过你，特里斯坦国王是病逝的，不是吗？";
+				next;
+				mes "[审查官]";
+				mes "你就没有别的可好奇的吗？";
+				next;
+				break;
+			case 3:
+				mes "[审查官]";
+				mes "当然……";
+				mes "公布国王的死讯本是理所当然。但国家的氛围还不成熟。";
+				mes "这是我们目前唯一的选择。";
+				next;
+				mes "[审查官]";
+				mes "王子们不能随意外出，普通人也不能去王子们所在的地方。";
+				next;
+				break;
+			case 4:
+				if (.@prince == 1) {
+					mes "[审查官]";
+					mes "我想说明已经够充分了。";
+					mes "现在我告诉你";
+					mes "去哪里见王子们。";
+					next;
+					mes "[审查官]";
+					mes "到了军医官的房间附近，你会看到一个士兵站在奇怪的位置。";
+					mes "你会发现那里并没有门。";
+					next;
+					mes "[审查官]";
+					mes "在士兵身后有一扇秘密的门。";
+					mes "只要你和士兵交谈，他就会让你进去。";
+					next;
+					mes "[审查官]";
+					mes "正如我所说，这对卢恩·米德加兹王国是非常重要的事情。";
+					mes "虽然我反复强调，但还是觉得不够。";
+					next;
+					mes "[审查官]";
+					mes "请好自为之。";
+					mes "感谢你的付出。";
+					set nk_prince,5;
+					completequest 10003;
+					setquest 10005;
+					setquest 10006;
+					setquest 10007;
+					setquest 10008;
+					setquest 10009;
+					setquest 10010;
+					setquest 10011;
+					close;
+				}
+				else {
+					mes "[审查官]";
+					mes "你已经得到该怎么做的指示了，不是吗？";
+					mes "这件事没那么无关紧要，不能掉以轻心！请注意这一点！";
+					next;
+					mes "[审查官]";
+					mes "如果你没有动力去做，我会另找冒险家。";
+					mes "你想回去忙自己的事，也可以。";
+					next;
+				}
+				break;
+			}
+		}
+	}
+	else if (nk_prince == 7) {
+		mes "[审查官]";
+		mes "进展如何？";
+		mes "评价别人可不是件轻松的事，确实是辛苦的工作。";
+		mes "你是在为我们的国家辛苦付出。";
+		next;
+		if ((nkprince_eisen == 15) && (checkquest(10025) == 0 || checkquest(10025) == 1)) {
+			mes "-我告诉了他艾伦和阿勒姆发生的意外。-";
+			next;
+			mes "[审查官]";
+			mes "什么！？简直难以置信！";
+			mes "这、这太……";
+			next;
+			mes "[审查官]";
+			mes "是阿勒姆下的手……？";
+			mes "是吗……？";
+			next;
+			mes "[审查官]";
+			mes "你已经完全尽到了";
+			mes "冒险家鉴定师的职责。";
+			mes "非常感谢你至今的帮助。多亏了你，王国的未来都欠你一份情。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "（他似乎并不怎么惊讶……难道有什么原因？现在我反而起疑了……）";
+			next;
+			mes "[审查官]";
+			mes "喂，你在这里经历的事不能透露给任何人。";
+			mes "你明白这件事是完全保密的。";
+			next;
+			mes "[审查官]";
+			mes "所以，继续好好干。";
+			mes "为了卢恩·米德加兹王国！";
+			if (checkre(3)) {
+				if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 40000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 45000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 50000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 55000,0;
+				else if (BaseLevel > 99) getexp 110000,0;
+				else getexp 30000,0;
+			} else {
+				if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 400000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 450000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 500000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 550000,0;
+				else if (BaseLevel >= 99) getexp 1100000,0;
+				else getexp 300000,0;
+			}
+			set nk_prince,8;
+			completequest 10025;
+			close;
+		}
+		else {
+			mes "[审查官]";
+			mes "那么，我也该上路了……";
+			close;
+		}
+	}
+	else if ((nk_prince == 8) || (nk_prince == 9)) {
+		mes "[审查官]";
+		mes "一切为了";
+		mes "卢恩·米德加兹的荣耀！";
+		close;
+	}
+	else {
+		mes "[审查官]";
+		mes "你好，鉴定师。";
+		mes "希望你能圆满完成使命。你像我交代的那样，见过所有王子了吗？";
+		if (nkprince_eisen != 10)
+			close;
+		next;
+		switch(select("是的。:还没有。")) {
+		case 1:
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[审查官]";
+				mes "很好。";
+				mes "我很乐意听听王子们的情况。";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[审查官]";
+				mes "你确定吗？";
+				mes "请把所有王子都确认一遍。";
+			}
+			close;
+		case 2:
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[审查官]";
+				mes "别装傻了。我肯定你已经做完了。";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[审查官]";
+				mes "我对所有王子的调查已经完成了。";
+			}
+			close;
+		}
+	}
+}
+
+prt_castle,272,375,4	script	王子	881,{
+	if (nk_prince > 6) {
+		mes "-他沉迷于制作";
+		mes "锁和钥匙。-";
+		close;
+	}
+	if (checkquest(10020) == 2) {
+		mes "[艾里希]";
+		mes "……我真是倒霉！";
+		mes "可他明知道会怎样，还坚持说我已经堕落了……";
+		close;
+	}
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		mes "[艾里希]";
+		mes "这些天我真倒霉……麻烦事全找上我……";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[王子]";
+		mes "你是谁？";
+		mes "我认为你没有资格";
+		mes "进这个房间。";
+		next;
+		mes "[王子]";
+		mes "我命令你";
+		mes "从我眼前消失。";
+		close;
+	}
+	else if (nk_prince == 5) {
+		mes "[王子]";
+		mes "你是谁？";
+		mes "一定是有人把隐藏入口的事告诉你了。难道……你是冒险家鉴定师？";
+		next;
+		select("是的，我是。");
+		mes "[王子]";
+		mes "是你啊……那就帮我个忙吧。我是内斯里家族的嫡子，名叫艾里希。";
+		mes "你可以叫我艾里希王子。";
+		next;
+		mes "[艾里希]";
+		mes "我的全名是……";
+		next;
+		mes "[艾里希]";
+		mes "够了。";
+		mes "关于我的事，你可以去问我的侍从。我要休息了。";
+		set nk_prince,6;
+		completequest 10011;
+		set .@prin1,checkquest(10005);
+		set .@prin2,checkquest(10006);
+		set .@prin3,checkquest(10007);
+		set .@prin4,checkquest(10008);
+		set .@prin5,checkquest(10009);
+		set .@prin6,checkquest(10010);
+		set .@prin7,checkquest(10011);
+		if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+			setquest 10012;
+		}
+		close;
+	}
+	else {
+		mes "[艾里希]";
+		mes "……我的良心！";
+		mes "它不太好使了……";
+		next;
+		mes "-他似乎沉迷其中，对其他事都毫不在意。-";
+		close;
+	}
+}
+
+prt_castle,274,372,4	script	侍者#hans	48,{
+	if (checkquest(10020) == 2) {
+		mes "[侍者 汉斯]";
+		mes "啊……嗯……我……";
+		mes "我……非常抱歉！";
+		mes "我……想我对鉴定师犯了个大错！";
+		next;
+		mes "[侍者 汉斯]";
+		mes "我的王子没有做错任何事，但无论如何，我为一切向你道歉！";
+		close;
+	}
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		mes "不停……-";
+		mes "-每次我回应他，他都紧张不安。他的举动让我心生怜悯。-";
+		close;
+	}
+	if (nk_prince == 6) {
+		mes "[侍者 汉斯]";
+		mes "您好，先生。";
+		mes "我叫汉斯，是艾里希王子的侍从。";
+		next;
+		mes "[侍者 汉斯]";
+		mes "有什么可以为您效劳？";
+		next;
+		switch(select("艾里希王子让我来找你。:没什么事。")) {
+		case 1:
+			mes "[侍者 汉斯]";
+			mes "是艾里希王子……？";
+			next;
+			select("我想听听关于他的事。");
+			mes "[侍者 汉斯]";
+			mes "啊，我明白了。";
+			mes "坦白说，艾里希王子对政权并不怎么感兴趣。";
+			next;
+			mes "[侍者 汉斯]";
+			mes "他每天都写日记。结婚那天，他只写了一句：'今天没什么特别的事'。";
+			mes "他不关心时事，也不在意人际关系。";
+			next;
+			mes "[侍者 汉斯]";
+			mes "他喜欢做的是制作锁。";
+			mes "他很古怪，不是吗？";
+			mes "他有点像小丑。";
+			next;
+			mes "[侍者 汉斯]";
+			mes "他也不喜欢华丽的服装，来这里甚至没带一套礼服。";
+			mes "而且一到这儿，他就一头扎进锁和钥匙的制作里，就像那样。";
+			next;
+			mes "[侍者 汉斯]";
+			mes "我想不出合适的说法……关于他，我也没什么特别的可说。";
+			mes "你照你看到的样子评价他就好了……";
+			next;
+			mes "[侍者 汉斯]";
+			mes "关于这事，我能说的就这些了。";
+			mes "唉……~";
+			next;
+			emotion ET_SURPRISE;
+			mes "[侍者 汉斯]";
+			mes "啊，王子！";
+			mes "小心割到手指！";
+			next;
+			mes "[艾里希]";
+			mes "……";
+			next;
+			mes "[侍者 汉斯]";
+			mes "……唉，他根本听不见……";
+			mes "哦哦哦……";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			close;
+		case 2:
+			mes "[侍者 汉斯]";
+			mes "你见过其他王子了吗？";
+			next;
+			mes "[侍者 汉斯]";
+			mes "就算你问些什么，现在也不会从他那里听到什么特别的事。";
+			close;
+		}
+	}
+	else {
+		mes "[侍者 汉斯]";
+		mes "你好？";
+		mes "你是新来的冒险家鉴定师吗？？";
+		close;
+	}
+}
+
+prt_castle,339,202,3	script	王子#urgen	989,{
+	if (nk_prince > 6) {
+		mes "[尤勒坚]";
+		mes "……这不够美。";
+		mes "让我浑身不舒服……";
+		close;
+	}
+	if (checkquest(10021) == 2) {
+		mes "[尤勒坚]";
+		mes " 我非常不悦。喂，你在看什么？出去！";
+		next;
+		mes "[尤勒坚]";
+		mes "我美丽的身体现在不在最佳状态。今天我不想让任何人看到。";
+		close;
+	}
+	else if (checkquest(10021) == 0 || checkquest(10021) == 1) {
+		mes "[尤勒坚]";
+		mes "……什么？你刚才……";
+		mes "对我说了什么……？啊？";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[王子]";
+		mes "呼————";
+		mes "这里不是你该来的地方。";
+		next;
+		mes "[王子]";
+		mes "尽快离我远点。";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[王子]";
+		mes "啦~啦啦啦啦~啦啦啦~";
+		mes "你就是那个要来打量我、评价我品质的人吗？";
+		next;
+		mes "[王子]";
+		mes "你正在注视的这朵水仙名叫尤勒坚。他绽放在维格纳家族。";
+		next;
+		mes "[尤勒坚]";
+		mes "我平时不让人听到我美丽的声音，但这次，";
+		mes "我就特别为你破例一次。";
+		next;
+		mes "[尤勒坚]";
+		mes "听着……";
+		mes "让我用令人难忘的、";
+		mes "清亮而美丽的声音来回答你。";
+		next;
+		while(1) {
+			switch(select("我想了解你的出身背景。:说说你对国家的看法。:你有什么兴趣爱好？:让我离开。")) {
+			case 1:
+				mes "[尤勒坚]";
+				mes "我从小英俊潇洒，招来男人的羡慕嫉妒，";
+				mes "也招来女人无止境的示好。我对此感到厌倦，于是开始远离人群。";
+				next;
+				mes "[尤勒坚]";
+				mes "我这样美丽的人，";
+				mes "有时不该承受那些。";
+				next;
+				mes "[尤勒坚]";
+				mes "我渐渐变得胆怯。无论男女，都让我心生畏惧。";
+				set .@p_a,1;
+				next;
+				break;
+			case 2:
+				mes "[尤勒坚]";
+				mes "人们各司其职，这是国家运转的动力。";
+				mes "至于我，我的存在本身对国家就足够了。";
+				next;
+				mes "[尤勒坚]";
+				mes "像我这样华丽的国王存在本身，就是子民的光芒，";
+				mes "是他们生活的希望与理由。";
+				set .@p_b,1;
+				next;
+				break;
+			case 3:
+				mes "[尤勒坚]";
+				mes "当然是保养我的身体。人类就应该追求美。这很自然，不是吗？";
+				next;
+				mes "[尤勒坚]";
+				mes "凡事都有例外，就像这宫廷里的你。能站得离我再远一点吗？";
+				mes "你身上的气味让我几乎无法呼吸。";
+				set .@p_c,1;
+				next;
+				break;
+			case 4:
+				mes "[尤勒坚]";
+				mes "你的意志一定很坚强。";
+				mes "注视我的美貌这么久，居然还没有失魂落魄。";
+				if (.@p_a + .@p_b + .@p_c == 3) {
+					completequest 10009;
+				}
+				completequest 10011;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+prt_castle,289,201,3	script	王子#helmut	991,{
+	if (nk_prince > 6) {
+		mes "[赫尔穆特]";
+		mes "真是个白痴。我早该杀了他。现在我轻松多了。";
+		close;
+	}
+	if (checkquest(10022) == 2) {
+		mes "[赫尔穆特]";
+		mes "可恶……可恶！";
+		mes "沃尔特的新手！！";
+		mes "我该怎么发泄这股怒火？该死！混账！";
+		close;
+	}
+	else if (checkquest(10022) == 0 || checkquest(10022) == 1) {
+		mes "-他满脸通红，";
+		mes "怒气都写在了脸上。-";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[赫尔穆特]";
+		mes "你不该来这里！";
+		mes "离我远点不行吗！";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[赫尔穆特]";
+		mes "你是新来的鉴定师？我受够了这么多的访客！直接进入正题吧！";
+		next;
+		mes "-我该从哪个话题开始呢？-";
+		next;
+		switch(select("你的出身背景……:你的野心……:你对国家的看法……:我想先去见见其他人。")) {
+		case 1:
+			mes "[赫尔穆特]";
+			mes "我不知道别人怎么回答，但你的问题让我很不耐烦。";
+			mes "我不该这样，但我没有别的看法！";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是王子；你有怨言，那你来当王子啊！我厌烦这种盘问。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			mes "好吧，我明白了。请继续……";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是罗恩堡家族的赫尔穆特。";
+			mes "我喜欢战场上血腥的味道，也喜欢节日。";
+			next;
+			mes "[赫尔穆特]";
+			mes "我讨厌拘泥礼节，也讨厌废话连篇。至于野心？";
+			mes "等我当上……国王……要做什么？这个问题我被问过很多次了。";
+			next;
+			mes "[赫尔穆特]";
+			mes "等我当了国王，我要扩充军队，统一大陆；";
+			mes "我要消灭所有危害子民的怪物！";
+			next;
+			mes "[赫尔穆特]";
+			mes "~咳咳~！我喉咙痛！有一阵子没这么用过嗓子了。~咳咳~！";
+			next;
+			mes "[赫尔穆特]";
+			mes "嘿，卡尔伯尔尼！";
+			mes "拿啤酒来！啤酒！";
+			next;
+			mes "[赫尔穆特]";
+			mes "你还站在那干什么？我没什么要对你说的了！退下！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 2:
+			mes "[赫尔穆特]";
+			mes "我不知道别人怎么回答，但你的问题让我很不耐烦。";
+			mes "我不该这样，但我没有别的看法！";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是王子；你有怨言，那你来当王子啊！我厌烦这种盘问。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			mes "好吧，我明白了。请继续……";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是罗恩堡家族的赫尔穆特。";
+			mes "我喜欢战场上血腥的味道，也喜欢节日。";
+			next;
+			mes "[赫尔穆特]";
+			mes "我讨厌拘泥礼节，也讨厌废话连篇。至于野心？";
+			mes "等我当上……国王……要做什么？这个问题我被问过很多次了。";
+			next;
+			mes "[赫尔穆特]";
+			mes "等我当了国王，我要扩充军队，统一大陆；";
+			mes "我要消灭所有危害子民的怪物！";
+			next;
+			mes "[赫尔穆特]";
+			mes "~咳咳~！我喉咙痛！有一阵子没这么用过嗓子了。~咳咳~！";
+			next;
+			mes "[赫尔穆特]";
+			mes "嘿，卡尔伯尔尼！";
+			mes "拿啤酒来！啤酒！";
+			next;
+			mes "[赫尔穆特]";
+			mes "你还站在那干什么？我没什么要对你说的了！退下！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 3:
+			mes "[赫尔穆特]";
+			mes "我不知道别人怎么回答，但你的问题让我很不耐烦。";
+			mes "我不该这样，但我没有别的看法！";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是王子；你有怨言，那你来当王子啊！我厌烦这种盘问。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			mes "好吧，我明白了。请继续……";
+			next;
+			mes "[赫尔穆特]";
+			mes "我是罗恩堡家族的赫尔穆特。";
+			mes "我喜欢战场上血腥的味道，也喜欢节日。";
+			next;
+			mes "[赫尔穆特]";
+			mes "我讨厌拘泥礼节，也讨厌废话连篇。至于野心？";
+			mes "等我当上……国王……要做什么？这个问题我被问过很多次了。";
+			next;
+			mes "[赫尔穆特]";
+			mes "等我当了国王，我要扩充军队，统一大陆；";
+			mes "我要消灭所有危害子民的怪物！";
+			next;
+			mes "[赫尔穆特]";
+			mes "~咳咳~！我喉咙痛！有一阵子没这么用过嗓子了。~咳咳~！";
+			next;
+			mes "[赫尔穆特]";
+			mes "嘿，卡尔伯尔尼！";
+			mes "拿啤酒来！啤酒！";
+			next;
+			mes "[赫尔穆特]";
+			mes "你还站在那干什么？我没什么要对你说的了！退下！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 4:
+			mes "[" + strcharinfo(0) + "]";
+			mes "不，王子殿下，";
+			mes "我稍后再来。";
+			next;
+			mes "[赫尔穆特]";
+			mes "好吧，随你。";
+			mes "嘿！嘿，卡尔伯尔尼！";
+			mes "赶紧给我过来，带上啤酒！";
+			mes "是不是想挨揍？";
+			close;
+		}
+	}
+}
+
+prt_castle,288,208,4	script	卡尔伯尔尼	962,{
+	mes "[卡尔伯尔尼]";
+	mes "您好，先生。";
+	mes "我是赫尔穆特王子的侍从……";
+	mes "卡尔伯尔尼。";
+	next;
+	mes "[赫尔穆特]";
+	mes "嘿，卡尔伯尔尼！";
+	mes "拿啤酒来！啤酒！";
+	next;
+	mes "[卡尔伯尔尼]";
+	mes "哎呀，非常抱歉。";
+	mes "我还有事要忙……";
+	close;
+}
+
+prt_castle,391,205,3	script	王子#poe	993,{
+	if (nk_prince > 6) {
+		mes "[珀]";
+		mes "不管情况如何，他都是人生这场博弈里的输家。";
+		close;
+	}
+	if (checkquest(10018) == 2) {
+		mes "[珀]";
+		mes "他不战而降。这不是男人该有的做法。他不如我。不过算了。";
+		mes "我对他很失望。说的就是艾伦。";
+		close;
+	}
+	else if (checkquest(10018) == 0 || checkquest(10018) == 1) {
+		mes "[珀]";
+		mes "……";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[王子]";
+		mes "嗨，你好啊？";
+		mes "我认为你不配";
+		mes "待在这里。";
+		mes "先回去理清你的家谱，再来吧？";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[王子]";
+		mes "过来。";
+		mes "你就是那个冒险家吧！";
+		mes "我也热爱艰险旅途的挑战。";
+		mes "唠叨的老头子和他们的冒险……休想让我停止冒险……";
+		next;
+		mes "[王子]";
+		mes "我叫珀。";
+		mes "我是理查德家族的王子。记住我，成为我的支持者吧……";
+		next;
+		mes "[珀]";
+		mes "首先，我想测试一下";
+		mes "你作为冒险家的能力。测试不会太认真。";
+		mes "我只想知道你的直觉有多准……仅此而已。";
+		next;
+		mes "[珀]";
+		mes "我不想和直觉迟钝的人交谈。";
+		mes "让我简单说明一下，";
+		mes "试试你的直觉。";
+		next;
+		mes "[珀]";
+		mes "我的卡牌数字从1到13。";
+		mes "你要回答我抽出的卡牌数字，是更大还是更小。";
+		next;
+		mes "[珀]";
+		mes "啊，当然，7是中间数。7意味着不输不赢。";
+		mes "这个游戏的目标是连续答对2次。开始吧！";
+		next;
+		while(.@wincount < 2) {
+			set .@card,rand(1,13);
+			mes "[珀]";
+			mes "好，现在从大和小里";
+			mes "选一个。";
+			mes "只能选一个。";
+			next;
+			switch(select("大:小")) {
+			case 1:
+				mes "[珀]";
+				mes "嗯……大吗？……";
+				mes "我现在抽牌了！";
+				next;
+				mes "[珀]";
+				mes "是……" + .@card + "！！";
+				next;
+				if (.@card > 7) {
+					set .@wincount,.@wincount+1;
+					mes "[珀]";
+					mes "哇哦，你答对了！";
+					if (.@wincount == 2) {
+						mes "你连续答对2次了，对吧？……";
+						next;
+						break;
+					}
+					else {
+						mes "不过目前你才答对1次。";
+						next;
+					}
+				}
+				else if (.@card == 7) {
+					mes "[珀]";
+					mes "这局算平局。";
+					mes "下次表现好点。";
+					next;
+				}
+				else {
+					mes "[珀]";
+					mes "错了……";
+					mes "去找忽克连，请他帮你精炼一下运气吧。";
+					close;
+				}
+				break;
+			case 2:
+				mes "[珀]";
+				mes "咦，小吗？……";
+				mes "看我的牌！";
+				next;
+				mes "[珀]";
+				mes "是……" + .@card + "！！";
+				next;
+				if (.@card < 7) {
+					set .@wincount,.@wincount+1;
+					mes "[珀]";
+					mes "哇哦，你答对了！";
+					if (.@wincount == 2) {
+						mes "你连续答对2次了，对吧？……";
+						next;
+						break;
+					}
+					else {
+						mes "不过目前你才答对1次。";
+						next;
+					}
+				}
+				else if (.@card == 7) {
+					mes "[珀]";
+					mes "这局算平局。";
+					mes "下次表现好点。";
+					next;
+				}
+				else {
+					mes "[珀]";
+					mes "错了……";
+					mes "去找忽克连，请他帮你精炼一下运气吧。";
+					close;
+				}
+				break;
+			}
+		}
+		mes "[珀]";
+		mes "很好，对我这样直觉敏锐、又喜欢把牌抽个精光的人敞开心扉，";
+		mes "也是理所当然。";
+		next;
+		mes "[珀]";
+		mes "通过亮出的牌，我已经很了解你了，这次就让你看看我的底牌吧！";
+		mes "你想知道什么，尽管问。";
+		next;
+		mes "[珀]";
+		mes "那么……你想知道什么？！";
+		next;
+		while(1) {
+			switch(select("你的出身背景……:你对国家的看法……:兴趣爱好……:我稍后再来。")) {
+			case 1:
+				mes "[珀]";
+				mes "我的背景……";
+				mes "过去的事罢了。";
+				mes "我根本不把它当回事，所以也记不清了……";
+				next;
+				mes "[珀]";
+				mes "就说我是无数较量与战斗中的幸存者吧。这很适合我。哈哈哈哈！";
+				next;
+				mes "[珀]";
+				mes "我不得不应对许多意外和挑战……我从中生还，";
+				mes "并不断追求新的事物。人生就是……";
+				next;
+				mes "[珀]";
+				mes "永远不要因手中的牌而气馁，瞄准致命的一击！";
+				next;
+				mes "[珀]";
+				mes "……";
+				next;
+				mes "[珀]";
+				mes "嘿，很酷吧？";
+				mes "我们品味相同，不是吗？";
+				set .@p_a,1;
+				next;
+				break;
+			case 2:
+				mes "[珀]";
+				mes "我认为国家应该为子民提供最低限度的守护，保障各自的自由。";
+				next;
+				mes "[珀]";
+				mes "人应该挑战能让自己热血沸腾的事物，";
+				mes "所以国民的自由行动不应受国家阻挠。";
+				next;
+				mes "[珀]";
+				mes "如果我当上国王，就取消所有限制，";
+				mes "在不受侵害的范围内让每个人过上自由的生活。";
+				next;
+				mes "[珀]";
+				mes "说到我的家族，我家里的人都太保守，不懂变通。";
+				next;
+				mes "[珀]";
+				mes "他们总说这不能做那不能做，";
+				mes "那很危险这很正常……这种唠叨伴随了我一生……";
+				next;
+				mes "[珀]";
+				mes "啊，最后那几句";
+				mes "请不要记录在案。";
+				mes "我不想被家里人找麻烦。";
+				set .@p_b,1;
+				next;
+				break;
+			case 3:
+				mes "[珀]";
+				mes "体验一切新鲜事物！";
+				mes "不管它是什么！";
+				next;
+				mes "[珀]";
+				mes "如果我们这个时代是大航海时代，我可能就是探险队的船长！";
+				mes "探索未知、开辟航路、调查研究……这些都是我的看家本领。你呢？";
+				next;
+				mes "[珀]";
+				mes "不过很多人评价我的性格，说我沉迷赌博。";
+				mes "我只是充满挑战精神，喜欢大把赚钱罢了！";
+				mes "我是个自由奔放的正常人。";
+				set .@p_c,1;
+				next;
+				break;
+			case 4:
+				mes "[珀]";
+				mes "好吧，";
+				mes "下次让我们在更刺激、更危险的地方见面。";
+				if (.@p_a + .@p_b + .@p_c == 3) {
+					completequest 10007;
+				}
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,364,375,4	script	王子#peter	987,{
+	if (nk_prince > 6) {
+		mes "[佩托]";
+		mes "鉴定师。";
+		mes "你见过艾尔帕兰的那个小女孩了吗？";
+		next;
+		switch(select("是的，我替你去看她了。:不，我不想去。")) {
+		case 1:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[佩托]";
+				mes "很高兴那孩子喜欢。等我的病好了，我本想亲自去见她。";
+				next;
+				mes "[佩托]";
+				mes "无论如何，辛苦你了。为这点小事麻烦你，我真的很过意不去。";
+				mes "这是我的一点谢意。别有负担，请收下。";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
+			mes "[佩托]";
+			mes "想到那个小女孩，我的心就能平静下来。";
+			mes "我仍不敢相信自己的眼睛。刚刚离世的艾伦王子……~";
+			close;
+		case 2:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[佩托]";
+				mes "如你所说。";
+				mes "我听说在我消沉的时候，她的生命像花儿一样绽放。";
+				mes "我会亲自去看她的。";
+				next;
+				mes "[佩托]";
+				mes "为这点小事麻烦你，真的很抱歉。请收下这个。";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
+			mes "[佩托]";
+			mes "没关系。";
+			mes "我仍不敢相信自己的眼睛。刚刚离世的艾伦王子……~~";
+			close;
+		}
+	}
+	if (checkquest(10019) == 2) {
+		mes "[佩托]";
+		mes "孩子……你到底发生了什么事？……";
+		close;
+	}
+	else if (checkquest(10019) == 0 || checkquest(10019) == 1) {
+		mes "[佩托]";
+		mes "……";
+		close;
+	}
+	if (checkquest(10008) == 2) {
+		set .@quest, checkquest(10014);
+		if (.@quest == 2) {
+			mes "[佩托]";
+			mes "真的很感谢你。";
+			mes "你真是个好人。";
+			close;
+		}
+		else if (.@quest == 0 || .@quest == 1) {
+			mes "[佩托]";
+			mes "很高兴那孩子喜欢。等我的病好了，我本想亲自去见她。";
+			next;
+			mes "[佩托]";
+			mes "无论如何，辛苦你了。为这点小事麻烦你，我真的很过意不去。";
+			mes "这是我的一点谢意。别有负担，请收下。";
+			completequest 10014;
+			getitem 644,1; //Gift_Box
+			close;
+		}
+		else {
+			mes "[佩托]";
+			mes "你还有别的事吗，";
+			mes "鉴定师？";
+			close;
+		}
+	}
+	else {
+		if (nk_prince < 4) {
+			mes "[王子]";
+			mes "我认为你不被允许";
+			mes "待在这里。";
+			close;
+		}
+		else if (nk_prince > 4) {
+			mes "[王子]";
+			mes "你好，";
+			mes "我是海涅家族的佩托。很高兴见到你。";
+			next;
+			mes "[佩托]";
+			mes "那么，我们从哪里开始呢？";
+			next;
+			while(1) {
+				switch(select("你的出身背景……:你对国家的看法……:兴趣爱好……:我稍后再来。")) {
+				case 1:
+					mes "[佩托]";
+					mes "我的家族并没有那么大的影响力。";
+					mes "我的童年也不富裕；我必须找工作，靠打零工赚钱。";
+					next;
+					mes "[佩托]";
+					mes "但这让我得以了解人们的生活，了解每一个细节。这是好的一面。";
+					next;
+					mes "[佩托]";
+					mes "这样回答你的问题够了吗？";
+					next;
+					break;
+				case 2:
+					mes "[佩托]";
+					mes "我想重要的是，人们在自己的领域实现自我，";
+					mes "国家只需从旁辅助支持。";
+					mes "简而言之，国家不应统治。人们需要彼此和睦相处。";
+					next;
+					mes "[佩托]";
+					mes "因此，我会消除阶级差异带来的利益鸿沟。";
+					mes "这不是平等的问题，而是为了提升国力。";
+					next;
+					break;
+				case 3:
+					mes "[佩托]";
+					mes "我的爱好只有读书。";
+					mes "我认为人应该不断向前；要有奋发向上的态度。";
+					next;
+					break;
+				case 4:
+					mes "[佩托]";
+					mes "啊，是这样吗？";
+					next;
+					mes "[佩托]";
+					mes "那么我有件事想拜托你……你能听我说说吗？";
+					next;
+					mes "[佩托]";
+					mes "原本，";
+					mes "我不喜欢留胡子……但有一次机会让我改变了想法……最近我觉得，";
+					mes "是有人给了我这个机会。";
+					next;
+					mes "[佩托]";
+					mes "那是因为一位陌生女孩的来信……";
+					next;
+					mes "[佩托]";
+					mes "她在信里说，我的形象太过锐利，如果留起胡子，";
+					mes "脸部的轮廓就能柔和不少，看起来会好得多。";
+					next;
+					mes "[佩托]";
+					mes "我想报答她。";
+					mes "因为她的话对我帮助很大。没什么特别的，也许就是一小束花。";
+					next;
+					mes "[佩托]";
+					mes "你能帮我把这些花送给艾尔帕兰的那个女孩，并代我致谢吗？";
+					completequest 10008;
+					next;
+					switch(select("好的，没问题。:请找别人吧。")) {
+					case 1:
+						mes "[佩托]";
+						mes "太好了，非常感谢。";
+						mes "请多保重。";
+						getitem 744,1; //Bunch_Of_Flowers
+						setquest 10013;
+						set .@prin1,checkquest(10005);
+						set .@prin2,checkquest(10006);
+						set .@prin3,checkquest(10007);
+						set .@prin4,checkquest(10008);
+						set .@prin5,checkquest(10009);
+						set .@prin6,checkquest(10010);
+						set .@prin7,checkquest(10011);
+						if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+							setquest 10012;
+						}
+						close;
+					case 2:
+						mes "[佩托]";
+						mes "我理解你……";
+						mes "我知道你有";
+						mes "自己的事要忙。";
+						setquest 10013;
+						set .@prin1,checkquest(10005);
+						set .@prin2,checkquest(10006);
+						set .@prin3,checkquest(10007);
+						set .@prin4,checkquest(10008);
+						set .@prin5,checkquest(10009);
+						set .@prin6,checkquest(10010);
+						set .@prin7,checkquest(10011);
+						if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+							setquest 10012;
+						}
+						close;
+					}
+				}
+			}
+		}
+	}
+}
+
+aldebaran,132,184,3	script	小女孩#prince	96,{
+	if (checkquest(10013) == 0 || checkquest(10013) == 1) {
+		if (countitem(744) > 0) {
+			mes "[小女孩]";
+			mes "哇，是佩托叔叔送我的花吗？";
+			mes "嗯~闻起来真香。";
+			next;
+			mes "[小女孩]";
+			mes "嘻嘻~你一定是佩托叔叔的朋友。";
+			mes "下次有机会见到他，";
+			mes "请代我向佩托叔叔问好。";
+			mes "告诉他我非常喜欢这些花……";
+			mes "好了，回头见。";
+			next;
+			mes "[小女孩]";
+			mes "我要早点回家，";
+			mes "把这些花插进花瓶里。";
+			mes "啦啦啦~";
+			delitem 744,1; //Bunch_Of_Flowers
+			changequest 10013,10014;
+			close;
+		}
+		else {
+			mes "[小女孩]";
+			mes "嗨，你听说过长腿叔叔的故事吗？…………";
+			close;
+		}
+	}
+	else {
+		mes "[小女孩]";
+		mes "嗨，你听说过长腿叔叔的故事吗？…………";
+		close;
+	}
+}
+prt_castle,314,373,4	script	王子#eisen	983,{
+	if (nkprince_eisen > 2) {
+		if (nkprince_eisen == 3) {
+			mes "[艾伦]";
+			mes "阿勒姆还好吗……？";
+			mes "他对什么事都那么认真。他不惹麻烦，也不乱发脾气……就是有点怪。";
+			next;
+			mes "[艾伦]";
+			mes "我们是亲密的朋友。";
+			mes "和我不同，他善良而富有同情心；是位出色的公务人才。";
+			mes "需要严格的时候，他对谁都严格。";
+			set nkprince_eisen,4;
+			close;
+		}
+		else if (nkprince_eisen == 4) {
+			mes "[艾伦]";
+			mes "我是艾伦，";
+			mes "我将成为卢恩·米德加兹之光。";
+			close;
+		}
+		else if (nkprince_eisen == 5) {
+			mes "[艾伦]";
+			mes "无论谁当国王，";
+			mes "让我们互相帮助……把卢恩·米德加兹变成世界上最好的国家。";
+			next;
+			mes "[阿勒姆]";
+			mes "我们能做到的。";
+			mes "不，是我们一定要做到。只要兄弟俩齐心协力，就一定能做到。";
+			next;
+			mes "[艾伦]";
+			mes "但是……如果我执政，或者辅佐你；如果我堕落了……你要亲手……杀了我。";
+			next;
+			mes "[艾伦]";
+			mes "反过来说，我也会杀了你，明白吗？";
+			mes "所以永远不要迷失，也永远不要忘记你的决心。";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长，你尽想些可怕的事。那种事绝不会发生的……别这么说。";
+			next;
+			mes "[艾伦]";
+			mes "这只是假设。";
+			mes "别太当真。";
+			next;
+			mes "[阿勒姆]";
+			mes "好吧好吧。别";
+			mes "误会。";
+			mes "我一直为兄长和王国效力，今后也会一如既往。";
+			next;
+			emotion ET_SURPRISE;
+			mes "[艾伦]";
+			mes "啊，鉴定师来了。";
+			mes "你怎么出现得这么突然？我和阿勒姆正在谈话呢。";
+			next;
+			mes "[阿勒姆]";
+			mes "怎么了，兄长？我们没在谈什么坏事。我们只是在坚定自己的决心。";
+			next;
+			mes "[艾伦]";
+			mes "你来得正好。我们刚刚约定……如果其中一人堕落，另一人就杀了他。";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长？！";
+			next;
+			mes "[艾伦]";
+			mes "无论如何，请你做这个约定的见证人。你不能拒绝。";
+			mes "因为从某些方面来说，这对你的工作很有好处，不是吗？";
+			next;
+			mes "[阿勒姆]";
+			mes "兄……兄长。你太强势了。鉴定师一定有自己的立场和看法。";
+			next;
+			mes "[艾伦]";
+			mes "你的个性还是这么软弱。我又没强人所难！管他呢？沉默就是默许！";
+			mes "就这么定了！我们的约定也成立了！";
+			next;
+			mes "[阿勒姆]";
+			mes "唉……哈哈……鉴定师，我为冒犯你深表歉意。";
+			mes "抱歉，但这个约定是不可能履行的。";
+			mes "所以，别把刚才的情况当真……你知道的……除非太阳从西边出来……~";
+			next;
+			mes "[阿勒姆]";
+			mes "现在，让我回房间吧。继续好好干，鉴定师。";
+			donpcevent "王子#another_ern::OnDisable";
+			set nkprince_eisen,6;
+			close;
+		}
+		else if (nkprince_eisen == 6) {
+			mes "[艾伦]";
+			mes "我听说今天有个";
+			mes "我家族的人要来。但我还没找到他。";
+			next;
+			mes "[艾伦]";
+			mes "我担心你说的话……";
+			mes "这次你想说什么……？";
+			mes "你见到他了吗，鉴定师？";
+			set nkprince_eisen,7;
+			changequest 10012,10016;
+			close;
+		}
+		else if (nkprince_eisen == 7) {
+			mes "[艾伦]";
+			mes "啊……无聊，无聊。";
+			mes "我现在真是活受罪！";
+			close;
+		}
+		else if (nkprince_eisen == 8) {
+			mes "[艾伦]";
+			mes "你来这里来得真勤。";
+			mes "我知道你是个尽职的人，从事着对王国非常重要的工作，";
+			mes "但你来得也太频繁了……";
+			next;
+			switch(select("我有件事……:是吗？那么，回头见。")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "我见到了一个沃尔特家族的人。";
+				next;
+				mes "[艾伦]";
+				mes "哦！真的吗？";
+				mes "他为什么不来见我？";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "-我把事情告诉了艾伦。-";
+				next;
+				mes "[艾伦]";
+				mes "……";
+				next;
+				mes "[艾伦]";
+				mes "什么！你说的是真的吗？啊啊啊……";
+				next;
+				mes "[艾伦]";
+				mes "……";
+				next;
+				mes "[艾伦]";
+				mes "很抱歉，但我想一个人静一静。现在就离我远点！";
+				set nkprince_eisen,9;
+				close2;
+				warp "prt_castle",318,273;
+				end;
+			case 2:
+				mes "[艾伦]";
+				mes "好吧，慢走不送。";
+				close;
+			}
+		}
+		else if ((nkprince_eisen == 9) || (nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+			mes "[艾伦]";
+			mes "很抱歉，但我想一个人静一静。现在就离我远点！";
+			close2;
+			warp "prt_castle",318,273;
+			end;
+		}
+		else if (nkprince_eisen == 13) {
+			mes "[艾伦]";
+			mes "我说过我不想当国王，也绝不打算改变主意！";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长！我不知道你为什么这么痛苦！你竟是这么脆弱的生物吗？！";
+			next;
+			mes "[艾伦]";
+			mes "痛苦？我？……啊啊啊……看起来是这样吗……？是啊……确实如此。";
+			mes "压力好大……呼呼呼……哈哈哈！";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长，艾伦……？";
+			next;
+			mes "[艾伦]";
+			mes "……只有我逃脱了吗……总之，我是个不合格的人……呼呼呼。";
+			mes "但是，我已经做了决定。";
+			next;
+			mes "[艾伦]";
+			mes "阿勒姆。";
+			next;
+			mes "[阿勒姆]";
+			mes "嗯？……嗯？";
+			next;
+			mes "[艾伦]";
+			mes "拿着这个。";
+			next;
+			mes "-嗖。- ";
+			next;
+			mes "-艾伦随手把一把华丽短剑扔给阿勒姆。-";
+			next;
+			mes "[阿勒姆]";
+			mes "咦？……这是什么意思？……沃尔特家族的华丽短剑？……为什么？";
+			next;
+			mes "[艾伦]";
+			mes "现在正是完美的时机。连我们的见证人都在！";
+			mes "阿勒姆，你还清楚记得我们的约定吧？";
+			next;
+			mes "[阿勒姆]";
+			mes "什么？约定？见证人？……啊……真、真的要这样吗……";
+			next;
+			mes "[艾伦]";
+			mes "是的，真的。现在就是时候了。";
+			next;
+			mes "[阿勒姆]";
+			mes "胡说！你以为我下得了手吗？！";
+			next;
+			mes "[艾伦]";
+			mes "白痴！当国王就要有果断的行动。我没有机会当国王了。";
+			mes "堕落下去、像那样苟活，还不如被你杀死……";
+			next;
+			mes "[阿勒姆]";
+			mes "但、但是，你可以像原来一样活着！就当什么都没发生。";
+			mes "你只要回到从前的样子就行了。兄长，让我帮你。";
+			mes "把你隐瞒的一切都告诉我……";
+			next;
+			mes "[艾伦]";
+			mes "这太愚蠢了！你这样也配称王吗？你现在是在同情我吗？";
+			mes "你应该做个明事理的人！否则，你就不配当国王候选人！";
+			next;
+			mes "[阿勒姆]";
+			mes "但……但是！";
+			next;
+			mes "[艾伦]";
+			mes "争来争去没有用！我没办法了。";
+			mes "如果你不肯做明事理的人，一味固执，那这样的人就不该当国王。";
+			next;
+			mes "[艾伦]";
+			mes "呃？！兄长？！";
+			next;
+			mes "（匕首刺入的声音）";
+			specialeffect EF_HIT2;
+			set nkprince_eisen,14;
+			donpcevent "王子#another_ern::OnDisable";
+			donpcevent "王子#another_ern1::OnEnable";
+			close;
+		}
+		else if (nkprince_eisen == 14) {
+			mes "[阿勒姆]";
+			mes "兄……兄长？……你……说过要杀了我……";
+			mes "你其实是想死在我手里吗？……";
+			mes "兄……兄长？……";
+			next;
+			mes "[艾伦]";
+			mes "呼呼……才不是。";
+			mes "我只是想杀了你……仅此而已……干得好，阿勒姆……这是正当防卫，";
+			mes "除掉恶徒……对吧？";
+			next;
+			mes "[阿勒姆]";
+			mes "兄……兄长……现在还不晚！去找军医，你还能得救！";
+			next;
+			mes "[艾伦]";
+			mes "太晚了……要害被刺穿了……";
+			mes "还怎么活得下去……又怎么能起死回生……我不想活了。";
+			next;
+			mes "[阿勒姆]";
+			mes "兄……兄长……你怎么……怎么能这样？！";
+			next;
+			mes "[艾伦]";
+			mes "永别了，我的兄弟……当上国王，改变这个国家。你……你能做到的……呃……";
+			next;
+			mes "[阿勒姆]";
+			mes "……兄长……兄长……为什么……为什么……你的表情看起来这么满足？为什么……？兄长……";
+			next;
+			mes "[艾伦]";
+			mes "呼呼……你不需要知道。";
+			mes "话说回来，你遵守了约定……你应该当国王……但如果你迷失了、堕落了，";
+			mes "我随时会来杀了你……从地狱里回来！";
+			next;
+			mes "[阿勒姆]";
+			mes "我……我不知道！我不知道发生了什么事！";
+			next;
+			mes "[艾伦]";
+			mes "你不需要知道……你只需要知道，我做出了牺牲。";
+			mes "为了让我的死有意义，你要当一个好国王。";
+			mes "这是我的信念……就是这样……呃……！别忘了我的话……呃呃。";
+			next;
+			mes "[阿勒姆]";
+			mes "白痴……笨蛋……";
+			next;
+			mes "[艾伦]";
+			mes "啊……鉴定师，你知道自己该怎么做吧？说话要小心。";
+			mes "关于你看到的、听到的……你不能把经历的一切全告诉审查官。";
+			next;
+			mes "[艾伦]";
+			mes "阿勒姆在这里杀死了一个横行霸道的恶徒……我没有机会……";
+			mes "他表现得果断，这使他配得上国王的权利……";
+			next;
+			mes "[艾伦]";
+			mes "如果你对这件事说错话，我的死就毫无价值了……呃……你明白吗？";
+			next;
+			switch(select("……好吧，我尊重你的意愿……:……")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "……好吧，我尊重你的意愿。别担心……";
+				next;
+				break;
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "……";
+				next;
+				mes "[艾伦]";
+				mes "沉默……就是同意……这意味着……我的做法……成功了……";
+				next;
+				break;
+			}
+			mes "[艾伦]";
+			mes "现在……我可以……安心地死了……非常……感谢……你们……两个。";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长……";
+			next;
+			mes "[艾伦]";
+			mes "那么，永别了……再见……对不起……现在我没法去钓鱼了。";
+			next;
+			mes "[阿勒姆]";
+			mes "兄……兄长？";
+			next;
+			mes "[艾伦]";
+			mes "……";
+			next;
+			mes "[阿勒姆]";
+			mes "兄……兄长，兄长！";
+			next;
+			mes "[艾伦]";
+			mes "……";
+			next;
+			mes "[阿勒姆]";
+			mes "兄长————！！";
+			next;
+			set nkprince_eisen,15;
+			set nk_prince,7;
+			donpcevent "王子#another_ern1::OnDisable";
+			changequest 10024,10025;
+			close2;
+			warp "prt_castle",318,273;
+			end;
+		}
+	}
+	if (nk_prince < 5) {
+		mes "[王子]";
+		mes "这里不许你来。";
+		mes "嗯……";
+		next;
+		mes "[王子]";
+		mes "别挡我的路。";
+		mes "我不想和你起冲突。";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[王子]";
+		mes "你是新来的冒险家鉴定师？我是沃尔特家族的艾伦。";
+		mes "你可以简称我艾伦王子。";
+		next;
+		mes "[艾伦]";
+		mes "希望你问的问题简短明了。";
+		mes "冗长的问题未必能换来特别的好答案。";
+		next;
+		while(1) {
+			mes "-该问些什么呢……-";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我想问问关于……";
+			next;
+			switch(select("你的出身背景……:你对国家的看法……:你的兴趣爱好……:算了，我稍后再来。")) {
+			case 1:
+				mes "[艾伦]";
+				mes "你不只是想满足你对王室的好奇心吧？";
+				next;
+				mes "[艾伦]";
+				mes "从小我就喜欢体验各种事物并学习它们。";
+				mes "因此，我不得不忍受家族的干涉。";
+				mes "在他们看来，我不是个体面的贵族成员。";
+				next;
+				mes "[艾伦]";
+				mes "但我对这些并不敏感，我认为好的国王应该忽略那些琐事。";
+				next;
+				mes "[艾伦]";
+				mes "别人可以说我的行为让他们难堪，但只要事情圆满收场，";
+				mes "他们最终都会满意。我有错吗？";
+				next;
+				mes "[艾伦]";
+				mes "虽然我跳过了一些人生功课，但我能轻松补上缺失的部分。";
+				mes "谁在乎谁能发誓我当得了国王！我就是这样的人。";
+				next;
+				mes "[艾伦]";
+				mes "阿勒姆为这事唠叨过我很多次，";
+				mes "但我从不把它当回事。真是个挑剔的家伙。";
+				next;
+				mes "[艾伦]";
+				mes "就像我说的，我是在他的责骂声中长大的。";
+				mes "我觉得他的话比那些等我做成事就闭嘴的人更苛刻。";
+				next;
+				mes "[艾伦]";
+				mes "他总是说，结果并不能代表一切。";
+				next;
+				mes "[艾伦]";
+				mes "在所有事情之前，能出生在沃尔特这样显赫的贵族之家，";
+				mes "是我的幸运和荣耀。";
+				next;
+				mes "[艾伦]";
+				mes "当然，我的能力";
+				mes "常因我的出身被低估。从这方面说，我感到悲哀。";
+				next;
+				mes "[艾伦]";
+				mes "在未来的时代，人们会谈起沃尔特家族的艾伦，";
+				mes "而不是沃尔特家的那个艾伦。";
+				next;
+				mes "[艾伦]";
+				mes "沃尔特家族本身就有崇高的地位和名望，";
+				mes "但我会让这个名字更加闪耀，让别人以我为荣。";
+				next;
+				break;
+			case 2:
+				mes "[艾伦]";
+				mes "我治理的国家，";
+				mes "不会像童话那样";
+				mes "粉饰太平。";
+				next;
+				mes "[艾伦]";
+				mes "当然，失败者和颓废的人自有他们的缺点，比如对生活缺乏挑战。";
+				next;
+				mes "[艾伦]";
+				mes "我多少相信无限竞争的益处。";
+				mes "坦白说，我不喜欢这种从贵族中推选国王的制度。";
+				next;
+				mes "[艾伦]";
+				mes "即使这些等级制度";
+				mes "全都消失，";
+				mes "我也会凭自己的能力和资质当上国王！哈哈哈。";
+				emotion ET_SMILE;
+				next;
+				mes "[艾伦]";
+				mes "我个人对其他国王候选人";
+				mes "相当了解。";
+				mes "但我找不到一位能领导好这个王国的杰出人物。";
+				next;
+				mes "[艾伦]";
+				mes "我不是说他们不出色，但考虑到卢恩·米德加兹的现状，";
+				mes "他们似乎不是令人惊叹的领袖。";
+				next;
+				mes "[艾伦]";
+				mes "因此，我向你保证，他们中没有候选人适合这个位置。";
+				mes "如果非要挑一个能与我匹敌的，我可以说是阿勒姆。";
+				next;
+				mes "[艾伦]";
+				mes "他性格温和，遇事想得太久，但我承认他有很多优点。";
+				mes "可以说他是相当高标准的候选人。";
+				next;
+				mes "[艾伦]";
+				mes "……";
+				next;
+				mes "[艾伦]";
+				mes "嗯，我说得太多了。";
+				mes "为我的多言道歉，哈哈哈。";
+				next;
+				break;
+			case 3:
+				mes "[艾伦]";
+				mes "我喜欢活动。";
+				mes "我受不了被动的游戏，";
+				mes "比如纸牌和棋盘游戏。";
+				mes "我认为那些游戏";
+				mes "更适合学者型的人。";
+				next;
+				mes "[艾伦]";
+				mes "我的兄弟阿勒姆能长时间专注于一件事，比如读书或研究。";
+				next;
+				mes "[艾伦]";
+				mes "一旦我当上国王，";
+				mes "我可不会整天坐着";
+				mes "处理文件。";
+				next;
+				mes "[艾伦]";
+				mes "那对我来说太难了。";
+				next;
+				break;
+			case 4:
+				mes "[艾伦]";
+				mes "好吧……";
+				mes "随你。";
+				if (nkprince_eisen == 2) {
+					set nkprince_eisen,3;
+				}
+				else {
+					set nkprince_eisen,1;
+				}
+				completequest 10005;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,368,312,4	script	王子#ern	985,{
+	if (checkquest(10024) == 2) {
+		mes "[阿勒姆]";
+		mes "……兄长，如果你希望……";
+		mes "……啊，请你离开这里。";
+		mes "我不想见任何人。";
+		close;
+	}
+	else if (checkquest(10024) == 0 || checkquest(10024) == 1) {
+		mes "[阿勒姆]";
+		mes "……艾伦兄长……";
+		close;
+	}
+	if (nkprince_eisen > 2) {
+		if (nkprince_eisen == 3) {
+			mes "[阿勒姆]";
+			mes "你见过我的兄长艾伦了吗？他是个了不起的人。真的。";
+			next;
+			mes "他处理事情有时太过强硬，以至于惹出问题。";
+			mes "但即使在那种时候，他也愿意听我的话；";
+			mes "所以我们很少真的陷入严重的麻烦。";
+			next;
+			mes "[阿勒姆]";
+			mes "也只能这样了，因为我们俩一直亲密无间。";
+			next;
+			mes "[阿勒姆]";
+			mes "艾伦兄长一直为这事责怪我，说我想得太多、没必要。";
+			mes "但他还是会听我的，按我的建议行事。";
+			next;
+			mes "[阿勒姆]";
+			mes "他不是个很了不起的人吗？";
+			mes "他是个值得信赖、能给人教益的人。";
+			close;
+		}
+		else if (nkprince_eisen == 5) {
+			mes "[阿勒姆]";
+			mes "啊，我现在要和艾伦兄长商量件事。";
+			mes "如果你没有重要的事，我就先走了。 ";
+			close;
+		}
+		else if (nkprince_eisen == 6) {
+			mes "[阿勒姆]";
+			mes "啊，我听说沃尔特家族的人到这里来了。你见到他了吗？";
+			next;
+			mes "[阿勒姆]";
+			mes "看来连艾伦兄长都还没见到他。嗯……";
+			set nkprince_eisen,7;
+			changequest 10012,10016;
+			close;
+		}
+		else if (nkprince_eisen == 9) {
+			mes "[阿勒姆]";
+			mes "欢迎，评审员。";
+			mes "我们见面的次数真不少。";
+			mes "你何不放慢一点工作的脚步呢？";
+			next;
+			mes "[阿勒姆]";
+			mes "嗯……我没有更多的话可说了。而且，艾伦这几天看起来有些奇怪。";
+			mes "我很担心。希望不是什么大事。";
+			set nkprince_eisen,10;
+			changequest 10017,10004;
+			close;
+		}
+		else if ((nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+			mes "[阿勒姆]";
+			mes "艾伦变得越来越奇怪了。";
+			mes "这不是普通的变化，而是真正的堕落。我感到不安。";
+			next;
+			mes "[阿勒姆]";
+			mes "这不可能发生的。";
+			mes "我相信艾伦会恢复原样。不过，我感觉不太好。";
+			close;
+		}
+		else if (nkprince_eisen == 15) {
+			mes "[阿勒姆]";
+			mes "啊……";
+			mes "艾伦兄长……";
+			mes "艾伦……是的，先生。";
+			next;
+			mes "[阿勒姆]";
+			mes "……";
+			next;
+			mes "[阿勒姆]";
+			mes "请离开这里。我不想见任何人。";
+			close;
+		}
+		else {
+			mes "[阿勒姆]";
+			mes "欢迎，鉴定师。";
+			mes "辛苦你了。评价别人是很难的事，不是吗？";
+			close;
+		}
+	}
+	if (nk_prince < 5) {
+		mes "[王子]";
+		mes "你不是冒险家评审员。";
+		mes "我认为你不该在这里。";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[王子]";
+		mes "你好，";
+		mes "你就是评审员吧。";
+		mes "我是阿勒姆，吉尔伯格家族的王子。";
+		next;
+		mes "[阿勒姆]";
+		mes "我认为评价人们的才能是项辛苦的工作。我会尽力帮助你。";
+		next;
+		mes "[阿勒姆]";
+		mes "那么，谢谢你。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "（作为国王候选人，他的性格似乎很有礼貌。）";
+		next;
+		while(1) {
+			mes "-那么，问些什么呢。-";
+			next;
+			switch(select("先说说出身背景。:我想了解你的爱国精神。:你的习惯和爱好。:我还会再来的。")) {
+			case 1:
+				mes "[阿勒姆]";
+				mes "从小我就在皇家教育下长大。";
+				mes "我从未与人激烈争吵，但也并非处处谦让。";
+				next;
+				mes "[阿勒姆]";
+				mes "人们以为我胆小，但那只是因为我不想被人疏远。";
+				next;
+				mes "[阿勒姆]";
+				mes "当然，我们有个例外……艾伦。";
+				next;
+				mes "[阿勒姆]";
+				mes "艾伦可以算作例外。他不拘礼节，却能以准确的判断让人信服。";
+				next;
+				mes "[阿勒姆]";
+				mes "我认为那是种了不起的能力，我应该学习。";
+				mes "但是，这不仅关乎结果，也关乎礼节。";
+				mes "我们应该守住必须守住的东西。";
+				next;
+				mes "[阿勒姆]";
+				mes "对我而言，过程比结果更重要。如今我将两者视为同等的美德。";
+				mes "我过去并不看重结果，是艾伦点醒了我，他曾以为结果无关紧要。";
+				break;
+			case 2:
+				mes "[阿勒姆]";
+				mes "我当上国王后的爱国精神吗？";
+				next;
+				mes "[阿勒姆]";
+				mes "你或许认为国王的权力是无限的，但作为一个人，它有其限度。";
+				next;
+				mes "[阿勒姆]";
+				mes "无论平民还是杰出人物都承担着社会的责任，";
+				mes "集众人之智总好过独断专行。";
+				next;
+				mes "[阿勒姆]";
+				mes "艾伦会帮我弥补不足。";
+				mes "不只是艾伦，还有所有的大臣和内阁成员；子民也是我的主人。";
+				next;
+				mes "[阿勒姆]";
+				mes "除了艾伦之外还有这么多主人，是我的福气。";
+				mes "这对我的国家也是好事。";
+				next;
+				break;
+			case 3:
+				mes "[阿勒姆]";
+				mes "我没有特别的习惯。我只是乐于学习和读书。";
+				next;
+				mes "[阿勒姆]";
+				mes "我也喜欢和艾伦交谈。";
+				mes "艾伦足够聪明，总能提出让我追随的新想法。";
+				next;
+				mes "[阿勒姆]";
+				mes "嗯，说实话，和艾伦一起去钓鱼更棒。";
+				mes "不过，因为王国的这些事务，我们忙得没空去钓鱼。";
+				next;
+				mes "[阿勒姆]";
+				mes "我们约定过登基之后一起去钓鱼……走着瞧吧……";
+				next;
+				mes "[阿勒姆]";
+				mes "嗯……这样够了吗？";
+				next;
+				break;
+			case 4:
+				mes "[阿勒姆]";
+				mes "好的，那么，回头见。";
+				if (nkprince_eisen == 1) {
+					set nkprince_eisen,3;
+				}
+				else {
+					set nkprince_eisen,2;
+				}
+				completequest 10006;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,163,319,0	script	#twonoble	-1,3,3,{
+OnTouch:
+	if (nkprince_eisen == 7) {
+		donpcevent "年轻贵族#valter::OnEnable";
+		donpcevent "年长贵族#rihart::OnEnable";
+		mes "[年长贵族]";
+		mes "你不必担心。";
+		mes "一旦我家的艾伦被选为国王，理查德家族就会成为第二大家族。";
+		next;
+		mes "[理查德家族的人]";
+		mes "呵呵，艾伦已经是最有声望、最有影响力的候选人了。";
+		mes "这件事要是成了，你可就了不起了。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "虽然艾伦是有力的候选人，";
+		mes "但吉尔伯格家族的王子美德之名也很高。";
+		mes "稳妥起见，还是确认一下为好。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "那么，给阿勒姆王子下毒的计划，你办妥了吗？";
+		next;
+		mes "[理查德家族的人]";
+		mes "当然。就算验尸也查不出来。……你不必担心。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "一旦阿勒姆王子被除掉，艾伦就会当选，然后……";
+		next;
+		mes "[理查德家族的人]";
+		mes "两大家族将共同领导这个国家，呼呼呼。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "你一定知道沃尔特和吉尔伯格家族做过什么。";
+		mes "两大家族都曾位极人臣。";
+		next;
+		mes "[理查德家族的人]";
+		mes "七大家族中最弱的吉尔伯格家族，";
+		mes "靠联合施密特和沃尔特家族夺取了权力。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "是的，所以沃尔特和吉尔伯格的联合堪称完美。";
+		mes "而且，艾伦和阿勒姆……分明是施密特和海因里希的再现。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "正因如此，沃尔特家族和吉尔伯格家族不能并存。";
+		mes "他们的共存会带来毁灭，就像过去那样。";
+		next;
+		mes "[理查德家族的人]";
+		mes "多谢提醒。这样就好。";
+		mes "所有知道往事的人，都会否认与艾伦或阿勒姆结盟。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "总之，我们又多了一点时间。严守秘密；不要告诉任何人。";
+		next;
+		mes "[理查德家族的人]";
+		mes "是的。为了卢恩·米德加兹的荣耀。";
+		next;
+		mes "[沃尔特家族的人]";
+		mes "一切荣耀归于卢恩·米德加兹……";
+		mes "嗯？";
+		next;
+		emotion ET_SURPRISE;
+		mes "[沃尔特家族的人]";
+		mes "安静……有人来了。";
+		mes "好……保重。";
+		next;
+		mes "[理查德家族的人]";
+		mes "别在意……";
+		donpcevent "年轻贵族#valter::OnDisable";
+		donpcevent "年长贵族#rihart::OnDisable";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "（沃尔特是艾伦的家族名。";
+		mes "理查德是珀的家族名。）";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "（这是两个家族的阴谋吗？到底是怎么回事……）";
+		changequest 10016,10017;
+		set nkprince_eisen,8;
+		close;
+	}
+}
+
+prt_castle,156,325,4	script	年轻贵族#valter	86,{
+	mes "[沃尔特的年轻贵族]";
+	mes "让开。";
+	mes "你怎么敢跟他说话。";
+	close;
+
+OnInit:
+	disablenpc "年轻贵族#valter";
+	end;
+
+OnEnable:
+	enablenpc "年轻贵族#valter";
+	end;
+
+OnDisable:
+	disablenpc "年轻贵族#valter";
+	end;
+}
+
+prt_castle,157,323,3	script	年长贵族#rihart	880,{
+	mes "[理查德的年长贵族]";
+	mes "嗯哼。";
+	mes "真是个无礼的家伙！";
+	close;
+
+OnInit:
+	disablenpc "年长贵族#rihart";
+	end;
+
+OnEnable:
+	enablenpc "年长贵族#rihart";
+	end;
+
+OnDisable:
+	disablenpc "年长贵族#rihart";
+	end;
+}
+prt_castle,314,371,0	script	王子#another_ern	985,{
+	if (nkprince_eisen == 13) {
+		mes "[艾伦]";
+		mes "我说过我不想当国王，也绝不打算改变主意！";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长！我不知道你为什么这么痛苦！你竟是这么脆弱的生物吗？！";
+		next;
+		mes "[艾伦]";
+		mes "痛苦？我？……啊啊啊……看起来是这样吗……？是啊……确实如此。";
+		mes "压力好大……呼呼呼……哈哈哈！";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长，艾伦……？";
+		next;
+		mes "[艾伦]";
+		mes "……只有我逃脱了吗……总之，我是个不合格的人……呼呼呼。";
+		mes "但是，我已经做了决定。";
+		next;
+		mes "[艾伦]";
+		mes "阿勒姆。";
+		next;
+		mes "[阿勒姆]";
+		mes "嗯？……嗯？";
+		next;
+		mes "[艾伦]";
+		mes "拿着这个。";
+		next;
+		mes "-嗖。- ";
+		next;
+		mes "-艾伦随手把一把华丽短剑扔给阿勒姆。-";
+		next;
+		mes "[阿勒姆]";
+		mes "咦？……这是什么意思？……沃尔特家族的华丽短剑？……为什么？";
+		next;
+		mes "[艾伦]";
+		mes "现在正是完美的时机。连我们的见证人都在！";
+		mes "阿勒姆，你还清楚记得我们的约定吧？";
+		next;
+		mes "[阿勒姆]";
+		mes "什么？约定？见证人？……啊……真、真的要这样吗……";
+		next;
+		mes "[艾伦]";
+		mes "是的，真的。现在就是时候了。";
+		next;
+		mes "[阿勒姆]";
+		mes "胡说！你以为我下得了手吗？！";
+		next;
+		mes "[艾伦]";
+		mes "白痴！当国王就要有果断的行动。我没有机会当国王了。";
+		mes "堕落下去、像那样苟活，还不如被你杀死……";
+		next;
+		mes "[阿勒姆]";
+		mes "但、但是，你可以像原来一样活着！就当什么都没发生。";
+		mes "你只要回到从前的样子就行了。兄长，让我帮你。";
+		mes "把你隐瞒的一切都告诉我……";
+		next;
+		mes "[艾伦]";
+		mes "这太愚蠢了！你这样也配称王吗？你现在是在同情我吗？";
+		mes "你应该做个明事理的人！否则，你就不配当国王候选人！";
+		next;
+		mes "[阿勒姆]";
+		mes "但……但是！";
+		next;
+		mes "[艾伦]";
+		mes "争来争去没有用！我没办法了。";
+		mes "如果你不肯做明事理的人，一味固执，那这样的人就不该当国王。";
+		next;
+		mes "[艾伦]";
+		mes "呃？！兄长？！";
+		next;
+		mes "（匕首刺入的声音）";
+		specialeffect EF_HIT2;
+		set nkprince_eisen,14;
+		donpcevent "王子#another_ern::OnDisable";
+		donpcevent "王子#another_ern1::OnEnable";
+		close;
+	}
+	if (nkprince_eisen == 5) {
+		mes "[艾伦]";
+		mes "无论谁当国王，";
+		mes "让我们互相帮助……";
+		mes "把卢恩·米德加兹变成世界上最好的国家。";
+		next;
+		mes "[阿勒姆]";
+		mes "我们能做到的。";
+		mes "不，是我们一定要做到。只要兄弟俩齐心协力，就一定能做到。";
+		next;
+		mes "[艾伦]";
+		mes "但是……如果我执政，或者辅佐你；如果我堕落了……你要亲手……杀了我。";
+		next;
+		mes "[艾伦]";
+		mes "反过来说，我也会杀了你，明白吗？";
+		mes "所以永远不要迷失，也永远不要忘记你的决心。";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长，你尽想些可怕的事。";
+		mes "那种事绝不会发生的……";
+		mes "别这么说。";
+		next;
+		mes "[艾伦]";
+		mes "这只是假设。";
+		mes "别太当真。";
+		next;
+		mes "[阿勒姆]";
+		mes "好吧好吧。别";
+		mes "误会。";
+		mes "我一直为兄长和王国效力，今后也会一如既往。";
+		next;
+		emotion ET_SURPRISE;
+		mes "[艾伦]";
+		mes "啊，鉴定师来了。";
+		mes "你怎么出现得这么突然？我和阿勒姆正在谈话呢。";
+		next;
+		mes "[阿勒姆]";
+		mes "怎么了，兄长？我们没在谈什么坏事。我们只是在坚定自己的决心。";
+		next;
+		mes "[艾伦]";
+		mes "你来得正好。";
+		mes "我们刚刚约定……";
+		mes "如果其中一人堕落，";
+		mes "另一人就杀了他。";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长？！";
+		next;
+		mes "[艾伦]";
+		mes "无论如何，请你做这个约定的见证人。你不能拒绝。";
+		mes "因为从某些方面来说，这对你的工作很有好处，不是吗？";
+		next;
+		mes "[阿勒姆]";
+		mes "兄……兄长。你太强势了。鉴定师一定有自己的立场和看法。";
+		next;
+		mes "[艾伦]";
+		mes "你的个性还是这么软弱。我又没强人所难！管他呢？沉默就是默许！";
+		mes "就这么定了！我们的约定也成立了！";
+		next;
+		mes "[阿勒姆]";
+		mes "唉……哈哈……鉴定师，我为冒犯你深表歉意。";
+		mes "抱歉，但这个约定是不可能履行的。";
+		mes "所以，别把刚才的情况当真……你知道的……除非太阳从西边出来……~";
+		next;
+		mes "[阿勒姆]";
+		mes "现在，让我回房间吧。继续好好干，鉴定师。";
+		donpcevent "王子#another_ern::OnDisable";
+		set nkprince_eisen,6;
+		close;
+	}
+
+OnInit:
+	disablenpc "王子#another_ern";
+	end;
+
+OnEnable:
+	enablenpc "王子#another_ern";
+	end;
+
+OnDisable:
+	disablenpc "王子#another_ern";
+	end;
+}
+
+prt_castle,314,372,0	script	王子#another_ern1	985,{
+	if (nkprince_eisen == 14) {
+		mes "[阿勒姆]";
+		mes "兄……兄长？……你……说过要杀了我……你其实是想死在我手里吗？？……兄……兄长？……";
+		next;
+		mes "[艾伦]";
+		mes "呼呼……才不是。";
+		mes "我只是想杀了你……仅此而已……干得好，阿勒姆……这是正当防卫，";
+		mes "除掉恶徒……对吧？";
+		next;
+		mes "[阿勒姆]";
+		mes "兄……兄长……现在还不晚！去找军医，你还能得救！";
+		next;
+		mes "[艾伦]";
+		mes "太晚了……要害被刺穿了……";
+		mes "还怎么活得下去……又怎么能起死回生……我不想活了。";
+		next;
+		mes "[阿勒姆]";
+		mes "兄……兄长……你怎么……怎么能这样？！";
+		next;
+		mes "[艾伦]";
+		mes "永别了，我的兄弟……当上国王，改变这个国家。你……你能做到的……呃……";
+		next;
+		mes "[阿勒姆]";
+		mes "……兄长……兄长……为什么……为什么……你的表情看起来这么满足？为什么……？兄长……";
+		next;
+		mes "[艾伦]";
+		mes "呼呼……你不需要知道。";
+		mes "话说回来，你遵守了约定……你应该当国王……但如果你迷失了、堕落了，";
+		mes "我随时会来杀了你……从地狱里回来！";
+		next;
+		mes "[阿勒姆]";
+		mes "我……我不知道！我不知道发生了什么事！";
+		next;
+		mes "[艾伦]";
+		mes "你不需要知道……你只需要知道，我做出了牺牲。";
+		mes "为了让我的死有意义，你要当一个好国王。";
+		mes "这是我的信念……就是这样……呃……！别忘了我的话……呃呃。";
+		next;
+		mes "[阿勒姆]";
+		mes "白痴……笨蛋……";
+		next;
+		mes "[艾伦]";
+		mes "啊……鉴定师，你知道自己该怎么做吧？说话要小心。";
+		mes "关于你看到的、听到的……你不能把经历的一切全告诉审查官。";
+		next;
+		mes "[艾伦]";
+		mes "阿勒姆在这里杀死了一个横行霸道的恶徒……我没有机会……";
+		mes "他表现得果断，这使他配得上国王的权利……";
+		next;
+		mes "[艾伦]";
+		mes "如果你对这件事说错话，我的死就毫无价值了……呃……你明白吗？";
+		next;
+		switch(select("……好吧，我尊重你的意愿……:……")) {
+		case 1:
+			mes "[" + strcharinfo(0) + "]";
+			mes "……好吧，我尊重你的意愿。别担心……";
+			next;
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			next;
+			mes "[艾伦]";
+			mes "沉默……就是同意……这意味着……我的做法……成功了……";
+			next;
+			break;
+		}
+		mes "[艾伦]";
+		mes "现在……我可以……安心地死了……非常……感谢……你们……两个。";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长……";
+		next;
+		mes "[艾伦]";
+		mes "那么，永别了……再见……对不起……现在我没法去钓鱼了。";
+		next;
+		mes "[阿勒姆]";
+		mes "兄……兄长？";
+		next;
+		mes "[艾伦]";
+		mes "……";
+		next;
+		mes "[阿勒姆]";
+		mes "兄……兄长，兄长！";
+		next;
+		mes "[艾伦]";
+		mes "……";
+		next;
+		mes "[阿勒姆]";
+		mes "兄长————！！";
+		next;
+		set nkprince_eisen,15;
+		set nk_prince,7;
+		donpcevent "王子#another_ern1::OnDisable";
+		changequest 10024,10025;
+		close2;
+		warp "prt_castle",318,273;
+		end;
+	}
+
+OnInit:
+	disablenpc "王子#another_ern1";
+	end;
+
+OnEnable:
+	enablenpc "王子#another_ern1";
+	end;
+
+OnDisable:
+	disablenpc "王子#another_ern1";
+	end;
+}
+
+prt_castle,272,372,1	script	王子#eisen1	983,{
+	mes "[艾伦]";
+	mes "笨蛋。你永远当不了国王。你这一生……难道不明白吗？这样一个废物！！";
+	next;
+	mes "[艾里希]";
+	mes "……我本来也没想当，但骂人的话让我很不舒服。你怎么突然这样？";
+	next;
+	mes "[艾伦]";
+	mes "我只是受够了你。连你这样的混蛋也是国王候选人？";
+	mes "我对这场王位继承感到恶心。";
+	next;
+	mes "[艾里希]";
+	mes "是啊，这话不算错。但我代表内斯里家族。我不能容忍你的侮辱。";
+	next;
+	mes "[艾里希]";
+	mes "你的家族知道你疯狂的行径吗？";
+	mes "你在毁掉你自己的名声，还有你家族的名声。";
+	next;
+	mes "[艾伦]";
+	mes "……！是啊……我才不在乎。不……连我的存在也一样！呼呼呼……哈哈哈哈哈哈！";
+	next;
+	mes "[艾伦]";
+	mes "是的，你和我都不合格！哈哈哈哈！这个该死的瘾君子说出了真相！";
+	mes "是啊，哈哈哈哈哈哈！";
+	next;
+	mes "[艾里希]";
+	mes "……疯子。滚开。我不想再和你说话了。";
+	next;
+	mes "[艾伦]";
+	mes "好啊，我这就走。家族的耻辱？哈哈哈……家族算什么！咳咳咳！";
+	mes "太有意思了！";
+	next;
+	mes "-艾伦看起来已经神志不清，径直朝门口走去。-";
+	next;
+	mes "[艾里希]";
+	mes "……真是个疯子。";
+	completequest 10020;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "王子#eisen1::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen1";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen1";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen1";
+	end;
+}
+
+prt_castle,336,202,7	script	王子#eisen2	983,{
+	mes "[尤勒坚]";
+	mes "你说什么？艾伦？";
+	mes "喂！你刚才对我说了什么？艾伦？！";
+	next;
+	mes "[艾伦]";
+	mes "我说多少遍都行！尤勒坚，你一点都不美！一点也没有！";
+	mes "事实上，你的样子又丑又俗气！";
+	next;
+	mes "[尤勒坚]";
+	mes "太无礼了！像你这样肮脏的细菌，";
+	mes "怎么能对我这么说话！";
+	next;
+	mes "[艾伦]";
+	mes "肮脏？是的，我是肮脏。但这不是我的问题。一切都肮脏！";
+	mes "我再也受不了了！";
+	next;
+	mes "[尤勒坚]";
+	mes "哼！我可以同意你的话，这世界是污秽的，";
+	mes "但你不能把我拉到那个层次！我不能原谅你的话！永远不能！";
+	next;
+	mes "[艾伦]";
+	mes "不原谅我又怎样？你想怎么样？好啊。你要杀了我吗？你会杀了我吗？";
+	mes "杀我啊？哈哈？所谓美丽，不过是你自封的罢了！";
+	next;
+	mes "[尤勒坚]";
+	mes "啊！我受不了了！这么低俗的言行……？你算什么王子。";
+	mes "我不想再面对你了！滚出去！";
+	next;
+	mes "[艾伦]";
+	mes "你的品质还不够格。你没有铲除邪恶的信念。论意志，你就是垃圾。";
+	mes "我也不想和垃圾为伍！永远待在你的世界里，别出来了！";
+	next;
+	mes "-艾伦大步走出房间，嘴里还在抱怨……-";
+	next;
+	mes "[尤勒坚]";
+	mes "……你太低俗了。我看错你了。你不是少数有艺术眼光的人。";
+	mes "我完全看走了眼。";
+	completequest 10021;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "王子#eisen2::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen2";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen2";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen2";
+	end;
+}
+
+prt_castle,286,201,7	script	王子#eisen3	983,{
+	mes "[艾伦]";
+	mes "军事狂！混蛋！你以为武力能解决一切吗？";
+	mes "在任何情况下，人们都能和平生活吗？";
+	next;
+	mes "[赫尔穆特]";
+	mes "你现在完全是在使用暴力。";
+	mes "按你的理论，你也不具备国王的品质！";
+	next;
+	mes "[艾伦]";
+	mes "是啊，你说得倒好听。呸！";
+	mes "我没有品质！！";
+	mes "但你比我更糟！国王候选人？？你不过是个战争贩子！";
+	next;
+	mes "[赫尔穆特]";
+	mes "你是来这里挑衅我的吗？你以为你打得过我吗，艾伦？！";
+	next;
+	mes "[艾伦]";
+	mes "打架？太无聊了。我才不在乎。我只是来把想说的话说给你听。";
+	mes "我甚至懒得和你打。我走了！";
+	next;
+	mes "[赫尔穆特]";
+	mes "站住，胆小鬼！你现在要逃吗？！真是个懦夫！让我们一决胜负！";
+	next;
+	mes "[艾伦]";
+	mes "懦夫……这个词真不错。是的，我就是。我走了。再见啦！";
+	mes "你连我这样的懦夫都不如……！拜拜了，战争贩子！";
+	next;
+	mes "-艾伦带着莫名的笑意瞥了一眼恼怒的赫尔穆特，离开了房间。-";
+	next;
+	mes "[赫尔穆特]";
+	mes "那家伙……真是个小人！！！";
+	completequest 10022;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "王子#eisen3::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen3";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen3";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen3";
+	end;
+}
+
+prt_castle,388,205,6	script	王子#eisen4	983,{
+	mes "[艾伦]";
+	mes "你总是关心赌博。但是，为什么不先关心一下你的周围呢，嗯？";
+	mes "理查德家的少爷？";
+	next;
+	mes "[珀]";
+	mes "你现在干嘛取笑我？";
+	mes "至少我觉得我的骰子点数比你大……你不这么认为吗？";
+	next;
+	mes "[艾伦]";
+	mes "呸！你满口都是骰子。听着。";
+	mes "你觉得我掷出的点数比你小……但你在掷骰子之前就已经输了！";
+	mes "你知道吗？";
+	next;
+	mes "[珀]";
+	mes "你在说什么？我听不懂。我输给了谁？我不知道你为什么这么说。";
+	next;
+	mes "[艾伦]";
+	mes "你当然不知道！那又怎样？就算知道了，你又能做什么？";
+	mes "你对一切都太过自负。";
+	mes "你以为能把一棵烂透的树，培育成健康的树吗？";
+	next;
+	mes "[珀]";
+	mes "你想说什么就说清楚。你是在宣布认输吗？";
+	mes "我的运气有那么可怕吗，艾伦？";
+	next;
+	mes "[艾伦]";
+	mes "是的，我宣布我的失败。但不是输给你。你和我一样是输家。";
+	mes "在进入正题之前，你就已经被环境因素毁掉了。";
+	next;
+	mes "[珀]";
+	mes "……你到底在说什么？环境？我完全听不懂。从来就说不清楚。";
+	next;
+	mes "[艾伦]";
+	mes "你最好不明白。如果你知道了，你会失去健康的。";
+	mes "别去管它……在你有生之年！";
+	next;
+	mes "[珀]";
+	mes "等、等等！喂，艾伦！";
+	mes "站住！艾伦！嘿！";
+	next;
+	mes "-艾伦完全无视呼唤他的声音，";
+	mes "带着一脸落寞离开了房间。-";
+	next;
+	mes "[珀]";
+	mes "什么……什么嘛。真没意思。";
+	mes "我完全搞不懂他。";
+	completequest 10018;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "王子#eisen4::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen4";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen4";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen4";
+	end;
+}
+
+prt_castle,364,372,1	script	王子#eisen5	983,{
+	mes "[艾伦]";
+	mes "佩托，如果你的努力毫无意义，你会怎么办？";
+	next;
+	mes "[佩托]";
+	mes "……我不知道你在说什么，但不存在毫无意义的事物。";
+	mes "我想你并不了解这一点。";
+	next;
+	mes "[艾伦]";
+	mes "嗡——你错了。有的事物本身就毫无意义。";
+	mes "明确地说，不知道意义的行动，就会变得毫无意义……";
+	next;
+	mes "[佩托]";
+	mes "你是想解释……清楚吗？反而越来越复杂了。你到底想说什么？直说吧。";
+	next;
+	mes "[艾伦]";
+	mes "……无论我做还是不做，我都只是被某种东西操纵着。";
+	mes "更糟的是，我身处其中，只会伤害别人。";
+	next;
+	mes "[佩托]";
+	mes "……";
+	next;
+	mes "[艾伦]";
+	mes "最糟糕的是，我觉得自己因为了解和认识了那种东西，";
+	mes "反而变得胆怯了……";
+	next;
+	mes "[艾伦]";
+	mes "但你也一样。";
+	mes "如果你真想向那个女孩表达感谢，就应该亲自去看她。";
+	mes "你做不到，不是吗？";
+	next;
+	mes "[佩托]";
+	mes "……艾伦，你怎么了？你不是我认识的艾伦。是什么让你变成这样？";
+	next;
+	mes "[艾伦]";
+	mes "哼……那种东西。没什么。毫无意义。现实就是这样。和你谈话很愉快。";
+	mes "再见，从此以后，像往常一样活下去吧。";
+	next;
+	mes "[佩托]";
+	mes "……艾伦。你……";
+	next;
+	mes "-艾伦一脸阴沉地离开了房间。-";
+	next;
+	mes "[佩托]";
+	mes "……";
+	completequest 10019;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "王子#eisen5::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen5";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen5";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen5";
+	end;
+}
+
+prt_castle,368,310,1	script	王子#eisen6	983,{
+	mes "[阿勒姆]";
+	mes "兄长，再说一遍。你刚才说了什么？";
+	next;
+	mes "[艾伦]";
+	mes "好。让我告诉你。这个卢恩·米德加兹就是垃圾。";
+	mes "你我在垃圾堆里挣扎，我们和垃圾没什么两样，即使它无法回收。";
+	next;
+	mes "[阿勒姆]";
+	mes "兄长，你怎么了？你疯了吗？";
+	next;
+	mes "[艾伦]";
+	mes "疯了？";
+	mes "我清醒得很……我只是受够了这令人作呕的现实，我可爱的弟弟。";
+	next;
+	mes "[阿勒姆]";
+	mes "现实？什么现实？你察觉到了什么？你不像平时的你。";
+	mes "我完全帮不了你！";
+	next;
+	mes "[艾伦]";
+	mes "我和平时一样，阿勒姆。";
+	mes "只是，现实是肮脏的，而我意识到自己被困在这堆垃圾里。";
+	mes "我出不去了。";
+	next;
+	mes "[阿勒姆]";
+	mes "骗子！你总是告诉我，你的书里有无限可能！";
+	mes "你总是表现得那么骄傲！";
+	next;
+	mes "[艾伦]";
+	mes "闭嘴。";
+	next;
+	mes "[阿勒姆]";
+	mes "它肮脏、不美好。正因如此我们才应该纠正它。";
+	mes "我们早就知道这种情况，可你为什么要这样！";
+	next;
+	mes "[艾伦]";
+	mes "……我说过，别吵！";
+	next;
+	mes "[阿勒姆]";
+	mes "不。堕落是双方认同的，是你把我带到这里，正因为有你，";
+	mes "我才能依靠你！";
+	next;
+	mes "[艾伦]";
+	mes "闭嘴 闭嘴！！！！！！！！！！！！";
+	next;
+	mes "[阿勒姆]";
+	mes "……！";
+	next;
+	mes "[艾伦]";
+	mes "毫无意义的行动不会受欢迎！被肮脏的东西操纵令人作呕。";
+	mes "我曾一无所知，以为自己在按自己的意志行事，";
+	mes "现在我意识到我是被操纵的！";
+	next;
+	mes "[艾伦]";
+	mes "国王？那有什么用？那什么都不是！";
+	mes "即使我们创造一个新世界，也不会有任何改变！";
+	mes "我们就像在一场戏里。一幅画只是某人的意图……被画出来而已！";
+	mes "对吧？";
+	next;
+	mes "[阿勒姆]";
+	mes "你在说什么？我完全听不懂！你是说你不满现状吗？是吗？";
+	mes "你到底在说什么啊！";
+	next;
+	mes "[艾伦]";
+	mes "闭嘴！什么都不知道，你连自己何时会被杀都不知道。";
+	mes "你还不明白……啊……！你不需要知道这些！";
+	next;
+	mes "[阿勒姆]";
+	mes "兄……兄长，你要一直这样坚持吗？我们的情谊就这么短吗？";
+	next;
+	mes "[艾伦]";
+	mes "闭嘴！如果你不满意，可以照我们的约定杀了我！你……我……我……！";
+	mes "我不想再谈了，我要回我的房间！";
+	next;
+	mes "[阿勒姆]";
+	mes "啊。等一下，兄长！艾伦！";
+	next;
+	mes "[艾伦]";
+	mes "我……不知道！国王……你！";
+	next;
+	mes "-艾伦涨红了脸，";
+	mes "离开房间。他看起来疲惫至极。-";
+	next;
+	mes "[阿勒姆]";
+	mes "艾伦……艾伦……";
+	changequest 10023,10024;
+	set nkprince_eisen,13;
+	donpcevent "王子#eisen6::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "王子#eisen6";
+	end;
+
+OnEnable:
+	enablenpc "王子#eisen6";
+	end;
+
+OnDisable:
+	disablenpc "王子#eisen6";
+	end;
+}
+
+prt_castle,318,276,0	script	#eisen	45,1,1,{
+OnTouch_:
+	if ((nkprince_eisen == 4) || (nkprince_eisen == 5)) {
+		donpcevent "王子#another_ern::OnEnable";
+		set nkprince_eisen,5;
+		warp "prt_castle",318,368;
+	}
+	else if ((nkprince_eisen == 9) || (nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+		set .@armkoe,rand(1,4);
+		if (.@armkoe == 1) {
+			mes "-在进入艾伦的房间之前，";
+			mes "你能听到他的声音。";
+			mes "声音从里面传来。-";
+			next;
+			mes "[艾伦]";
+			mes "我没有那种资格。我在如此肮脏的地方长大。我是如此无知！";
+			next;
+			mes "[艾伦]";
+			mes "什么是国王的气量？什么是清明的政治……？啊啊啊啊啊啊啊！！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			close2;
+		}
+		else if (.@armkoe == 2) {
+			mes "-在进入艾伦的房间之前，";
+			mes "你能听到他的声音。";
+			mes "声音从里面传来。-";
+			next;
+			mes "[艾伦]";
+			mes "骄傲的家族？……名望……";
+			mes "出身……？王族？……这些到底算什么？";
+			next;
+			mes "[艾伦]";
+			mes "对阿勒姆兄长来说，我的家族就是罪。而我是罪的一部分。";
+			mes "作为家族的一部分。家族的罪。等同于我的罪。";
+			next;
+			mes "[艾伦]";
+			mes "我再也……掩盖不住了……阿勒姆……我希望至少你……";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			close2;
+		}
+		else if (.@armkoe == 3) {
+			mes "-在进入艾伦的房间之前，";
+			mes "你能听到他的声音。";
+			mes "声音从里面传来。-";
+			next;
+			mes "[艾伦]";
+			mes "到头来，我只是被利用……我拼尽全力成为主角。";
+			mes "那也不过是剧本的一部分……";
+			next;
+			mes "[艾伦]";
+			mes "该死！该死……！！";
+			mes "我不能接受。绝不。绝不！";
+			next;
+			mes "[艾伦]";
+			mes "我的祖先^FF0000施密特^000000……";
+			mes "面对这种情况你会怎么做？";
+			mes "不……难道你也和我一样……被别人利用了吗？";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			close2;
+		}
+		else if (.@armkoe == 4) {
+			mes "-在进入艾伦的房间之前，";
+			mes "我能听到他的声音。";
+			mes "声音从里面传来。-";
+			next;
+			mes "[艾伦]";
+			mes "不，不行……不……到了这一步，我会成为国王。";
+			mes "我不该成为国王……阿勒姆……你不要忘记真正国王的意义。";
+			next;
+			mes "[艾伦]";
+			mes "为了真正国王的登场……我今晚就要……为你堕入黑暗。……啊啊啊啊啊！！！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……";
+			close2;
+		}
+		warp "prt_castle",318,368;
+	}
+	else if (nkprince_eisen == 13) {
+		donpcevent "王子#another_ern::OnEnable";
+		warp "prt_castle",318,368;
+	}
+	else if (nkprince_eisen == 15) {
+		warp "prt_castle",318,309;
+	}
+	else {
+		warp "prt_castle",318,368;
+	}
+	end;
+}
+
+prt_castle,336,276,0	script	#ern	45,1,1,{
+OnTouch_:
+	if (checkquest(10023) == 0 || checkquest(10023) == 1) {
+		donpcevent "王子#eisen6::OnEnable";
+	}
+	warp "prt_castle",368,308;
+	end;
+}
+
+prt_castle,300,276,0	script	#erich	45,1,1,{
+OnTouch_:
+	if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		donpcevent "王子#eisen1::OnEnable";
+	}
+	warp "prt_castle",274,368;
+	end;
+}
+
+prt_castle,330,271,0	script	#helmut	45,1,1,{
+OnTouch_:
+	if (checkquest(10022) == 0 || checkquest(10022) == 1) {
+		donpcevent "王子#eisen3::OnEnable";
+	}
+	warp "prt_castle",290,208;
+	end;
+}
+
+prt_castle,348,271,0	script	#poe	45,1,1,{
+OnTouch_:
+	if (checkquest(10018) == 0 || checkquest(10018) == 1) {
+		donpcevent "王子#eisen4::OnEnable";
+	}
+	warp "prt_castle",390,208;
+	end;
+}
+
+prt_castle,354,276,0	script	#peter	45,1,1,{
+OnTouch_:
+	if (checkquest(10019) == 0 || checkquest(10019) == 1) {
+		donpcevent "王子#eisen5::OnEnable";
+	}
+	warp "prt_castle",366,368;
+	end;
+}
+
+prt_castle,310,271,0	script	#urgen	45,1,1,{
+OnTouch_:
+	if (checkquest(10021) == 0 || checkquest(10021) == 1) {
+		donpcevent "王子#eisen2::OnEnable";
+	}
+	warp "prt_castle",340,208;
+	end;
+}
+
+prt_castle,317,364,0	warp	#eisen2	1,1,prt_castle,318,273
+prt_castle,317,304,0	warp	eisen22	1,1,prt_castle,318,273
+prt_castle,367,304,0	warp	#ern2	1,1,prt_castle,336,273
+prt_castle,273,364,0	warp	#erich2	1,1,prt_castle,300,273
+prt_castle,289,213,0	warp	#helmut2	1,1,prt_castle,330,274
+prt_castle,389,213,0	warp	#poe2	1,1,prt_castle,348,274
+prt_castle,365,364,0	warp	#peter2	1,1,prt_castle,354,273
+prt_castle,340,213,0	warp	#urgen2	1,1,prt_castle,310,274
+prt_castle,163,312,0	warp	#class2	1,1,prt_castle,221,343
+prt_castle,221,347,0	warp	#class	1,1,prt_castle,163,316
+prt_castle,225,338,0	warp	#room11	1,1,prt_castle,275,283
+prt_castle,273,284,0	warp	#room21	1,1,prt_castle,221,338
+prt_castle,225,318,0	warp	#room12	1,1,prt_castle,276,263
+prt_castle,273,264,0	warp	#room22	1,1,prt_castle,221,318
+prt_castle,221,308,0	warp	#princeout	1,1,prt_castle,176,167
+
+prt_castle,176,170,5	script	守卫#princein	105,{
+	if (nk_prince > 4) {
+		mes "[站在奇怪地方的士兵]";
+		mes "你可以通过隐藏的门，去王子们聚集的房间。";
+		mes "出于安全考虑，它被严密把守并完全隐藏。";
+		next;
+		mes "[站在奇怪地方的士兵]";
+		mes "让我为你开门。";
+		close2;
+		warp "prt_castle",220,312;
+		end;
+	}
+	else {
+		mes "[站在奇怪地方的士兵]";
+		mes "我只是来这里休息的。想知道位置的话，可以去问别人。";
+		close;
+	}
+}
+
+prt_castle,121,168,0	script	#arm	111,4,4,{
+OnTouch:
+	if (nk_prince == 8) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "牛奶都洒了。";
+		mes "就别再想了。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "谁会代替他登上王位呢？";
+		next;
+		set nk_prince,9;
+		mes "[" + strcharinfo(0) + "]";
+		mes "噢，不……";
+		close;
+	}
+}
+
+prt_castle,316,313,0	script	#arm1	111,3,3,{
+OnTouch:
+	if (nkprince_eisen > 14) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "他当时怀着怎样的想法，";
+		mes "又是如何在这间房间里决定成为国王的？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "是怎样的情况……";
+		mes "把他拉回了无法挽回的地步？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "我不能再问他了，也没有留下线索。剩下的只有……";
+		next;
+		mes "[艾伦]";
+		mes "~~如果你对这件事说错话，我的死就毫无价值了……呃……你明白吗？~~";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "……为他保守秘密。";
+		mes "背负他留下的重担……用我的一生。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "……安息吧。";
+		close;
+	}
+	end;
+}

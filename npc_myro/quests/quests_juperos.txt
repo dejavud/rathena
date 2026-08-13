@@ -1,0 +1,4922 @@
+//===== rAthena Script =======================================
+//= Juperos Dungeon Quests
+//===== By ===================================================
+//= MasterOfMuppets
+//===== Version ==============================================
+//= 2.0
+//===== Compatible With ======================================
+//= rAthena Project
+//===== Description ==========================================
+//= [Partial Official Conversion]
+//= Juperos Ruins related Quests/Events
+//===== Comments =============================================
+//= 1.0 First version, partly implemented [MasterOfMuppets]
+//= 1.1 Added official Juperos Ruins History Quest. Thanks
+//=     to Keplerk for his first version. [SinSloth]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.3 Removed semi-official core access NPCs, replaced with [L0ne_W0lf]
+//=     event-driven story progressive NPCs. Optimization needed.
+//= 1.3a Adjusted the elevafor timer. (132000 -> 142000) [L0ne_W0lf]
+//= 1.3b Minor updates to juperos elevator NPCs. [L0ne_W0lf]
+//= 1.4 Fixed Elevator not working after failing once. [L0ne_W0lf]
+//= 1.5 Lots of Fixes, missing stopnpctimers, cleanup. [Zephyrus]
+//= 1.6 Added missing close in "Popular Feats" [L0ne_W0lf]
+//= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.8 Updated RE/Pre-RE EXP. [Euphy]
+//= 1.9 Added GM management NPC. [Euphy]
+//= 2.0 Added Juperos Ruins History quest logs. [Capuche]
+//============================================================
+
+yuno_in04,190,125,4	script	学者	700,{
+function Func_JupHist;
+	switch(yuno_hist) {
+	case 0:
+		mes "[学者]";
+		mes "……嗯？";
+		mes "……什么事？";
+		next;
+		mes "[学者]";
+		mes "……";
+		mes "…………";
+		mes "有什么事吗？";
+		next;
+		switch(select("啊！没、没什么！:打扰了……")) {
+		case 1:
+			mes "[学者]";
+			mes "……";
+			mes "…………";
+			mes "嗯？";
+			mes "………………";
+			mes "哼。";
+			close;
+		case 2:
+			mes "[学者]";
+			mes "……";
+			mes "…………";
+			mes "嗯？";
+			mes "………………";
+			mes "嗯……";
+			next;
+			mes "[学者]";
+			mes "你一定是迷路了。";
+			mes "这里是学术研究区，";
+			mes "都是些你看不懂的内容。";
+			mes "通俗小说和图画书在别的地方。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "……";
+			mes "…………";
+			next;
+			mes "[学者]";
+			mes "你干嘛不去书架上";
+			mes "翻翻书呢？";
+			mes "相信你一定能找到";
+			mes "感兴趣的书。嗯，";
+			mes "这得看你能专注多久……";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "（她吃错药了？！";
+			mes "是态度有问题，还是纯粹目中无人？）";
+			close;
+		}
+	case 1:
+		mes "[学者]";
+		mes "……嗯？";
+		mes "……什么事？";
+		next;
+		mes "[学者]";
+		mes "……";
+		mes "…………";
+		mes "有什么事吗？";
+		next;
+		switch(select("啊！没、没什么！:莫非……")) {
+		case 1:
+			mes "[学者]";
+			mes "……";
+			mes "…………";
+			mes "嗯？";
+			mes "………………";
+			mes "哼。";
+			close;
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "莫非……";
+			mes "你在研究";
+			mes "朱庇洛斯吗？";
+			next;
+			mes "[学者]";
+			mes "没错，正是如此。";
+			mes "不过你是怎么知道";
+			mes "我目前的研究课题的？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "哦，我碰巧读过一篇";
+			mes "题为《朱庇洛斯的覆灭》";
+			mes "的论文，总觉得那文笔";
+			mes "和你的性格莫名相像。";
+			next;
+			mes "[学者]";
+			mes "哦……！你读过我的";
+			mes "论文？那你觉得";
+			mes "写得怎么样？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "目前看来还行，";
+			mes "但坦白说并不完整。";
+			mes "我是说，你没什么推论，";
+			mes "更没有什么证据";
+			mes "来支撑你的观点。";
+			next;
+			mes "[学者]";
+			mes "……";
+			mes "我为刚才的失礼";
+			mes "向你道歉。";
+			mes "对了，我叫";
+			mes "法伊鲁兹·克尔希哈。";
+			mes "请问你叫什么名字？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "我是"+strcharinfo(0)+"，";
+			mes "一名为英明仁慈的";
+			mes "特里斯坦三世陛下";
+			mes "效力的勇敢冒险者。";
+			set yuno_hist,2;
+			setquest 11017;
+			next;
+			mes "[法伊鲁兹]";
+			mes "好吧，"+strcharinfo(0)+"，";
+			mes "我承认我的论文";
+			mes "还需要更多证据。";
+			mes "但我需要一些来自";
+			mes "朱庇洛斯的古代文献，";
+			mes "才能完成研究……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "如果你恰好去朱庇洛斯，";
+			mes "发现任何古代文献，";
+			mes "能带给我吗？那些东西";
+			mes "对我的研究帮助极大。";
+			mes "拜托你了……";
+			close;
+		}
+	case 2:
+		if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
+			mes "[法伊鲁兹]";
+			mes "啊，是你！听着，";
+			mes "我刚找到一份记载，";
+			mes "是关于一位探索朱庇洛斯的";
+			mes "冒险者的。这里提到";
+			mes "一座石像，也许";
+			mes "很值得关注……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "如果你去朱庇洛斯，";
+			mes "能在遗迹入口处";
+			mes "找到那座石像，";
+			mes "帮我读一读上面";
+			mes "刻着的文字吗？";
+			next;
+			mes "[法伊鲁兹]";
+			mes "根据我的笔记，";
+			mes "上面附有一种魔法，";
+			mes "即使不懂那种语言，";
+			mes "读者也能记住它的内容。";
+			mes "所以如果你能读出来，";
+			mes "就来告诉我吧。";
+			close;
+		}
+		mes "[法伊鲁兹]";
+		mes "如果你有机会";
+		mes "去朱庇洛斯，";
+		mes "发现任何对我研究";
+		mes "有帮助的东西，";
+		mes "能告诉我吗？";
+		mes "我会非常感激的。";
+		close;
+	case 3:
+		mes "[法伊鲁兹]";
+		mes "嗯，你看起来";
+		mes "心情不错。";
+		mes "发生什么事了，";
+		mes "让你露出这副表情？";
+		next;
+		switch(select("我在朱庇洛斯发现了东西。:没什么。")) {
+		case 1:
+			mes "[" +strcharinfo(0)+"]";
+			mes "我照你说的去了朱庇洛斯，";
+			mes "找到了你说的那座石像。";
+			mes "就像你说的，上面刻着文字。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "太奇妙了！";
+			mes "它真的被施了魔法，";
+			mes "谁都能记住吗？";
+			mes "上、上面写了什么？";
+			next;
+			mes "^3355FF你背诵着石像上刻着的";
+			mes "文字，虽然不明白";
+			mes "自己发出的声音是何含义，";
+			mes "但奇怪的是，你能轻易地";
+			mes "从记忆中回想起来。^000000";
+			next;
+			mes "[法伊鲁兹]";
+			mes "啊，我明白了！等等，";
+			mes "给我一点时间，";
+			mes "好好翻译一下……";
+			next;
+			mes "……";
+			mes "…………";
+			mes "……………";
+			next;
+			mes "[法伊鲁兹]";
+			mes "意思是：『你想看到";
+			mes "疯狂的尽头吗？";
+			mes "他在三根石柱被毁之处、";
+			mes "两百个幻影徘徊之处";
+			mes "等待着。』";
+			next;
+			mes "[法伊鲁兹]";
+			mes "『你将亲眼见到他，";
+			mes "那个虚荣而奢靡之人，";
+			mes "就在光芒穿过的地方。』";
+			set yuno_hist,4;
+			changequest 11018,11019;
+			next;
+			mes "[法伊鲁兹]";
+			mes "啊，通常『虚荣而奢靡";
+			mes "之人』指的是传闻中生活在";
+			mes "那个远古时代的疯狂科学家。";
+			mes "但如果这是真的，";
+			mes "我可能得重写我的论文了……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "我还有一个请求。";
+			mes "如果你在朱庇洛斯发现";
+			mes "任何有历史意义的物品，";
+			mes "能带给我吗？";
+			mes "当然，我会酬谢你的。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "如果你能找到那个时代";
+			mes "留下的文献，那就最好了。";
+			mes "幸运的是，那时候的人们";
+			mes "把记录刻在比纸更耐久的材料上。";
+			close;
+		case 2:
+			mes "[法伊鲁兹]";
+			mes "没什么吗？";
+			mes "我的生活也挺平淡的，";
+			mes "但不知为何，";
+			mes "我并不满足于此。";
+			close;
+		}
+	case 4:
+		mes "[法伊鲁兹]";
+		mes "哦，你好，"+strcharinfo(0)+"。";
+		mes "今天来朱诺图书馆";
+		mes "有什么事吗？";
+		next;
+		switch(select("今天天气不错，是吧？:我在朱庇洛斯发现了东西。:没什么。")) {
+		case 1:
+			mes "[法伊鲁兹]";
+			mes "嗯，我不太清楚。";
+			mes "我每次出门都很晚，";
+			mes "总是见不到阳光。";
+			mes "我想我有时候";
+			mes "真的很怀念好天气。";
+			close;
+		case 2:
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
+				mes "[法伊鲁兹]";
+				mes "哦，真的吗？！";
+				mes "太好了！";
+				mes "你、你发现了什么？";
+				next;
+				mes "^3355FF法伊鲁兹兴奋地";
+				mes "翻看着你的东西，";
+				mes "你还没来得及回答。^000000";
+				next;
+				mes "[法伊鲁兹]";
+				mes "哦，一定是这个！";
+				mes "我能留下这块透明石板";
+				mes "用于研究吗？作为回报，";
+				mes "我会给你讲一些";
+				mes "我了解到的朱庇洛斯传说。";
+				next;
+				switch(select("请便，拿去吧。:不行，不能给你。")) {
+				case 1:
+					if (countitem(7352)) Func_JupHist(7352,1);
+					else if (countitem(7353)) Func_JupHist(7353,2);
+					else if (countitem(7354)) Func_JupHist(7354,4);
+					else if (countitem(7355)) Func_JupHist(7352,8);
+				case 2:
+					mes "[法伊鲁兹]";
+					mes "嗯？你是认真的？";
+					mes "这东西对我这样的研究者";
+					mes "非常珍贵，但我不知道";
+					mes "它对冒险者有什么用。";
+					mes "好吧，你有你的理由……";
+					close;
+				}
+			}
+			mes "[法伊鲁兹]";
+			mes "哦，真的吗？！";
+			mes "太好了！";
+			mes "你、你发现了什么？";
+			next;
+			mes "^3355FF法伊鲁兹兴奋地";
+			mes "翻看着你的东西，";
+			mes "你还没来得及回答。^000000";
+			next;
+			mes "[法伊鲁兹]";
+			mes "哦。这里没有";
+			mes "对我研究有帮助的东西，";
+			mes "不过还是谢谢你。";
+			mes "如果你在朱庇洛斯还发现";
+			mes "别的什么，请回来给我看看，好吗？";
+			close;
+		case 3:
+			mes "[法伊鲁兹]";
+			mes "啊，这样啊。既然来了，";
+			mes "干嘛不读点书呢？";
+			mes "这里有很多书涉及";
+			mes "有趣的话题，比如";
+			mes "修发兹共和国的经济……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "哦，无论如何，";
+			mes "请别忘了我拜托你的事。";
+			mes "如果你在朱庇洛斯发现";
+			mes "任何有历史意义的东西，";
+			mes "请马上带给我。";
+			close;
+		}
+	case 5:
+		mes "[法伊鲁兹]";
+		mes "哦，"+strcharinfo(0)+"！";
+		mes "你从朱庇洛斯";
+		mes "带东西回来了吗？";
+		mes "我一直盼着你带些";
+		mes "对我研究有帮助的东西回来！";
+		next;
+		switch(select("看看这个。:哦，抱歉……")) {
+		case 1:
+			switch(jupe_hist) {
+				case 1: Func_JupHist(7353,7354,7355,7352);
+				case 2: Func_JupHist(7352,7354,7355,7353);
+				case 4: Func_JupHist(7352,7353,7355,7354);
+				case 8: Func_JupHist(7352,7353,7354,7355);
+			}
+		case 2:
+			mes "[法伊鲁兹]";
+			mes "啊，这样啊。既然来了，";
+			mes "干嘛不读点书呢？";
+			mes "这里有很多书涉及";
+			mes "有趣的话题，比如……";
+			mes "比如……《自我诚实》（？）。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "哦，无论如何，";
+			mes "请别忘了我拜托你的事。";
+			mes "如果你在朱庇洛斯发现";
+			mes "任何有历史意义的东西，";
+			mes "请马上带给我。";
+			close;
+		}
+	case 6:
+		mes "[法伊鲁兹]";
+		mes "哦，"+strcharinfo(0)+"！";
+		mes "你上次带给我的透明石板";
+		mes "对我的研究帮助很大。";
+		mes "如果有机会，";
+		mes "请再带一些来！";
+		set yuno_hist,7;
+		next;
+		mes "[法伊鲁兹]";
+		mes "这些新资料让我的论文";
+		mes "可信多了。哦，请稍等，";
+		mes "让我快点把最后";
+		mes "这一段翻译完……";
+		close;
+	case 7:
+		mes "[法伊鲁兹]";
+		mes "你好，"+strcharinfo(0)+"～";
+		mes "哦，你在朱庇洛斯找到";
+		mes "对我研究有帮助的东西了吗？";
+		next;
+		switch(select("嗯，看看这个。:不，抱歉……")) {
+		case 1:
+			switch(jupe_hist) {
+				case 3: Func_JupHist(7354,7355,7352,7353);
+				case 5: Func_JupHist(7353,7355,7352,7354);
+				case 6: Func_JupHist(7352,7355,7353,7354);
+				case 9: Func_JupHist(7353,7354,7352,7355);
+				case 10: Func_JupHist(7352,7354,7353,7355);
+				case 12: Func_JupHist(7352,7353,7354,7355);
+			}
+		case 2:
+			mes "[法伊鲁兹]";
+			mes "哦，没关系。";
+			mes "再说，我的研究";
+			mes "也没什么截止日期。";
+			mes "不过我想让你知道，";
+			mes "我真的很感谢你的帮助。";
+			close;
+		}
+	case 8:
+		mes "[法伊鲁兹]";
+		mes ""+strcharinfo(0)+"……";
+		mes "翻译你上次带来的";
+		mes "那块透明石板";
+		mes "遇到了很大困难。";
+		mes "真让人沮丧……";
+		next;
+		mes "[法伊鲁兹]";
+		mes "等一下……";
+		mes "这里是说……";
+		mes "好。嗯。是的。";
+		mes "对！当然了，";
+		mes "我之前怎么没看出来！";
+		set yuno_hist,9;
+		next;
+		mes "[法伊鲁兹]";
+		mes "请稍等一下！";
+		mes "我想我刚刚";
+		mes "有了真正的突破……！";
+		next;
+	case 9:
+		mes "[法伊鲁兹]";
+		mes "啊，我一直在";
+		mes "等你，"+strcharinfo(0)+"。";
+		mes "你又去朱庇洛斯了吗？我真希望你";
+		mes "能找到对我研究有帮助的新东西……";
+		next;
+		switch(select("其实，我找到了这个……:抱歉，没有……")) {
+		case 1:
+			switch(jupe_hist) {
+				case 7: Func_JupHist(7355,7352,7353,7354);
+				case 11: Func_JupHist(7354,7352,7353,7355);
+				case 13: Func_JupHist(7353,7352,7354,7355);
+				case 14: Func_JupHist(7352,7353,7354,7355);
+			}
+		case 2:
+			mes "[法伊鲁兹]";
+			mes "啊，这样啊。既然来了，";
+			mes "干嘛不读点书呢？";
+			mes "这里有很多书涉及";
+			mes "有趣的话题，比如";
+			mes "近代冒险史。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "哦，无论如何，";
+			mes "请别忘了我拜托你的事。";
+			mes "如果你在朱庇洛斯发现";
+			mes "任何有历史意义的东西，";
+			mes "请马上带给我。";
+			close;
+		}
+	case 10:
+		mes "[法伊鲁兹]";
+		mes "哦，你好，"+strcharinfo(0)+"……";
+		mes "这次来朱诺图书馆";
+		mes "究竟有什么事呢？";
+		next;
+		switch(select("我又找到了一块透明石板。:只是来看看。")) {
+		case 1:
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
+				mes "[法伊鲁兹]";
+				mes "嗯，你之前给我的透明石板";
+				mes "已经让我们取得了";
+				mes "尽可能多的进展，";
+				mes "不过支撑理论的证据";
+				mes "再多也不嫌多。";
+				next;
+				mes "[法伊鲁兹]";
+				mes "我真的很感谢你";
+				mes "一直以来的帮助。";
+				mes "请收下这个，";
+				mes "当作我的谢礼。";
+				mes "你真是太好了，"+strcharinfo(0)+"……";
+				if (countitem(7352)) delitem 7352,1;
+				else if (countitem(7353)) delitem 7353,1;
+				else if (countitem(7354)) delitem 7354,1;
+				else delitem 7355,1;
+				getitem 644,1;
+				close;
+			}
+			mes "[法伊鲁兹]";
+			mes "嗯……？";
+			mes "你好像没有";
+			mes "带新的透明石板来。";
+			mes "你确定不是";
+			mes "放错地方了吗？";
+			close;
+		case 2:
+			mes "[法伊鲁兹]";
+			mes "啊，这样啊。";
+			mes "多亏了你的帮助，";
+			mes "我的论文取得了";
+			mes "很大的进展。";
+			mes "真的很感谢你为我做的一切，";
+			mes "冒险者。";
+			close;
+		}
+	}
+
+function Func_JupHist {
+	setarray .@arg[0], getarg(0), getarg(1), getarg(2,0), getarg(3,0);
+	switch(yuno_hist) {
+	case 4:
+		mes "[法伊鲁兹]";
+		mes "太感谢了，";
+		mes "你不知道这对我";
+		mes "意味着什么！好了，";
+		mes "请放松坐下。";
+		mes "闭上眼睛，听我讲述";
+		mes "这个古老的故事。";
+		next;
+		mes "^3355FF法伊鲁兹开始讲述";
+		mes "一个关于朱庇洛斯的古老传说，";
+		mes "听起来像是个经典的老故事，";
+		mes "但她讲述的方式却不知不觉地";
+		mes "把你带入身临其境般生动的体验。";
+		next;
+		mes "^3355FF你感受着主角的";
+		mes "荣耀与悲剧，仿佛";
+		mes "真的与英雄一同冒险。";
+		mes "故事终于讲完了，";
+		mes "你从恍惚中醒来，";
+		mes "被轻轻拉回现实。^000000";
+		delitem .@arg[0],1;
+		set yuno_hist,5;
+		jupe_hist = .@arg[1];
+		getexp (checkre(3))?10000:100000,0;
+		changequest 11019,11020;
+		next;
+		mes "[法伊鲁兹]";
+		mes "每个人都能从这些";
+		mes "古老的经典故事中";
+		mes "找到共鸣。希望这个故事";
+		mes "对你也能像对我初次听到时";
+		mes "一样有意义。";
+		next;
+		mes "[法伊鲁兹]";
+		mes "如果你能再帮我找到";
+		mes "一件朱庇洛斯的文物，";
+		mes "我会再给你讲一个故事。";
+		mes "怎么样？好了，";
+		mes "再见，冒险者～";
+		close;
+	case 5:
+		if (countitem(.@arg[0]) || countitem(.@arg[1]) || countitem(.@arg[2])) {
+			mes "[法伊鲁兹]";
+			mes "哦，真没想到。";
+			mes "这块透明石板";
+			mes "似乎制作于与你之前";
+			mes "给我的那块不同的时代。";
+			mes "真有趣……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "*叹气* 我真希望";
+			mes "能亲自去探索朱庇洛斯，";
+			mes "但我实在不够强壮。";
+			mes "从某种意义上说，我很羡慕你。";
+			mes "但这也是没办法的事……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "对了，这让我想起";
+			mes "一个关于悲剧英雄的";
+			mes "精彩故事，我想讲给你听。";
+			mes "放松心神，听我讲述";
+			mes "这个永恒而苦涩的故事吧……";
+			next;
+			mes "^3355FF法伊鲁兹给你讲了一个故事，";
+			mes "开头光明而充满希望，";
+			mes "让你仿佛置身天堂般的幸福，";
+			mes "随后却骤然把你推入";
+			mes "地狱般的绝望与痛苦之中。^000000";
+			next;
+			mes "^3355FF故事终于讲完了，";
+			mes "你惊讶地发现";
+			mes "自己正坐在";
+			mes "朱诺图书馆里。^000000";
+			next;
+			mes "[法伊鲁兹]";
+			mes "我知道这是个";
+			mes "很压抑的故事，";
+			mes "但希望你喜欢。";
+			mes "我想你会认同，";
+			mes "它包含着关于人类";
+			mes "无法忽视的真相。";
+			if (countitem(.@arg[0])) {
+				delitem .@arg[0],1;
+				if (.@arg[0] == 7352) set jupe_hist,jupe_hist +1;
+				else set jupe_hist,jupe_hist +2;
+			}
+			else if (countitem(.@arg[1])) {
+				delitem .@arg[1],1;
+				if (.@arg[1] == 7353) set jupe_hist,jupe_hist +2;
+				else set jupe_hist,jupe_hist +4;
+			}
+			else {
+				delitem .@arg[2],1;
+				if (.@arg[2] == 7354) set jupe_hist,jupe_hist +4;
+				else set jupe_hist,jupe_hist +8;
+			}
+			set yuno_hist,6;
+			changequest 11020,11021;
+			getexp (checkre(3))?10000:100000,0;
+			next;
+			mes "[法伊鲁兹]";
+			mes "到现在你一定明白了，";
+			mes "这些经典故事就像";
+			mes "浓缩的人生经验，";
+			mes "是我们在现实中";
+			mes "也能看到的、";
+			mes "提炼而永恒不变的真理。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "如果你在朱庇洛斯";
+			mes "找到更多这样的透明石板，";
+			mes "我很乐意再给你";
+			mes "讲一个故事，"+strcharinfo(0)+"。";
+			close;
+		}
+		else if (countitem(.@arg[3])) {
+			mes "[法伊鲁兹]";
+			mes "哦，这块似乎";
+			mes "制作于与你之前";
+			mes "给我的那块相近的时代。";
+			mes "我不确定它能提供";
+			mes "多少新的信息……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "不过，我相信这对";
+			mes "我的研究会有帮助。";
+			mes "只是进展不会像我预期的";
+			mes "那么快了。";
+			mes "请收下这个，聊表我的谢意。";
+			delitem .@arg[3],1;
+			getitem 644,1;
+			next;
+			mes "[法伊鲁兹]";
+			mes "那么失陪了，";
+			mes "我得回去整理";
+			mes "我的研究了……";
+			mes "非常感谢你的帮助，"+strcharinfo(0)+"。";
+			close;
+		}
+		else {
+			mes "[法伊鲁兹]";
+			mes "哦。这里没有";
+			mes "对我研究有帮助的东西，";
+			mes "不过还是谢谢你。";
+			mes "如果你在朱庇洛斯还发现";
+			mes "别的什么，请回来给我看看，好吗？";
+			close;
+		}
+	case 7:
+		if (countitem(.@arg[0]) || countitem(.@arg[1])) {
+			mes "[法伊鲁兹]";
+			mes "这是另一块";
+			mes "透明石板吗？";
+			mes "是的，它和你上次";
+			mes "带给我的那块很不一样……";
+			mes "太令人兴奋了！";
+			next;
+			mes "[法伊鲁兹]";
+			mes "哦。你一定觉得";
+			mes "我是个彻头彻尾的";
+			mes "学术狂。好吧，我的生活";
+			mes "也许有点平淡，但我";
+			mes "也会想别的事情！";
+			mes "比如，嗯……说来奇怪……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "其实，我有一个";
+			mes "喜欢的人。我不确定";
+			mes "他现在在哪里，";
+			mes "他叫纳迪姆·阿马尔。";
+			mes "他是我朋友的哥哥，";
+			mes "我10年前第一次见到他。^333333*叹气……*^000000";
+			next;
+			mes "[法伊鲁兹]";
+			mes "就在最近，我见到";
+			mes "他和他的妹妹，也就是";
+			mes "我来自梦罗克的朋友在一起。";
+			mes "过了这么久还会对他";
+			mes "有这种感觉，很奇怪吧？哦……！";
+			next;
+			mes "[法伊鲁兹]";
+			mes "我该好好报答你";
+			mes "带来的这块透明石板。";
+			mes "不如我给你讲讲";
+			mes "我知道的最可怕的故事吧？";
+			next;
+			mes "^3355FF法伊鲁兹给你讲了一个";
+			mes "令人毛骨悚然的恐怖故事，";
+			mes "让你不寒而栗。";
+			mes "你听过别的鬼故事，";
+			mes "但从未如此身临其境。^000000";
+			next;
+			mes "直到故事结束，";
+			mes "你回过神来，才发觉";
+			mes "自己已经浑身冷汗。^000000";
+			next;
+			mes "[法伊鲁兹]";
+			mes "也许是本能反应吧，";
+			mes "所有人都会以各种方式";
+			mes "恐惧未知。恐怖故事";
+			mes "之所以吸引人，是因为";
+			mes "我们其实喜欢怪异之物。";
+			if (countitem(.@arg[0])) {
+				delitem .@arg[0],1;
+				if (.@arg[0] == 7352) set jupe_hist,jupe_hist +1;
+				else if (.@arg[0] == 7353) set jupe_hist,jupe_hist +2;
+				else set jupe_hist,jupe_hist +4;
+			}
+			else if (countitem(.@arg[1])) {
+				delitem .@arg[1],1;
+				if (.@arg[1] == 7353) set jupe_hist,jupe_hist +2;
+				else if (.@arg[1] == 7354) set jupe_hist,jupe_hist +4;
+				else set jupe_hist,jupe_hist +8;
+			}
+			set yuno_hist,8;
+			changequest 11021,11022;
+			getexp (checkre(3))?10000:100000,0;
+			next;
+			mes "[法伊鲁兹]";
+			mes "嗯……那只是我的";
+			mes "看法。总之，如果你在";
+			mes "朱庇洛斯还发现什么";
+			mes "对我研究有帮助的东西，";
+			mes "请回来给我看看，好吗？";
+			mes "再见～";
+			close;
+		}
+		else if (countitem(.@arg[2]) || countitem(.@arg[3])) {
+			mes "[法伊鲁兹]";
+			mes "哦，这块似乎";
+			mes "制作于与你之前";
+			mes "给我的那块相近的时代。";
+			mes "我不确定它能提供";
+			mes "多少新的信息……";
+			next;
+			mes "[法伊鲁兹]";
+			mes "不过，我相信这对";
+			mes "我的研究会有帮助。";
+			mes "只是进展不会像我预期的";
+			mes "那么快了。";
+			mes "请收下这个，聊表我的谢意。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "那么失陪了，";
+			mes "我得回去整理";
+			mes "我的研究了……";
+			mes "非常感谢你的帮助，"+strcharinfo(0)+"。";
+			if (countitem(.@arg[2])) delitem .@arg[2],1;
+			else if (countitem(.@arg[3])) delitem .@arg[3],1;
+			getitem 644,1;
+			close;
+		}
+		else {
+			mes "[法伊鲁兹]";
+			mes "哦。这里没有";
+			mes "对我研究有帮助的东西，";
+			mes "不过还是谢谢你。";
+			mes "如果你在朱庇洛斯还发现";
+			mes "别的什么，请回来给我看看，好吗？";
+			close;
+		}
+	case 9:
+		if (countitem(.@arg[0])) {
+			mes "[法伊鲁兹]";
+			mes "哦……！这块";
+			mes "和你之前给我的";
+			mes "那些大不相同。";
+			mes "它应该能为研究";
+			mes "朱庇洛斯文明提供";
+			mes "大量全新的见解！";
+			next;
+			mes "[法伊鲁兹]";
+			mes "你给我的所有透明石板";
+			mes "包含的数据，已经足够";
+			mes "我完成研究论文了。";
+			mes "再次衷心感谢你～";
+			next;
+			mes "[法伊鲁兹]";
+			mes "不过，这并不意味着";
+			mes "我会停止为研究收集资料。";
+			mes "总之，我还有最后一个故事要讲，";
+			mes "关于一位被神选中、侍奉并守护人类的纯洁之人。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "为此，神赐予他";
+			mes "一套蕴含惊人力量的";
+			mes "华丽铠甲，还有一本";
+			mes "详述其使用方法的书。";
+			mes "然而，他很快就";
+			mes "把使用说明弄丢了……";
+			next;
+			mes "^3355FF法伊鲁兹讲的这个";
+			mes "关于朱庇洛斯最伟大英雄的故事，";
+			mes "开头非常幽默，随后却";
+			mes "涵盖了人类全部的情感";
+			mes "与人性……";
+			next;
+			mes "^3355FF故事讲完了，你心中";
+			mes "涌起一股不懈的";
+			mes "希望与鼓舞……";
+			mes "只要努力，你就能做到！^000000";
+			if (.@arg[0] == 7352) set jupe_hist,jupe_hist+1;
+			else if (.@arg[0] == 7353) set jupe_hist,jupe_hist+2;
+			else if (.@arg[0] == 7354) set jupe_hist,jupe_hist+4;
+			else set jupe_hist,jupe_hist+8;
+			set yuno_hist,10;
+			completequest 11022;
+			delitem .@arg[0],1;
+			getexp (checkre(3))?10000:100000,0;
+			next;
+			mes "[法伊鲁兹]";
+			mes "好了，这就是我";
+			mes "要与你分享的最后一个、";
+			mes "也是最棒的故事。";
+			mes "也许下次，我会告诉你";
+			mes "我的研究进展～";
+			close;
+		}
+		else if (countitem(.@arg[1]) || countitem(.@arg[2]) || countitem(.@arg[3])) {
+			mes "[法伊鲁兹]";
+			mes "嗯……";
+			mes "这块似乎制作于与上一块";
+			mes "相近的时代。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "别担心。";
+			mes "这对我的研究当然有帮助，";
+			mes "虽然我觉得它不会像";
+			mes "另一块那样让我的研究";
+			mes "飞速推进。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "请收下这个，聊表我的谢意。";
+			next;
+			mes "[法伊鲁兹]";
+			mes "那么失陪了。我得回去继续研究了。";
+			if (countitem(.@arg[1])) delitem .@arg[1],1;
+			else if (countitem(.@arg[2])) delitem .@arg[2],1;
+			else delitem .@arg[3],1;
+			getitem 644,1;
+			close;
+		}
+		else {
+			mes "[法伊鲁兹]";
+			mes "哦。这里没有";
+			mes "对我研究有帮助的东西，";
+			mes "不过还是谢谢你。";
+			mes "如果你在朱庇洛斯还发现";
+			mes "别的什么，请回来给我看看，好吗？";
+			close;
+		}
+	}
+}
+}
+
+yuno_in04,186,125,4	script	文件堆	111,{
+	mes "^8B6914*论文：朱庇洛斯的覆灭*";
+	mes "作者：法伊鲁兹·克尔希哈";
+	mes "贤者城堡研究员^000000";
+	next;
+	switch(select("目录。:不看了。")) {
+	case 1:
+		if (yuno_hist > 4) {
+			mes "^8B6914 1. 前言";
+			mes " 2. 朱庇洛斯背景";
+			mes " 3. 覆灭理论^000000";
+			next;
+			switch(select("前言:朱庇洛斯背景:覆灭理论:不看了。")) {
+			case 1:
+				mes "^8B6914学者们确信，";
+				mes "朱庇洛斯文明";
+				mes "曾经位于地面之上，";
+				mes "但如今已埋藏在";
+				mes "艾尔梅斯高原之下。";
+				mes "这座城市毁灭的";
+				if (yuno_hist < 9) {
+					mes "原因至今仍不明确……^000000";
+					next;
+					mes "^8B6914关于朱庇洛斯衰亡的原因，";
+					mes "人们有很多猜测，";
+					mes "但那个时代的文献";
+					mes "已经很难找到。";
+					mes "目前我们掌握的证据";
+					mes "都得不出定论。^000000";
+					next;
+					mes "^8B6914尽管缺乏关于";
+					mes "朱庇洛斯文明的";
+					mes "实证或具体资料，";
+					mes "我们的现代世界";
+					mes "也许仍能从那座";
+					mes "古城的遗迹中学到很多。";
+					mes "..................^000000";
+					if (yuno_hist < 7) {
+						next;
+						mes "["+strcharinfo(0)+"]";
+						mes "嗯……";
+						mes "整整一章就为了说：";
+						mes "『我们什么都不知道。』";
+						mes "我也该写本书～";
+					}
+					close;
+				}
+				mes "原因至今仍有争议……^000000";
+				next;
+				mes "^8B6914不过，关于朱庇洛斯历史的";
+				mes "新发现，让我们";
+				mes "得以得出一些结论。^000000";
+				close;
+			case 2:
+				if (yuno_hist < 9) {
+					mes "^8B6914……";
+					mes "…………";
+					mes "………………^000000";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "这全都是";
+					mes "无根据的猜想！";
+					mes "这篇东西还不够成熟，";
+					mes "算不上真正的论文……";
+					close;
+				}
+				else if (yuno_hist == 9) {
+					mes "^8B6914朱庇洛斯建于";
+					mes "一千多年前，";
+					mes "那是一场大战之后";
+					mes "的和平时代。与普遍看法";
+					mes "相反，没有任何证据";
+					mes "证明朱诺可能";
+					mes "源自朱庇洛斯。^000000";
+					next;
+					mes "^8B6914事实上，更有可能的是，";
+					mes "朱诺与朱庇洛斯之间";
+					mes "的另一场战争，";
+					mes "导致了朱诺从朱庇洛斯独立，";
+					mes "并毁掉了那个时代";
+					mes "现存的所有文献。^000000";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "对……当然！";
+					mes "现在一切都讲得通了！";
+					close;
+				}
+				mes "^8B6914朱庇洛斯建于";
+				mes "一千多年前，";
+				mes "那是一场大战之后";
+				mes "的和平时代。如今有了";
+				mes "直接证据将朱诺";
+				mes "与朱庇洛斯联系起来，证明朱诺";
+				mes "曾是朱庇洛斯的一部分。^000000";
+				next;
+				mes "^8B6914与朱诺一样，朱庇洛斯";
+				mes "也是一个以科学进步";
+				mes "为荣的社会，科学";
+				mes "渗透在文明生活的方方面面。";
+				mes "科学造就了朱庇洛斯的兴起与衰亡。";
+				close;
+			case 3:
+				if (yuno_hist < 10) {
+					mes "^8B6914……";
+					mes "…………";
+					mes "………………^000000";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "咦。作者一直在";
+					mes "谈论什么理论，";
+					mes "可我越读越不明白";
+					mes "那理论到底是什么。";
+					mes "我看根本就没有吧……";
+					emotion ET_SWEAT, playerattached();
+					close;
+				}
+				mes "^8B6914最令人不安的，";
+				mes "是最近的证据，包括";
+				mes "一份第一手的手记，";
+				mes "涉及朱庇洛斯最杰出的";
+				mes "科学家之一在那座城市的";
+				mes "兴衰中所扮演的角色。";
+				next;
+				mes "^8B6914如果这些文字属实，";
+				mes "那么实际上发生的是一场";
+				mes "科学革命，它直接源于";
+				mes "一位科学家试图操控";
+				mes "名为伊米尔之心的神器";
+				mes "所蕴含的能量。";
+				next;
+				mes "^8B6914这一个人和伊米尔之心";
+				mes "被归功于朱庇洛斯文明的";
+				mes "成功与繁荣。";
+				mes "然而，在朱庇洛斯陷落之前，";
+				mes "有多份记述详细描述了他";
+				mes "研究凯美拉的工作……^000000";
+				next;
+				mes "^8B6914据说这位科学家";
+				mes "热衷于用凯美拉做实验，";
+				mes "想找到一种科学方法";
+				mes "让同胞获得永生，";
+				mes "结果却陷入了疯狂。";
+				mes "他在自己身上做实验，";
+				mes "酿成了灾难性的后果。^000000";
+				next;
+				mes "^8B6914伊米尔之心的";
+				mes "能量校准出现了差错，";
+				mes "那位科学家变成了";
+				mes "我们现在所说的凯美拉。";
+				mes "他和他的实验体";
+				mes "被放入了朱庇洛斯城中。^000000";
+				next;
+				mes "^8B6914这些不死的凯美拉";
+				mes "把整座城市夷为平地，";
+				mes "杀害了无数人。显然，";
+				mes "一组科学家设法";
+				mes "抢救出了伊米尔之心的";
+				mes "一块碎片，用它把朱庇洛斯的";
+				mes "一部分送上了天空。^000000";
+				next;
+				mes "^8B6914朱庇洛斯的那一部分";
+				mes "最终发展成了朱诺城。";
+				mes "由于把朱诺送上天空的";
+				mes "科学家们随后都立即死于";
+				mes "不明原因，他们没有留下任何文献。^000000";
+				next;
+				mes "^8B6914据说那只凯美拉，";
+				mes "以及创造它的实验室，";
+				mes "至今仍留在这座";
+				mes "曾经伟大的城市";
+				mes "朱庇洛斯的遗迹之下。^000000";
+				close;
+			case 4:
+				mes "["+strcharinfo(0)+"]";
+				mes "呃……看这种";
+				mes "聪明人才看的书，";
+				mes "看得我头疼。";
+				mes "有了！我去玩游戏吧！";
+				close;
+			}
+		}
+		switch(select("前言:合上文件。")) {
+		case 1:
+			mes "^8B6914学者们确信，";
+			mes "朱庇洛斯文明";
+			mes "曾经位于地面之上，";
+			mes "但如今已埋藏在";
+			mes "艾尔梅斯高原之下。";
+			mes "这座城市毁灭的";
+			mes "原因至今仍不明确……^000000";
+			next;
+			mes "^8B6914关于朱庇洛斯衰亡的原因，";
+			mes "人们有很多猜测，";
+			mes "但那个时代的文献";
+			mes "已经很难找到。";
+			mes "目前我们掌握的证据";
+			mes "都得不出定论。^000000";
+			next;
+			mes "^8B6914尽管缺乏关于";
+			mes "朱庇洛斯文明的";
+			mes "实证或具体资料，";
+			mes "我们的现代世界";
+			mes "也许仍能从那座";
+			mes "古城的遗迹中学到很多。";
+			mes "..................^000000";
+			if (!yuno_hist) set yuno_hist,1;
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "这……";
+			mes "这也算是";
+			mes "研究论文？";
+			mes "里面几乎";
+			mes "没有研究内容……";
+			close;
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "嗯……";
+			mes "这还不够分量，";
+			mes "算不上真正的";
+			mes "学术著作。";
+			mes "肯定还没写完。";
+			close;
+		}
+	case 2:
+		if (yuno_hist < 5) {
+			mes "["+strcharinfo(0)+"]";
+			mes "算了……";
+			mes "我看书看累了。";
+			mes "真是讽刺。";
+			close;
+		}
+		else if (yuno_hist < 7) {
+			mes "["+strcharinfo(0)+"]";
+			mes "我不想看这个。";
+			mes "图片太少了……";
+			close;
+		}
+		else if (yuno_hist < 9) {
+			mes "["+strcharinfo(0)+"]";
+			mes "看起来非常深奥……";
+			close;
+		}
+		else if (yuno_hist < 10) {
+			mes "["+strcharinfo(0)+"]";
+			mes "我认得这本书……";
+			mes "但现在不想看。";
+			close;
+		}
+		else {
+			mes "["+strcharinfo(0)+"]";
+			mes "这篇论文";
+			mes "看起来不错嘛～";
+			mes "当然，我也";
+			mes "出了一份力……";
+			close;
+		}
+	}
+}
+
+yuno_in04,188,118,4	script	书籍#juperos	111,{
+	if (yuno_hist > 7) {
+		mes "^8B6914*《自我诚实》*";
+		mes "*受益终生！*";
+		mes "作者：斯蒂芬·欧阳";
+		mes " ";
+		mes " ";
+		mes "出版社：";
+		mes "武术出版社^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "哇、哇哦！";
+		mes "这本书之前";
+		mes "不在这里！";
+		mes "看起来挺有意思……";
+		close;
+	}
+	mes "["+strcharinfo(0)+"]";
+	mes "你知道吗？";
+	mes "我想随便拿本书";
+	mes "翻几页看看。";
+	mes "嗯，让我瞧瞧……";
+	next;
+	mes "^8B6914『上将，凯洛星人";
+	mes "还在推进！』麦肯里克指挥官";
+	mes "一反常态地报告，";
+	mes "没有了平日的嚣张。";
+	mes "『他们……他们停不下来！』";
+	mes "但雷赫上将的眼神冰冷，";
+	mes "透着无情的严厉。^000000";
+	next;
+	mes "^8B6914『让那些该死的太空";
+	mes "外星人来吧。』雷赫";
+	mes "咬牙切齿地说。『没有";
+	mes "泽诺之剑去召唤";
+	mes "天神巨剑的力量，";
+	mes "我们毫无胜算。一切都……";
+	mes "全都完了。可恶……』^000000";
+	next;
+	mes "^8B6914大门猛地打开，";
+	mes "巴基冲进了房间。";
+	mes "『泽诺之剑！";
+	mes "泽诺之剑！有人";
+	mes "找到它了！』男孩喊道。";
+	mes "『真的吗？！我们得快点了：";
+	mes "地球没有时间了！』^000000";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "……";
+	mes "…………";
+	mes "哇哦。我真该";
+	mes "从头开始读读";
+	mes "这部杰作……";
+	close;
+}
+
+// Bronze Statue - juperos_01 99 112
+
+juperos_01,99,112,4	script	青铜雕像#1	844,{
+	if (yuno_hist > 3) {
+		mes "^3355FF『你想看到疯狂的尽头吗？";
+		mes "他在三根石柱被毁之处、";
+		mes "两百个幻影徘徊之处";
+		mes "等待着。』^000000";
+		close;
+	}
+	else if (yuno_hist == 3) {
+		mes "["+strcharinfo(0)+"]";
+		mes "我最好去朱诺图书馆";
+		mes "找法伊鲁兹，";
+		mes "把铭文的事告诉她。";
+		close;
+	}
+	else {
+		mes "^3355FF青铜雕像的权杖上";
+		mes "刻着奇特的铭文。^000000";
+		next;
+		switch(select("调查:不理它")) {
+		case 1:
+			mes "^3355FF这是一段用古老语言";
+			mes "写成的铭文，你看不懂，";
+			mes "但不知为何，你却能";
+			mes "毫无障碍地读出";
+			mes "它的发音。^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "真诡异！";
+			mes "我明明不该";
+			mes "读得懂这个，";
+			mes "但我就是能。";
+			mes "我知道这些字母";
+			mes "都该怎么发音……";
+			next;
+			if (yuno_hist == 2) {
+				mes "["+strcharinfo(0)+"]";
+				mes "话说回来，法伊鲁兹";
+				mes "确实说过这被施了魔法。";
+				mes "好吧，我回朱诺图书馆，";
+				mes "把发现告诉她吧。";
+				set yuno_hist,3;
+				changequest 11017,11018;
+				close;
+			}
+			mes "["+strcharinfo(0)+"]";
+			mes "咦。也许只有学者，";
+			mes "比如朱诺的什么人，";
+			mes "才能看懂这些内容。";
+			close;
+		case 2:
+			close;
+		}
+	}
+}
+
+yuno_in04,169,109,1	script	野心勃勃的忽克连	111,{
+	mes "*《忽克连：野心》*";
+	mes "作者：阿拉缸·考尔*";
+	mes " ";
+	mes " ";
+	mes " ";
+	mes " ";
+	mes "出版社：";
+	mes "穆哈图书公司";
+	next;
+	mes "……";
+	mes "为了拥有世界上最强的武器，";
+	mes "他可以不惜一切代价。";
+	mes "他成为了一名铁匠，";
+	mes "这样他就能辨别";
+	mes "哪些武器最为强大……";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "真奇怪……";
+	mes "下一页";
+	mes "被撕掉了。";
+	close;
+}
+
+yuno_in04,174,111,1	script	身无分文的忽克连	111,{
+	mes "^8B6914*《身无分文的忽克连》*";
+	mes " * 身无分文的忽克连 * ";
+	mes "作者：忽克连";
+	mes " ";
+	mes " ";
+	mes "出版社：";
+	mes "穆哈图书公司^000000";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "这本书看起来";
+	mes "完全是一坨垃圾。";
+	mes "让蒙着眼睛的牙医";
+	mes "给我钻牙，";
+	mes "都比看它有趣。";
+	mes "还是说……未必？";
+	close;
+}
+
+yuno_in04,102,106,1	script	大众美食	111,{
+	mes "^8B6914*《大众美食》*";
+	mes "作者：卷心菜泡菜社区";
+	mes " ";
+	mes " ";
+	mes " ";
+	mes "出版社：";
+	mes "穆哈图书公司^000000";
+	next;
+	switch(select(" 1. 油炸悠悠尾巴: 14. 波利沙拉: 252. 鸟喙汤")) {
+	case 1:
+		mes "^8B6914……";
+		mes "如果可能，尽量";
+		mes "使用从活悠悠身上";
+		mes "割下来的尾巴。";
+		mes "接下来，关于剥皮……^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "呃……";
+		mes "想吐？";
+		close;
+	case 2:
+		mes "["+strcharinfo(0)+"]";
+		mes "嘿，这一页没了！";
+		mes "看来波利沙拉是";
+		mes "整本书里";
+		mes "最受欢迎的美食。";
+		close;
+	case 3:
+		mes "^8B6914……";
+		mes "用草药油把切好的";
+		mes "鸟喙炸至酥脆。";
+		mes "然后，把羽毛";
+		mes "倒进搅拌机……^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "嗯……";
+		mes "听起来有点太『美食』了，";
+		mes "不合我的口味。";
+		mes "所谓『美食』，";
+		mes "就是『恶心透了』的意思。";
+		close;
+	}
+}
+
+yuno_in04,111,108,1	script	捕鼠人哈梅伦	111,{
+	mes "["+strcharinfo(0)+"]";
+	mes "我够……";
+	mes "够不着……！";
+	close;
+}
+
+yuno_in04,167,127,1	script	红色书籍	111,{
+	mes "^3355FF你发现了一本";
+	mes "红色封皮的书。^000000";
+	next;
+	switch(select("阅读。:不看了。")) {
+	case 1:
+		mes "^8B6914……^000000";
+		next;
+		mes "^8B6914……";
+		mes "…………^000000";
+		next;
+		mes "^8B6914……";
+		mes "…………";
+		mes "……………^000000";
+		next;
+		mes "^8B6914……";
+		mes "…………";
+		mes "……………";
+		mes "………………^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "这是……";
+		mes "莎士比亚作品集的";
+		mes "涂色书版本？";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "等等……";
+		mes "莎士比亚的粉丝";
+		mes "干嘛要涂色书？";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "嗯……这个嘛……";
+		mes "我想，读莎士比亚的";
+		mes "小孩子应该会";
+		mes "喜欢这种东西吧。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "等一下……";
+		mes "真有能读莎士比亚";
+		mes "作品的小孩子吗？";
+		mes "希望没有……";
+		close;
+	case 2:
+		mes "["+strcharinfo(0)+"]";
+		mes "多么奇怪";
+		mes "又神秘的书啊。";
+		mes "不读一读的话，";
+		mes "我永远不知道里面写了什么！";
+		mes "拜托！红色封皮";
+		mes "难道没有别的含义吗？";
+		close;
+	}
+}
+
+yuno_in04,121,109,1	script	卷轴	111,{
+	mes "^3355FF你发现了一卷";
+	mes "古旧的卷轴，";
+	mes "上面积了";
+	mes "一层细灰。^000000";
+	next;
+	switch(select("细读:不看了")) {
+	case 1:
+		mes "^8B6914装备升级指南";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "1. 装备升级的定义";
+		mes " ";
+		mes "升级装备成功的关键";
+		mes "只来自一个地方：";
+		mes "你的『心』。";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "2. 积极心态的力量";
+		mes "在尝试升级装备之前，";
+		mes "先计划好要升到多高、";
+		mes "打算花多少钱。";
+		mes "但就像所有女士一样，";
+		mes "幸运女神只在你挥霍到底时";
+		mes "才会微笑。^000000";
+		mes " ";
+		mes " ";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "等等，等等……";
+		mes "这东西确实古老。";
+		mes "我是说，它显然是";
+		mes "从大男子主义的立场写的，";
+		mes "还在鼓吹";
+		mes "刻板的性别角色。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "我……";
+		mes "我被冒犯到了。";
+		close;
+	case 2:
+		mes "["+strcharinfo(0)+"]";
+		mes "这卷轴太原始了。";
+		mes "阅读技术已经有了";
+		mes "各种我不能或缺的";
+		mes "进步……比如书页。";
+		close;
+	}
+}
+
+yuno_in04,118,116,4	script	纸张	111,{
+	mes "^3355FF这是一张纸，";
+	mes "看起来像是";
+	mes "一封私人信件。^000000";
+	next;
+	switch(select("读一读。:不看了。")) {
+	case 1:
+		if (yuno_hist > 7) {
+			mes "^8B6914又及：";
+			mes "请……";
+			mes "回到我身边。";
+			mes " ";
+			mes " ";		  
+			mes "爱你的，";
+			mes "法伊鲁兹^000000";
+			close;
+		}
+		mes "^8B6914……";
+		mes "我忘不了你的笑容。";
+		mes "无论如何，即使你";
+		mes "讨厌我，我的心意";
+		mes "也永远只属于你。";
+		mes "你是最特别的人，";
+		mes "是我心中最重要的人。^000000";
+		next;
+		mes "^8B6914我知道我们有过分歧，";
+		mes "但请不要拒绝我的爱。";
+		mes "我希望你能看在我们的份上";
+		mes "原谅我。";
+		mes "- 爱你的，法伊鲁兹^000000";
+		next;
+		if (getpartnerid()) {
+			mes "["+strcharinfo(0)+"]";
+			mes "啊啊啊～";
+			mes "恋爱的感觉真好！";
+			close;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "搞什么——？！";
+		mes "呸——！";
+		mes "恋爱最讨厌了！";
+		close;
+	case 2:
+		mes "["+strcharinfo(0)+"]";
+		mes "我想我最好";
+		mes "别看这个。";
+		mes "我是说，看了";
+		mes "也许会后悔。";
+		close;
+	}
+}
+
+juperos_01,123,92,4	script	石像	844,{
+	if (yuno_hist) {
+		mes "^3355FF这是一座石像，";
+		mes "看起来和朱诺图书馆里的";
+		mes "那座一模一样。";
+		mes "不过它上面雕的是";
+		mes "石书而不是真书。^000000";
+		next;
+		mes "^3355FF也许朱诺图书馆里的";
+		mes "那座石像是仿照";
+		mes "这座制作的。";
+		mes "但谁能确定呢？^000000";
+		close;
+	}
+	mes "^3355FF这是一座";
+	mes "古老的石雕。^000000";
+	close;
+}
+
+juperos_01,99,71,4	script	青铜雕像#2	844,{
+	mes "^3355FF这是一座精致的";
+	mes "青铜雕像，";
+	mes "高度是常人的两倍。^000000";
+	close;
+}
+
+juperos_01,79,92,4	script	雕塑	844,{
+	mes "^3355FF这是一座让你";
+	mes "觉得眼熟的雕塑。^000000";
+	close;
+}
+
+juperos_01,215,127,4	script	机械雕像	844,{
+	mes "^3355FF这是一座人形机械的";
+	mes "半身像，中间刻着";
+	mes "一块眼熟的纹章碎片。^000000";
+	next;
+	mes "^3355FF雕像的整体造型";
+	mes "令人费解，";
+	mes "但你注意到";
+	mes "它伸出的手臂";
+	mes "指向西方。^000000";
+	close;
+}
+
+//============================================================
+// Jupers Core access Story Event
+//============================================================
+//============================================================
+// 1rd Floor -> 2nd Floor
+//============================================================
+juperos_01,100,91,0	script	jupe_goto#1	-1,2,2,{
+	end;
+
+OnTouch_:
+	initnpctimer "jupe_goto#1",1;
+	mes "^777777["+ strcharinfo(0) +"]^000000";
+	mes "这光芒……";
+	mes "感觉就像……";
+	mes "它的温暖……";
+	mes "包裹着我全身……";
+	next;
+	switch(select("啊，好舒服……:不！这不对劲！")) {
+	case 1:
+		mes "^777777["+ strcharinfo(0) +"]^000000";
+		mes "啊啊啊……";
+		mes "感觉就像";
+		mes "漂浮了起来……";
+		specialeffect2 EF_LIGHTSPHERE;
+		close2;
+		stopnpctimer;
+		warp "juperos_02",128,278;
+		break;
+	case 2:
+		mes "^777777["+ strcharinfo(0) +"]^000000";
+		mes "不、不！";
+		mes "这不对劲！";
+		mes "有怪事发生了！";
+		mes "我得赶紧离开！";
+		close2;
+		stopnpctimer;
+		warp "juperos_01",96,91;
+		break;
+	}
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	warp "juperos_02",128,278;
+	donpcevent "jupe_goto#2::OnEnable";
+	end;
+}
+
+juperos_01,100,91,0	script	jupe_goto#2	-1,2,2,{
+OnInit:
+	disablenpc "jupe_goto#2";
+	end;
+
+OnEnable:
+	enablenpc "jupe_goto#2";
+	disablenpc "jupe_goto#1";
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "juperos_02",128,278;
+	end;
+
+OnTimer2000:
+	enablenpc "jupe_goto#1";
+	disablenpc "jupe_goto#2";
+	end;
+}
+
+//============================================================
+// 2nd Floor 
+//============================================================
+
+juperos_02,97,70,0	script	3F Gate Switch#jupe	-1,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnReset:
+	killmonster "juperos_02","3F Gate Switch#jupe::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "3F Gate Switch#jupe";
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	set .MyMobs,3;
+	monster "juperos_02",24,275,"1st Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
+	monster "juperos_02",240,29,"2nd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
+	monster "juperos_02",282,183,"3rd Gate Switch",1674,1,"3F Gate Switch#jupe::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs == 2)
+		mapannounce "juperos_02","你们是什么人，竟敢来到这里？",bc_map,"0xFF0000";
+	else if (.MyMobs == 1)
+		mapannounce "juperos_02","你们是来寻找朱庇洛斯的吗？！它已经不复存在了……",bc_map,"0xFF0000";
+	else if (.MyMobs == 0) {
+		mapannounce "juperos_02","你们是来见我的吗？好啊！那就先找到我！",bc_map,"0xFF0000";
+		specialeffect2 EF_SCREEN_QUAKE;
+		soundeffectall "earth_quake.wav",0;
+		disablenpc "3F Gate Switch#jupe";
+		donpcevent "Restricted Area#jupe::OnEnable";
+	}
+	end;
+}
+
+
+juperos_02,130,149,0	script	Restricted Area#jupe	139,2,2,{
+OnInit:
+	disablenpc "Restricted Area#jupe";
+	end;
+
+OnEnable:
+	enablenpc "Restricted Area#jupe";
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	mapannounce "juperos_02","嗡！嗡！",bc_map,"0xE559A2";
+	end;
+
+OnTimer7000:
+	mapannounce "juperos_02","各位访客请注意。",bc_map,"0xE559A2";
+	end;
+
+OnTimer9000:
+	mapannounce "juperos_02","你们可以短暂进入下一个区域。请使用地图中央的传送门。",bc_map,"0xE559A2";
+	end;
+
+OnTimer9001:
+OnTimer23000:
+OnTimer46000:
+OnTimer69000:
+OnTimer92000:
+OnTimer115000:
+OnTimer161000:
+OnTimer184000:
+OnTimer207000:
+OnTimer230000:
+OnTimer253000:
+OnTimer276000:
+OnTimer299000:
+OnTimer322000:
+OnTimer345000:
+OnTimer368000:
+OnTimer391000:
+OnTimer414000:
+OnTimer460000:
+OnTimer483000:
+OnTimer506000:
+OnTimer529000:
+OnTimer552000:
+	specialeffect EF_BIG_PORTAL;
+	end;
+
+OnTimer556000:
+	mapannounce "juperos_02","各位访客请注意。通往下一区域的大门即将关闭。",bc_map,"0xE559A2";
+	end;
+
+OnTimer561000:
+	mapannounce "juperos_02","距离大门关闭还剩1分钟。",bc_map,"0xE559A2";
+	end;
+
+OnTimer598000:
+	specialeffect EF_BIG_PORTAL;
+	end;
+
+OnTimer600000:
+	mapannounce "juperos_02","大门正在关闭……",bc_map,"0xE559A2";
+	end;
+
+OnTimer603000:
+	mapannounce "juperos_02","开关稍后会重新激活。",bc_map,"0xE559A2";
+	end;
+
+OnTimer621000:
+	disablenpc "Restricted Area#jupe";
+	end;
+
+OnTimer1200000:
+	donpcevent "3F Gate Switch#jupe::OnEnable";
+	stopnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_gate",50,167;
+	end;
+}
+
+//============================================================
+// Security Checkpoint 1-1
+//============================================================
+jupe_area1,88,224,0	script	#hole#1-1	844,{
+	cutin "1",2;
+	if ($@JupreArea1InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "1",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7356) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "1-1",2;
+				next;
+				if ($@JupreArea1InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "1-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#1-1::OnEnable";
+					enablenpc "Red Alarm#1-1";
+					disablenpc "#hole#1-1";
+					close2;
+					cutin "1-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "1",255;
+				end;
+			}
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "1",255;
+			end;
+		}
+		close;
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "1",255;
+		end;
+	}
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#1-1";
+	disablenpc "Red Alarm#1-1";
+	end;
+}
+
+jupe_area1,83,221,0	script	Warp#1-1	139,2,2,{
+OnInit:
+	disablenpc "Warp#1-1";
+	end;
+
+OnEnable:
+	enablenpc "Warp#1-1";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area1",47,259;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	disablenpc "Warp#1-1";
+	end;
+}
+
+jupe_area1,47,259,0	script	Red Alarm#1-1	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#1-1";
+	end;
+
+OnTouch_:
+	donpcevent "Red Alarm On#1-1::OnEnable";
+	disablenpc "Red Alarm#1-1";
+	donpcevent "#hole#1-1::OnStop_Timer";
+	set $@JupreArea1InUse,1;
+	disablenpc "#hole#1-1";
+	end;
+}
+
+-	script	Red Alarm On#1-1	-1,{
+OnInit:
+	disablenpc "Red Alarm On#1-1";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#1-1";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area1","来到这里的人们啊……",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area1","我并不打算阻止你们。",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area1","但我想你们已经准备好面对一些障碍了……",bc_map,"0xFF0000";
+	donpcevent "Monster1#1-1::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area1","毕竟，你们正闯入一片禁地！",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#1-1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#1-1	-1,{
+OnInit:
+	disablenpc "Monster1#1-1";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#1-1";
+	killmonster "jupe_area1","Monster1#1-1::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster1#1-1";
+	initnpctimer;
+	set .MyMobs,8;
+	monster "jupe_area1",30,263,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,262,"Security Guard",1669,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,261,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,260,"Security Guard",1669,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,259,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,258,"Security Guard",1669,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,257,"Security Guard",1675,1,"Monster1#1-1::OnMyMobDead";
+	monster "jupe_area1",30,256,"Security Guard",1669,1,"Monster1#1-1::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","你们知道这只是幻觉吗？",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-1";
+	stopnpctimer;
+	donpcevent "Monster1#1-1::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#1-1::OnEnable";
+		disablenpc "Monster1#1-1";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#1-1	-1,{
+OnInit:
+	disablenpc "Monster2#1-1";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#1-1";
+	killmonster "jupe_area1","Monster2#1-1::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#1-1";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area1","现在呢？",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area1","让我看看……",bc_map,"0xFF0000";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area1","你们到底有多强！",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area1";
+	set .MyMobs,8;
+	monster "jupe_area1",30,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",31,238,"Security Guard",1669,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",32,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",33,238,"Security Guard",1669,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",34,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",35,238,"Security Guard",1669,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",36,238,"Security Guard",1675,1,"Monster2#1-1::OnMyMobDead";
+	monster "jupe_area1",37,238,"Security Guard",1669,1,"Monster2#1-1::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","哇哈哈哈！你们只会逃跑！",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-1";
+	stopnpctimer;
+	donpcevent "Monster2#1-1::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area1","滋滋。滋滋……",bc_map,"0xFF0000";
+		disablenpc "Monster2#1-1";
+		enablenpc "#hole#1-1";
+		set $@JupreArea1InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Security Checkpoint 1-2
+//============================================================
+jupe_area1,25,238,0	script	#hole#1-2	844,{
+	cutin "2",2;
+	if ($@JupreArea1InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "2",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7357) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "2-1",2;
+				next;
+				if ($@JupreArea1InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "2-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#1-2::OnEnable";
+					enablenpc "Red Alarm#1-2";
+					disablenpc "#hole#1-2";
+					close2;
+					cutin "2-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "2",255;
+				end;
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "2",255;
+			end;
+		}
+		close;
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "2",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#1-2";
+	disablenpc "Red Alarm#1-2";
+	end;
+}
+
+jupe_area1,21,225,0	script	Warp#1-2	139,2,2,{
+OnInit:
+	disablenpc "Warp#1-2";
+	end;
+
+OnEnable:
+	enablenpc "Warp#1-2";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area1",21,191;
+	end;
+
+OnTimer22500:
+	disablenpc "Warp#1-2";
+	end;
+}
+
+jupe_area1,21,191,0	script	Red Alarm#1-2	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#1-2";
+	end;
+
+OnTouch_:
+	set $@JupreArea1InUse,1;
+	donpcevent "Red Alarm On#1-2::OnEnable";
+	disablenpc "Red Alarm#1-2";
+	disablenpc "#hole#1-2";
+	end;
+}
+
+-	script	Red Alarm On#1-2	-1,{
+OnInit:
+	disablenpc "Red Alarm On#1-2";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#1-2";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area1","来吧，来吧！",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area1","对。跑吧……直接跑进我的手掌心！",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area1","你们想知道我是谁吗？",bc_map,"0xFF0000";
+	donpcevent "Monster1#1-2::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area1","等你们打败我所有的爪牙，就会知道了！",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#1-2";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#1-2	-1,{
+OnInit:
+	disablenpc "Monster1#1-2";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#1-2";
+	killmonster "jupe_area1","Monster1#1-2::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#1-2";
+	set .MyMobs,8;
+	monster "jupe_area1",30,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",31,176,"High Guard",1675,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",32,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",33,176,"High Guard",1675,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",34,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",35,176,"High Guard",1675,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",36,176,"High Guard",1669,1,"Monster1#1-2::OnMyMobDead";
+	monster "jupe_area1",37,176,"High Guard",1675,1,"Monster1#1-2::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","真不敢相信你们竟然这么懦弱……",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-2";
+	stopnpctimer;
+	donpcevent "Monster1#1-2::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#1-2::OnEnable";
+		disablenpc "Monster1#1-2";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#1-2	-1,{
+OnInit:
+	disablenpc "Monster2#1-2";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#1-2";
+	killmonster "jupe_area1","Monster2#1-2::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#1-2";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area1","我曾是这座地下研究所的负责人。",bc_map,"0xFF0000";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area1","但那是很久以前的事了，那时我还只是个人类。",bc_map,"0xFF0000";
+	end;
+
+OnTimer6000:
+	mapannounce "jupe_area1","人们叫我维斯珀·牛顿。哈哈哈，那时候他们都叫我疯子。",bc_map,"0xFF0000";
+	set .MyMobs,13;
+	monster "jupe_area1",30,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",31,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",32,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",33,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",34,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",35,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",36,152,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",37,152,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",30,150,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",31,150,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",32,150,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",33,150,"Security Guard",1675,1,"Monster2#1-2::OnMyMobDead";
+	monster "jupe_area1",34,150,"Security Guard",1669,1,"Monster2#1-2::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","……还不行。",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-2";
+	stopnpctimer;
+	donpcevent "Monster2#1-2::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area1","还不行！",bc_map,"0xFF0000";
+		disablenpc "Monster2#1-2";
+		enablenpc "#hole#1-2";
+		set $@JupreArea1InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Security Checkpoint 1-3
+//============================================================
+jupe_area1,36,146,0	script	#hole#1-3	844,{
+	cutin "3",2;
+	if ($@JupreArea1InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "3",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7358) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "3-1",2;
+				next;
+				if ($@JupreArea1InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "3-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#1-3::OnEnable";
+					enablenpc "Red Alarm#1-3";
+					disablenpc "#hole#1-3";
+					close2;
+					cutin "3-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "3",255;
+				end;
+			}
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "3",255;
+			end;
+		}
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "3",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#1-3";
+	disablenpc "Red Alarm#1-3";
+	end;
+}
+
+jupe_area1,33,137,0	script	Warp#1-3	139,2,2,{
+OnInit:
+	disablenpc "Warp#1-3";
+	end;
+
+OnEnable:
+	enablenpc "Warp#1-3";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area1",33,105;
+	end;
+
+OnTimer22500:
+	disablenpc "Warp#1-3";
+	end;
+}
+
+jupe_area1,33,105,0	script	Red Alarm#1-3	-1,0,4,{
+OnInit:
+	disablenpc "Red Alarm#1-3";
+	end;
+
+OnTouch_:
+	set $@JupreArea1InUse,1;
+	donpcevent "Red Alarm On#1-3::OnEnable";
+	disablenpc "Red Alarm#1-3";
+	disablenpc "#hole#1-3";
+	end;
+}
+
+-	script	Red Alarm On#1-3	-1,{
+OnInit:
+	disablenpc "Red Alarm On#1-3";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#1-3";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area1","这些安保系统……",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area1","它们其实不是为了防护。",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area1","也算是我打发时间的爱好吧……",bc_map,"0xFF0000";
+	donpcevent "Monster1#1-3::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area1","长生不死，我有的是时间……",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#1-3";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#1-3	-1,{
+OnInit:
+	disablenpc "Monster1#1-3";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#1-3";
+	killmonster "jupe_area1","Monster1#1-3::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#1-3";
+	set .MyMobs,8;
+	monster "jupe_area1",30,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",31,89,"Security Guard",1669,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",32,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",33,89,"Security Guard",1669,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",34,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",35,89,"Security Guard",1669,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",36,89,"Security Guard",1675,1,"Monster1#1-3::OnMyMobDead";
+	monster "jupe_area1",37,89,"Security Guard",1669,1,"Monster1#1-3::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","滋滋……滋滋……",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	donpcevent "Monster1#1-3::OnDisable";
+	enablenpc "#hole#1-3";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#1-3::OnEnable";
+		disablenpc "Monster1#1-3";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#1-3	-1,{
+OnInit:
+	disablenpc "Monster2#1-3";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#1-3";
+	killmonster "jupe_area1","Monster2#1-3::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster2#1-3";
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area1","你们为何而来？",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area1","你们是指望找到什么美妙的东西吗？还是什么奇迹？",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_area1","你们错了！欢迎来到地狱！",bc_map,"0xFF0000";
+	set .MyMobs,15;
+	monster "jupe_area1",42,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",43,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",44,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",45,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",46,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",47,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",48,64,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",49,64,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",42,62,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",43,62,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",44,62,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",45,62,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",46,62,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",47,62,"Security Guard",1675,1,"Monster2#1-3::OnMyMobDead";
+	monster "jupe_area1",48,62,"Security Guard",1669,1,"Monster2#1-3::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","你们还有勇气吗？来。证明给我看。",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-3";
+	stopnpctimer;
+	donpcevent "Monster2#1-3::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area1","你们还有勇气吗？来。证明给我看。",bc_map,"0xFF0000";
+		disablenpc "Monster2#1-3";
+		enablenpc "#hole#1-3";
+		set $@JupreArea1InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Security Checkpoint 1-4
+//============================================================
+jupe_area1,50,49,0	script	#hole#1-4	844,{
+	cutin "4",2;
+	if ($@JupreArea1InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "4",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7359) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "4-1",2;
+				next;
+				if ($@JupreArea1InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "4-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#1-4::OnEnable";
+					donpcevent "Red Alarm#1-4::OnEnable";
+					disablenpc "#hole#1-4";
+					close2;
+					cutin "4-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "4",255;
+				end;
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "4",255;
+			end;
+		}
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "4",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	enablenpc "#hole#1-4";
+	disablenpc "Red Alarm#1-4";
+	end;
+}
+
+jupe_area1,57,53,0	script	Warp#1-4	139,2,2,{
+OnInit:
+	disablenpc "Warp#1-4";
+	end;
+
+OnEnable:
+	enablenpc "Warp#1-4";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area1",83,157;
+	end;
+
+OnTimer5000:
+	disablenpc "Warp#1-4";
+	end;
+}
+
+jupe_area1,83,157,0	script	Red Alarm#1-4	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#1-4";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm#1-4";
+	end;
+
+OnTouch_:
+	set $@JupreArea1InUse,1;
+	donpcevent "Red Alarm On#1-4::OnEnable";
+	disablenpc "Red Alarm#1-4";
+	disablenpc "#hole#1-4";
+	end;
+}
+
+-	script	Red Alarm On#1-4	-1,{
+OnInit:
+	disablenpc "Red Alarm On#1-4";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#1-4";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area1","我一直在等一个强到足以与我抗衡的人。",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area1","如果你能听到这段话，我希望你就是那个人……",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area1","也许，只是昔日之我的一道残影……",bc_map,"0xFF0000";
+	donpcevent "Monster1#1-4::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area1","就在这下面的某处徘徊……",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	stopnpctimer;
+	disablenpc "Red Alarm On#1-4";
+	end;
+}
+
+-	script	Monster1#1-4	-1,{
+OnInit:
+	disablenpc "Monster1#1-4";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#1-4";
+	killmonster "jupe_area1","Monster1#1-4::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#1-4";
+	set .MyMobs,8;
+	monster "jupe_area1",92,154,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",96,154,"Security Guard",1675,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",100,154,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",104,154,"Security Guard",1675,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",92,161,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",96,161,"Security Guard",1675,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",100,161,"Security Guard",1669,1,"Monster1#1-4::OnMyMobDead";
+	monster "jupe_area1",104,161,"Security Guard",1675,1,"Monster1#1-4::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area1","滋滋……滋滋……",bc_map,"0xFF0000";
+	set $@JupreArea1InUse,0;
+	end;
+
+OnTimer300002:
+	stopnpctimer;
+	enablenpc "#hole#1-4";
+	donpcevent "Monster1#1-4::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#1-4::OnEnable";
+		disablenpc "Monster1#1-4";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#1-4	-1,{
+OnInit:
+	disablenpc "Monster2#1-4";
+	end;
+
+OnDisable:
+	killmonster "jupe_area1","Monster2#1-4::OnMyMobDead";
+	disablenpc "Monster2#1-4";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#1-4";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area1","我永远无法安息……",bc_map,"0xFF0000";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area1","我会永远等下去，或者等到有人能终结我的痛苦……",bc_map,"0xFF0000";
+	end;
+
+OnTimer6000:
+	mapannounce "jupe_area1","我会在那里等你！",bc_map,"0xFF0000";
+	set .MyMobs,10;
+	monster "jupe_area1",104,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",108,161,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",111,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",112,161,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",115,161,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",104,154,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",108,154,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",111,154,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",112,154,"Security Guard",1675,1,"Monster2#1-4::OnMyMobDead";
+	monster "jupe_area1",115,154,"Security Guard",1669,1,"Monster2#1-4::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	set $@JupreArea1InUse,0;
+	mapannounce "jupe_area1","真可笑……不是吗？",bc_map,"0xFF0000";
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#1-4";
+	donpcevent "Monster2#1-4::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area1","真可笑……不是吗？",bc_map,"0xFF0000";
+		disablenpc "Monster2#1-4";
+		enablenpc "#hole#1-4";
+		set $@JupreArea1InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Move to Elevator
+//============================================================
+jupe_area1,112,162,0	script	Lever#ufe	844,{
+	mes "^3355FF这是一根操纵杆，";
+	mes "你不知道";
+	mes "它有什么用。^000000";
+	next;
+	switch(select("拉动。:取消。")) {
+	case 1:
+		if ($@JupreArea1InUse == 1) close;
+		initnpctimer;
+		donpcevent "LeverWarp#ufe::OnEnable";
+		disablenpc "Lever#ufe";
+		close;
+	case 2:
+		mes "[" + strcharinfo(0) + "]";
+		mes "要拉这根操纵杆吗？";
+		mes "我甚至不知道";
+		mes "会发生什么……";
+		close;
+	}
+	close;
+
+OnTimer3000:
+	enablenpc "Lever#ufe";
+	stopnpctimer;
+	end;
+}
+
+jupe_area1,117,157,0	script	LeverWarp#ufe	139,2,2,{
+OnInit:
+	disablenpc "LeverWarp#ufe";
+	end;
+
+OnEnable:
+	enablenpc "LeverWarp#ufe";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_gate",28,30;
+	end;
+
+OnTimer3000:
+	stopnpctimer;
+	disablenpc "LeverWarp#ufe";
+	end;
+}
+
+//============================================================
+// Security Checkpoint 2-1
+//============================================================
+jupe_area2,74,224,0	script	#hole#2-1	844,{
+	cutin "1",2;
+	if ($@JupreArea2InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "1",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7356) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "1-1",2;
+				next;
+				if ($@JupreArea2InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "1-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#2-1::OnEnable";
+					enablenpc "Red Alarm#2-1";
+					disablenpc "#hole#2-1";
+					close2;
+					cutin "1-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "1",255;
+				end;
+			}
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "1",255;
+			end;
+		}
+		close;
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "1",255;
+		end;
+	}
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#2-1";
+	disablenpc "Red Alarm#2-1";
+	end;
+}
+
+jupe_area2,80,221,0	script	Warp#2-1	139,2,2,{
+OnInit:
+	disablenpc "Warp#2-1";
+	end;
+
+OnEnable:
+	enablenpc "Warp#2-1";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area2",116,259;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	disablenpc "Warp#2-1";
+	end;
+}
+
+jupe_area2,116,259,0	script	Red Alarm#2-1	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#2-1";
+	end;
+
+OnTouch_:
+	donpcevent "Red Alarm On#2-1::OnEnable";
+	disablenpc "Red Alarm#2-1";
+	donpcevent "#hole#2-1::OnStop_Timer";
+	set $@JupreArea2InUse,1;
+	disablenpc "#hole#2-1";
+	end;
+}
+
+-	script	Red Alarm On#2-1	-1,{
+OnInit:
+	disablenpc "Red Alarm On#2-1";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#2-1";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area2","来到这里的人们啊……",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area2","我并不打算阻止你们。",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area2","但我想你们已经准备好面对一些障碍了……",bc_map,"0xFF0000";
+	donpcevent "Monster1#2-1::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area2","毕竟，你们正闯入一片禁地！",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#2-1";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#2-1	-1,{
+OnInit:
+	disablenpc "Monster1#2-1";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#2-1";
+	killmonster "jupe_area2","Monster1#2-1::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster1#2-1";
+	initnpctimer;
+	set .MyMobs,8;
+	monster "jupe_area2",126,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",127,252,"Security Guard",1675,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",128,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",129,252,"Security Guard",1675,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",130,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",131,252,"Security Guard",1675,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",132,252,"Security Guard",1669,1,"Monster1#2-1::OnMyMobDead";
+	monster "jupe_area2",133,252,"Security Guard",1675,1,"Monster1#2-1::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","你们知道这只是幻觉吗？",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-1";
+	stopnpctimer;
+	donpcevent "Monster1#2-1::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#2-1::OnEnable";
+		disablenpc "Monster1#2-1";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#2-1	-1,{
+OnInit:
+	disablenpc "Monster2#2-1";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#2-1";
+	killmonster "jupe_area2","Monster2#2-1::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#2-1";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area2","现在呢？",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area2","让我看看……",bc_map,"0xFF0000";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area2","你们到底有多强！",bc_map,"0xFF0000";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	soundeffectall "jupe_warning.wav",0,"jupe_area2";
+	set .MyMobs,8;
+	monster "jupe_area2",126,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",127,236,"Security Guard",1669,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",128,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",129,236,"Security Guard",1669,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",130,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",131,236,"Security Guard",1669,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",132,236,"Security Guard",1675,1,"Monster2#2-1::OnMyMobDead";
+	monster "jupe_area2",133,236,"Security Guard",1669,1,"Monster2#2-1::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","哇哈哈哈！你们只会逃跑！",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-1";
+	stopnpctimer;
+	donpcevent "Monster2#2-1::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area2","滋滋。滋滋……",bc_map,"0xFF0000";
+		disablenpc "Monster2#2-1";
+		enablenpc "#hole#2-1";
+		set $@JupreArea2InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Security Checkpoint 2-2
+//============================================================
+jupe_area2,138,238,0	script	#hole#2-2	844,{
+	cutin "2",2;
+	if ($@JupreArea2InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "2",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7357) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "2-1",2;
+				next;
+				if ($@JupreArea2InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "2-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#2-2::OnEnable";
+					enablenpc "Red Alarm#2-2";
+					disablenpc "#hole#2-2";
+					close2;
+					cutin "2-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "2",255;
+				end;
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "2",255;
+			end;
+		}
+		close;
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "2",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#2-2";
+	disablenpc "Red Alarm#2-2";
+	end;
+}
+
+jupe_area2,142,225,0	script	Warp#2-2	139,2,2,{
+OnInit:
+	disablenpc "Warp#2-2";
+	end;
+
+OnEnable:
+	enablenpc "Warp#2-2";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area2",142,191;
+	end;
+
+OnTimer22500:
+	disablenpc "Warp#2-2";
+	end;
+}
+
+jupe_area2,142,191,0	script	Red Alarm#2-2	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#2-2";
+	end;
+
+OnTouch_:
+	set $@JupreArea2InUse,1;
+	donpcevent "Red Alarm On#2-2::OnEnable";
+	disablenpc "Red Alarm#2-2";
+	disablenpc "#hole#2-2";
+	end;
+}
+
+-	script	Red Alarm On#2-2	-1,{
+OnInit:
+	disablenpc "Red Alarm On#2-2";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#2-2";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area2","来吧，来吧！",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area2","对。跑吧……直接跑进我的手掌心！",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area2","你们想知道我是谁吗？",bc_map,"0xFF0000";
+	donpcevent "Monster1#2-2::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area2","等你们打败我所有的爪牙，就会知道了！",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#2-2";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#2-2	-1,{
+OnInit:
+	disablenpc "Monster1#2-2";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#2-2";
+	killmonster "jupe_area2","Monster1#2-2::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#2-2";
+	set .MyMobs,8;
+	monster "jupe_area2",126,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",127,176,"High Guard",1675,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",128,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",129,176,"High Guard",1675,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",130,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",131,176,"High Guard",1675,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",132,176,"High Guard",1669,1,"Monster1#2-2::OnMyMobDead";
+	monster "jupe_area2",133,176,"High Guard",1675,1,"Monster1#2-2::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","真不敢相信你们竟然这么懦弱……",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-2";
+	stopnpctimer;
+	donpcevent "Monster1#2-2::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#2-2::OnEnable";
+		disablenpc "Monster1#2-2";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#2-2	-1,{
+OnInit:
+	disablenpc "Monster2#2-2";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#2-2";
+	killmonster "jupe_area2","Monster2#2-2::OnMyMobDead";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#2-2";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area2","我曾是这座地下研究所的负责人。",bc_map,"0xFF0000";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area2","但那是很久以前的事了，那时我还只是个人类。",bc_map,"0xFF0000";
+	end;
+
+OnTimer6000:
+	mapannounce "jupe_area2","人们叫我维斯珀·牛顿。哈哈哈，那时候他们都叫我疯子。",bc_map,"0xFF0000";
+	set .MyMobs,13;
+	monster "jupe_area2",126,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",127,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",128,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",129,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",130,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",131,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",132,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",133,156,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",133,156,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",127,152,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",129,152,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",130,152,"Security Guard",1669,1,"Monster2#2-2::OnMyMobDead";
+	monster "jupe_area2",132,152,"Security Guard",1675,1,"Monster2#2-2::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","……还不行。",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-2";
+	stopnpctimer;
+	donpcevent "Monster2#2-2::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area2","还不行！",bc_map,"0xFF0000";
+		disablenpc "Monster2#2-2";
+		enablenpc "#hole#2-2";
+		set $@JupreArea2InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Security Checkpoint 2-3
+//============================================================
+jupe_area2,127,146,0	script	#hole#2-3	844,{
+	cutin "3",2;
+	if ($@JupreArea2InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "3",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7358) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "3-1",2;
+				next;
+				if ($@JupreArea2InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "3-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#2-3::OnEnable";
+					enablenpc "Red Alarm#2-3";
+					disablenpc "#hole#2-3";
+					close2;
+					cutin "3-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "3",255;
+				end;
+			}
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "3",255;
+			end;
+		}
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "3",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer22500:
+	stopnpctimer;
+	enablenpc "#hole#2-3";
+	disablenpc "Red Alarm#2-3";
+	end;
+}
+
+jupe_area2,130,137,0	script	Warp#2-3	139,2,2,{
+OnInit:
+	disablenpc "Warp#2-3";
+	end;
+
+OnEnable:
+	enablenpc "Warp#2-3";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area2",130,105;
+	end;
+
+OnTimer22500:
+	disablenpc "Warp#2-3";
+	end;
+}
+
+jupe_area2,130,105,0	script	Red Alarm#2-3	-1,0,4,{
+OnInit:
+	disablenpc "Red Alarm#2-3";
+	end;
+
+OnTouch_:
+	set $@JupreArea2InUse,1;
+	donpcevent "Red Alarm On#2-3::OnEnable";
+	disablenpc "Red Alarm#2-3";
+	disablenpc "#hole#2-3";
+	end;
+}
+
+-	script	Red Alarm On#2-3	-1,{
+OnInit:
+	disablenpc "Red Alarm On#2-3";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#2-3";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area2","这些安保系统……",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area2","它们其实不是为了防护。",bc_map,"0xFF0000";
+	disablenpc "#hole#2-3";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area2","也算是我打发时间的爱好吧……",bc_map,"0xFF0000";
+	donpcevent "Monster1#2-3::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area2","长生不死，我有的是时间……",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	disablenpc "Red Alarm On#2-3";
+	stopnpctimer;
+	end;
+}
+
+-	script	Monster1#2-3	-1,{
+OnInit:
+	disablenpc "Monster1#2-3";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#2-3";
+	killmonster "jupe_area2","Monster1#2-3::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#2-3";
+	set .MyMobs,8;
+	monster "jupe_area2",126,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",127,89,"Security Guard",1669,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",128,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",129,89,"Security Guard",1669,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",130,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",131,89,"Security Guard",1669,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",132,89,"Security Guard",1675,1,"Monster1#2-3::OnMyMobDead";
+	monster "jupe_area2",133,89,"Security Guard",1669,1,"Monster1#2-3::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","滋滋……滋滋……",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	donpcevent "Monster1#2-3::OnDisable";
+	enablenpc "#hole#2-3";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#2-3::OnEnable";
+		disablenpc "Monster1#2-3";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#2-3	-1,{
+OnInit:
+	disablenpc "Monster2#2-3";
+	end;
+
+OnDisable:
+	disablenpc "Monster2#2-3";
+	killmonster "jupe_area2","Monster2#2-3::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster2#2-3";
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area2","你们为何而来？",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area2","你们是指望找到什么美妙的东西吗？还是什么奇迹？",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_area2","你们错了！欢迎来到地狱！",bc_map,"0xFF0000";
+	set .MyMobs,16;
+	monster "jupe_area2",114,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",115,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",116,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",117,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",118,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",119,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",120,64,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",121,64,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",114,62,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",115,62,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",116,62,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",117,62,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",118,62,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",119,62,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",120,62,"Security Guard",1675,1,"Monster2#2-3::OnMyMobDead";
+	monster "jupe_area2",121,62,"Security Guard",1669,1,"Monster2#2-3::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","你们还有勇气吗？来。证明给我看。",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-3";
+	stopnpctimer;
+	donpcevent "Monster2#2-3::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area2","你们还有勇气吗？来。证明给我看。",bc_map,"0xFF0000";
+		disablenpc "Monster2#2-3";
+		enablenpc "#hole#2-3";
+		set $@JupreArea2InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+	
+//============================================================
+// Security Checkpoint 2-4
+//============================================================
+jupe_area2,113,49,0	script	#hole#2-4	844,{
+	cutin "4",2;
+	if ($@JupreArea2InUse == 1) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "4",255;
+		end;
+	}
+	else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		next;
+		switch(select("插入纹章碎片。:取消。")) {
+		case 1:
+			if (countitem(7359) > 0) {
+				mes "^3355FF你取出纹章碎片，";
+				mes "把它放进插槽，";
+				mes "它恰好完美地";
+				mes "嵌了进去。^000000";
+				specialeffect EF_TOPRANK;
+				cutin "4-1",2;
+				next;
+				if ($@JupreArea2InUse == 1) {
+					mes "^3355FF什么也没发生。";
+					mes "也许警报或其他";
+					mes "安全措施被激活了，";
+					mes "阻止了纹章碎片";
+					mes "启动这个传送装置。";
+					mes "你取回了纹章碎片。^000000";
+					close2;
+					cutin "4-1",255;
+					end;
+				}
+				else {
+					mes "^3355FF插槽旋转起来，";
+					mes "纹章碎片像是在转动钥匙。";
+					mes "你感到一阵轻微的震动，";
+					mes "通往另一边的传送门";
+					mes "启动了。随后你";
+					mes "取回了纹章碎片。^000000";
+					initnpctimer;
+					donpcevent "Warp#2-4::OnEnable";
+					donpcevent "Red Alarm#2-4::OnEnable";
+					disablenpc "#hole#2-4";
+					close2;
+					cutin "4-1",255;
+					end;
+				}
+			}
+			else {
+				mes "^3355FF可惜，你身上";
+				mes "没有任何能插进插槽、";
+				mes "启动这个机械装置的";
+				mes "东西。^000000";
+				close2;
+				cutin "4",255;
+				end;
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯……";
+			mes "我身上有什么东西";
+			mes "能让这台奇怪的机器";
+			mes "运转起来吗？";
+			close2;
+			cutin "4",255;
+			end;
+		}
+	}
+	else {
+		mes "^3355FF这似乎是某种装置，";
+		mes "能让你通过";
+		mes "到达另一边。";
+		mes "上面有一个插槽，";
+		mes "你可能需要插入";
+		mes "某种物品……^000000";
+		close2;
+		cutin "4",255;
+		end;
+	}
+	end;
+
+OnStop_Timer:
+	stopnpctimer;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	enablenpc "#hole#2-4";
+	disablenpc "Red Alarm#2-4";
+	end;
+}
+
+jupe_area2,106,53,0	script	Warp#2-4	139,2,2,{
+OnInit:
+	disablenpc "Warp#2-4";
+	end;
+
+OnEnable:
+	enablenpc "Warp#2-4";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_area2",80,157;
+	end;
+
+OnTimer5000:
+	disablenpc "Warp#2-4";
+	end;
+}
+
+jupe_area2,80,157,0	script	Red Alarm#2-4	-1,2,2,{
+OnInit:
+	disablenpc "Red Alarm#2-4";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm#2-4";
+	end;
+
+OnTouch_:
+	set $@JupreArea2InUse,1;
+	donpcevent "Red Alarm On#2-4::OnEnable";
+	disablenpc "Red Alarm#2-4";
+	disablenpc "#hole#2-4";
+	end;
+}
+
+-	script	Red Alarm On#2-4	-1,{
+OnInit:
+	disablenpc "Red Alarm On#2-4";
+	end;
+
+OnEnable:
+	enablenpc "Red Alarm On#2-4";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce "jupe_area2","我一直在等一个强到足以与我抗衡的人。",bc_map,"0xFF0000";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_area2","如果你能听到这段话，我希望你就是那个人……",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_area2","也许，只是昔日之我的一道残影……",bc_map,"0xFF0000";
+	donpcevent "Monster1#2-4::OnEnable";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_area2","就在这下面的某处徘徊……",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	stopnpctimer;
+	disablenpc "Red Alarm On#2-4";
+	end;
+}
+
+-	script	Monster1#2-4	-1,{
+OnInit:
+	disablenpc "Monster1#2-4";
+	end;
+
+OnDisable:
+	disablenpc "Monster1#2-4";
+	killmonster "jupe_area2","Monster1#2-4::OnMyMobDead";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "Monster1#2-4";
+	set .MyMobs,8;
+	monster "jupe_area2",75,161,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",72,161,"Security Guard",1669,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",71,161,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",68,161,"Security Guard",1669,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",75,154,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",72,154,"Security Guard",1669,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",71,154,"Security Guard",1675,1,"Monster1#2-4::OnMyMobDead";
+	monster "jupe_area2",68,154,"Security Guard",1669,1,"Monster1#2-4::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	mapannounce "jupe_area2","滋滋……滋滋……",bc_map,"0xFF0000";
+	set $@JupreArea2InUse,0;
+	end;
+
+OnTimer300002:
+	stopnpctimer;
+	enablenpc "#hole#2-4";
+	donpcevent "Monster1#2-4::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Monster2#2-4::OnEnable";
+		disablenpc "Monster1#2-4";
+		stopnpctimer;
+	}
+	end;
+}
+
+-	script	Monster2#2-4	-1,{
+OnInit:
+	disablenpc "Monster2#2-4";
+	end;
+
+OnDisable:
+	killmonster "jupe_area2","Monster2#2-4::OnMyMobDead";
+	disablenpc "Monster2#2-4";
+	end;
+
+OnEnable:
+	enablenpc "Monster2#2-4";
+	initnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_area2","我永远无法安息……",bc_map,"0xFF0000";
+	end;
+
+OnTimer4000:
+	mapannounce "jupe_area2","我会永远等下去，或者等到有人能终结我的痛苦……",bc_map,"0xFF0000";
+	end;
+
+OnTimer6000:
+	mapannounce "jupe_area2","我会在那里等你！",bc_map,"0xFF0000";
+	set .MyMobs,12;
+	monster "jupe_area2",63,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",61,161,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",59,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",57,161,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",55,161,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",53,161,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",53,154,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",55,154,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",57,154,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",59,154,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",61,154,"Security Guard",1675,1,"Monster2#2-4::OnMyMobDead";
+	monster "jupe_area2",63,154,"Security Guard",1669,1,"Monster2#2-4::OnMyMobDead";
+	end;
+
+OnTimer300000:
+	set $@JupreArea2InUse,0;
+	mapannounce "jupe_area2","真可笑……不是吗？",bc_map,"0xFF0000";
+	end;
+
+OnTimer300002:
+	enablenpc "#hole#2-4";
+	donpcevent "Monster2#2-4::OnDisable";
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		mapannounce "jupe_area2","真可笑……不是吗？",bc_map,"0xFF0000";
+		disablenpc "Monster2#2-4";
+		enablenpc "#hole#2-4";
+		set $@JupreArea2InUse,0;
+		stopnpctimer;
+	}
+	end;
+}
+
+//============================================================
+// Move to Elevator
+//============================================================
+jupe_area2,51,162,0	script	Lever#ufe2	844,{
+	mes "^3355FF这是一根操纵杆，";
+	mes "你不知道";
+	mes "它有什么用。^000000";
+	next;
+	switch(select("拉动。:取消。")) {
+	case 1:
+		if ($@JupreArea2InUse == 1) close;
+		initnpctimer;
+		donpcevent "LeverWarp#ufe2::OnEnable";
+		disablenpc "Lever#ufe2";
+		close;
+	case 2:
+		mes "[" + strcharinfo(0) + "]";
+		mes "要拉这根操纵杆吗？";
+		mes "我甚至不知道";
+		mes "会发生什么……";
+		close;
+	}
+	close;
+
+OnTimer3000:
+	enablenpc "Lever#ufe2";
+	stopnpctimer;
+	end;
+}
+
+jupe_area2,46,157,0	script	LeverWarp#ufe2	139,2,2,{
+OnInit:
+	disablenpc "LeverWarp#ufe2";
+	end;
+
+OnEnable:
+	enablenpc "LeverWarp#ufe2";
+	specialeffect EF_BIG_PORTAL;
+	soundeffectall "jupe_warp.wav",0;
+	initnpctimer;
+	end;
+
+OnTouch_:
+	warp "jupe_gate",71,29;
+	end;
+
+OnTimer3000:
+	stopnpctimer;
+	disablenpc "LeverWarp#ufe2";
+	end;
+}
+
+//============================================================
+// Elevator Reception Room
+//============================================================
+jupe_ele_r,51,98,0	script	Switch#ufe	844,{
+	if ($@JupeElevatorInUse == 1) {
+		mes "^3355FF这是某种操纵杆，";
+		mes "看起来已经";
+		mes "被别人拉过了。^000000";
+		close;
+	}
+	else {
+		cutin "5",2;
+		mes "^3355FF这是某种操纵杆，";
+		mes "位于四个空插槽旁边。^000000";
+		next;
+		switch(select("拉动操纵杆。:不碰它。")) {
+		case 1:
+			mes "^3355FF*咔哒 咔哒*^000000";
+			next;
+			mes "^3355FF你拉下操纵杆，";
+			mes "但什么也没发生。";
+			mes "你可能需要在插槽里";
+			mes "插入正确的物品，";
+			mes "操纵杆才能运作。^000000";
+			next;
+			if (countitem(7356) > 0 && countitem(7359) > 0 && countitem(7357) > 0 && countitem(7358) > 0) {
+				switch(select("插入所有的纹章碎片。")) {
+				case 1:
+					mes "^3300FF*咔哒！*^000000";
+					mes "^3300FF奇怪的是，";
+					mes "四块纹章碎片";
+					mes "全都完美地嵌入了插槽，";
+					mes "并开始散发出";
+					mes "奇异的光芒。^000000";
+					cutin "5-1",2;
+					specialeffect EF_SPHERE;
+					delitem 7356,1; //Piece_Of_Crest1
+					delitem 7359,1; //Piece_Of_Crest4
+					delitem 7357,1; //Piece_Of_Crest2
+					delitem 7358,1; //Piece_Of_Crest3
+					next;
+					switch(select("拔出纹章碎片。:拉动操纵杆。")) {
+					case 1:
+						cutin "5",2;
+						mes "^3355FF你把插入插槽的";
+						mes "纹章碎片";
+						mes "全都拔了出来。^000000";
+						getitem 7356,1; //Piece_Of_Crest1
+						getitem 7359,1; //Piece_Of_Crest4
+						getitem 7357,1; //Piece_Of_Crest2
+						getitem 7358,1; //Piece_Of_Crest3
+						close2;
+						cutin "5",255;
+						end;
+					case 2:
+						if ($@JupeElevatorInUse == 1) {
+							mes "^3355FF奇怪，";
+							mes "这根操纵杆";
+							mes "已经被拉过了。^000000";
+							close2;
+							cutin "5",255;
+							end;
+						}
+						else {
+							mes "^3355FF你一拉下操纵杆，";
+							mes "纹章碎片的插槽";
+							mes "突然被盖住，再也取不出来了，";
+							mes "地面开始剧烈震动。";
+							mes "这不对劲！^000000";
+							next;
+							set $@JupeElevatorInUse,1;
+							disablenpc "Switch#ufe";
+							enablenpc "Switch On#ufe";
+							initnpctimer;
+							specialeffect2 EF_SCREEN_QUAKE;
+							soundeffectall "earth_quake.wav",0;
+							close2;
+							cutin "5-1",255;
+							end;
+						}
+					}
+				}
+			}
+			else if (countitem(7356) > 0 || countitem(7359) > 0 || countitem(7357) > 0 || countitem(7358) > 0) {
+				select("插入纹章碎片。");
+				mes "^3355FF眼下，你没有足够的";
+				mes "纹章碎片放进这四个插槽。";
+				mes "你需要找齐所有碎片^FFFFFF ^3355FF才能让装置运作。^000000";
+				close2;
+				cutin "5-1",255;
+				end;
+			}
+			else {
+				mes "^3355FF你需要找到某种";
+				mes "能放进这四个插槽的";
+				mes "物品……^000000";
+				close2;
+				cutin "5-1",255;
+				end;
+			}
+		case 2:
+			mes "^3355FF谁知道这根操纵杆";
+			mes "会有什么用呢？";
+			mes "除非你有勇气尝试，";
+			mes "否则永远不会知道。^000000";
+			close2;
+			cutin "5",255;
+			end;
+		}
+	}
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele_r","我的子孙们……",bc_map,"0x66FF00";
+	end;
+
+OnTimer3000:
+	mapannounce "jupe_ele_r","你们想知道这座城市为何被埋入地下吗……？",bc_map,"0x66FF00";
+	end;
+
+OnTimer7000:
+	mapannounce "jupe_ele_r","如果想的话，就跟随我的声音……",bc_map,"0x66FF00";
+	end;
+
+OnTimer10000:
+	mapannounce "jupe_ele_r","我会让你们亲眼看到想知道的一切……",bc_map,"0x66FF00";
+	end;
+
+OnTimer17000:
+	mapannounce "jupe_ele_r","战胜所有的幻觉。",bc_map,"0xCC6600";
+	end;
+
+OnTimer20000:
+	mapannounce "jupe_ele_r","睁开双眼，看穿所有的谎言。",bc_map,"0xFF0000";
+	end;
+
+OnTimer23000:
+	mapannounce "jupe_ele_r","我为你们维持这幻象的时间只有20分钟。",bc_map,"0xFF0000";
+	donpcevent "Elevator Guard1#ufe::OnEnable";
+	end;
+
+OnTimer27000:
+	mapannounce "jupe_ele_r","看吧！并且记住！",bc_map,"0xFF0000";
+	stopnpctimer;
+	end;
+}
+
+jupe_ele_r,51,98,0	script	Switch On#ufe	844,{
+	mes "^3355FF似乎有别人";
+	mes "正在使用";
+	mes "这台机器……^000000";
+	close;
+
+OnInit:
+	disablenpc "Switch On#ufe";
+	end;
+}
+
+//============================================================
+// Elevator Receptoin Guards
+//============================================================
+jupe_ele_r,10,50,0	script	Elevator Guard1#ufe	-1,{
+OnInit:
+	disablenpc "Elevator Guard1#ufe";
+	end;
+
+OnEnable:
+	set .MyMobs,9;
+	enablenpc "Elevator Guard1#ufe";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	monster "jupe_ele_r",44,99,"Guard",1669,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer1200:
+	monster "jupe_ele_r",55,99,"Guard",1675,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer1400:
+	monster "jupe_ele_r",45,84,"Guard",1683,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer1600:
+	monster "jupe_ele_r",54,84,"Guard",1675,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer1800:
+	monster "jupe_ele_r",45,99,"Guard",1669,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer2000:
+	monster "jupe_ele_r",54,99,"Guard",1683,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer2200:
+	monster "jupe_ele_r",48,84,"Guard",1669,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer2400:
+	monster "jupe_ele_r",52,84,"Guard",1683,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer2600:
+	monster "jupe_ele_r",50,84,"Chief Guard",1684,1,"Elevator Guard1#ufe::OnMyMobDead";
+	end;
+
+OnTimer120000:
+	mapannounce "jupe_ele_r","真令人失望，你们竟然弱到连幻觉都打不败……",bc_map,"0x66FF00";
+	enablenpc "Switch#ufe";
+	disablenpc "Switch On#ufe";
+	donpcevent "Annihilation#ufe::OnEnable";
+	set $@JupeElevatorInUse,0;
+	end;
+
+OnTimer120005:
+	killmonster "jupe_ele_r","Elevator Guard1#ufe::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		donpcevent "Elevator Safety#ufe::OnEnable";
+		stopnpctimer;
+	}
+	end;
+}
+
+jupe_ele_r,10,52,0	script	Elevator Safety#ufe	-1,{
+OnInit:
+	disablenpc "Elevator Safety#ufe";
+	end;
+
+OnEnable:
+	enablenpc "Elevator Safety#ufe";
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele_r","战胜了幻觉的人们啊，上前一步吧。",bc_map,"0x66FF00";
+	soundeffectall "earth_quake.wav",0;
+	end;
+
+OnTimer8000:
+	donpcevent "Elevator On#ufe::OnEnable";
+	end;
+
+OnTimer10000:
+	disablenpc "Elevator Safety#ufe";
+	stopnpctimer;
+	end;
+}
+
+jupe_ele_r,50,89,0	script	Annihilation#ufe	-1,35,50,{
+OnInit:
+	disablenpc "Annihilation#ufe";
+	end;
+
+OnEnable:
+	enablenpc "Annihilation#ufe";
+	initnpctimer;
+	end;
+
+OnTouch_:
+	percentheal -99,-100;
+	end;
+
+OnTimer1000:
+	mapwarp "jupe_ele_r", "jupe_gate",49,138;
+	end;
+
+OnTimer1600:
+	enablenpc "Elevator Escape#ufe";
+	end;
+
+OnTimer3000:
+	disablenpc "Annihilation#ufe";
+	disablenpc "Elevator Escape#ufe";
+	end;
+}
+
+jupe_ele_r,50,89,0	script	Elevator Escape#ufe	-1,35,50,{
+OnInit:
+	disablenpc "Elevator Escape#ufe";
+	end;
+
+OnTouch_:
+	mapwarp "jupe_ele_r", "jupe_gate",49,138;
+	end;
+}
+
+jupe_ele_r,10,54,0	script	Elevator On#ufe	-1,{
+OnInit:
+	disablenpc "Elevator On#ufe";
+	end;
+
+OnEnable:
+	enablenpc "Elevator On#ufe";
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapwarp "jupe_ele_r", "jupe_ele",42,47;
+	set $@JupeElevatorInUse2,0;
+	donpcevent "TimeOut#ufe::OnEnable";
+	donpcevent "Guard-1#ufe::OnEnable";
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	disablenpc "Elevator On#ufe";
+	end;
+}
+
+//============================================================
+// Elevator NPCs
+//============================================================
+jupe_ele,14,6,1	script	TimeOut#ufe	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer59000:
+	if (getmapusers("jupe_ele") == 0) {
+		killmonsterall "jupe_ele";
+		donpcevent "Guard-1#ufe::OnDisable";
+		donpcevent "Guard-2#ufe::OnDisable";
+		donpcevent "Guard-3#ufe::OnDisable";
+		donpcevent "Guard-4#ufe::OnDisable";
+		stopnpctimer;
+		set $@JupeElevatorInUse2,0;
+		set $@JupeElevatorInUse,0;
+		disablenpc "Switch On#ufe";
+		enablenpc "Switch#ufe";
+	}
+	end;
+
+OnTimer120000:
+	killmonsterall "jupe_ele";
+	donpcevent "Guard-1#ufe::OnDisable";
+	donpcevent "Guard-2#ufe::OnDisable";
+	donpcevent "Guard-3#ufe::OnDisable";
+	donpcevent "Guard-4#ufe::OnDisable";
+	mapannounce "jupe_ele","到头来，你们连内心的恐惧都无法战胜……",bc_map,"0xFF0000";
+	end;
+
+OnTimer122000:
+	mapannounce "jupe_ele","你们从未直面过内心的恐惧，对吧？",bc_map,"0xFF0000";
+	end;
+
+OnTimer125000:
+	mapannounce "jupe_ele","你们以为这就是幻觉的尽头了吗？",bc_map,"0xFF0000";
+	end;
+
+OnTimer127000:
+	mapannounce "jupe_ele","如果你们听到的声音也是幻觉呢？",bc_map,"0xFF0000";
+	end;
+
+OnTimer129000:
+	mapannounce "jupe_ele","如果这一切都只是梦呢？",bc_map,"0xFF0000";
+	end;
+
+OnTimer131000:
+	mapannounce "jupe_ele","如果这座城市本身的存在就是个谎言呢？",bc_map,"0xFF0000";
+	end;
+
+OnTimer133000:
+	mapannounce "jupe_ele","你们真的存在吗？",bc_map,"0xFF0000";
+	end;
+
+OnTimer134000:
+OnTimer135000:
+	mapwarp "jupe_ele", "jupe_gate",49,138;
+	end;
+
+OnTimer142000:
+	disablenpc "GuardEnd#ufe";
+	disablenpc "4F Enter#ufe";
+	donpcevent "TimeOut#ufe::OnDisable";
+	set $@JupeElevatorInUse2,0;
+	set $@JupeElevatorInUse,0;
+	disablenpc "Switch On#ufe";
+	enablenpc "Switch#ufe";
+	stopnpctimer;
+	end;
+}
+
+jupe_ele,15,6,1	script	Guard-1#ufe	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele","我佩服你们的耐心。",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele","让我们看看，你们所经历的一切",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_ele","是否都是为入侵者设下的陷阱……",bc_map,"0xFF0000";
+	end;
+
+OnTimer12000:
+	set .MyMobs,8;
+	monster "jupe_ele",48,44,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",38,42,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",35,44,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",35,51,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-1#ufe::OnMyMobDead";
+	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-1#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,1;
+	end;
+
+OnTimer30000:
+	if ($@JupeElevatorInUse2 == 1) {
+		donpcevent "Guard-2#ufe::OnEnable";
+		stopnpctimer;
+	}
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		if ($@JupeElevatorInUse2 == 1) {
+			donpcevent "Guard-2#ufe::OnEnable";
+			stopnpctimer;
+		} else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
+		}
+	}
+	end;
+}
+
+jupe_ele,16,6,1	script	Guard-2#ufe	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele","这座城市并不",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele","像你们想的那样辉煌。",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_ele","这里是人类一切恐惧滋生的地方。",bc_map,"0xFF0000";
+	end;
+
+OnTimer11000:
+	mapannounce "jupe_ele","没错。没有人能活着离开！",bc_map,"0xFF0000";
+	end;
+
+OnTimer12000:
+	set .MyMobs,8;
+	monster "jupe_ele",48,44,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",38,42,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",35,44,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",35,51,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-2#ufe::OnMyMobDead";
+	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-2#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,2;
+	end;
+
+OnTimer30000:
+	if ($@JupeElevatorInUse2 == 2) {
+		donpcevent "Guard-3#ufe::OnEnable";
+		stopnpctimer;
+	}
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		if ($@JupeElevatorInUse2 == 2) {
+			donpcevent "Guard-3#ufe::OnEnable";
+			stopnpctimer;
+		} else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
+		}
+	}
+	end;
+}
+
+jupe_ele,17,6,1	script	Guard-3#ufe	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele","你们看到了什么？",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele","你们的眼睛真的看到了什么吗？",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_ele","还是说你们只是相信自己在看？",bc_map,"0xFF0000";
+	end;
+
+OnTimer12000:
+	set .MyMobs,8;
+	monster "jupe_ele",48,44,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",38,42,"Guard",1683,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",35,44,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",35,51,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",38,53,"Guard",1683,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",45,53,"Guard",1675,1,"Guard-3#ufe::OnMyMobDead";
+	monster "jupe_ele",48,51,"Guard",1669,1,"Guard-3#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,3;
+	end;
+
+OnTimer30000:
+	if ($@JupeElevatorInUse2 == 3) {
+		donpcevent "Guard-4#ufe::OnEnable";
+		stopnpctimer;
+	}
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		if ($@JupeElevatorInUse2 == 3) {
+			donpcevent "Guard-4#ufe::OnEnable";
+			stopnpctimer;
+		}
+		else if ($@JupeElevatorInUse2 == 4 && getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-4#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
+		}
+	}
+	end;
+}
+
+jupe_ele,18,6,1	script	Guard-4#ufe	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele","不要忘记。限制你们的只有你们自己。",bc_map,"0xFF0000";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele","虚无即是你们所惧，而你们无所可惧……",bc_map,"0xFF0000";
+	end;
+
+OnTimer8000:
+	set .MyMobs,8;
+	monster "jupe_ele",48,44,"Guard",1684,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",45,42,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",38,42,"Guard",1684,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",35,44,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",35,51,"Guard",1675,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",38,53,"Guard",1669,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",45,53,"Guard",1683,1,"Guard-4#ufe::OnMyMobDead";
+	monster "jupe_ele",48,51,"Guard",1675,1,"Guard-4#ufe::OnMyMobDead";
+	set $@JupeElevatorInUse2,4;
+	end;
+
+OnMyMobDead:
+	set .MyMobs,.MyMobs-1;
+	if (.MyMobs < 1) {
+		if (getvariableofnpc(.MyMobs,"Guard-1#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-2#ufe") < 1 && getvariableofnpc(.MyMobs,"Guard-3#ufe") < 1) {
+			donpcevent "GuardEnd#ufe::OnEnable";
+			stopnpctimer;
+		}
+	}
+	end;
+}
+
+jupe_ele,19,6,1	script	GuardEnd#ufe	844,{
+OnInit:
+	disablenpc "GuardEnd#ufe";
+	end;
+
+OnEnable:
+	enablenpc "GuardEnd#ufe";
+	donpcevent "TimeOut#ufe::OnDisable";
+	initnpctimer;
+	end;
+
+OnDisable:
+	disablenpc "GuardEnd#ufe";
+	stopnpctimer;
+	end;
+
+OnTimer2000:
+	mapannounce "jupe_ele","我什么都不会告诉你们。",bc_map,"0x66FF00";
+	end;
+
+OnTimer5000:
+	mapannounce "jupe_ele","我的城市、我的人民，如今只剩回忆。",bc_map,"0x66FF00";
+	end;
+
+OnTimer8000:
+	mapannounce "jupe_ele","一切都是错误。我们本不该在这里。",bc_map,"0x66FF00";
+	end;
+
+OnTimer11000:
+	mapannounce "jupe_ele","这里是人类禁止踏足的地方吗？",bc_map,"0x66FF00";
+	end;
+
+OnTimer12000:
+	mapannounce "jupe_ele","你们想知道，对吧？那就去吧……去更深的地方。",bc_map,"0x66FF00";
+	enablenpc "4F Enter#ufe";
+	end;
+
+OnTimer22000:
+	mapannounce "jupe_ele","反正这一切都不是真的。都很安全，伤不了你们……",bc_map,"0x66FF00";
+	soundeffectall "earth_quake.wav",0;
+	disablenpc "4F Enter#ufe";
+	end;
+
+OnTimer24000:
+	mapwarp "jupe_ele","jupe_core",150,286;
+	end;
+
+OnTimer25000:
+	mapwarp "jupe_ele","jupe_core",151,286;
+	end;
+
+OnTimer26000:
+	set $@JupeElevatorInUse2,0;
+	set $@JupeElevatorInUse,0;
+	disablenpc "Switch On#ufe";
+	enablenpc "Switch#ufe";
+	donpcevent "GuardEnd#ufe::OnDisable";
+}
+
+jupe_ele,41,33,0	script	4F Enter#ufe	45,4,4,{
+OnInit:
+	disablenpc "4F Enter#ufe";
+	end;
+
+OnTouch_:
+	warp "jupe_core",rand(149,151),286;
+	end;
+}
+
+//============================================================
+// Warps
+//============================================================
+jupe_gate,50,173,0	script	gate#start	-1,2,3,{
+	end;
+
+OnTouch_:
+	initnpctimer "gate#start",1;
+	mes "^3355FF这是一个传送门，";
+	mes "能把你送回";
+	mes "上一层。^000000";
+	next;
+	switch(select("使用。:不理它。")) {
+	case 1:
+		specialeffect2 EF_LIGHTSPHERE;
+		close2;
+		stopnpctimer;
+		warp "juperos_02",130,142;
+		break;
+	case 2:
+		mes "[" + strcharinfo(0) + "]";
+		mes "现在不行！";
+		mes "我还不能离开！";
+		close2;
+		stopnpctimer;
+		warp "jupe_gate",50,168;
+		break;
+	}
+	end;
+
+OnTimer10000:
+	warp "juperos_02",128,278;
+	enablenpc "gate#start#2";
+	disablenpc "gate#start";
+	end;
+}
+
+jupe_gate,50,171,0	script	gate#start#2	-1,2,2,{
+OnInit:
+	disablenpc "gate#start#2";
+	end;
+
+OnTouch_:
+	warp "juperos_02",130,142;
+	end;
+
+OnTimer2000:
+	enablenpc "gate#start";
+	disablenpc "gate#start#2";
+	end;
+}
+
+juperos_02,33,59,0	script	jupe_goto2F	45,2,2,{
+OnTouch_:
+	switch(rand(1,4)) {
+	case 1: warp "juperos_01",120,72; end;
+	case 2: warp "juperos_01",120,112; end;
+	case 3: warp "juperos_01",79,112; end;
+	case 4: warp "juperos_01",79,72; end;
+	}
+	end;
+}
+
+//============================================================
+// GM Management NPC
+//============================================================
+sec_in02,39,167,0	script	朱庇洛斯管理员	864,{
+	callfunc "F_GM_NPC";
+	mes "[朱庇洛斯管理员]";
+	mes "我是负责管理";
+	mes "朱庇洛斯相关任务";
+	mes "全局变量的NPC。";
+	mes "GM，请输入密码。";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "[朱庇洛斯管理员]";
+		mes "密码错误。";
+		close;
+	} else {
+		mes "[朱庇洛斯管理员]";
+		mes "请选择一张地图。记住：";
+		mes "确保没有玩家正在";
+		mes "你要重置的地图上";
+		mes "做任务，否则";
+		mes "你会打断他们的";
+		mes "任务进度。";
+		next;
+		switch(select("jupe_Area1:jupe_Area2:jupe_ele_r:jupe_ele")) {
+		case 1:
+			set .@loc$,"jupe_Area1";
+			set .@var$,"$@JupreArea1InUse";
+			break;
+		case 2:
+			set .@loc$,"jupe_Area2";
+			set .@var$,"$@JupreArea2InUse";
+			break;
+		case 3:
+			set .@loc$,"jupe_ele_r";
+			set .@var$,"$@JupeElevatorInUse";
+			break;
+		case 4:
+			set .@loc$,"jupe_ele";
+			set .@var$,"$@JupeElevatorInUse2";
+			break;
+		}
+		mes "[朱庇洛斯管理员]";
+		mes "你决定";
+		mes "重置 "+.@loc$+"。";
+		mes "要继续吗？";
+		next;
+		switch(select("是。:否。")) {
+		case 1:
+			mes "[朱庇洛斯管理员]";
+			mes "全局变量";
+			mes .@loc$+" 已重置为0。";
+			mes "谢谢使用。";
+			setd .@var$,0;
+			close;
+		case 2:
+			mes "[朱庇洛斯管理员]";
+			mes "该命令";
+			mes "已被取消。";
+			close;
+		}
+	}
+}

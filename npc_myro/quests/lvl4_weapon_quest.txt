@@ -1,0 +1,3823 @@
+//===== rAthena Script ======================================= 
+//= A级与S级武器任务
+//===== By: ================================================== 
+//= Vicious_Pucca, Reddozen & MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project; SVN 3422+
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= A级与S级武器任务
+//===== Additional Comments: ================================= 
+//= 1.0 First Version, Credits goes to Vicious_Pucca for converting [MasterOfMuppets]
+//=     the quest from aegis format to eA format. Also thanks to 
+//=     reddozen for fixing bugs.
+//= 1.1 Many fixes to spelling, grammar, and sentence order. [Silent]
+//= 1.2 A small fix, thanks to vicious_pucca [MasterOfMuppets]
+//= 1.21 Fixing MoM's typos (Citrin -> Citrine) [erKURITA]
+//= 1.3 Redirected error message for "LV_16" to "LV_16_NOGEM" (Gepard) [L0ne_W0lf]
+//= 1.4 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.6 Was using the wrong IDs for the ores needed. [L0ne_W0lf]
+//============================================================ 
+
+umbala,117,285,3	script	巴佐#lv4	85,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[巴佐]";
+		mes "你好……";
+		mes "你不是这附近的人";
+		mes "吧？";
+		next;
+		mes "[巴佐]";
+		mes "我叫巴佐·赫布里希，很高兴认识你。";
+		mes "如你所见，我也不是本地人。";
+		mes "我感觉……我们像是注定要相遇。";
+		next;
+		mes "[巴佐]";
+		mes "如果你不介意，让我跟你聊聊这个地方。";
+		mes "我刚到这里时就感觉到，";
+		mes "这个村子有些不同寻常。";
+		next;
+		mes "[巴佐]";
+		mes "首先，汶巴拉距离死者的国度";
+		mes "尼芙菲姆非常近。正因为如此，";
+		mes "这里有些人能够汲取";
+		mes "那个国度的邪恶力量。";
+		next;
+		mes "[巴佐]";
+		mes "别担心，本地人只用这种力量制作特产。";
+		mes "我住在这里期间，也学会了一些";
+		mes "那样的制作方法。";
+		next;
+		mes "[巴佐]";
+		mes "如果你愿意，我可以向你展示我的手艺。";
+		mes "怎么样？";
+		next;
+		switch(select("听起来不错~:不用了，谢谢。")) {
+		case 1:
+			if (BaseLevel < 70) {
+				mes "[巴佐]";
+				mes "嗯。眼下你应该先提升等级，";
+				mes "让自己变强。我说你还没准备好";
+				mes "使用我的东西，是为你好，请别介意。";
+				next;
+				mes "[巴佐]";
+				mes "就像我之前说的，这些东西";
+				mes "带有邪恶力量。如果你不够强、";
+				mes "经验不足，是会被逼疯的。";
+				next;
+				mes "[巴佐]";
+				mes "等你准备好了，";
+				mes "我很乐意为你做点";
+				mes "了不起的东西~";
+				close;
+			}
+			mes "[巴佐]";
+			mes "太好了！我说说需要的材料吧。";
+			mes "数量不算多，但你最好记下来。";
+			next;
+			mes "[巴佐]";
+			mes "首先，我需要";
+			mes "一些基础材料。";
+			mes "10个黄金、";
+			mes "50个钢铁和";
+			mes "10个华丽金属。";
+			next;
+			mes "[巴佐]";
+			mes "然后，我需要一些稀有矿石来附魔。";
+			mes "成品的特性将取决于你用的矿石。";
+			next;
+			mes "[巴佐]";
+			mes "请给我带30个黄水晶、绿松石或玛瑙。";
+			mes "那么，祝你顺利找到这些东西，";
+			mes "我等你~";
+			set lv4_weapon,1;
+			close;
+		case 2:
+			mes "[巴佐]";
+			mes "哦，好吧。";
+			mes "我没意见。";
+			mes "如果你改变主意，";
+			mes "我随时都在这里。";
+			close;
+		}
+	}
+	if (lv4_weapon > 7) {
+		mes "[巴佐]";
+		mes "嗯……";
+		mes "我感觉你有些与众不同。说不清楚，";
+		mes "但我强烈地感到，我已经没有什么";
+		mes "能为你做的了。";
+		next;
+		mes "[巴佐]";
+		mes "无论如何，祝你旅途平安，冒险者。";
+		close;
+	}
+	if ((lv4_weapon >= 5) && (lv4_weapon <= 7)) {
+		mes "[巴佐]";
+		mes "太好了……！";
+		mes "现在，我们开始吧！";
+		mes "哦，你得知道，";
+		mes "我无法预知我们会得到什么。";
+		mes "但希望结果会是好的。";
+		next;
+		mes "^3355FF你感到一股神秘的力量在材料周围聚集，";
+		mes "周围的空气开始噼啪作响。这些材料";
+		mes "仿佛在吸收周遭所有的能量。^000000";
+		next;
+		mes "^3355FF巴佐没有任何明显的动作，材料便开始相互融合了。^000000";
+		next;
+		mes "[巴佐]";
+		mes "你感觉到了吗？材料正在自行吸收力量。";
+		mes "现在已经超出我的能力范围了。";
+		mes "我们只能等待和祈祷。";
+		next;
+		mes "^3355FF材料融合完毕，";
+		mes "空气也恢复了平静。^000000";
+		next;
+		mes "[巴佐]";
+		mes "哦哦哦！完成了！";
+		mes "我们成功了！啊，";
+		mes "这太惊人了！我们的祈祷";
+		mes "一定得到了回应！";
+		next;
+		mes "[巴佐]";
+		mes "看起来这些材料变成了某种武器。";
+		mes "它应该对你很有用。来看看吧……";
+		next;
+		mes "[巴佐]";
+		if (lv4_weapon == 5) {
+			mes "无形之剑！";
+			mes "这把剑注定属于你！";
+			mes "恭喜你，希望它对你有用。";
+			set lv4_weapon,0;
+			getitem 1141,1; //Immaterial_Sword
+		}
+		else if (lv4_weapon == 6) {
+			mes "斩击之锤！";
+			mes "这把钝器注定属于你！";
+			mes "恭喜你，希望它对你有用。";
+			set lv4_weapon,0;
+			getitem 1526,1; //Slash
+		}
+		else if (lv4_weapon == 7) {
+			mes "四连锤！";
+			mes "这把钝器注定属于你！";
+			mes "恭喜你，希望它对你有用。";
+			set lv4_weapon,0;
+			getitem 1527,1; //Quadrille
+		}
+		next;
+		mes "[巴佐]";
+		mes "啊，我对这个结果非常满意。";
+		mes "如果你还想要一把，随时来找我。";
+		mes "好了，祝你旅途愉快~";
+		close;
+	}
+	if (((lv4_weapon == 2) && (countitem(7295) > 29)) || ((lv4_weapon == 3) && (countitem(7294) > 29)) || ((lv4_weapon == 4) && (countitem(7291) > 29))) {
+		if (lv4_weapon == 2) {
+			set .@itemreq,7295; // Citrine
+		}
+		else if (lv4_weapon == 3) {
+			set .@itemreq,7294; //Turqoise
+		}
+		else if (lv4_weapon == 4) {
+			set .@itemreq,7291; // Agate
+		}
+		mes "[巴佐]";
+		mes "好，看来你准备好了，那我们开始吧。";
+		mes "对了，我最喜欢的怪物是波利、蚯蚓、";
+		mes "人鱼和米洛斯。";
+		next;
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			setarray .@mons[.@i],rand(1,4);
+			mes "[巴佐]";
+			if (.@i == 1) {
+				mes "第一个问题。";
+				mes "我现在心里想的是";
+				mes "什么怪物？";
+			}
+			else if (.@i == 2) {
+				mes "好了……";
+				mes "猜猜我现在心里想的";
+				mes "是什么怪物……就是现在！";
+			}
+			else if (.@i == 3) {
+				mes "那么我现在想的";
+				mes "是什么怪物？";
+			}
+			else if (.@i == 4) {
+				mes "我现在心里想的";
+				mes "是什么怪物？";
+			}
+			else if (.@i == 5) {
+				mes "好，最后一次。";
+				mes "猜猜我现在心里想的";
+				mes "是什么怪物。";
+			}
+			next;
+			set .@answer,select("波利:蚯蚓:人鱼:米洛斯");
+			if (.@answer == .@mons[.@i]) {
+				set .@dap,.@dap + 1;
+			}
+		}
+		mes "[巴佐]";
+		mes "好，我按心里想的顺序公布答案。";
+		mes "也许看起来像是我现在编的，但不是。";
+		mes "我们得互相信任。";
+		next;
+		mes "[巴佐]";
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			if (.@mons[.@i] == 1) {
+				mes "波利";
+			}
+			else if (.@mons[.@i] == 2) {
+				mes "蚯蚓";
+			}
+			else if (.@mons[.@i] == 3) {
+				mes "人鱼";
+			}
+			else if (.@mons[.@i] == 4) {
+				mes "米洛斯";
+			}
+		}
+		if (.@dap > 0) {
+			delitem .@itemreq,30;
+			set lv4_weapon,lv4_weapon+3;
+		}
+		else if (.@dap < 1) {
+			delitem .@itemreq,10;
+		}
+		next;
+		if (.@dap > 0) {
+			mes "[巴佐]";
+			mes "你答对了 " + .@dap + " 次！太厉害了！";
+			mes "如约，我将为你制作一件汶巴拉特产。";
+			mes "给我一点时间准备，然后我们就开始。";
+			close;
+		}
+		else if (.@dap < 1) {
+			mes "[巴佐]";
+			mes "唉。你要么是不会读心术，";
+			mes "要么就是运气太差。不管怎样，";
+			mes "在驱走你身边的晦气之前，不能再试了。";
+			next;
+			mes "[巴佐]";
+			mes "嗯，至少要10个";
+			mes getitemname(.@itemreq)+"才能再试一次，";
+			mes "所以先把那个给我吧。";
+			next;
+			mes "[巴佐]";
+			mes "如果你想再试一次读心游戏，";
+			mes "就带着材料回来。我会等着测你的运气。";
+			close;
+		}
+	}
+	if ((lv4_weapon == 2) || (lv4_weapon == 3) || (lv4_weapon == 4)) {
+		mes "[巴佐]";
+		mes "嗯。感觉不太对劲。";
+		mes "我们一定漏了什么。";
+		mes "能再检查一下你带来的材料吗？";
+		close;
+	}
+	if ((lv4_weapon == 1) && (countitem(969) > 9) && (countitem(999) > 49) && (countitem(714) > 9)) {
+		mes "[巴佐]";
+		mes "哦，基础材料都带齐了。";
+		mes "现在让我看看你有没有带上";
+		mes "我要的稀有矿石……";
+		next;
+		if ((countitem(7295) > 29) || (countitem(7294) > 29) || (countitem(7291) > 29)) {
+			if ((countitem(7295) > 29) && (countitem(7294) > 29) && (countitem(7291) > 29)) {
+				mes "[巴佐]";
+				mes "哈哈哈，我只要你带一种矿石，";
+				mes "不是全部都带。那么你想用哪一种呢？";
+				next;
+				switch(select("黄水晶:绿松石:玛瑙")) {
+				case 1:
+					set .@itemreq,7295; // Citrine
+					break;
+				case 2:
+					set .@itemreq,7294; //Turqoise
+					break;
+				case 3:
+					set .@itemreq,7291; // Agate
+					break;
+				}
+			}
+			else if ((countitem(7295) > 29) && (countitem(7294) > 29)) {
+				mes "哈哈哈，我只要你带一种矿石，";
+				mes "不是两种。";
+				mes "那么你想用哪一种呢？";
+				switch(select("黄水晶:绿松石")) {
+				case 1:
+					set .@itemreq,7295; // Citrine
+					break;
+				case 2:
+					set .@itemreq,7294; //Turqoise
+					break;
+				}
+			}
+			else if ((countitem(7295) > 29) && (countitem(7291) > 29)) {
+				mes "哈哈哈，我只要你带一种矿石，";
+				mes "不是两种。";
+				mes "那么你想用哪一种呢？";
+				switch(select("黄水晶:玛瑙")) {
+				case 1:
+					set .@itemreq,7295; // Citrine
+					break;
+				case 2:
+					set .@itemreq,7291; // Agate
+					break;
+				}
+			}
+			else if ((countitem(7294) > 29) && (countitem(7291) > 29)) {
+				mes "哈哈哈，我只要你带一种矿石，";
+				mes "不是两种。";
+				mes "那么你想用哪一种呢？";
+				switch(select("绿松石:玛瑙")) {
+				case 1:
+					set .@itemreq,7294; //Turqoise
+					break;
+				case 2:
+					set .@itemreq,7291; // Agate
+					break;
+				}
+			}
+			else {
+				if (countitem(7295) > 29) {
+					set .@itemreq,7295; // Citrine
+				}
+				if (countitem(7294) > 29) {
+					set .@itemreq,7294; //Turqoise
+				}
+				if (countitem(7291) > 29) {
+					set .@itemreq,7291; // Agate
+				}
+			}
+			mes "[巴佐]";
+			mes getitemname(.@itemreq)+"，是吧。";
+			mes "好吧。在开始之前，我们必须先测试你的运气。";
+			mes "你也许猜到了，汶巴拉的物品制作";
+			mes "是一个非常精细的过程。";
+			next;
+			mes "[巴佐]";
+			mes "如果在你运气好的时候制作，";
+			mes "我们就有很大机会做出了不起的东西。";
+			mes "有道理吧？";
+			next;
+			mes "[巴佐]";
+			mes "现在，我们用一个简单的读心游戏来测运气。";
+			mes "我会想一种特定的怪物，";
+			mes "你要从我喜欢的怪物里";
+			mes "猜出它是什么。";
+			next;
+			mes "[巴佐]";
+			mes "我给你五次机会，只要猜对一次，";
+			mes "我们就开始制作。但如果全猜错了，";
+			mes "我们就得驱走所有晦气！";
+			next;
+			mes "[巴佐]";
+			mes "为了驱走晦气，我要收走你带来的";
+			mes "10个特殊矿石。我知道这不太好，";
+			mes "但总比制作失败损失30个矿石强，对吧？";
+			next;
+			mes "[巴佐]";
+			mes "好，现在我需要";
+			mes "一些时间来准备……";
+			mes "回头再聊！";
+			delitem 969,10; //Gold
+			delitem 999,50; //Steel
+			delitem 714,10; //Emperium
+			if (.@itemreq == 7295) {
+				set lv4_weapon,2;
+			}
+			else if (.@itemreq == 7294) {
+				set lv4_weapon,3;
+			}
+			else if (.@itemreq == 7291) {
+				set lv4_weapon,4;
+			}
+			close;
+		}
+		else {
+			mes "[巴佐]";
+			mes "请给我带30个黄水晶、绿松石或玛瑙。";
+			mes "你一定是忘了带了，回去取来吧，";
+			mes "这样我们才能开始。";
+			close;
+		}
+	}
+	if (lv4_weapon == 1) {
+		mes "[巴佐]";
+		mes "如果你想让我制作一件汶巴拉特产，";
+		mes "就需要你带些东西来，我才能动手。";
+		next;
+		mes "[巴佐]";
+		mes "首先，我需要";
+		mes "一些基础材料。";
+		mes "10个黄金、";
+		mes "50个钢铁和";
+		mes "10个华丽金属。";
+		next;
+		mes "[巴佐]";
+		mes "然后，我需要一些稀有矿石来附魔。";
+		mes "成品的特性将取决于你用的矿石。";
+		next;
+		mes "[巴佐]";
+		mes "请给我带30个黄水晶、绿松石或玛瑙。";
+		mes "那么，祝你顺利找到这些东西，";
+		mes "我等你~";
+		close;
+	}
+	mes "[巴佐]";
+	mes "你好……";
+	mes "你不是这附近的人";
+	mes "吧？";
+	next;
+	mes "[巴佐]";
+	mes "我叫巴佐·赫布里希，很高兴认识你。";
+	mes "如你所见，我也不是本地人。";
+	mes "我感觉……我们像是注定要相遇。";
+	next;
+	mes "[巴佐]";
+	mes "如果你不介意，让我跟你聊聊这个地方。";
+	mes "我刚到这里时就感觉到，";
+	mes "这个村子有些不同寻常。";
+	next;
+	mes "[巴佐]";
+	mes "首先，汶巴拉距离死者的国度";
+	mes "尼芙菲姆非常近。正因为如此，";
+	mes "这里有些人能够汲取";
+	mes "那个国度的邪恶力量。";
+	next;
+	mes "[巴佐]";
+	mes "别担心，本地人只用这种力量制作特产。";
+	mes "我住在这里期间，也学会了一些";
+	mes "那样的制作方法。";
+	next;
+	mes "[巴佐]";
+	mes "如果你愿意，我可以向你展示我的手艺。";
+	mes "怎么样？";
+	next;
+	switch(select("听起来不错~:不用了，谢谢。")) {
+	case 1:
+		if (BaseLevel < 70) {
+			mes "[巴佐]";
+			mes "嗯。眼下你应该先提升等级，";
+			mes "让自己变强。我说你还没准备好";
+			mes "使用我的东西，是为你好，请别介意。";
+			next;
+			mes "[巴佐]";
+			mes "就像我之前说的，这些东西";
+			mes "带有邪恶力量。如果你不够强、";
+			mes "经验不足，是会被逼疯的。";
+			next;
+			mes "[巴佐]";
+			mes "等你准备好了，";
+			mes "我很乐意为你做点";
+			mes "了不起的东西~";
+			close;
+		}
+		mes "[巴佐]";
+		mes "太好了！我说说需要的材料吧。";
+		mes "数量不算多，但你最好记下来。";
+		next;
+		mes "[巴佐]";
+		mes "首先，我需要";
+		mes "一些基础材料。";
+		mes "10个黄金、";
+		mes "50个钢铁和";
+		mes "10个华丽金属。";
+		next;
+		mes "[巴佐]";
+		mes "然后，我需要一些稀有矿石来附魔。";
+		mes "成品的特性将取决于你用的矿石。";
+		next;
+		mes "[巴佐]";
+		mes "请给我带30个黄水晶、绿松石或玛瑙。";
+		mes "那么，祝你顺利找到这些东西，";
+		mes "我等你~";
+		set lv4_weapon,1;
+		close;
+	case 2:
+		mes "[巴佐]";
+		mes "哦，好吧。";
+		mes "我没意见。";
+		mes "如果你改变主意，";
+		mes "我随时都在这里。";
+		close;
+	}
+}
+
+umbala,163,257,3	script	希比莱森#lv4	785,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (event_umbala < 3) {
+		mes "[希比莱森]";
+		mes "Umba! Umbaba...umum! Baumba!";
+		mes "Umumumbababaumumbabaumba!";
+		mes "Umbaumbaumbaumbaumhah!";
+		mes "Umumumumumbababababab!";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[希比莱森]";
+		mes "嘿嘿嘿……";
+		mes "终于，这一天来了。";
+		mes "我终于被公认为";
+		mes "汶巴拉最伟大的工匠了！";
+		next;
+		mes "[希比莱森]";
+		mes "对对，我就是^802A2A那个^000000希比莱森。";
+		mes "如果你把材料带来，我就屈尊为你";
+		mes "制作一件我的杰作。哇哈哈哈~！";
+		next;
+		mes "[希比莱森]";
+		mes "嗯？你说什么？";
+		mes "没听说过我？";
+		mes "拜托，别开玩笑了！";
+		mes "虽说我是手艺大师，你也不必这么紧张。";
+		next;
+		mes "[希比莱森]";
+		mes "现在老实说……";
+		mes "你想不想成为我那";
+		mes "充满灵感、常被模仿的";
+		mes "手工作品的幸运儿？";
+		next;
+		switch(select("想。是的，我想。:抱歉，我不需要！")) {
+		case 1:
+			if (BaseLevel < 70) {
+				mes "[希比莱森]";
+				mes "哦……";
+				mes "你的心智还太弱，承受不了我作品的力量。";
+				mes "很抱歉，你还需要更多锻炼。";
+				next;
+				mes "[希比莱森]";
+				mes "我知道等待拥有我的作品一定很难熬。";
+				mes "但为了你好，先变强再来找我吧。";
+				close;
+			}
+			mes "[希比莱森]";
+			mes "哈哈哈！";
+			mes "那是当然！";
+			mes "那只是个反问句！";
+			mes "不过我喜欢你的态度。现在我说说";
+			mes "你需要带来的东西，记好了。";
+			next;
+			mes "[希比莱森]";
+			mes "我需要";
+			mes "10个黄金、";
+			mes "50个钢铁和";
+			mes "10个华丽金属";
+			mes "作为基础材料。";
+			next;
+			mes "[希比莱森]";
+			mes "我还需要一些稀有矿石来赋予作品力量。";
+			mes "白云母、黑云母或辉石。";
+			mes "随便哪种，给我带30个就行。";
+			next;
+			mes "[希比莱森]";
+			mes "好，祝你好运！";
+			mes "这段时间我就在这里悠闲地等你回来。";
+			set lv4_weapon,8;
+			close;
+		case 2:
+			mes "[希比莱森]";
+			mes "哈哈哈~！";
+			mes "不用这么";
+			mes "谦虚啦！";
+			mes "哦，你们这些冒险者";
+			mes "有时候真是有意思。";
+			next;
+			mes "[希比莱森]";
+			mes "好吧，等你鼓起勇气来求我帮忙时，";
+			mes "随时回来。给我个机会展示我的天才！";
+			close;
+		}
+	}
+	if ((lv4_weapon < 8) || (lv4_weapon > 14)) {
+		mes "[希比莱森]";
+		mes "……";
+		mes "啊……我现在";
+		mes "^820A2A什么都不想^000000";
+		mes "做。晚点再来，好吗？";
+		close;
+	}
+	if ((lv4_weapon == 12) || (lv4_weapon == 13) || (lv4_weapon == 14)) {
+		mes "[希比莱森]";
+		mes "啊，我感觉一切都准备就绪了。好，好，";
+		mes "我可以开始了！现在，别偷看。";
+		mes "我可不能冒险泄露我";
+		mes "惊人的秘诀！";
+		next;
+		mes "^3355FF希比莱森拿起所有材料，背对着你。";
+		mes "虽然看不清他在做什么，但他的动作看似简单笨拙，";
+		mes "你却感到一股奇异的力量在他周围聚集。^000000";
+		next;
+		mes "[希比莱森]";
+		mes "嗯~ 嗯~ 嗯~";
+		mes "哦~ 哦~ 哦~";
+		mes "呼~ 呼~ 呼~";
+		mes "呜~ 呜~ 呜~";
+		mes "嗬~ 嗬~ 嗬~";
+		next;
+		mes "[希比莱森]";
+		mes "哈哈，完成了！";
+		mes "^333333*呼*^000000 还真不容易，";
+		mes "不过你肯定迫不及待想看看我们做出了什么。";
+		mes "好，来看看吧……";
+		next;
+		mes "[希比莱森]";
+		if (lv4_weapon == 12) {
+			mes "哦，这次大获成功！当然了，";
+			mes "既然是我的手艺，那是理所当然。";
+			mes "嘿，这是一把武器……某种……破甲短剑！";
+			set lv4_weapon,0;
+			getitem 1225,1; //Mail_Breaker
+		}
+		else if (lv4_weapon == 13) {
+			mes "哦，这次大获成功！当然了，";
+			mes "既然是我的手艺，那是理所当然。";
+			mes "嘿，这是一把武器……某种……破刃短剑！";
+			set lv4_weapon,0;
+			getitem 1224,1; //Sword_Breaker
+		}
+		else if (lv4_weapon == 14) {
+			mes "哦，这次大获成功！当然了，";
+			mes "既然是我的手艺，那是理所当然。";
+			mes "嘿，这是一把武器……某种……屠戮之斧！";
+			set lv4_weapon,0;
+			getitem 1367,1; //Slaughter
+		}
+		next;
+		mes "[希比莱森]";
+		mes "啊，又一件见证我惊人身手的作品！";
+		mes "想让我再做真正了不起的东西时，随时来找我。";
+		mes "回见~";
+		close;
+	}
+	if (((lv4_weapon == 9) && (countitem(7292) > 29)) || ((lv4_weapon == 10) && (countitem(7297) > 29)) || ((lv4_weapon == 11) && (countitem(7296) > 29))) {
+		if (lv4_weapon == 9) {
+			set .@itemreq,7292; //Muscovite
+		}
+		else if (lv4_weapon == 10) {
+			set .@itemreq,7297; // Biotite
+		}
+		else if (lv4_weapon == 11) {
+			set .@itemreq,7296; // Pyroxene
+		}
+		mes "[希比莱森]";
+		mes "好，我们开始吧！";
+		mes "首先，看看你今天运气如何。";
+		mes "我们玩一个简单的游戏，";
+		mes "你来猜我心里想的怪物。";
+		next;
+		mes "[希比莱森]";
+		mes "别担心，我会告诉你我喜欢的怪物，";
+		mes "所以这游戏不是不可能赢。";
+		mes "只要猜对一个，就说明你今天运气不错！";
+		next;
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			setarray .@mons[.@i],rand(1,4);
+			mes "[希比莱森]";
+			if (.@i == 1) {
+				mes "好了……";
+				mes "我最喜欢的怪物是";
+				mes "狂热者、爱丽丝、妖道和";
+				mes "蛇女伊丝。现在……猜猜";
+				mes "我现在想的是哪一个！";
+			}
+			else if (.@i == 2) {
+				mes "好……";
+				mes "现在我想的是另一种怪物。是吗？猜猜看！";
+			}
+			else if (.@i == 3) {
+				mes "现在……";
+				mes "我心里想的是";
+				mes "什么怪物？";
+			}
+			else if (.@i == 4) {
+				mes "你能猜出我现在";
+				mes "心里想的是什么怪物吗？";
+			}
+			else if (.@i == 5) {
+				mes "再来一次！";
+				mes "我心里想的";
+				mes "是什么怪物？";
+			}
+			next;
+			set .@answer,select("狂热者:爱丽丝:妖道:蛇女伊丝");
+			if (.@answer == .@mons[.@i]) {
+				set .@dap,.@dap + 1;
+			}
+		}
+		mes "[希比莱森]";
+		mes "好，到此为止！";
+		mes "现在，这就是我";
+		mes "心里想的怪物的";
+		mes "顺序……";
+		next;
+		mes "[希比莱森]";
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			if (.@mons[.@i] == 1) {
+				mes "狂热者";
+			}
+			else if (.@mons[.@i] == 2) {
+				mes "爱丽丝";
+			}
+			else if (.@mons[.@i] == 3) {
+				mes "妖道";
+			}
+			else if (.@mons[.@i] == 4) {
+				mes "蛇女伊丝";
+			}
+		}
+		if (.@dap > 0) {
+			delitem .@itemreq,30;
+			set lv4_weapon,lv4_weapon+3;
+		}
+		else if (.@dap < 1) {
+			delitem .@itemreq,10;
+		}
+		next;
+		mes "[希比莱森]";
+		if (.@dap > 0) {
+			mes "太惊人了……";
+			mes "你一定有超能力什么的。你答对了";
+			mes "" + .@dap + "次！哇，你今天运气一定很好！";
+			next;
+			mes "[希比莱森]";
+			mes "既然如此，就没理由拖延了。";
+			mes "给我一点时间准备，然后我们就开始";
+			mes "为你制作，好吗？";
+			close;
+		}
+		else if (.@dap < 1) {
+			mes "哦……";
+			mes "这可不太妙。";
+			mes "你^660000全都猜错^000000了。";
+			mes "我们最好用10个"+getitemname(.@itemreq)+"驱走你的晦气。";
+			next;
+			mes "[希比莱森]";
+			mes "在你的运气足够强之前不能开始，";
+			mes "所以这游戏还得再玩一次。";
+			mes "如果矿石不够，就多带些再来。";
+			next;
+			mes "[希比莱森]";
+			mes "我哪儿也不去，";
+			mes "所以不用急。慢慢来，";
+			mes "我等着你！";
+			close;
+		}
+	}
+	if ((lv4_weapon == 9) || (lv4_weapon == 10) || (lv4_weapon == 11)) {
+		mes "[希比莱森]";
+		mes "嗯。感觉不太对劲。";
+		mes "我们一定漏了什么。";
+		mes "能再检查一下你带来的材料吗？";
+		close;
+	}
+	if ((lv4_weapon == 8) && (countitem(969) > 9) && (countitem(999) > 49) && (countitem(714) > 9)) {
+		mes "[希比莱森]";
+		mes "哦，你回来得比我预想的早。";
+		mes "基础材料都带齐了，但最重要的东西";
+		mes "带来了吗……？";
+		next;
+		if ((countitem(7292) > 29) || (countitem(7297) > 29) || (countitem(7296) > 29)) {
+			if ((countitem(7292) > 29) && (countitem(7297) > 29) && (countitem(7296) > 29)) {
+				mes "[希比莱森]";
+				mes "哇，我要的三种矿石你都带来了？";
+				mes "哈哈，我们只能用其中一种，选吧。";
+				next;
+				switch(select("白云母:黑云母:辉石")) {
+				case 1:
+					set .@itemreq,7292; //Muscovite
+					break;
+				case 2:
+					set .@itemreq,7297; // Biotite
+					break;
+				case 3:
+					set .@itemreq,7296; // Pyroxene
+					break;
+				}
+			}
+			else if ((countitem(7292) > 29) && (countitem(7297) > 29)) {
+				mes "[希比莱森]";
+				mes "哈哈哈，你只需带一种矿石，不用两种。";
+				mes "那么你想用哪种矿石呢？";
+				next;
+				switch(select("白云母:黑云母")) {
+				case 1:
+					set .@itemreq,7292; //Muscovite
+					break;
+				case 2:
+					set .@itemreq,7297; // Biotite
+					break;
+				}
+			}
+			else if ((countitem(7292) > 29) && (countitem(7296) > 29)) {
+				mes "[希比莱森]";
+				mes "哈哈哈，你只需带一种矿石，不用两种。";
+				mes "那么你想用哪种矿石呢？";
+				next;
+				switch(select("白云母:辉石")) {
+				case 1:
+					set .@itemreq,7292; //Muscovite
+					break;
+				case 2:
+					set .@itemreq,7296; // Pyroxene
+					break;
+				}
+			}
+			else if ((countitem(7297) > 29) && (countitem(7296) > 29)) {
+				mes "[希比莱森]";
+				mes "哈哈哈，你只需带一种矿石，不用两种。";
+				mes "那么你想用哪种矿石呢？";
+				next;
+				switch(select("黑云母:辉石")) {
+				case 1:
+					set .@itemreq,7297; // Biotite
+					break;
+				case 2:
+					set .@itemreq,7296; // Pyroxene
+					break;
+				}
+			}
+			else {
+				if (countitem(7292) > 29) {
+					set .@itemreq,7292; //Muscovite
+				}
+				else if (countitem(7297) > 29) {
+					set .@itemreq,7297; // Biotite
+				}
+				else if (countitem(7296) > 29) {
+					set .@itemreq,7296; // Pyroxene
+				}
+			}
+			mes "[希比莱森]";
+			mes getitemname(.@itemreq)+"，嗯？";
+			mes "好，在开始之前，我们要尽可能";
+			mes "减少你的坏运气。";
+			next;
+			mes "[希比莱森]";
+			mes "我们在这上面投入了大量的材料和能量，";
+			mes "要是失败了就太可惜了，对吧？";
+			next;
+			mes "[希比莱森]";
+			mes "如果在你运气旺的日子制作，应该就没问题。";
+			mes "为了测量你的运气，我们玩个读心游戏。";
+			next;
+			mes "[希比莱森]";
+			mes "很简单。你只需从四种怪物里";
+			mes "猜出我心里想的那个。猜对一次，";
+			mes "我们就可以开始了！";
+			next;
+			mes "[希比莱森]";
+			mes "我给你五次机会。但如果五次全错，";
+			mes "我就要收走你带来的10个特殊矿石，";
+			mes "用来驱走你的霉运。";
+			next;
+			mes "[希比莱森]";
+			mes "没错，听起来是不太好，";
+			mes "但为了保佑特殊物品制作成功，";
+			mes "这点代价不算什么，对吧？";
+			next;
+			mes "[希比莱森]";
+			mes "好，我需要些时间准备。";
+			mes "晚点再来找我，让我看看你今天的运气~";
+			delitem 969,10; //Gold
+			delitem 999,50; //Steel
+			delitem 714,10; //Emperium
+			if (countitem(7292) > 29) {
+				set lv4_weapon,9;
+			}
+			else if (countitem(7297) > 29) {
+				set lv4_weapon,10;
+			}
+			else if (countitem(7296) > 29) {
+				set lv4_weapon,11;
+			}
+			close;
+		}
+		else {
+			mes "[希比莱森]";
+			mes "嗯……？";
+			mes "看起来你没有带上";
+			mes "我要的那种特殊矿石。";
+			next;
+			mes "[希比莱森]";
+			mes "请带30个黑云母、白云母";
+			mes "或辉石，";
+			mes "我需要其中一种矿石";
+			mes "才能开始制作。";
+			close;
+		}
+	}
+	if (lv4_weapon == 8) {
+		mes "[希比莱森]";
+		mes "我需要";
+		mes "10个黄金、";
+		mes "50个钢铁和";
+		mes "10个华丽金属";
+		mes "作为基础材料。";
+		next;
+		mes "[希比莱森]";
+		mes "我还需要一些稀有矿石来赋予作品力量。";
+		mes "白云母、黑云母或辉石。";
+		mes "随便哪种，给我带30个就行。";
+		next;
+		mes "[希比莱森]";
+		mes "好，祝你好运！";
+		mes "这段时间我就在这里悠闲地等你回来。";
+		close;
+	}
+	mes "[希比莱森]";
+	mes "嘿嘿嘿……";
+	mes "终于，这一天来了。";
+	mes "我终于被公认为";
+	mes "汶巴拉最伟大的工匠了！";
+	next;
+	mes "[希比莱森]";
+	mes "对对，我就是^802A2A那个^000000希比莱森。";
+	mes "如果你把材料带来，我就屈尊为你";
+	mes "制作一件我的杰作。哇哈哈哈~！";
+	next;
+	mes "[希比莱森]";
+	mes "嗯？你说什么？";
+	mes "没听说过我？";
+	mes "拜托，别开玩笑了！";
+	mes "虽说我是手艺大师，你也不必这么紧张。";
+	next;
+	mes "[希比莱森]";
+	mes "现在老实说……";
+	mes "你想不想成为我那";
+	mes "充满灵感、常被模仿的";
+	mes "手工作品的幸运儿？";
+	next;
+	switch(select("想。是的，我想。:抱歉，我不需要！")) {
+	case 1:
+		if (BaseLevel < 70) {
+			mes "[希比莱森]";
+			mes "哦……";
+			mes "你的心智还太弱，承受不了我作品的力量。";
+			mes "很抱歉，你还需要更多锻炼。";
+			next;
+			mes "[希比莱森]";
+			mes "我知道等待拥有我的作品一定很难熬。";
+			mes "但为了你好，先变强再来找我吧。";
+			close;
+		}
+		mes "[希比莱森]";
+		mes "哈哈哈！";
+		mes "那是当然！";
+		mes "那只是个反问句！";
+		mes "不过我喜欢你的态度。现在我说说";
+		mes "你需要带来的东西，记好了。";
+		next;
+		mes "[希比莱森]";
+		mes "我需要";
+		mes "10个黄金、";
+		mes "50个钢铁和";
+		mes "10个华丽金属";
+		mes "作为基础材料。";
+		next;
+		mes "[希比莱森]";
+		mes "我还需要一些稀有矿石来赋予作品力量。";
+		mes "白云母、黑云母或辉石。";
+		mes "随便哪种，给我带30个就行。";
+		next;
+		mes "[希比莱森]";
+		mes "好，祝你好运！";
+		mes "这段时间我就在这里悠闲地等你回来。";
+		set lv4_weapon,8;
+		close;
+	case 2:
+		mes "[希比莱森]";
+		mes "哈哈哈~！";
+		mes "不用这么";
+		mes "谦虚啦！";
+		mes "哦，你们这些冒险者";
+		mes "有时候真是有意思。";
+		next;
+		mes "[希比莱森]";
+		mes "好吧，等你鼓起勇气来求我帮忙时，";
+		mes "随时回来。给我个机会展示我的天才！";
+		close;
+	}
+}
+
+um_in,156,77,5	script	塔贝森#lv4	788,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (event_umbala < 3) {
+		mes "[塔贝森]";
+		mes "Umba! Umbaba...umum! Baumba!";
+		mes "Umumumbababaumumbabaumba!";
+		mes "Umbaumbaumbaumbaumhah!";
+		mes "Umumumumumbababababab!";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[塔贝森]";
+		mes "嗯……";
+		mes "我感觉你有些与众不同。你是外地人吧？";
+		next;
+		mes "[塔贝森]";
+		mes "请允许我自我介绍。我是塔贝森，";
+		mes "知识的源泉，汶巴拉著名的天才。哈哈哈！";
+		next;
+		mes "[塔贝森]";
+		mes "我有两个徒弟：希比莱森，是个笨蛋；";
+		mes "还有巴佐，相当聪明，很有潜力。";
+		next;
+		mes "[塔贝森]";
+		mes "当然，两人都很有天赋和手艺，";
+		mes "但我担心希比莱森。他常犯愚蠢的错误，";
+		mes "还对自己的错误毫不知耻。";
+		next;
+		mes "[塔贝森]";
+		mes "我教过他们如何操控汶巴拉周围的能量";
+		mes "来制造物品。听说外面的世界也有一种";
+		mes "类似的技艺，你们称之为炼金术。";
+		next;
+		mes "[塔贝森]";
+		mes "无论如何，你需要我的手艺吗？";
+		mes "如果需要，请带来我所需的材料，";
+		mes "我就可以为你效劳。";
+		next;
+		switch(select("好的，麻烦你。:不用了，谢谢。")) {
+		case 1:
+			if (BaseLevel < 70) {
+				mes "[塔贝森]";
+				mes "很遗憾，你还不足以驾驭我的工艺品。";
+				mes "请多加修炼、变得更强再来找我。";
+				mes "祝你旅途平安。";
+				close;
+			}
+			mes "[塔贝森]";
+			mes "很好。请你记清楚";
+			mes "需要带给我什么，";
+			mes "我才能为你制作。我需要……";
+			next;
+			mes "[塔贝森]";
+			mes "10个黄金、";
+			mes "50个钢铁";
+			mes "和10个华丽金属";
+			mes "作为基础材料。";
+			mes "我还需要一种稀有矿石来为作品附魔。";
+			next;
+			mes "[塔贝森]";
+			mes "另外，请带30个金云母、橄榄石或粉晶。";
+			mes "根据你选择的矿石不同，我的作品";
+			mes "会拥有不同的特性。";
+			next;
+			mes "[塔贝森]";
+			mes "请注意，我并不清楚具体会做出什么物品。";
+			mes "炼金术的变数太多，任何人的知识";
+			mes "都是有限的。";
+			next;
+			mes "[塔贝森]";
+			mes "换句话说，我们只能听天由命。";
+			mes "不过这事以后再说。现在请先去";
+			mes "收集所需的材料。我会在这里等你。";
+			set lv4_weapon,15;
+			close;
+		case 2:
+			mes "[塔贝森]";
+			mes "哦……我明白了。";
+			mes "听到这个有点失望，但如果你觉得";
+			mes "我能帮上忙，";
+			mes "请再来找我。";
+			close;
+		}
+	}
+	if ((lv4_weapon < 15) || (lv4_weapon > 21)) {
+		mes "[塔贝森]";
+		mes "嗯……？";
+		mes "你找我";
+		mes "没什么事吧？";
+		next;
+		mes "[塔贝森]";
+		mes "请不要把我当成普通的老糊涂。";
+		mes "人老了，看人心反而更清楚。";
+		mes "请继续做你的事吧，祝你旅途好运。";
+		close;
+	}
+	if ((lv4_weapon == 19) || (lv4_weapon == 20) || (lv4_weapon == 21)) {
+		mes "[塔贝森]";
+		mes "很好，我准备好开始了。";
+		mes "给我一点时间，把这些材料摆成法阵。";
+		next;
+		mes "^3355FF他把材料摆成一个奇异的法阵，开始吟唱。";
+		mes "塔贝森周围的空气变得沉重而不祥，";
+		mes "材料仿佛涌动起新生的能量。^000000";
+		next;
+		mes "[塔贝森]";
+		mes "请明白，这力量并非来自我。";
+		mes "我只是用我的技艺从死者的国度";
+		mes "汲取力量，注入这些材料之中。";
+		next;
+		mes "[塔贝森]";
+		mes "让我们祈祷好结果。";
+		mes "现在我们只能把最终的结果";
+		mes "交给命运。";
+		next;
+		mes "^3355FF材料缓缓相互融合，";
+		mes "结合成一个全新的物体。你与塔贝森";
+		mes "是成功还是失败，很快就会见分晓了。^000000";
+		next;
+		mes "[塔贝森]";
+		if (lv4_weapon == 19) {
+			mes "我不敢相信！";
+			mes "这是如此难以置信的稀有武器！";
+			mes "是的，我记得已故父亲告诉过我的名字。";
+			mes "这是……凯撒之剑！";
+			set lv4_weapon,0;
+			getitem 1134,1; //Scissores_Sword
+		}
+		else if (lv4_weapon == 20) {
+			mes "我不敢相信！";
+			mes "这是如此难以置信的稀有武器！";
+			mes "是的，我记得已故父亲告诉过我的名字。";
+			mes "这是……提尔锋！";
+			set lv4_weapon,0;
+			getitem 1139,1; //Tale_Fing_
+		}
+		else if (lv4_weapon == 21) {
+			mes "我不敢相信！";
+			mes "这是如此难以置信的稀有武器！";
+			mes "是的，我记得已故父亲告诉过我的名字。";
+			mes "这是……安息日之斧！";
+			set lv4_weapon,0;
+			getitem 1365,1; //Sabbath
+		}
+		next;
+		mes "[塔贝森]";
+		mes "这把强大的武器归你了。如果你觉得";
+		mes "我还能再为你效劳，随时回来找我。";
+		mes "后会有期，勇敢的冒险者。";
+		close;
+	}
+	if (((lv4_weapon == 16) && (countitem(7290))) || ((lv4_weapon == 17) && (countitem(7289))) || ((lv4_weapon == 18) && (countitem(7293)))) {
+		if (lv4_weapon == 16) {
+			set .@itemreq,7290; //Phlogopite
+		}
+		else if (lv4_weapon == 17) {
+			set .@itemreq,7289; //Olivine
+		}
+		else if (lv4_weapon == 18) {
+			set .@itemreq,7293; //Rose_Quartz
+		}
+		mes "[塔贝森]";
+		mes "我们开始吧？";
+		mes "我会说出四种怪物的名字。";
+		mes "你有五次机会预测我心里想的是哪一种。";
+		next;
+		mes "[塔贝森]";
+		mes "这个读心游戏能有效测定";
+		mes "你的运气是好是坏。准备好了……";
+		next;
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			setarray .@mons[.@i],rand(1,4);
+			mes "[塔贝森]";
+			if (.@i == 1) {
+				mes "我最喜欢的怪物是";
+				mes "巴风特、黑暗之王、血腥骑士";
+				mes "和冰暴骑士。现在，";
+				mes "试着猜猜我心里想的是";
+				mes "哪一种。";
+			}
+			else if (.@i == 2) {
+				mes "请试着判断";
+				mes "此时此刻我心里想的";
+				mes "是什么怪物。";
+			}
+			else if (.@i == 3) {
+				mes "现在，试着感应";
+				mes "我脑海中浮现的";
+				mes "是什么怪物。";
+			}
+			else if (.@i == 4) {
+				mes "再一次，";
+				mes "猜猜我现在心里想的";
+				mes "是什么怪物。";
+			}
+			else if (.@i == 5) {
+				mes "好了，这是你";
+				mes "最后一次机会，";
+				mes "猜对我心里想的";
+				mes "是什么怪物。";
+			}
+			next;
+			set .@answer,select("巴风特:黑暗之王:血腥骑士:冰暴骑士");
+			if (.@answer == .@mons[.@i]) {
+				set .@dap,.@dap + 1;
+			}
+		}
+		mes "[塔贝森]";
+		mes "游戏结束。现在，这就是我";
+		mes "心里想的怪物的顺序……";
+		next;
+		mes "[塔贝森]";
+		for( set .@i, 1; .@i <= 5; set .@i,.@i+1 ) {
+			if (.@mons[.@i] == 1) {
+				mes "巴风特";
+			}
+			else if (.@mons[.@i] == 2) {
+				mes "黑暗之王";
+			}
+			else if (.@mons[.@i] == 3) {
+				mes "血腥骑士";
+			}
+			else if (.@mons[.@i] == 4) {
+				mes "冰暴骑士";
+			}
+		}
+		if (.@dap > 0) {
+			delitem .@itemreq,30;
+			set lv4_weapon,lv4_weapon+3;
+		}
+		else if (.@dap < 1) {
+			delitem .@itemreq,10;
+		}
+		next;
+		mes "[塔贝森]";
+		if (.@dap > 0) {
+			mes "你答对了 " + .@dap + " 次。看来你的运气正处于高点，";
+			mes "现在正是我为你制作的好时机。";
+			mes "给我一点时间准备，然后再来找我。";
+			close;
+		}
+		else if (.@dap < 1) {
+			mes "很遗憾，你一次都没猜对。";
+			mes "看来你的运气充满了负面能量。";
+			mes "我们需要用你的10个金云母驱走霉运。";
+			next;
+			mes "[塔贝森]";
+			mes "别灰心。损失10个";
+			mes getitemname(.@itemreq)+"总比制作失败损失30个要好。";
+			next;
+			mes "[塔贝森]";
+			mes "请带着30个金云母回来，";
+			mes "我们再试一次读心游戏。";
+			mes "我就在这里等你。";
+			close;
+		}
+	}
+	if ((lv4_weapon == 16) || (lv4_weapon == 17) || (lv4_weapon == 18)) {
+		mes "[塔贝森]";
+		mes "嗯……";
+		mes "你的粉晶";
+		mes "似乎不够。";
+		mes "请尽量收集至少30个，";
+		mes "然后再来找我。";
+		close;
+	}
+	if ((lv4_weapon == 15) && (countitem(969) > 9) && (countitem(999) > 49) && (countitem(714) > 9)) {
+		mes "[塔贝森]";
+		mes "你回来得比我预想的早。";
+		mes "我感觉基础材料你都带齐了，";
+		mes "但特殊矿石带够了吗？";
+		next;
+		if ((countitem(7290) > 29) || (countitem(7289) > 29) || (countitem(7293) > 29)) {
+			if ((countitem(7290) > 29) && (countitem(7289) > 29) && (countitem(7293) > 29)) {
+				mes "[塔贝森]";
+				mes "啊，三种你都带来了。不过我们一次";
+				mes "只能用一种矿石，请只选一种。";
+				next;
+				switch(select("金云母:橄榄石:粉晶")) {
+				case 1:
+					set .@itemreq,7290; //Phlogopite
+					break;
+				case 2:
+					set .@itemreq,7289; //Olivine
+					break;
+				case 3:
+					set .@itemreq,7293; //Rose_Quartz
+					break;
+				}
+			}
+			else if ((countitem(7290) > 29) && (countitem(7289) > 29)) {
+				mes "[塔贝森]";
+				mes "哈哈哈，你不必带";
+				mes "一种以上的矿石。";
+				mes "那么你想用哪一种呢？";
+				next;
+				switch(select("金云母:橄榄石")) {
+				case 1:
+					set .@itemreq,7290; //Phlogopite
+					break;
+				case 2:
+					set .@itemreq,7289; //Olivine
+					break;
+				}
+			}
+			else if ((countitem(7290) > 29) && (countitem(7293) > 29)) {
+				mes "[塔贝森]";
+				mes "哈哈哈，你不必带";
+				mes "一种以上的矿石。";
+				mes "那么你想用哪一种呢？";
+				next;
+				switch(select("金云母:粉晶")) {
+				case 1:
+					set .@itemreq,7290; //Phlogopite
+					break;
+				case 2:
+					set .@itemreq,7293; //Rose_Quartz
+					break;
+				}
+			}
+			else if ((countitem(7289) > 29) && (countitem(7293) > 29)) {
+				mes "[塔贝森]";
+				mes "哈哈哈，你不必带";
+				mes "一种以上的矿石。";
+				mes "那么你想用哪一种呢？";
+				next;
+				switch(select("橄榄石:粉晶")) {
+				case 1:
+					set .@itemreq,7289; //Olivine
+					break;
+				case 2:
+					set .@itemreq,7293; //Rose_Quartz
+					break;
+				}
+			}
+			else {
+				if (countitem(7290) > 29) {
+					set .@itemreq,7290; //Phlogopite
+				}
+				else if (countitem(7289) > 29) {
+					set .@itemreq,7289; //Olivine
+				}
+				else if (countitem(7293) > 29) {
+					set .@itemreq,7293; //Rose_Quartz
+				}
+			}
+			mes "[塔贝森]";
+			mes "好，"+getitemname(.@itemreq)+"。";
+			mes "现在，在我开始制作之前，";
+			mes "我必须先确定你的运气是否足够";
+			mes "让我继续。";
+			next;
+			mes "[塔贝森]";
+			mes "我们玩一个读心游戏，";
+			mes "让我测量你的运气是否高到";
+			mes "足以避免制作失败。";
+			next;
+			mes "[塔贝森]";
+			mes "你有五次机会，从我喜欢的四种怪物里";
+			mes "猜出我想的那个。只要猜对一次，";
+			mes "我就可以开始制作。";
+			next;
+			mes "[塔贝森]";
+			mes "但如果五次全部猜错，我必须收走";
+			mes "你10个特殊矿石来驱走你的霉运。";
+			next;
+			mes "[塔贝森]";
+			mes "现在，请给我一点时间完成准备。";
+			mes "我们稍后再谈。";
+			delitem 999,50; //Steel
+			delitem 969,10; //Gold
+			delitem 714,10; //Emperium
+			if (countitem(7290) > 29) {
+				set lv4_weapon,16;
+			}
+			else if (countitem(7289) > 29) {
+				set lv4_weapon,17;
+			}
+			else if (countitem(7293) > 29) {
+				set lv4_weapon,18;
+			}
+			close;
+		}
+		else {
+			mes "[塔贝森]";
+			mes "嗯……";
+			mes "看来还没齐。记住，我需要30个金云母、";
+			mes "橄榄石或粉晶才能开始制作。";
+			close;
+		}
+	}
+	if (lv4_weapon == 15) {
+		mes "[塔贝森]";
+		mes "[塔贝森]";
+		mes "给我带来……";
+		mes "10个黄金、";
+		mes "50个钢铁";
+		mes "和10个华丽金属。";
+		mes "我还需要一种稀有矿石来为作品附魔。";
+		next;
+		mes "[塔贝森]";
+		mes "另外，请带30个金云母、橄榄石或粉晶。";
+		mes "根据你选择的矿石不同，我的作品";
+		mes "会拥有不同的特性。";
+		close;
+	}
+	mes "[塔贝森]";
+	mes "嗯……";
+	mes "我感觉你有些与众不同。你是外地人吧？";
+	next;
+	mes "[塔贝森]";
+	mes "请允许我自我介绍。我是塔贝森，";
+	mes "知识的源泉，汶巴拉著名的天才。哈哈哈！";
+	next;
+	mes "[塔贝森]";
+	mes "我有两个徒弟：希比莱森，是个笨蛋；";
+	mes "还有巴佐，相当聪明，很有潜力。";
+	next;
+	mes "[塔贝森]";
+	mes "当然，两人都很有天赋和手艺，";
+	mes "但我担心希比莱森。他常犯愚蠢的错误，";
+	mes "还对自己的错误毫不知耻。";
+	next;
+	mes "[塔贝森]";
+	mes "我教过他们如何操控汶巴拉周围的能量";
+	mes "来制造物品。听说外面的世界也有一种";
+	mes "类似的技艺，你们称之为炼金术。";
+	next;
+	mes "[塔贝森]";
+	mes "无论如何，你需要我的手艺吗？";
+	mes "如果需要，请带来我所需的材料，";
+	mes "我就可以为你效劳。";
+	next;
+	switch(select("好的，麻烦你。:不用了，谢谢。")) {
+	case 1:
+		if (BaseLevel < 70) {
+			mes "[塔贝森]";
+			mes "很遗憾，你还不足以驾驭我的工艺品。";
+			mes "请多加修炼、变得更强再来找我。";
+			mes "祝你旅途平安。";
+			close;
+		}
+		mes "[塔贝森]";
+		mes "很好。请你记清楚";
+		mes "需要带给我什么，";
+		mes "我才能为你制作。我需要……";
+		next;
+		mes "[塔贝森]";
+		mes "10个黄金、";
+		mes "50个钢铁";
+		mes "和10个华丽金属";
+		mes "作为基础材料。";
+		mes "我还需要一种稀有矿石来为作品附魔。";
+		next;
+		mes "[塔贝森]";
+		mes "另外，请带30个金云母、橄榄石或粉晶。";
+		mes "根据你选择的矿石不同，我的作品";
+		mes "会拥有不同的特性。";
+		next;
+		mes "[塔贝森]";
+		mes "请注意，我并不清楚具体会做出什么物品。";
+		mes "炼金术的变数太多，任何人的知识";
+		mes "都是有限的。";
+		next;
+		mes "[塔贝森]";
+		mes "换句话说，我们只能听天由命。";
+		mes "不过这事以后再说。现在请先去";
+		mes "收集所需的材料。我会在这里等你。";
+		set lv4_weapon,15;
+		close;
+	case 2:
+		mes "[塔贝森]";
+		mes "哦……我明白了。";
+		mes "听到这个有点失望，但如果你觉得";
+		mes "我能帮上忙，";
+		mes "请再来找我。";
+		close;
+	}
+}
+
+aldebaran,178,239,3	script	比尔·萨耶#lv4	712,{
+	if (lv4_weapon == 55) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个辉石、绿松石和金云母。";
+		mes "我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 54) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个黄水晶、玛瑙";
+		mes "和白云母。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 53) {
+		mes "[比尔·萨耶]";
+		mes "什么……？";
+		mes "沃尔鲍斯特的研究？";
+		next;
+		mes "[比尔·萨耶]";
+		mes "你怎么会认识他？";
+		mes "你在他生前是他的朋友吗？";
+		mes "这一定是天意……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个黄水晶、玛瑙";
+			mes "和白云母。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,54;
+			close;
+		}
+		else {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个辉石、绿松石和金云母。";
+			mes "我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,55;
+			close;
+		}
+	}
+	if ((lv4_weapon == 49) || (lv4_weapon == 50)) {
+		mes "[比尔·萨耶]";
+		mes "你没有别的事可做吗？别烦我了，";
+		mes "去为目标拼尽全力吧。";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*唉……*^000000";
+		mes "不过，拼尽全力";
+		mes "也不一定能成功。";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^660000但这不是借口！^000000";
+		mes "历史上每一个成功的人";
+		mes "都是拼尽全力的！";
+		next;
+		mes "[比尔·萨耶]";
+		mes "希望你记住这一点。这是我以前";
+		mes "常对儿子们说的话。哈哈哈~";
+		set lv4_weapon,50;
+		close;
+	}
+	if (lv4_weapon == 45) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个绿松石、";
+		mes "黑云母和粉晶。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		set lv4_weapon,45;
+		close;
+	}
+	if (lv4_weapon == 46) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个金云母、";
+		mes "黄水晶和辉石。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		set lv4_weapon,46;
+		close;
+	}
+	if (lv4_weapon == 44) {
+		mes "[比尔·萨耶]";
+		mes "什么……？";
+		mes "海因的研究？";
+		next;
+		mes "[比尔·萨耶]";
+		mes "你怎么会认识他？";
+		mes "你在他生前是他的朋友吗？";
+		mes "这一定是天意……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个绿松石、";
+			mes "黑云母和粉晶。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,45;
+			close;
+		}
+		else {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个金云母、";
+			mes "黄水晶和辉石。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,46;
+			close;
+		}
+	}
+	if ((lv4_weapon == 40) || (lv4_weapon == 41)) {
+		mes "[比尔·萨耶]";
+		mes "不管你愿意付我多少钱，";
+		mes "我都不会再给任何人锻造武器了。";
+		next;
+		mes "[比尔·萨耶]";
+		mes "即使在我打造武器的年代，";
+		mes "我也从不收任何客人的钱。";
+		mes "你知道为什么吗？";
+		next;
+		mes "[比尔·萨耶]";
+		mes "我总是告诫儿子们：'铸造好武器绝不能收报酬。";
+		mes "^333333那会招来厄运。^000000'别问为什么，就是这样。";
+		set lv4_weapon,41;
+		next;
+		mes "[比尔·萨耶]";
+		mes "即使你拿出比金钱更珍贵的东西，";
+		mes "我也不会为你锻造武器。";
+		mes "不过如果我的儿子们还在世，也许我会吧……";
+		close;
+	}
+	if (lv4_weapon == 37) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个黑云母、";
+		mes "玛瑙和黄水晶。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 36) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个白云母、";
+		mes "橄榄石和粉晶。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 35) {
+		mes "[比尔·萨耶]";
+		mes "什么……？";
+		mes "雷格玛的研究？";
+		next;
+		mes "[比尔·萨耶]";
+		mes "你怎么会认识他？";
+		mes "你在他生前是他的朋友吗？";
+		mes "这一定是天意……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个白云母、";
+			mes "橄榄石和粉晶。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,36;
+			close;
+		}
+		else {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个黑云母、";
+			mes "玛瑙和黄水晶。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,37;
+			close;
+		}
+	}
+	if ((lv4_weapon == 31) || (lv4_weapon == 32)) {
+		mes "[比尔·萨耶]";
+		mes "我的儿子们都英年早逝，让我心碎。";
+		mes "我记得我总是对他们说：'享受你的青春。";
+		mes "^333333活得无怨无悔。^000000'";
+		set lv4_weapon,32;
+		next;
+		mes "[比尔·萨耶]";
+		mes "但我从没想过他们的生命会如此短暂。";
+		mes "请记住，要活得让日后的自己不被悔恨纠缠。";
+		mes "这是我能给你的最好忠告。";
+		close;
+	}
+	if (lv4_weapon == 27) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个绿松石、";
+		mes "橄榄石和玛瑙。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 28) {
+		mes "[比尔·萨耶]";
+		mes "嗯……";
+		mes "你需要30个金云母、";
+		mes "辉石和粉晶。我确定这些就是你要的材料，";
+		mes "但成品到底是什么我就不知道了……";
+		next;
+		mes "[比尔·萨耶]";
+		mes "^333333*抽泣*^000000";
+		mes "我的儿子们都在完成研究之前";
+		mes "就去世了。死的应该是我才对。他们还那么年轻……";
+		close;
+	}
+	if (lv4_weapon == 26) {
+		mes "[比尔·萨耶]";
+		mes "什么……？";
+		mes "凯隆的研究？";
+		next;
+		mes "[比尔·萨耶]";
+		mes "你怎么会认识他？";
+		mes "你在他生前是他的朋友吗？";
+		mes "这一定是天意……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个绿松石、";
+			mes "橄榄石和玛瑙。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,27;
+			close;
+		}
+		else {
+			mes "[比尔·萨耶]";
+			mes "嗯……";
+			mes "你需要30个金云母、";
+			mes "辉石和粉晶。我确定这些就是你要的材料，";
+			mes "但成品到底是什么我就不知道了……";
+			next;
+			mes "[比尔·萨耶]";
+			mes "^333333*抽泣*^000000";
+			mes "我的儿子们都在完成研究之前";
+			mes "就去世了。死的应该是我才对。他们还那么年轻……";
+			set lv4_weapon,28;
+			close;
+		}
+	}
+	if ((lv4_weapon == 22) || (lv4_weapon == 23)) {
+		mes "[比尔·萨耶]";
+		mes "听着，我说过了……";
+		mes "我什么都做不了。";
+		mes "^333333我在这里完全无能为力。^000000";
+		set lv4_weapon,23;
+		next;
+		mes "[比尔·萨耶]";
+		mes "求我做任何事都没有意义。";
+		mes "自从儿子们去世后，我就一蹶不振。";
+		mes "请让我一个人静静。";
+		close;
+	}
+	mes "[比尔·萨耶]";
+	mes "别管我了……";
+	mes "我只是个心碎的老头子。";
+	next;
+	mes "[比尔·萨耶]";
+	mes "我不再为任何人打造武器了。";
+	mes "也许我曾是远近闻名的武器工匠，";
+	mes "但自从儿子们去世后，我就再也提不起劲干活了……";
+	close;
+}
+
+geffen,203,146,5	script	市民#lv4-1	97,{
+	mes "[市民]";
+	mes "艾尔帕兰曾有一位技艺精湛的";
+	mes "武器工匠，他有4个儿子。";
+	mes "他们一家以武器锻造技艺闻名全国。";
+	next;
+	mes "[市民]";
+	mes "不幸的是，儿子们都在尝试制造";
+	mes "强大武器时丧生了。只有父亲在事故中幸存。";
+	next;
+	mes "[市民]";
+	mes "因为那场事故，武器工匠引退并隐居起来。";
+	mes "谁也没见过他和儿子们正在开发的武器。";
+	next;
+	mes "[市民]";
+	mes "我想他的儿子们付出了那么多，";
+	mes "却只能带着未竟的目标离去，";
+	mes "是无法安息的吧……";
+	close;
+}
+
+morocc,289,230,3	script	市民#lv4-2	92,{
+	mes "[市民]";
+	mes "在死者的国度遇见故人是不可能的。";
+	mes "但听说如果你真的遇到了死者，";
+	mes "会发现他并不记得所有的事。";
+	next;
+	mes "[市民]";
+	mes "但如果你带上能唤起他生前记忆的东西，";
+	mes "他就能暂时恢复记忆。当然，你得真的";
+	mes "在冥界遇到谁才能验证。";
+	next;
+	mes "[市民]";
+	mes "哈……";
+	mes "我知道我说的这些有点阴森，";
+	mes "但再琐碎的消息说不定哪天也有用，对吧？";
+	close;
+}
+
+niflheim,240,193,3	script	凯隆#lv4	794,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (BaseLevel < 80) {
+		mes "[凯隆]";
+		mes "嘿……";
+		mes "像你这样的人是怎么";
+		mes "跑到这种地方来的？";
+		next;
+		mes "[凯隆]";
+		mes "看你这稚嫩的脸就知道你还很弱。";
+		mes "你最好赶紧离开这里，变得足够强";
+		mes "之后再考虑回来。";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[凯隆]";
+		mes "我生前名叫凯隆。";
+		mes "但现在我只是在这死者的国度里";
+		mes "游荡的孤魂野鬼。没有躯体，";
+		mes "我感到如此无用。";
+		next;
+		switch(select("表示关注。:不理他。")) {
+		case 1:
+			mes "[凯隆]";
+			mes "啊……？";
+			mes "我不记得刚才想说什么了。我……我的记忆！";
+			mes "我……我好像想不起来了……";
+			set lv4_weapon,22;
+			close;
+		case 2:
+			mes "[凯隆]";
+			mes "没用……";
+			mes "一点用都没有……";
+			close;
+		}
+	}
+	if ((lv4_weapon < 22) || (lv4_weapon > 30)) {
+		mes "[凯隆]";
+		mes "我感觉你身上有些东西。";
+		mes "就好像你是带着某种目的";
+		mes "来到这里的一样。";
+		next;
+		mes "[凯隆]";
+		mes "我很惊讶……";
+		mes "还有点羡慕。";
+		mes "可以说，尼芙菲姆的大多数存在";
+		mes "来到这里时，";
+		mes "都毫无目的可言。";
+		close;
+	}
+	if ((lv4_weapon == 29) || (lv4_weapon == 30)) {
+		mes "[凯隆]";
+		mes "嘿嘿嘿……";
+		mes "你来得正是时候。";
+		mes "是时候向你展示";
+		mes "我研究的成果了……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[凯隆]";
+			mes "成功了！";
+			mes "我完成了那个让我丧命的";
+			mes "实验！我简直不敢相信！";
+			mes "我造出了";
+			if (lv4_weapon == 29) {
+				mes "这个……巨斧！";
+				getitem 1364,1; //Great_Axe
+			}
+			else {
+				mes "这个……朗基努斯之枪！";
+				getitem 1469,1; //Longinus's_Spear
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[凯隆]";
+			mes "我很高兴多年的研究没有白费。";
+			mes "要是父亲能看到就好了，他一定会为我高兴的。";
+			next;
+			mes "[凯隆]";
+			mes "哦不……";
+			mes "^333333*唉*^000000 我感觉记忆又开始模糊了。";
+			mes "如果你再见到我，请再让我想起我的过去。";
+			mes "谢谢你……";
+			close;
+		}
+		else {
+			mes "[凯隆]";
+			mes "成功了！";
+			mes "我完成了那个让我丧命的";
+			mes "实验！我简直不敢相信！";
+			mes "我造出了";
+			if (lv4_weapon == 29) {
+				mes "这个……断头台之斧！";
+				getitem 1369,1; //Guillotine
+			}
+			else {
+				mes "这个……布里欧纳克之枪！";
+				getitem 1470,1; //Brionac
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[凯隆]";
+			mes "我很高兴多年的研究没有白费。";
+			mes "要是父亲能看到就好了，他一定会为我高兴的。";
+			next;
+			mes "[凯隆]";
+			mes "哦不……";
+			mes "^333333*唉*^000000 我感觉记忆又开始模糊了。";
+			mes "如果你再见到我，请再让我想起我的过去。";
+			mes "谢谢你……";
+			close;
+		}
+	}
+	if (((lv4_weapon == 27) && (countitem(7289) > 29) && (countitem(7294) > 29) && (countitem(7291) > 29)) || ((lv4_weapon == 28) && (countitem(7290) > 29) && (countitem(7296) > 29) && (countitem(7293) > 29))) {
+		mes "[凯隆]";
+		mes "这是什么？";
+		mes "你随身带着的东西";
+		mes "看起来非常眼熟。";
+		mes "嗯，请让我看看……";
+		next;
+		mes "[凯隆]";
+		mes "没错，我没记错！";
+		mes "我可以用这些锻造武器！你怎么知道";
+		mes "这些就是我需要的材料？不管怎样，太棒了！";
+		next;
+		mes "[凯隆]";
+		mes "哦，不过首先，我们得测试你的运气。";
+		mes "不管我的手艺多好，都得确保你今天运气不错，";
+		mes "否则不能动手。";
+		next;
+		mes "[凯隆]";
+		mes "我们来玩'^660000猜拳^000000'。";
+		mes "如果你三局两胜，我们就开始制作。";
+		next;
+		mes "[凯隆]";
+		mes "但如果你三局里输了两局，说明你的运气";
+		mes "还不够我尝试锻造。我们就得扔掉一大堆";
+		mes "你带来的一种材料来驱走你的坏运气。";
+		next;
+		mes "[凯隆]";
+		mes "给你一张纸。";
+		mes "你写下'石头'、'布'或'剪刀'，我也一样。";
+		mes "然后我们对答案看结果。好，第一局开始！";
+		next;
+		set .@npchand1,rand(1,3);
+		set .@myhand1,select("剪刀:石头:布");
+		if (((.@myhand1 == 1) && (.@npchand1 == 3)) || ((.@myhand1 == 2) && (.@npchand1 == 1)) || ((.@myhand1 == 3) && (.@npchand1 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[凯隆]";
+		mes "现在……";
+		mes "我们来玩";
+		mes "第二局~";
+		next;
+		set .@npchand2,rand(1,3);
+		set .@myhand2,select("剪刀:石头:布");
+		if (((.@myhand2 == 1) && (.@npchand2 == 3)) || ((.@myhand2 == 2) && (.@npchand2 == 1)) || ((.@myhand2 == 3) && (.@npchand2 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[凯隆]";
+		mes "好了……";
+		mes "最后一次。";
+		mes "写下'石头'、";
+		mes "'布'或'剪刀'。";
+		next;
+		set .@npchand3,rand(1,3);
+		set .@myhand3,select("剪刀:石头:布");
+		if (((.@myhand3 == 1) && (.@npchand3 == 3)) || ((.@myhand3 == 2) && (.@npchand3 == 1)) || ((.@myhand3 == 3) && (.@npchand3 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		set .@aekddam,rand(1,3);
+		if (.@shobu > 1) {
+			if (lv4_weapon == 27) {
+				delitem 7289,30; //Olivine
+				delitem 7294,30; //Turquoise
+				delitem 7291,30; //Agate
+			}
+			else {
+				delitem 7290,30; //Phlogopite
+				delitem 7296,30; //Pyroxene
+				delitem 7293,30; //Rose_Quartz
+			}
+			set lv4_weapon,lv4_weapon+2;
+		}
+		else if (.@shobu < 2) {
+			if (.@aekddam == 1) {
+				if (lv4_weapon == 27) {
+					delitem 7289,30; //Olivine
+				}
+				else {
+					delitem 7290,30; //Phlogopite
+				}
+			}
+			else if (.@aekddam == 2) {
+				if (lv4_weapon == 27) {
+					delitem 7294,30; //Turquoise
+				}
+				else {
+					delitem 7296,30; //Pyroxene
+				}
+			}
+			else if (.@aekddam == 3) {
+				if (lv4_weapon == 27) {
+					delitem 7291,30; //Agate
+				}
+				else {
+					delitem 7293,30; //Rose_Quartz
+				}
+			}
+		}
+		mes "[凯隆]";
+		mes "我们结束了！";
+		mes "现在，我写的是……";
+		if (.@npchand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand1 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand1 == 3) {
+			mes "布";
+		}
+		if (.@npchand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand2 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand2 == 3) {
+			mes "布";
+		}
+		if (.@npchand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand3 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand3 == 3) {
+			mes "布";
+		}
+		next;
+		mes "[凯隆]";
+		mes "你写的是……";
+		if (.@myhand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand1 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand1 == 3) {
+			mes "布";
+		}
+		if (.@myhand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand2 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand2 == 3) {
+			mes "布";
+		}
+		if (.@myhand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand3 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand3 == 3) {
+			mes "布";
+		}
+		next;
+		if (.@shobu > 1) {
+			mes "[凯隆]";
+			mes "让我看看……";
+			mes "你赢了 " + .@shobu + " 次。";
+			mes "毫无疑问，";
+			mes "你的运气相当不错~";
+			next;
+			mes "[凯隆]";
+			mes "好，我说话算话。把材料给我，";
+			mes "再给我点时间完成准备。回头再聊，好吗？";
+			close;
+		}
+		else if (.@shobu < 2) {
+			mes "[凯隆]";
+			mes "唉，很遗憾你输了。我们别无选择，";
+			mes "只能用你带来的一些矿石";
+			mes "驱走你的坏运气了！";
+			next;
+			mes "[凯隆]";
+			mes "好，我们再来一次。去把我们需要的";
+			mes "材料找来，然后回来找我。";
+			close;
+		}
+	}
+	if ((lv4_weapon == 26) || (lv4_weapon == 27) || (lv4_weapon == 28)) {
+		mes "[凯隆]";
+		mes "我好像想不起其余需要的材料了。";
+		mes "这真让人越来越恼火。";
+		next;
+		mes "[凯隆]";
+		mes "要知道，我和父亲对这些东西本来烂熟于心。";
+		mes "我到底怎么了……？";
+		close;
+	}
+	if ((lv4_weapon == 25) && (countitem(1005) > 1) && (countitem(989) > 0) && (countitem(710) > 0) && (countitem(969) > 19)) {
+		mes "[凯隆]";
+		mes "哦……！";
+		mes "没想到你这么可靠！我要的东西";
+		mes "这么快就带来了！";
+		next;
+		mes "[凯隆]";
+		mes "但我还是想不起其余需要的东西。";
+		mes "真的很抱歉……";
+		next;
+		mes "[凯隆]";
+		mes "有没有办法让我想起更多呢？";
+		mes "在这期间，这些材料先由我保管。";
+		mes "我保证它们会被用来为你打造一把好武器。";
+		delitem 1005,2; //Hammer_Of_Blacksmith
+		delitem 989,1; //Emperium_Anvil
+		delitem 710,1; //Illusion_Flower
+		delitem 969,20; //Gold
+		set lv4_weapon,26;
+		close;
+	}
+	if (lv4_weapon == 25) {
+		mes "[凯隆]";
+		mes "我需要很多材料，但让我先提醒你";
+		mes "我确实记得的那些必需品。";
+		next;
+		mes "[凯隆]";
+		mes "目前，我知道我需要";
+		mes "2个铁匠之锤、";
+		mes "1个华丽金属铁砧、";
+		mes "1朵幻影之花和";
+		mes "20个黄金。";
+		next;
+		mes "[凯隆]";
+		mes "我知道还有几样东西";
+		mes "对这把武器的打造至关重要，但是……";
+		mes "我似乎无法集中精神想起来。";
+		close;
+	}
+	if (lv4_weapon == 24) {
+		mes "[凯隆]";
+		mes "好了……";
+		mes "我刚刚想起了";
+		mes "为你打造一把好武器";
+		mes "所需的大部分东西。";
+		next;
+		mes "[凯隆]";
+		mes "我觉得应该坦白告诉你：我无法保证";
+		mes "这次会打造出什么武器，因为说实话，";
+		mes "我自己也不记得了。";
+		next;
+		mes "[凯隆]";
+		mes "目前，我知道我需要";
+		mes "2个铁匠之锤、";
+		mes "1个华丽金属铁砧、";
+		mes "1朵幻影之花和";
+		mes "20个黄金。";
+		next;
+		mes "[凯隆]";
+		mes "先把那些东西带给我。我确定还需要";
+		mes "别的东西，但我实在想不起来。";
+		mes "我的记忆力开始让我有点担心了……";
+		next;
+		mes "[凯隆]";
+		mes "总之，你去收集那些东西的时候，";
+		mes "我会在这里等你。小心点，好吗？";
+		set lv4_weapon,25;
+		close;
+	}
+	if (lv4_weapon == 23) {
+		mes "[凯隆]";
+		mes "我生前名叫凯隆。";
+		mes "但现在我只是在这死者的国度里";
+		mes "游荡的孤魂野鬼。没有躯体，";
+		mes "我感到如此无用。";
+		next;
+		mes "[凯隆]";
+		mes "我什么都做不了。";
+		mes "我很……嗯……我很……？";
+		input .@input$;
+		next;
+		if (.@input$ == "我在这里完全无能为力。") {
+			mes "[凯隆]";
+			mes "我在这里完全无能为力。";
+			mes "对，对！父亲总是这么说！";
+			mes "我想我和兄弟们在很多方面都像父亲。";
+			next;
+			mes "[凯隆]";
+			mes "我的脑子一直昏昏沉沉的。";
+			mes "我甚至忘了自己曾经";
+			mes "是个活生生的人。";
+			mes "^333333*唉……*^000000";
+			next;
+			mes "[凯隆]";
+			mes "不过，这一小段回忆让我";
+			mes "心里平静了一些。真的很感激。";
+			next;
+			mes "[凯隆]";
+			mes "我生前是个武器工匠，所以如果你愿意，";
+			mes "我可以为你锻造点好东西。";
+			mes "不过你得把材料带来。";
+			next;
+			mes "[凯隆]";
+			mes "你知道，死了之后行动多少受限。";
+			mes "不过困在尼芙菲姆其实也有好处。";
+			mes "这个地方充满奇异的能量，";
+			mes "对我的锻造有帮助。";
+			next;
+			mes "[凯隆]";
+			mes "虽然实验性的锻造害死了我的命，";
+			mes "但这次不用担心了。毕竟我已经死了！哈哈哈~";
+			next;
+			mes "[凯隆]";
+			mes "好，给我一点时间，让我试着";
+			mes "想起需要的东西，好吗？";
+			set lv4_weapon,24;
+			close;
+		}
+		else {
+			mes "[凯隆]";
+			mes "啊……？";
+			mes "你刚才说什么？";
+			mes "抱歉，我在努力回想父亲以前";
+			mes "常说的一句话……";
+			close;
+		}
+	}
+	if (lv4_weapon == 22) {
+		mes "[凯隆]";
+		mes "我生前名叫凯隆。";
+		mes "但现在我只是在这死者的国度里";
+		mes "游荡的孤魂野鬼。没有躯体，";
+		mes "我感到如此无用。";
+		next;
+		mes "[凯隆]";
+		mes "啊……？";
+		mes "我不记得刚才想说什么了。我……我的记忆！";
+		mes "我……我好像想不起来了……";
+		close;
+	}
+	mes "[凯隆]";
+	mes "我生前名叫凯隆。";
+	mes "但现在我只是在这死者的国度里";
+	mes "游荡的孤魂野鬼。没有躯体，";
+	mes "我感到如此无用。";
+	next;
+	switch(select("表示关注。:不理他。")) {
+	case 1:
+		mes "[凯隆]";
+		mes "啊……？";
+		mes "我不记得刚才想说什么了。我……我的记忆！";
+		mes "我……我好像想不起来了……";
+		set lv4_weapon,22;
+		close;
+	case 2:
+		mes "[凯隆]";
+		mes "没用……";
+		mes "一点用都没有……";
+		close;
+	}
+}
+
+niflheim,99,268,5	script	雷格玛#lv4	794,{
+	if (MaxWeight - Weight < 3000) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (BaseLevel < 80) {
+		mes "[雷格玛]";
+		mes "怎么……";
+		mes "搞的……？";
+		next;
+		mes "[雷格玛]";
+		mes "活人跑到这里来干什么？再待下去，";
+		mes "我保证你活不了多久了。喂，你不想落得";
+		mes "跟我一样的下场。赶紧离开这里！";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[雷格玛]";
+		mes "可恶……";
+		mes "我不想死啊！";
+		next;
+		mes "[雷格玛]";
+		mes "唉，活着的谁又想死呢，但我差一点";
+		mes "就能完成我想做的事了。啊，青春……";
+		next;
+		mes "[雷格玛]";
+		mes "青春……";
+		mes "享受你的青春……";
+		mes "我记得听过这样的话，";
+		mes "但后面还有……";
+		next;
+		switch(select("表示关注。:不理他。")) {
+		case 1:
+			mes "[雷格玛]";
+			mes "享受你的青春……";
+			mes "享受你的青春……";
+			mes "……后面是什么来着？";
+			next;
+			mes "[雷格玛]";
+			mes "啊！";
+			mes "我想不起来！";
+			mes "我的脑子里";
+			mes "一片混沌！";
+			set lv4_weapon,31;
+			close;
+		case 2:
+			mes "[雷格玛]";
+			mes "享受你的青春……";
+			mes "享受你的青春……";
+			mes "……后面是什么来着？";
+			close;
+		}
+	}
+	if ((lv4_weapon < 31) || (lv4_weapon > 39)) {
+		mes "[雷格玛]";
+		mes "嘿……";
+		mes "感觉你是来这里";
+		mes "完成什么事情的。";
+		mes "是啊，漫无目的的人和有所追求的人";
+		mes "完全不同。";
+		next;
+		mes "[雷格玛]";
+		mes "不过我有点同情你，如果你要在";
+		mes "尼芙菲姆这种地方办事的话。";
+		close;
+	}
+	if ((lv4_weapon == 38) || (lv4_weapon == 39)) {
+		mes "[雷格玛]";
+		mes "……";
+		mes "……终于。";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[雷格玛]";
+			mes "我做到了！";
+			mes "我为了制作它而死，";
+			mes "但终于完成了！";
+			if (lv4_weapon == 38) {
+				mes "这是……狂暴之拳！";
+				getitem 1814,1; //Berserk
+			}
+			else {
+				mes "这是……琼库莱蒂之枪！";
+				getitem 1416,1; //Tjungkuletti
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[雷格玛]";
+			mes "^333333*唉*^000000 我感觉又要这样了。我的记忆又开始溜走。";
+			mes "就不能让我保留这段记忆吗？";
+			next;
+			mes "[雷格玛]";
+			mes "也许死者本就不该记得过去。";
+			mes "但谢谢你让我实现了毕生的心愿，";
+			mes "即使这一刻如此短暂。";
+			next;
+			mes "[雷格玛]";
+			mes "如果有机会，请再回来帮我想起过去，";
+			mes "让我再体验一次锻造武器的喜悦。";
+			mes "再见了，冒险者……";
+			close;
+		}
+		else {
+			mes "[雷格玛]";
+			mes "我做到了！";
+			mes "我为了制作它而死，";
+			mes "但终于完成了！";
+			if (lv4_weapon == 38) {
+				mes "这是……鲁德拉之弓！";
+				getitem 1720,1; //Bow_Of_Rudra
+			}
+			else {
+				mes "这是……布罗卡之枪！耶~ 我做出来了！";
+				getitem 1415,1; //Skewer
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[雷格玛]";
+			mes "^333333*唉*^000000 我感觉又要这样了。我的记忆又开始溜走。";
+			mes "就不能让我保留这段记忆吗？";
+			next;
+			mes "[雷格玛]";
+			mes "也许死者本就不该记得过去。";
+			mes "但谢谢你让我实现了毕生的心愿，";
+			mes "即使这一刻如此短暂。";
+			next;
+			mes "[雷格玛]";
+			mes "如果有机会，请再回来帮我想起过去，";
+			mes "让我再体验一次锻造武器的喜悦。";
+			mes "再见了，冒险者……";
+			close;
+		}
+	}
+	if (((lv4_weapon == 36) && (countitem(7292) > 29) && (countitem(7293) > 29) && (countitem(7289) > 29)) || ((lv4_weapon == 37) && (countitem(7297) > 29) && (countitem(7291) > 29) && (countitem(7295) > 29))) {
+		mes "[雷格玛]";
+		mes "等等……";
+		mes "你带着的那些东西。那些正是我制作";
+		mes "所需的东西！让我看看……";
+		next;
+		mes "[雷格玛]";
+		mes "是的，完美无缺！";
+		mes "但你怎么知道我确切需要什么材料？";
+		mes "哦，算了，这不重要。";
+		next;
+		mes "[雷格玛]";
+		mes "现在到了最难，或者说最简单的环节。";
+		mes "是时候测试你的运气了。";
+		mes "如果你的运气太弱，我们就不能继续。";
+		next;
+		mes "[雷格玛]";
+		mes "好，我们来玩'^660000猜拳^000000'。";
+		mes "你必须三局两胜，我们才能开始锻造。";
+		next;
+		mes "[雷格玛]";
+		mes "如果你运气不好输了，我们就得扔掉";
+		mes "你带来的一大堆某种矿石来驱走坏运气。";
+		mes "规矩就是这样。";
+		next;
+		mes "[雷格玛]";
+		mes "好，给你一张纸。我说开始，你就写下";
+		mes "'石头'、'布'或'剪刀'。好吗？开始吧。";
+		next;
+		set .@npchand1,rand(1,3);
+		set .@myhand1,select("剪刀:石头:布");
+		if (((.@myhand1 == 1) && (.@npchand1 == 3)) || ((.@myhand1 == 2) && (.@npchand1 == 1)) || ((.@myhand1 == 3) && (.@npchand1 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[雷格玛]";
+		mes "好，现在我们";
+		mes "再来一次。";
+		next;
+		set .@npchand2,rand(1,3);
+		set .@myhand2,select("剪刀:石头:布");
+		if (((.@myhand2 == 1) && (.@npchand2 == 3)) || ((.@myhand2 == 2) && (.@npchand2 == 1)) || ((.@myhand2 == 3) && (.@npchand2 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[雷格玛]";
+		mes "最后一次。";
+		mes "写下'石头'、";
+		mes "'布'或'剪刀'。";
+		next;
+		set .@npchand3,rand(1,3);
+		set .@myhand3,select("剪刀:石头:布");
+		if (((.@myhand3 == 1) && (.@npchand3 == 3)) || ((.@myhand3 == 2) && (.@npchand3 == 1)) || ((.@myhand3 == 3) && (.@npchand3 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		set .@aekddam,rand(1,3);
+		if (.@shobu > 1) {
+			if (lv4_weapon == 36) {
+				delitem 7292,30; //Muscovite
+				delitem 7293,30; //Rose_Quartz
+				delitem 7289,30; //Olivine
+			}
+			else {
+				delitem 7297,30; //Biotite
+				delitem 7291,30; //Agate
+				delitem 7295,30; //Citrine
+			}
+			set lv4_weapon,lv4_weapon+2;
+		}
+		else if (.@shobu < 2) {
+			if (.@aekddam == 1) {
+				if (lv4_weapon == 36) {
+					delitem 7292,30; //Muscovite
+				}
+				else {
+					delitem 7297,30; //Biotite
+				}
+			}
+			else if (.@aekddam == 2) {
+				if (lv4_weapon == 36) {
+					delitem 7293,30; //Rose_Quartz
+				}
+				else {
+					delitem 7291,30; //Agate
+				}
+			}
+			else if (.@aekddam == 3) {
+				if (lv4_weapon == 36) {
+					delitem 7289,30; //Olivine
+				}
+				else {
+					delitem 7295,30; //Citrine
+				}
+			}
+		}
+		mes "[雷格玛]";
+		mes "好了，现在";
+		mes "我写的是……";
+		if (.@npchand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand1 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand1 == 3) {
+			mes "布";
+		}
+		if (.@npchand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand2 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand2 == 3) {
+			mes "布";
+		}
+		if (.@npchand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand3 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand3 == 3) {
+			mes "布";
+		}
+		next;
+		mes "[雷格玛]";
+		mes "你写的是……";
+		if (.@myhand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand1 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand1 == 3) {
+			mes "布";
+		}
+		if (.@myhand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand2 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand2 == 3) {
+			mes "布";
+		}
+		if (.@myhand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand3 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand3 == 3) {
+			mes "布";
+		}
+		next;
+		if (.@shobu > 1) {
+			mes "[雷格玛]";
+			mes "不错。你赢了 " + .@shobu + " 次。你的运气真好，";
+			mes "我们终于搞定这无聊的玩意儿了。";
+			next;
+			mes "[雷格玛]";
+			mes "给我点时间准备一下。现在把矿石给我，";
+			mes "晚点再来找我说话，好吗？";
+			close;
+		}
+		else if (.@shobu < 2) {
+			mes "[雷格玛]";
+			mes "可恶……";
+			mes "赢了我该高兴，但这只说明你运气不好，";
+			mes "我们得再来一次。";
+			next;
+			mes "[雷格玛]";
+			mes "抱歉，我得收走你的一大堆某种矿石";
+			mes "来驱走你的坏运气。把需要的矿石都带来，";
+			mes "我们再测一次运气，好吗？";
+			close;
+		}
+	}
+	if ((lv4_weapon == 35) || (lv4_weapon == 36) || (lv4_weapon == 37)) {
+		mes "[雷格玛]";
+		mes "啊啊啊！";
+		mes "我还是想不起";
+		mes "我需要什么！";
+		mes "我发誓，";
+		mes "这快把我逼疯了！";
+		next;
+		mes "[雷格玛]";
+		mes "……";
+		next;
+		mes "[雷格玛]";
+		mes "……";
+		mes "…………";
+		next;
+		mes "[雷格玛]";
+		mes "可恶。";
+		mes "可恶，可恶，可恶！";
+		mes "'逼疯我？！'我都已经死了！";
+		close;
+	}
+	if ((lv4_weapon == 34) && (countitem(1005) > 1) && (countitem(989) > 0) && (countitem(710) > 0) && (countitem(969) > 19)) {
+		mes "[雷格玛]";
+		mes "干得好，我要的东西你都带来了。";
+		mes "不过，计划出了一点小岔子……";
+		next;
+		mes "[雷格玛]";
+		mes "原本的计划是，等你带着这些东西回来，";
+		mes "我就能想起其余需要的东西。但我没有。";
+		next;
+		mes "[雷格玛]";
+		mes "再给我点时间好好想想。现在，";
+		mes "你带来的东西先由我保管。我向你保证，";
+		mes "我会用它们为你打造一把武器。";
+		delitem 1005,2; //Hammer_Of_Blacksmith
+		delitem 989,1; //Emperium_Anvil
+		delitem 710,1; //Illusion_Flower
+		delitem 969,20; //Gold
+		set lv4_weapon,35;
+		close;
+	}
+	if (lv4_weapon == 34) {
+		mes "[雷格玛]";
+		mes "我最好再提醒你";
+		mes "我需要哪些东西。";
+		mes "如果需要的话，";
+		mes "就全部记下来。";
+		next;
+		mes "[雷格玛]";
+		mes "1个华丽金属铁砧、";
+		mes "2个铁匠之锤、";
+		mes "1朵幻影之花";
+		mes "和20个黄金……";
+		next;
+		mes "[雷格玛]";
+		mes "还有几样至关重要的东西，";
+		mes "但我现在实在想不起来……";
+		close;
+	}
+	if (lv4_weapon == 33) {
+		mes "[雷格玛]";
+		mes "好，你回来了。我记起了大部分";
+		mes "需要的东西。记下来吧。";
+		next;
+		mes "[雷格玛]";
+		mes "1个华丽金属铁砧、";
+		mes "2个铁匠之锤、";
+		mes "1朵幻影之花";
+		mes "和20个黄金……";
+		next;
+		mes "[雷格玛]";
+		mes "还有几样重要的东西，";
+		mes "但我实在想不起来了。";
+		mes "希望你带着东西回来的时候，我能想起来。";
+		next;
+		mes "[雷格玛]";
+		mes "现在，去把我说的东西带回来。越快越好。";
+		mes "快点，我不知道我的记忆能维持多久……";
+		set lv4_weapon,34;
+		close;
+	}
+	if (lv4_weapon == 32) {
+		mes "[雷格玛]";
+		mes "可恶……";
+		mes "我不想死啊！";
+		next;
+		mes "[雷格玛]";
+		mes "唉，活着的谁又想死呢，但我差一点";
+		mes "就能完成我想做的事了。啊，青春……";
+		next;
+		mes "[雷格玛]";
+		mes "青春……";
+		mes "享受你的青春……";
+		mes "我记得听过这样的话，";
+		mes "但后面还有……";
+		next;
+		input .@input$;
+		if (.@input$ == "活得无怨无悔。") {
+			mes "[雷格玛]";
+			mes "……";
+			next;
+			mes "[雷格玛]";
+			mes "……";
+			mes "…………";
+			mes "享受你的青春。";
+			mes "活得无怨无悔。";
+			next;
+			mes "[雷格玛]";
+			mes "当然了……";
+			mes "我父亲比尔·萨耶以前总是这么说！没错！";
+			next;
+			mes "[雷格玛]";
+			mes "嘿，谢谢你唤醒我的记忆。全都想起来了。";
+			mes "我曾是个武器工匠，遗憾的是我没能";
+			mes "完成最后的课题……";
+			next;
+			mes "[雷格玛]";
+			mes "你一定要帮我实现";
+			mes "最后的目标。即使我已经死了，";
+			mes "我也想完成那个让我丧命的实验。";
+			next;
+			mes "[雷格玛]";
+			mes "现在你只需要把我需要的东西带来。";
+			mes "我困在尼芙菲姆，自己恐怕弄不到什么。";
+			next;
+			mes "[雷格玛]";
+			mes "晚点再来。";
+			mes "到那时我应该能想起需要哪些东西了。";
+			set lv4_weapon,33;
+			close;
+		}
+		else {
+			mes "[雷格玛]";
+			mes "什么……？";
+			mes "你在耍我";
+			mes "还是怎么着？";
+			mes "给我消失~";
+			close;
+		}
+	}
+	if (lv4_weapon == 31) {
+		mes "[雷格玛]";
+		mes "可恶……";
+		mes "我不想死啊！";
+		next;
+		mes "[雷格玛]";
+		mes "唉，活着的谁又想死呢，但我差一点";
+		mes "就能完成我想做的事了。啊，青春……";
+		next;
+		mes "[雷格玛]";
+		mes "青春……";
+		mes "享受你的青春……";
+		mes "我记得听过这样的话，";
+		mes "但后面还有……";
+		next;
+		mes "[雷格玛]";
+		mes "享受你的青春……";
+		mes "享受你的青春……";
+		mes "……后面是什么来着？";
+		next;
+		mes "[雷格玛]";
+		mes "啊！";
+		mes "我想不起来！";
+		mes "我的脑子里";
+		mes "一片混沌！";
+		close;
+	}
+	mes "[雷格玛]";
+	mes "可恶……";
+	mes "我不想死啊！";
+	next;
+	mes "[雷格玛]";
+	mes "唉，活着的谁又想死呢，但我差一点";
+	mes "就能完成我想做的事了。啊，青春……";
+	next;
+	mes "[雷格玛]";
+	mes "青春……";
+	mes "享受你的青春……";
+	mes "我记得听过这样的话，";
+	mes "但后面还有……";
+	next;
+	switch(select("表示关注。:不理他。")) {
+	case 1:
+		mes "[雷格玛]";
+		mes "享受你的青春……";
+		mes "享受你的青春……";
+		mes "……后面是什么来着？";
+		next;
+		mes "[雷格玛]";
+		mes "啊！";
+		mes "我想不起来！";
+		mes "我的脑子里";
+		mes "一片混沌！";
+		set lv4_weapon,31;
+		close;
+	case 2:
+		mes "[雷格玛]";
+		mes "享受你的青春……";
+		mes "享受你的青春……";
+		mes "……后面是什么来着？";
+		close;
+	}
+}
+
+niflheim,187,280,3	script	海因#lv4	795,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[海因]";
+		mes "看起来你想问我些什么。呵，我当武器工匠时，";
+		mes "我的客人们脸上也是这种表情……";
+		next;
+		mes "[海因]";
+		mes "在那些日子里，";
+		mes "我干活从不收钱。父亲总是说，";
+		mes "'铸造好武器绝不能收报酬。那……那……'";
+		next;
+		switch(select("表示关注。:不理他。")) {
+		case 1:
+			mes "[海因]";
+			mes "后面是什么来着？";
+			mes "为什么我想不起";
+			mes "那句话的后半部分了？！";
+			next;
+			mes "[海因]";
+			mes "真奇怪。";
+			mes "我怎么会忘记";
+			mes "一句我整天";
+			mes "挂在嘴边的话？我……";
+			mes "我讨厌死掉的感觉！";
+			set lv4_weapon,40;
+			close;
+		case 2:
+			mes "[海因]";
+			mes "该死！为什么我想不起";
+			mes "那句话的后半部分了？！";
+			close;
+		}
+	}
+	if ((lv4_weapon < 40) || (lv4_weapon > 48)) {
+		mes "[海因]";
+		mes "嗯？看得出你是有事才来这里的。";
+		mes "在这里见到活人已经够奇怪了，";
+		mes "见到有正当理由的活人就更奇怪了。";
+		next;
+		mes "[海因]";
+		mes "帮我个忙，";
+		mes "好好活着。";
+		mes "相信我，";
+		mes "死了之后";
+		mes "一点乐趣都没有。";
+		close;
+	}
+	if ((lv4_weapon == 47) || (lv4_weapon == 48)) {
+		mes "[海因]";
+		mes "你来了！";
+		mes "我刚完成我的作品！";
+		mes "你想看看吧，对不对？";
+		mes "现在，深呼吸……";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[海因]";
+			mes "哈哈~！";
+			mes "这太棒了！";
+			mes "终于，我毕生的";
+			mes "心血完成了！";
+			mes "这把武器的名字";
+			if (lv4_weapon == 47) {
+				mes "是锋刃之剑！";
+				getitem 1132,1; //Edge
+			}
+			else {
+				mes "是屠龙剑！";
+				getitem 1166,1; //Dragon_Slayer
+			}
+			set lv4_weapon,0;
+			next;
+		}
+		else {
+			mes "[海因]";
+			mes "哈哈~！";
+			mes "这太棒了！";
+			mes "终于，我毕生的";
+			mes "心血完成了！";
+			mes "这把武器的名字";
+			if (lv4_weapon == 47) {
+				mes "是石中剑！";
+				getitem 1137,1; //Excalibur
+			}
+			else {
+				mes "是瑞士大剑！";
+				getitem 1167,1; //Schweizersabel
+			}
+			set lv4_weapon,0;
+			next;
+		}
+		mes "[海因]";
+		mes "好了……";
+		mes "看来现在要说再见了。我已经感觉到";
+		mes "记忆越来越模糊。哈哈，死掉果然不好。";
+		next;
+		mes "[海因]";
+		mes "谢谢你的帮助。如果你再回来帮我";
+		mes "找回记忆，我也会尽力帮你。再见了，冒险者……";
+		close;
+	}
+	if (((lv4_weapon == 45) && (countitem(7294) > 29) && (countitem(7297) > 29) && (countitem(7293) > 29)) || ((lv4_weapon == 46) && (countitem(7295) > 29) && (countitem(7296) > 29) && (countitem(7290) > 29))) {
+		mes "[海因]";
+		mes "嗯……？";
+		mes "你带来的东西似乎正是我完成作品所需。";
+		mes "让我看看……";
+		next;
+		mes "[海因]";
+		mes "哇……";
+		mes "你怎么知道我需要什么材料？";
+		mes "简直好得难以置信！好了，我们离";
+		mes "完成我毕生的心血又近了一步！";
+		next;
+		mes "[海因]";
+		mes "哦，对了。光有手艺不足以完成它。";
+		mes "我们还需要你的运气。首先，得测试";
+		mes "你今天运气好不好。";
+		next;
+		mes "[海因]";
+		mes "我们来玩'^660000猜拳^000000'。";
+		mes "只要你三局两胜，我们就开始制作这东西！";
+		next;
+		mes "[海因]";
+		mes "但如果你输了，我就得扔掉一大堆";
+		mes "你带来的某种矿石来驱走你的坏运气。";
+		next;
+		mes "[海因]";
+		mes "给你一张纸。";
+		mes "我说开始时，你写下'石头'、'布'或'剪刀'。";
+		mes "我也一样写，最后我们对答案，好吗？开始吧！";
+		next;
+		set .@npchand1,rand(1,3);
+		set .@myhand1,select("剪刀:石头:布");
+		if (((.@myhand1 == 1) && (.@npchand1 == 3)) || ((.@myhand1 == 2) && (.@npchand1 == 1)) || ((.@myhand1 == 3) && (.@npchand1 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[海因]";
+		mes "好，我们来玩";
+		mes "第二局！";
+		next;
+		set .@npchand2,rand(1,3);
+		set .@myhand2,select("剪刀:石头:布");
+		if (((.@myhand2 == 1) && (.@npchand2 == 3)) || ((.@myhand2 == 2) && (.@npchand2 == 1)) || ((.@myhand2 == 3) && (.@npchand2 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[海因]";
+		mes "好……";
+		mes "最后一局。";
+		mes "这局之后，";
+		mes "我们就对答案。";
+		next;
+		set .@npchand3,rand(1,3);
+		set .@myhand3,select("剪刀:石头:布");
+		set .@aekddam,rand(1,3);
+		if (((.@myhand3 == 1) && (.@npchand3 == 3)) || ((.@myhand3 == 2) && (.@npchand3 == 1)) || ((.@myhand3 == 3) && (.@npchand3 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		if (.@shobu > 1) {
+			if (lv4_weapon == 45) {
+				delitem 7294,30; //Turquoise
+				delitem 7297,30; //Biotite
+				delitem 7293,30; //Rose_Quartz
+			}
+			else {
+				delitem 7295,30; //Citrine
+				delitem 7296,30; //Pyroxene
+				delitem 7290,30; //Phlogopite
+			}
+			set lv4_weapon,lv4_weapon+2;
+		}
+		else if (.@shobu < 2) {
+			if (.@aekddam == 1) {
+				if (lv4_weapon == 45) {
+					delitem 7294,30; //Turquoise
+				}
+				else {
+					delitem 7295,30; //Citrine
+				}
+			}
+			else if (.@aekddam == 2) {
+				if (lv4_weapon == 45) {
+					delitem 7297,30; //Biotite
+				}
+				else {
+					delitem 7296,30; //Pyroxene
+				}
+			}
+			else if (.@aekddam == 3) {
+				if (lv4_weapon == 45) {
+					delitem 7293,30; //Rose_Quartz
+				}
+				else {
+					delitem 7290,30; //Phlogopite
+				}
+			}
+		}
+		mes "[海因]";
+		mes "准备好了吗？这就是";
+		mes "我写下的……";
+		if (.@npchand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand1 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand1 == 3) {
+			mes "布";
+		}
+		if (.@npchand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand2 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand2 == 3) {
+			mes "布";
+		}
+		if (.@npchand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand3 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand3 == 3) {
+			mes "布";
+		}
+		next;
+		mes "[海因]";
+		mes "你按这个顺序";
+		mes "写下了这些答案……";
+		if (.@myhand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand1 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand1 == 3) {
+			mes "布";
+		}
+		if (.@myhand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand2 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand2 == 3) {
+			mes "布";
+		}
+		if (.@myhand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand3 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand3 == 3) {
+			mes "布";
+		}
+		next;
+		if (.@shobu > 1) {
+			mes "[海因]";
+			mes "让我看看……";
+			mes "你赢了 " + shobu + " 次。";
+			mes "你真擅长这游戏！";
+			mes "是的，你的运气正旺！";
+			next;
+			mes "[海因]";
+			mes "如约，我将为你锻造一把武器。";
+			mes "现在把材料给我，等我准备好后再来。";
+			close;
+		}
+		else if (.@shobu < 2) {
+			mes "[海因]";
+			mes "唉，你输了。";
+			mes "很抱歉，但我们";
+			mes "必须用你带来的矿石";
+			mes "驱走你身边的";
+			mes "霉运……";
+			next;
+			mes "[海因]";
+			mes "好，我在这里等。";
+			mes "带着我需要的材料回来，";
+			mes "我们再试一次。";
+			close;
+		}
+	}
+	if ((lv4_weapon == 44) || (lv4_weapon == 45) || (lv4_weapon == 46)) {
+		mes "[海因]";
+		mes "能多给我点时间回想材料吗？";
+		mes "我好像没法集中精神。也许是因为";
+		mes "我已经死了的缘故吧……";
+		next;
+		mes "[海因]";
+		mes "我敢肯定，我活着的时候记性好得多。";
+		mes "父亲以前总是考我这些东西……";
+		close;
+	}
+	if ((lv4_weapon == 43) && (countitem(1005) > 1) && (countitem(989) > 0) && (countitem(710) > 0) && (countitem(969) > 19)) {
+		mes "[海因]";
+		mes "嘿，我要的东西你都带来了。";
+		mes "你一定迫不及待想开始了！";
+		next;
+		mes "[海因]";
+		mes "可惜，在我想起其余需要的东西之前，";
+		mes "还不能开始。我死活想不起";
+		mes "最重要的那些材料了……";
+		next;
+		mes "[海因]";
+		mes "好吧，现在你带来的东西先由我保管。";
+		mes "我保证，等一切就绪，我会用这些东西";
+		mes "为你打造一把好武器。";
+		delitem 1005,2; //Hammer_Of_Blacksmith
+		delitem 989,1; //Emperium_Anvil
+		delitem 710,1; //Illusion_Flower
+		delitem 969,20; //Gold
+		set lv4_weapon,44;
+		close;
+	}
+	if (lv4_weapon == 43) {
+		mes "[海因]";
+		mes "我确定我需要";
+		mes "2个铁匠之锤、";
+		mes "1个华丽金属铁砧、";
+		mes "1朵幻影之花和";
+		mes "20个黄金……";
+		next;
+		mes "[海因]";
+		mes "所以现在，";
+		mes "请先去";
+		mes "把那些东西";
+		mes "带给我吧。";
+		close;
+	}
+	if (lv4_weapon == 42) {
+		mes "[海因]";
+		mes "看来你是真的";
+		mes "想让我为你打造武器。";
+		mes "对于像我这样";
+		mes "已经退隐的武器工匠来说，";
+		mes "这本身就是莫大的恭维。";
+		next;
+		mes "[海因]";
+		mes "好，我需要……";
+		mes "1个华丽金属铁砧、";
+		mes "2个铁匠之锤、";
+		mes "1朵幻影之花和";
+		mes "20个黄金……";
+		next;
+		mes "[海因]";
+		mes "另外还有3样东西，";
+		mes "但我不太确定是什么。我想我生前的";
+		mes "很多记忆还缺失着。";
+		next;
+		mes "[海因]";
+		mes "^333333*唉*^000000 很抱歉求你这件事，但能请你去查清楚";
+		mes "那些东西是什么吗？我相信你能在";
+		mes "活人的世界找到线索。";
+		next;
+		mes "[海因]";
+		mes "你去做这些的时候，我会尽力回想";
+		mes "制作这把武器还需要什么。";
+		set lv4_weapon,43;
+		close;
+	}
+	if (lv4_weapon == 41) {
+		mes "[海因]";
+		mes "看起来你想问我些什么。呵，我当武器工匠时，";
+		mes "我的客人们脸上也是这种表情……";
+		next;
+		mes "[海因]";
+		mes "在那些日子里，";
+		mes "我干活从不收钱。父亲总是说，";
+		mes "'铸造好武器绝不能收报酬。那……那……'";
+		next;
+		input .@input$;
+		if (.@input$ == "那会招来厄运。") {
+			mes "[海因]";
+			mes "没错！";
+			mes "打造高品质武器时，运气是必不可少的！";
+			next;
+			mes "[海因]";
+			mes "哦……糟了。";
+			mes "我已经是个死人了。";
+			mes "我才意识到。";
+			mes "或者说才想起来。";
+			mes "也许我的脑子";
+			mes "也死了，是吧？";
+			set lv4_weapon,42;
+			next;
+			mes "[海因]";
+			mes "好吧，能想起部分过去，我一定算是个";
+			mes "幸运的死人了，对吧？哈哈哈！";
+			next;
+			mes "[海因]";
+			mes "对，我是在试图完成武器研究时死的。";
+			mes "也许这是命运让我完成未竟的工作？";
+			next;
+			mes "[海因]";
+			mes "嘿，帮我个忙。能把我完成研究需要的";
+			mes "材料带来吗？如果我成功了，成品归你。";
+			mes "全都归你！";
+			next;
+			mes "[海因]";
+			mes "慢慢考虑吧。";
+			mes "这买卖";
+			mes "应该不会太差……";
+			mes "对吧？";
+			close;
+		}
+		else {
+			mes "[海因]";
+			mes "什……？";
+			mes "你在说什么？";
+			mes "我刚才想说什么来着？";
+			mes "哎哟……我的头疼！";
+			close;
+		}
+	}
+	if (lv4_weapon == 40) {
+		mes "[海因]";
+		mes "看起来你想问我些什么。呵，我当武器工匠时，";
+		mes "我的客人们脸上也是这种表情……";
+		next;
+		mes "[海因]";
+		mes "在那些日子里，";
+		mes "我干活从不收钱。父亲总是说，";
+		mes "'铸造好武器绝不能收报酬。那……那……'";
+		next;
+		mes "[海因]";
+		mes "后面是什么来着？";
+		mes "为什么我想不起";
+		mes "那句话的后半部分了？！";
+		next;
+		mes "[海因]";
+		mes "真奇怪。";
+		mes "我怎么会忘记";
+		mes "一句我整天";
+		mes "挂在嘴边的话？我……";
+		mes "我讨厌死掉的感觉！";
+		close;
+	}
+	mes "[海因]";
+	mes "看起来你想问我些什么。呵，我当武器工匠时，";
+	mes "我的客人们脸上也是这种表情……";
+	next;
+	mes "[海因]";
+	mes "在那些日子里，";
+	mes "我干活从不收钱。父亲总是说，";
+	mes "'铸造好武器绝不能收报酬。那……那……'";
+	next;
+	switch(select("表示关注。:不理他。")) {
+	case 1:
+		mes "[海因]";
+		mes "后面是什么来着？";
+		mes "为什么我想不起";
+		mes "那句话的后半部分了？！";
+		next;
+		mes "[海因]";
+		mes "真奇怪。";
+		mes "我怎么会忘记";
+		mes "一句我整天";
+		mes "挂在嘴边的话？我……";
+		mes "我讨厌死掉的感觉！";
+		set lv4_weapon,40;
+		close;
+	case 2:
+		mes "[海因]";
+		mes "该死！为什么我想不起";
+		mes "那句话的后半部分了？！";
+		close;
+	}
+}
+
+niflheim,331,72,3	script	沃尔鲍斯特#lv4	795,{
+	if (checkweight(908,300) == 0) {
+		mes "^3355FF请稍等一下！现在你身上的物品实在太多了。请把一部分物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (BaseLevel < 80) {
+		mes "[沃尔鲍斯特]";
+		mes "哈……！";
+		mes "一个活人！";
+		mes "不过活不了多久了！";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "我希望你是带着强大的同伴来的。";
+		mes "凭你的实力，绝不可能独自";
+		mes "在这种地方活下来，你知道的。";
+		close;
+	}
+	if (lv4_weapon == 0) {
+		mes "[沃尔鲍斯特]";
+		mes "死了真让人憋屈。";
+		mes "没有躯体，我再怎么努力也做不了任何事。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "说来好笑。我父亲总是说，";
+		mes "'拼尽全力也不一定能成功……'";
+		mes "嗯，那个……咦？后面应该还有话。";
+		next;
+		switch(select("表示关注。:不理他。")) {
+		case 1:
+			mes "[沃尔鲍斯特]";
+			mes "让我再试一次。";
+			mes "'拼尽全力也不";
+			mes "一定能成功……'";
+			mes "我确定不止这些……";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我……";
+			mes "我想不出来！";
+			mes "那句话后面";
+			mes "应该是什么来着？";
+			set lv4_weapon,49;
+			close;
+		case 2:
+			mes "[沃尔鲍斯特]";
+			mes "让我再试一次。";
+			mes "'拼尽全力也不";
+			mes "一定能成功……'";
+			mes "我确定不止这些……";
+			close;
+		}
+	}
+	if ((lv4_weapon < 49) || (lv4_weapon > 57)) {
+		mes "[沃尔鲍斯特]";
+		mes "看起来你不像是在闲逛。你是为了";
+		mes "特定的事情来的，对吧？但死者的国度";
+		mes "有什么能给活人的呢？";
+		close;
+	}
+	if ((lv4_weapon == 56) || (lv4_weapon == 57)) {
+		mes "[沃尔鲍斯特]";
+		mes "看看这个！";
+		mes "只用了一小会儿，我就用你给我的材料";
+		mes "做出了东西。你很好奇结果是什么吧？";
+		next;
+		if (rand(1,2) == 1) {
+			mes "[沃尔鲍斯特]";
+			mes "沃尔鲍斯特从不出错！";
+			if (lv4_weapon == 56) {
+				mes "以我的手艺加上你的运气，失败的概率为零。";
+				mes "看吧……流星剑！";
+				getitem 1140,1; //Byeorrun_Gum
+			}
+			else {
+				mes "以我的手艺加上你的运气，失败的概率为零。";
+				mes "看吧……驱魔短剑！";
+				getitem 1233,1; //Exercise
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我是个天才！";
+			mes "哈哈哈哈哈哈哈！";
+			mes "我的兄弟们做不到的事";
+			mes "我做到了！哇哈哈哈 哈哈……哈？";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "可恶，脑子里那种模糊的感觉又来了。";
+			mes "这可不是好事。不过，我毕竟在死后";
+			mes "也证明了自己的天才。";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我相信，如果你再回来帮我找回记忆，";
+			mes "我还能再为你效劳。但现在，我必须谢谢你，";
+			mes "即使我最终会忘掉一切……";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "是的……";
+			mes "记住沃尔鲍斯特的成就，记住他是一位";
+			mes "超越时代的武器工匠，就是你的使命了。";
+			mes "暂时再见了，冒险者……";
+			close;
+		}
+		else {
+			mes "[沃尔鲍斯特]";
+			mes "沃尔鲍斯特从不出错！";
+			if (lv4_weapon == 56) {
+				mes "以我的手艺加上你的运气，失败的概率为零。";
+				mes "看吧……战斗短剑！";
+				getitem 1228,1; //Combat_Knife
+			}
+			else {
+				mes "以我的手艺加上你的运气，失败的概率为零。";
+				mes "看吧……大十字锤！！";
+				getitem 1528,1; //Grand_Cross
+			}
+			set lv4_weapon,0;
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我是个天才！";
+			mes "哈哈哈哈哈哈哈！";
+			mes "我的兄弟们做不到的事";
+			mes "我做到了！哇哈哈哈 哈哈……哈？";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "可恶，脑子里那种模糊的感觉又来了。";
+			mes "这可不是好事。不过，我毕竟在死后";
+			mes "也证明了自己的天才。";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我相信，如果你再回来帮我找回记忆，";
+			mes "我还能再为你效劳。但现在，我必须谢谢你，";
+			mes "即使我最终会忘掉一切……";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "是的……";
+			mes "记住沃尔鲍斯特的成就，记住他是一位";
+			mes "超越时代的武器工匠，就是你的使命了。";
+			mes "暂时再见了，冒险者……";
+			close;
+		}
+	}
+	if (((lv4_weapon == 54) && (countitem(7292) > 29) && (countitem(7291) > 29) && (countitem(7295) > 29)) || ((lv4_weapon == 55) && (countitem(7296) > 29) && (countitem(7294) > 29) && (countitem(7290) > 29))) {
+		mes "[沃尔鲍斯特]";
+		mes "等等，你拿的是什么？";
+		mes "我想那些正是我为你打造武器";
+		mes "所需的东西……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "是的……！";
+		mes "完美无缺。";
+		mes "看来我很快";
+		mes "就能开始";
+		mes "动手制作了。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "现在我们需要测试你的运气。为此，";
+		mes "我们得玩'^660000猜拳^000000'。我是认真的……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "如果你今天运气够强，制作武器失败的";
+		mes "风险就会更小。你需要三局两胜";
+		mes "我们才能开始。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "但如果你输了……";
+		mes "我们就得扔掉一大堆你带来的某种矿石";
+		mes "来驱走你的坏运气。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "拿着这张纸。";
+		mes "我说开始时，你写下'石头'、'布'或'剪刀'。";
+		mes "开始吧……！";
+		next;
+		set .@npchand1,rand(1,3);
+		set .@myhand1,select("剪刀:石头:布");
+		if (((.@myhand1 == 1) && (.@npchand1 == 3)) || ((.@myhand1 == 2) && (.@npchand1 == 1)) || ((.@myhand1 == 3) && (.@npchand1 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[沃尔鲍斯特]";
+		mes "好了……";
+		mes "现在，我们来";
+		mes "玩第二局。";
+		next;
+		set .@npchand2,rand(1,3);
+		set .@myhand2,select("剪刀:石头:布");
+		if (((.@myhand2 == 1) && (.@npchand2 == 3)) || ((.@myhand2 == 2) && (.@npchand2 == 1)) || ((.@myhand2 == 3) && (.@npchand2 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		mes "[沃尔鲍斯特]";
+		mes "最后一次。";
+		mes "这局之后，";
+		mes "我们对答案，";
+		mes "看看你的运气如何。";
+		next;
+		set .@npchand3,rand(1,3);
+		set .@myhand3,select("剪刀:石头:布");
+		if (((.@myhand3 == 1) && (.@npchand3 == 3)) || ((.@myhand3 == 2) && (.@npchand3 == 1)) || ((.@myhand3 == 3) && (.@npchand3 == 2))) {
+			set .@shobu,.@shobu+1;
+		}
+		set .@aekddam,rand(1,3);
+		if (.@shobu > 1) {
+			if (lv4_weapon == 54) {
+				delitem 7292,30; //Muscovite
+				delitem 7295,30; //Citrine
+				delitem 7291,30; //Agate
+			}
+			else {
+				delitem 7296,30; //Pyroxene
+				delitem 7294,30; //Turquoise
+				delitem 7290,30; //Phlogopite
+			}
+			set lv4_weapon,lv4_weapon+2;
+		}
+		else if (.@shobu < 2) {
+			if (.@aekddam == 1) {
+				if (lv4_weapon == 54) {
+					delitem 7292,30; //Muscovite
+				}
+				else {
+					delitem 7296,30; //Pyroxene
+				}
+			}
+			else if (.@aekddam == 2) {
+				if (lv4_weapon == 54) {
+					delitem 7295,30; //Citrine
+				}
+				else {
+					delitem 7294,30; //Turquoise
+				}
+			}
+			else if (.@aekddam == 3) {
+				if (lv4_weapon == 54) {
+					delitem 7291,30; //Agate
+				}
+				else {
+					delitem 7290,30; //Phlogopite
+				}
+			}
+		}
+		mes "[沃尔鲍斯特]";
+		mes "好……";
+		mes "我写的是……";
+		if (.@npchand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand1 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand1 == 3) {
+			mes "布";
+		}
+		if (.@npchand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand2 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand2 == 3) {
+			mes "布";
+		}
+		if (.@npchand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@npchand3 == 2) {
+			mes "石头";
+		}
+		else if (.@npchand3 == 3) {
+			mes "布";
+		}
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "现在，你写的是……";
+		if (.@myhand1 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand1 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand1 == 3) {
+			mes "布";
+		}
+		if (.@myhand2 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand2 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand2 == 3) {
+			mes "布";
+		}
+		if (.@myhand3 == 1) {
+			mes "剪刀";
+		}
+		else if (.@myhand3 == 2) {
+			mes "石头";
+		}
+		else if (.@myhand3 == 3) {
+			mes "布";
+		}
+		next;
+		if (.@shobu > 1) {
+			mes "[沃尔鲍斯特]";
+			mes "太好了。你赢了 " + shobu + " 次，";
+			mes "你的运气一定非常旺。";
+			mes "这意味着我们可以开始了~！";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "把矿石留在这里，给我点时间";
+			mes "完成准备。晚点回来，我应该就好了。";
+			close;
+		}
+		else if (.@shobu < 2) {
+			mes "[沃尔鲍斯特]";
+			mes "你输了……";
+			mes "很抱歉，但我们";
+			mes "必须扔掉一些";
+			mes "你的矿石来驱走";
+			mes "坏运气……";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "再去收集所需的矿石，";
+			mes "回来找我测试你的运气。我就在这里等。";
+			close;
+		}
+	}
+	if ((lv4_weapon == 53) || (lv4_weapon == 54) || (lv4_weapon == 55)) {
+		mes "[沃尔鲍斯特]";
+		mes "为什么我想不起来……？！";
+		mes "优秀的武器工匠应该";
+		mes "对这些东西烂熟于心！";
+		mes "我活着的时候可没有这种记忆问题……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "如果父亲看到";
+		mes "现在的我，我相信";
+		mes "他会感到丢脸的……";
+		close;
+	}
+	if ((lv4_weapon == 52) && (countitem(1005) > 1) && (countitem(989) > 0) && (countitem(710) > 0) && (countitem(969) > 19)) {
+		mes "[沃尔鲍斯特]";
+		mes "我需要的东西你都带来了？太好了，";
+		mes "但不知为何，我还是想不起其余的材料……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "这样吧。这些东西先由我保管，";
+		mes "我向你保证会用它们为你打造一把武器。";
+		mes "与此同时，我们得弄清楚其余的必需材料……";
+		delitem 1005,2; //Hammer_Of_Blacksmith
+		delitem 989,1; //Emperium_Anvil
+		delitem 710,1; //Illusion_Flower
+		delitem 969,20; //Gold
+		set lv4_weapon,53;
+		close;
+	}
+	if (lv4_weapon == 52) {
+		mes "[沃尔鲍斯特]";
+		mes "现在，先带来";
+		mes "那些基础的东西……";
+		mes "1个华丽金属铁砧、";
+		mes "2个铁匠之锤、";
+		mes "1朵幻影之花和";
+		mes "20个黄金……";
+		close;
+	}
+	if (lv4_weapon == 51) {
+		mes "[沃尔鲍斯特]";
+		mes "我刚想起了为你打造武器所需的";
+		mes "一些最基本的材料。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "现在，先带来";
+		mes "那些基础的东西……";
+		mes "1个华丽金属铁砧、";
+		mes "2个铁匠之锤、";
+		mes "1朵幻影之花和";
+		mes "20个黄金……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "还有几样必需的材料，但我需要";
+		mes "一点时间集中精神回想。";
+		set lv4_weapon,52;
+		close;
+	}
+	if (lv4_weapon == 50) {
+		mes "[沃尔鲍斯特]";
+		mes "死了真让人憋屈。";
+		mes "没有躯体，我再怎么努力也做不了任何事。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "说来好笑。我父亲总是说，";
+		mes "'拼尽全力也不一定能成功……'";
+		mes "嗯，那个……咦？后面应该还有话。";
+		next;
+		input .@input$;
+		if (.@input$ == "但这不是借口！") {
+			mes "[沃尔鲍斯特]";
+			mes "对！就是这句！";
+			mes "但这不是借口！";
+			mes "历史上每一个成功的人";
+			mes "都是拼尽全力的！";
+			set lv4_weapon,51;
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我想起来了……";
+			mes "我是在试图制造某种特殊武器时送命的。";
+			mes "嘿嘿，但这次不会了！";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "我们一定是命中注定要相遇。是啊，";
+			mes "强大的冒险者和天才总是惺惺相惜。";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "借我你的力量吧。";
+			mes "帮我完成我生前未竟的实验，";
+			mes "成品归你所有。我只想了结我毕生的心血。";
+			next;
+			mes "[沃尔鲍斯特]";
+			mes "看来死亡损害了我的记忆力。";
+			mes "给我点时间回想实验所需的东西。";
+			mes "我们稍后再谈。";
+			close;
+		}
+		else {
+			mes "[沃尔鲍斯特]";
+			mes "什么……？";
+			mes "不，不。完全";
+			mes "不是这句……";
+			mes "嗯。";
+			close;
+		}
+	}
+	if (lv4_weapon == 49) {
+		mes "[沃尔鲍斯特]";
+		mes "死了真让人憋屈。";
+		mes "没有躯体，我再怎么努力也做不了任何事。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "说来好笑。我父亲总是说，";
+		mes "'拼尽全力也不一定能成功……'";
+		mes "嗯，那个……咦？后面应该还有话。";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "让我再试一次。";
+		mes "'拼尽全力也不";
+		mes "一定能成功……'";
+		mes "我确定不止这些……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "我……";
+		mes "我想不出来！";
+		mes "那句话后面";
+		mes "应该是什么来着？";
+		close;
+	}
+	mes "[沃尔鲍斯特]";
+	mes "死了真让人憋屈。";
+	mes "没有躯体，我再怎么努力也做不了任何事。";
+	next;
+	mes "[沃尔鲍斯特]";
+	mes "说来好笑。我父亲总是说，";
+	mes "'拼尽全力也不一定能成功……'";
+	mes "嗯，那个……咦？后面应该还有话。";
+	next;
+	switch(select("表示关注。:不理他。")) {
+	case 1:
+		mes "[沃尔鲍斯特]";
+		mes "让我再试一次。";
+		mes "'拼尽全力也不";
+		mes "一定能成功……'";
+		mes "我确定不止这些……";
+		next;
+		mes "[沃尔鲍斯特]";
+		mes "我……";
+		mes "我想不出来！";
+		mes "那句话后面";
+		mes "应该是什么来着？";
+		set lv4_weapon,49;
+		close;
+	case 2:
+		mes "[沃尔鲍斯特]";
+		mes "让我再试一次。";
+		mes "'拼尽全力也不";
+		mes "一定能成功……'";
+		mes "我确定不止这些……";
+		close;
+	}
+}

@@ -1,0 +1,136 @@
+//===== rAthena Script =======================================
+//= Izlude Guides
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Izlude
+//===== Additional Comments: =================================
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks [MasterOfMuppets]
+//=     to Muad_Dib
+//= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//= 1.5a Fixed some errors with the loop[Samuray22]
+//	-Thanks to $ephiroth.
+//============================================================
+
+izlude,121,87,6	script	解说员#iz	105,{
+	cutin "prt_soldier",2;
+	mes "[依斯鲁得解说员]";
+	mes "欢迎来到普隆德拉的卫星城市";
+	mes "依斯鲁得岛。";
+	mes "如果您有什么想知道的，";
+	mes "随时可以来问我。";
+	set .@loop1,1;
+	while(.@loop1) {
+		next;
+		switch(select("城市导览:删除小地图上的标记:注意事项:取消")) {
+		case 1:
+			mes "[依斯鲁得解说员]";
+			mes "请从下面的菜单中选择您想知道的地点。";
+			if (.@compass_check == 0) {
+				mes "需要我在小地图上标记位置吗？";
+				next;
+				if (select("是:否") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while(.@loop2) {
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+
+				switch(select("^FF0000剑士公会^000000:剑士会馆:竞技场:依斯鲁得码头:武器店:道具店:取消")) {
+				case 1:
+					mes "[依斯鲁得解说员]";
+					mes "剑士公会在依斯鲁得西边的小岛上，";
+					mes "如果想转职成剑士，";
+					mes "可以去那里看看。";
+					if (.@compass_check)
+						viewpoint 1,52,140,0,0xFF0000;
+					break;
+				case 2:
+					mes "[依斯鲁得解说员]";
+					mes "剑士会馆位于依斯鲁得东边";
+					mes "相连的小岛上。";
+					if (.@compass_check)
+						viewpoint 1,214,130,1,0x00FF00;
+					break;
+				case 3:
+					mes "[依斯鲁得解说员]";
+					mes "依斯鲁得著名的竞技场，";
+					mes "位于城市的最北边。";
+					if (.@compass_check)
+						viewpoint 1,128,225,2,0x00FF00;
+					break;
+				case 4:
+					mes "[依斯鲁得解说员]";
+					mes "码头在城市的东北方向，";
+					mes "在那里可以乘船前往艾尔贝塔";
+					mes "或柏伊亚岚岛。";
+					if (.@compass_check)
+						viewpoint 1,200,180,3,0xFF0000;
+					break;
+				case 5:
+					mes "[依斯鲁得解说员]";
+					mes "武器店很好找，";
+					mes "就在依斯鲁得的西北边。";
+					if (.@compass_check)
+						viewpoint 1,111,149,4,0xFF00FF;
+					break;
+				case 6:
+					mes "[依斯鲁得解说员]";
+					mes "道具店在城市的东北方向，";
+					mes "应该不难找到。";
+					if (.@compass_check)
+						viewpoint 1,148,148,5,0xFF00FF;
+					break;
+				case 7:
+					mes "[依斯鲁得解说员]";
+					mes "如果不想让小地图继续显示位置标记，";
+					mes "请选择''删除小地图上的标记''。";
+					set .@loop2,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			viewpoint 2,237,41,0,0x00FF00;
+			viewpoint 2,237,41,1,0x0000FF;
+			viewpoint 2,46,345,2,0x00FF00;
+			viewpoint 2,175,220,3,0xFF0000;
+			viewpoint 2,134,221,4,0xFF0000;
+			viewpoint 2,204,214,5,0xFF0000;
+			set .@compass_check,0;
+			break;
+		case 3:
+			mes "[依斯鲁得解说员]";
+			mes "魔法与技术的进步，";
+			mes "让我们的信息系统得以升级，";
+			mes "可以在小地图上标记地点，出行更方便。";
+			next;
+			mes "[依斯鲁得解说员]";
+			mes "小地图在屏幕右上角，";
+			mes "如果看不到，请按 Ctrl + Tab 键，";
+			mes "或点击基本信息窗口里的''地图''按钮。";
+			next;
+			mes "[依斯鲁得解说员]";
+			mes "点击小地图上的''+''和''-''，";
+			mes "可以放大或缩小地图。";
+			mes "祝您在依斯鲁得旅途愉快。";
+			break;
+		case 4:
+			mes "[依斯鲁得解说员]";
+			mes "好的，如果您在依斯鲁得迷了路，";
+			mes "随时欢迎来问我。";
+			close2;
+			set .@loop1,0;
+			break;
+		}
+	}
+	cutin "prt_soldier",255;
+	end;
+}

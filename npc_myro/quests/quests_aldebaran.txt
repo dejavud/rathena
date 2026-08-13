@@ -1,0 +1,121 @@
+//===== rAthena Script ======================================= 
+//= 艾尔帕兰相关任务 NPC
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= 『医师发箍』、『羽毛帽』、『舞会面具』、『草帽』任务。
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Fixed Doctor Band items [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Updated headgear NPC. [L0ne_W0lf]
+//============================================================ 
+
+// 'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quest
+//============================================================
+aldeba_in,152,166,4	script	帽子商人#01	86,{
+	mes "[帽子商人]";
+	mes "这个神秘的男人是谁？";
+	mes "我，神秘又潇洒的『帽子商人』？";
+	next;
+	mes "[帽子商人]";
+	mes "带着一堆奇妙的帽子，走遍米德加兹大陆？没人知道……";
+	next;
+	mes "[帽子商人]";
+	mes "我为什么收集并交易来自世界各地的帽子？选一顶帽子，";
+	mes "就能更接近这个谜团的答案……";
+	next;
+	mes " (1) ^3355FF医师发箍^000000：";
+	mes "1条头巾 + 50个铁 + 1颗受损的钻石 + 3500 Zeny";
+	mes " (2) ^3355FF羽毛帽^000000：";
+	mes "1顶回忆帽 + 300根羽毛 + 500 Zeny";
+	mes " (3) ^3355FF舞会面具^000000：";
+	mes "20个铁 + 1棵哀唱草 + 5000 Zeny";
+	mes " (4) ^3355FF草帽^000000：";
+	mes "120根玛哪树枝 + 10000 Zeny";
+	next;
+	switch(select(" 医师发箍 : 羽毛帽 : 舞会面具 : 草帽 ")) {
+	case 1:
+		if ((countitem(2275) > 0) && (countitem(998) > 49) && (countitem(733) > 0) && (Zeny > 3499)) {
+			delitem 2275,1; //Red_Bandana
+			delitem 998,50; //Iron
+			delitem 733,1; //Crystal_Jewel___
+			set Zeny, Zeny-3500;
+			mes "[帽子商人]";
+			mes "嗯！你该不会有医师执照吧？没关系，";
+			mes "我听说有个无照行医的游方郎中创造过医学奇迹！不过……";
+			mes "那也许是漫画里的情节。";
+			next;
+			mes "[帽子商人]";
+			mes "哦，管他呢。只要别被逮到就行。";
+			getitem 2273,1; //Doctor_Cap
+			close;
+		}
+		else {
+			mes "[帽子商人]";
+			mes "喂～";
+			mes "再核对一下所需物品吧。";
+			mes "你看起来不像是糊涂人啊。行了，别开玩笑了。";
+			close;
+		}
+	case 2:
+		if ((countitem(2247) > 0) && (countitem(916) > 299) && (Zeny > 499)) {
+			delitem 2247,1; //Oldman's_Romance
+			delitem 916,300; //Feather_Of_Birds
+			set Zeny, Zeny-500;
+			mes "[帽子商人]";
+			mes "哦～！你的品味不错嘛。我知道收集这些东西很辛苦，";
+			mes "但这顶帽子值得。拿去吧。现在你只差一件皮大衣和一根手杖了！";
+			getitem 5018,1; //Feather_Bonnet
+			close;
+		}
+		else {
+			mes "[帽子商人]";
+			mes "喂～";
+			mes "再去核对一下所需物品吧。你看起来不像是糊涂人啊。行了，";
+			mes "别开玩笑了。";
+			close;
+		}
+	case 3:
+		if ((countitem(998) > 19) && (countitem(707) > 0) && (Zeny > 4999)){ //Iron Singing_Plant 
+			delitem 998,20; //Iron
+			delitem 707,1; //Singing_Plant
+			set Zeny, Zeny-5000;
+			mes "[帽子商人]";
+			mes "这个吗？虽然有点吓人，但自有几分浪漫的气质。你觉得呢？喜欢吗？";
+			mes "好，拿去吧，它是你的了！";
+			getitem 2281,1; //Phantom_Of_Opera
+			close;
+		}
+		else {
+			mes "[帽子商人]";
+			mes "糊涂虫。再去核对一下所需物品吧。";
+			mes "^3355FF舞会面具^000000可不是那么容易到手的。行了，别开玩笑了。";
+			close;
+		}
+	case 4:
+		if ((countitem(1019) > 119) && (Zeny > 9999)){ //Wooden_Block 
+			delitem 1019,120; //Wooden_Block
+			set Zeny, Zeny-10000;
+			mes "[帽子商人]";
+			mes "如果你有机会去山城裴扬，请去见见那里的草帽匠。";
+			next;
+			mes "[帽子商人]";
+			mes "除了我，他从不在别的商人那里卖草帽，因为只有我识货。";
+			mes "由于稀有，草帽已经成了一件独特而出众的珍品。好了！拿去吧，";
+			mes "它是你的了！";
+			getitem 2280,1; //Sahkkat
+			close;
+		}
+		else {
+			mes "[帽子商人]";
+			mes "笨蛋～再核对一下所需物品吧。行了，你看起来不像是糊涂人啊，";
+			mes "别开玩笑了～";
+			close;
+		}
+	}
+}

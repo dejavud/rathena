@@ -1,0 +1,560 @@
+//===== rAthena Script =======================================
+//= Thief Job Quest
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Job quest for Thief classes
+//===== Additional Comments: =================================
+//= 1.0 Fully working.
+//= 1.1 Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//=     Fixed possible EXP abuse [Lupus]
+//= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus] 1.6a typos
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=     No longer uses function "F_ToHigh"
+//= 1.8 Added Quest Log commands. [L0ne_W0lf]
+//============================================================
+
+moc_prydb1,39,129,2	script	盗贼向导	69,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
+			if (Class == Job_Novice_High) {
+				mes "[盗贼向导]";
+				mes "嗯？我认识你吗？你看起来这么面熟，怪瘆人的。";
+				mes "你该不会有个双胞胎兄弟吧？";
+				next;
+				if (!callfunc("F_CanChangeJob")) {
+					mes "[盗贼向导]";
+					mes "怎么，你想当盗贼？抱歉，你看起来还需要再练练。";
+					next;
+					mes "[盗贼向导]";
+					mes "慢慢来，先把基本技能都学会，好吗？";
+					mes "那么，回头见～！";
+					close;
+				}
+				mes "[盗贼向导]";
+				mes "嗯，我感觉你像是身经百战的老手，";
+				mes "所以我现在就提拔你当盗贼。你们这些硬汉想要的，我最好都照给...";
+				next;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
+				jobchange Job_Thief_High;
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
+				skill "TF_BACKSLIDING",1,SKILL_PERM;
+				skill "TF_PICKSTONE",1,SKILL_PERM;
+				skill "TF_THROWSTONE",1,SKILL_PERM;
+				mes "[盗贼向导]";
+				mes "既然成了盗贼，就要活得像个盗贼。好了，去吧！下一个～";
+				close;
+			}
+			else {
+				mes "[盗贼向导]";
+				if (Sex == SEX_MALE)
+					mes "嘿，哥们。";
+				else
+					mes "嘿，宝贝～";
+				close;
+			}
+		}
+		else {
+			mes "[盗贼向导]";
+			if (Sex == SEX_MALE)
+				mes "嘿，哥们。";
+			else
+				mes "嘿，宝贝。";
+			mes "...喂！你看起来一副乖乖牌的样子，哪像想当盗贼的！！";
+			mes "快滚，我忙着呢。下一个！";
+			close;
+		}
+	}
+	if (BaseJob == Job_Thief) {
+		mes "[盗贼向导]";
+		mes "有什么问题，随时来找我，好吗？";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[盗贼向导]";
+		mes "搞什么鬼...？";
+		switch(Class) {
+		case 1:
+			mes "哼。";
+			mes "好大的一把剑啊。";
+			next;
+			mes "[盗贼向导]";
+			mes "这么说...";
+			mes "你是想弥补什么吗...老兄？";
+			break;
+		case 2:
+			mes "一个魔法师跑来这里干什么？";
+			mes "你不是该去别处玩纸牌把戏吗？";
+			mes "算了，反正人人都有自由...";
+			next;
+			mes "[盗贼向导]";
+			mes "哦，等等，";
+			mes "这里可不是...";
+			mes "给我滚出去！";
+			break;
+		case 3:
+			mes "喂，你们弓箭手";
+			mes "不是该在森林里玩吗？";
+			break;
+		case 4:
+			mes "你知道我们都是靠偷东西为生的，对吧？";
+			mes "一个服事跑来这种地方干什么？";
+			break;
+		case 5:
+			mes "你是商人，对吧？";
+			mes "居然自己走进盗贼窝里来？！";
+			next;
+			mes "[盗贼向导]";
+			mes "你这简直是在求我们偷你的东西！";
+			mes "好了，快点离开这里～";
+			break;
+		case 8:
+			mes "我的天啊...";
+			mes "我是不是快死了？";
+			next;
+			mes "[盗贼向导]";
+			mes "不然牧师怎么会来这里？";
+			mes "我看我还是开始坦白我所有的罪行吧。";
+			close;
+		case 12:
+			mes "你不是我们中的一员吗？！";
+			mes "天啊，你变了。你现在看起来真危险...";
+			close;
+		case 17:
+			mes "老兄，你一下子变得好帅啊！";
+			mes "你一定有了我只能梦寐以求的本事！";
+			close;
+		}
+		next;
+		mes "[盗贼向导]";
+		mes "*唉* 听着，你真的没必要待在这种地方。";
+		mes "你该去哪儿就去哪儿吧。";
+		close;
+	}
+	if (job_thief_q == 3 && countitem(1069) > 0 || countitem(1070) > 0) {
+		mes "[盗贼向导]";
+		mes "嗯？";
+		mes "你是为盗贼测试去采蘑菇了，对吧？";
+		next;
+		mes "[盗贼向导]";
+		mes "来，跟我旁边这位老兄谈谈。";
+		mes "负责检查你的蘑菇的是他。";
+		close;
+	}
+	else if (job_thief_q == 3) {
+		mes "[盗贼向导]";
+		mes "那么蘑菇农场怎么样？";
+		mes "玩得开心吗？";
+		next;
+		if (select("嗯，还挺酷的。:太可怕了。") == 1) {
+			mes "[盗贼向导]";
+			mes "嘿嘿！这态度不错。干我们这一行，";
+			mes "总得以某种方式乐在其中，不怕弄脏自己的手。";
+			close;
+		}
+		mes "[盗贼向导]";
+		mes "是吗？我也去过那里，所以能理解为什么不是每个人都喜欢那地方。";
+		mes "不过，当盗贼也不全是光鲜和时髦的夜生活。";
+		close;
+	}
+	if (job_thief_q == 2) {
+		mes "[盗贼向导]";
+		mes "嘿，你在这里干什么？你不是该去采蘑菇吗？";
+		mes "还是要我再给你讲一遍？";
+		next;
+		if  (select("是。:不，不用了。") == 1) {
+			mes "[盗贼向导]";
+			mes "*唉* 好吧，总有一个不开窍的。好了，仔细听好。";
+			next;
+			mes "[盗贼向导]";
+			mes "好了，你的测试是从一个农场偷蘑菇。";
+			mes "别担心，那个农场主活该被抢。";
+			next;
+			mes "[盗贼向导]";
+			mes "总之，你得采两种蘑菇：^0000FF橙网蘑菇^000000和^0000FF橙黏蘑菇^000000。";
+			next;
+			mes "[盗贼向导]";
+			mes "小心点，农场里有保护蘑菇的怪物。";
+			mes "所以这可不是什么轻松的活儿。";
+			next;
+			mes "[盗贼向导]";
+			mes "采完蘑菇回到这里后，我们会根据你采到的蘑菇给你打分。";
+			next;
+			mes "[盗贼向导]";
+			mes "每个橙网蘑菇算 3 分，每个橙黏蘑菇算 1 分。";
+			mes "你需要总共 25 分才能通过测试。";
+			next;
+			mes "[盗贼向导]";
+			mes "出去后一直朝金字塔东部原野走。";
+			mes "你会看到我们的一个同伴站在两根石柱之间。";
+			next;
+			mes "[盗贼向导]";
+			mes "跟那家伙说话，他会从后门带你进农场。";
+			next;
+			mes "[盗贼向导]";
+			mes "在那片原野上，我想他的坐标是'^FF0000141, 125^000000'。";
+			mes "只要在聊天框右边输入 ^3355FF/where^000000 就能查看你当前的坐标。";
+			close;
+		}
+		mes "[盗贼向导]";
+		mes "哼。刚才那一瞬间，我还以为你有什么要紧事要告诉我呢。";
+		close;
+	}
+	mes "[盗贼向导]";
+	if (job_thief_q == 0) {
+		mes "是什么风把你吹到这老鼠洞里来的？";
+	}
+	else {
+		mes "啊...";
+		mes "你回来了。";
+		mes "你确定准备好再试一次了吗？";
+	}
+	next;
+	if (select("嘿，我是来当盗贼的！:不，我只是随便看看。") == 1) {
+		if (job_thief_q == 0) {
+			mes "[盗贼向导]";
+			mes "嘿，我喜欢你的自信。";
+			mes "不过，你知道当盗贼并不像人们说的那么好。";
+			next;
+			mes "[盗贼向导]";
+			mes "不过...";
+			mes "你真的想当盗贼吗？";
+			next;
+			switch(select("是。:不，只是浪费你的时间。:你为什么当盗贼？")) {
+			case 1:
+				mes "[盗贼向导]";
+				mes "真的吗...";
+				break;
+			case 2:
+				mes "[盗贼向导]";
+				mes "是啊...";
+				mes "我看得出来。";
+				break;
+			case 3:
+				mes "[盗贼向导]";
+				mes "我...？";
+				mes "我当时别无选择。要么偷东西，要么饿死。";
+				mes "不过这也不是非得把我的身世讲给你听。";
+				break;
+			}
+			next;
+			mes "[盗贼向导]";
+			mes "那么你到底要不要申请当盗贼？";
+			next;
+			switch(select("是的，我要。:我太害怕了，不敢当盗贼！")) {
+			case 1:
+				mes "[盗贼向导]";
+				mes "好，报上你的名字。";
+				next;
+				mes "[盗贼向导]";
+				mes "" + strcharinfo(0) + "？";
+				mes "" + strcharinfo(0) + "算什么名字啊？算了，等我一下。";
+				set job_thief_q,1;
+				next;
+				mes "[盗贼向导]";
+				mes "好，你的登记已经办好了。";
+				mes "好了，准备好了就可以开始测试。";
+				next;
+				switch(select("嗯，我准备好了。:不，我还没准备好。")) {
+				case 1:
+					break;
+				case 2:
+					mes "[盗贼向导]";
+					mes "没准备好？";
+					mes "你怎么能没准备好？！";
+					close;
+				}
+				break;
+			case 2:
+				mes "[盗贼向导]";
+				mes "太害怕了？！？";
+				mes "哈哈哈哈哈哈！";
+				mes "哦，拜托...！";
+				mes "真是太好笑了！";
+				close;
+			}
+		}
+		else {
+			mes "[盗贼向导]";
+			mes "好...";
+			mes "等我一下。";
+			next;
+		}
+		mes "[盗贼向导]";
+		mes "你的名字是...";
+		mes strcharinfo(0) + "？嗯，在哪儿呢？啊，找到了。让我看看...";
+		next;
+		mes "[盗贼向导]";
+		if (!callfunc("F_CanChangeJob")) {
+			mes "这不是挺可爱的嘛。我看得出你很有抱负，";
+			mes "但想当盗贼，你得先学会所有基本技能。";
+			close;
+		}
+		mes "好。我看了你的犯罪记录，你的过去似乎很有意思。";
+		mes "你也许具备当盗贼的素质。";
+		next;
+		mes "[盗贼向导]";
+		mes "就凭我乐意，我现在宣布你通过了这次面试。干得好！";
+		set job_thief_q,2;
+		setquest 1013;
+		next;
+		mes "[盗贼向导]";
+		mes "现在，需要测试一下你的实际能力了。你对测试了解多少？";
+		next;
+		switch(select("我了解。:抱歉，我不了解。")) {
+		case 1:
+			mes "[盗贼向导]";
+			mes "哦，是吗？嗯，那事情就简单多了。";
+			break;
+		case 2:
+			mes "[盗贼向导]";
+			mes "好，那我来说明。仔细听好。";
+			mes "这场测试将决定你是否有资格成为盗贼。";
+			next;
+			mes "[盗贼向导]";
+			mes "你要潜进希布的农场。";
+			mes "论人品，他是梦罗克最恶劣的商人。";
+			next;
+			mes "[盗贼向导]";
+			mes "好了，你的测试是从他的农场偷蘑菇。";
+			mes "别担心，那家伙活该被抢。";
+			next;
+			mes "[盗贼向导]";
+			mes "总之，你得采两种蘑菇：^0000FF橙网蘑菇^000000和^0000FF橙黏蘑菇^000000。";
+			next;
+			mes "[盗贼向导]";
+			mes "小心点，农场里有保护蘑菇的怪物。";
+			mes "所以这可不是什么轻松的活儿。";
+			next;
+			mes "[盗贼向导]";
+			mes "采完蘑菇回到这里后，我们会根据你采到的蘑菇给你打分。";
+			next;
+			mes "[盗贼向导]";
+			mes "每个橙网蘑菇算 3 分，每个橙黏蘑菇算 1 分。";
+			mes "你需要总共 25 分才能通过测试。";
+			next;
+			mes "[盗贼向导]";
+			mes "出去后一直朝金字塔东部原野走。";
+			mes "你会看到我们的一个同伴站在两根石柱之间。";
+			next;
+			mes "[盗贼向导]";
+			mes "跟那家伙说话，他会从后门带你进农场。";
+			next;
+			mes "[盗贼向导]";
+			mes "在那片原野上，我想他的坐标是'^FF0000141, 125^000000'。";
+			mes "只要在聊天框右边输入 ^3355FF/where^000000 就能查看你当前的坐标。";
+		}
+		next;
+		mes "[盗贼向导]";
+		mes "别忘了在进入蘑菇农场之前做好计划和准备。";
+		mes "动作尽量快，尽量别被杀了，好吗？";
+		close;
+	}
+	close;
+}
+
+moc_prydb1,42,133,2	script	同伴	118,{
+	if (BaseJob == Job_Thief) {
+		mes "[布拉德]";
+		mes "我们目前还没有什么特别活动。";
+		mes "等有消息了改天再来，好吗？";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[同伴]";
+		mes "嗯...";
+		mes "你看起来不像盗贼。";
+		next;
+		mes "[同伴]";
+		mes "你到底在这里干什么？";
+		close;
+	}
+	if (job_thief_q == 0 || job_thief_q == 1) {
+		mes "[同伴]";
+		mes "怎么了？想当盗贼的话，跟我旁边的女孩谈谈。";
+		close;
+	}
+	else if (job_thief_q == 2) {
+		mes "[同伴]";
+		mes "你通过面试了吗？";
+		mes "那你还等什么？";
+		close;
+	}
+	else if (job_thief_q == 3) {
+		mes "[同伴]";
+		mes "啊，向导跟我提过你了。";
+		mes "那么，让我检查一下你的蘑菇...";
+		if (countitem(1069) == 0 && countitem(1070) == 0) {
+			next;
+			mes "[同伴]";
+			mes "搞什么鬼...";
+			mes "你一个蘑菇都没有！回去采来。";
+			mes "不然你可没法通过测试当上盗贼！";
+			close;
+		}
+		next;
+		set .@thief_item1,countitem(1069) * 3;
+		set .@thief_item2,countitem(1070);
+		set .@total_thief,.@thief_item1 + .@thief_item2;
+		set .@money_thief,((.@thief_item1 * 5) + (.@thief_item2 * 2)) + 200;
+		mes "[同伴]";
+		if (countitem(1069) != 0) {
+			mes "首先，让我看看你拿到的橙网蘑菇。";
+			mes "嗯，有 " + countitem(1069) + " 个。";
+		}
+		if (countitem(1070) != 0)
+			mes "现在我来看看你的橙黏蘑菇。你采了 " + countitem(1070) + " 个。";
+		next;
+		mes "[同伴]";
+		mes "那么你的总分就是...";
+		next;
+		mes "[同伴]";
+		mes "嗯。" + .@total_thief + " 度，乘以光速，除以圆周率积分乘以高度，再加上政治的绝对值...";
+		next;
+		mes "[同伴]";
+		mes "好了！";
+		mes "我算出来了。";
+		next;
+		mes "[同伴]";
+		if (.@total_thief > 25) {
+			mes "你超过了 25 分！";
+			mes "太棒了！";
+		}
+		else if (.@total_thief == 25) {
+			mes "正好 25 分！";
+			mes "你做到了！真厉害！";
+		}
+		else {
+			mes "你离通过所需的 25 分还差得远。";
+			mes "出去再给我采些蘑菇来！";
+			close;
+		}
+		next;
+		mes "[同伴]";
+		mes strcharinfo(0) + "...";
+		mes "你通过了正式的盗贼测试。你现在是我们中的一员了。";
+		if (countitem(1069) != 0) delitem 1069,countitem(1069); //Mushroom_Of_Thief_1
+		if (countitem(1070) != 0) delitem 1070,countitem(1070); //Mushroom_Of_Thief_2
+		callfunc "Job_Change",Job_Thief;
+		callfunc "F_ClearJobVar";
+		completequest 1013;
+		next;
+		mes "[同伴]";
+		mes "恭喜你成为盗贼！";
+		mes "从今以后，要做盗贼公会的光荣代表。";
+		next;
+		mes "[同伴]";
+		mes "如果你让我们公会蒙羞，你会被干掉的。";
+		mes "我希望你能为同伴们争光。";
+		next;
+		mes "[布拉德]";
+		mes "*咳咳* 欢迎加入公会，同伴！";
+		mes "我是布拉德，在这里负责人事工作。";
+		next;
+		mes "[布拉德]";
+		mes "这是给你这样新人的小额补贴。想怎么花就怎么花。";
+		mes "好了，回头见～";
+		set Zeny, Zeny+.@money_thief;
+		close;
+	}
+}
+
+moc_ruins,141,125,3	script	无关紧要先生	83,{
+	if (BaseJob == Job_Thief) {
+		mes "[无关紧要先生]";
+		mes "啊，我看你现在已经是盗贼了。";
+		mes "我一直知道你会加入我们。";
+		next;
+		mes "[无关紧要先生]";
+		mes "现在从蘑菇农场偷东西对你来说太简单了。";
+		mes "你应该磨练技巧，精通我们的手艺。";
+		close;
+	}
+	else if (BaseJob != Job_Novice && BaseJob != Job_Thief) {
+		mes "[无关紧要先生]";
+		switch(rand(4)) {
+		case 1:
+			mes "我真想痛痛快快喝上一杯。";
+			close;
+		case 2:
+			mes "把钱交出来。";
+			next;
+			mes "[无关紧要先生]";
+			mes "开玩笑的，我现在下班了。";
+			close;
+		case 3:
+			mes "你说谁是疯子？！";
+			close;
+		case 4:
+			mes "我没什么话想跟你说。能让我一个人待着吗？";
+			close;
+		default:
+			mes "今天看起来是个去金字塔和朋友们打猎的好日子。";
+			close;
+		}
+	}
+	if (job_thief_q == 3) {
+		mes "[无关紧要先生]";
+		mes "哈哈哈哈～！";
+		mes "你还没通过测试吗？";
+		mes "好吧，我放你进去...";
+		close2;
+		switch(rand(5)) {
+		case 1: warp "job_thief1",228,106; end;
+		case 2: warp "job_thief1",38,50; end;
+		case 3: warp "job_thief1",66,331; end;
+		case 4: warp "job_thief1",196,331; end;
+		default: warp "job_thief1",309,234; end;
+		}
+	}
+	else if (job_thief_q == 2) {
+		mes "[无关紧要先生]";
+		mes "嗯...";
+		mes "你是来参加测试的，对吧？";
+		mes "我从你的眼神里看出了些什么。";
+		next;
+		mes "[无关紧要先生]";
+		mes "你的名字是 " + strcharinfo(0) + "？啊，名单上有。";
+		mes "好吧，我放你进蘑菇农场，但我可不能保证你的安全...";
+		close2;
+		set job_thief_q,3;
+		switch(rand(5)) {
+		case 1: warp "job_thief1",228,106; end;
+		case 2: warp "job_thief1",38,50; end;
+		case 3: warp "job_thief1",66,331; end;
+		case 4: warp "job_thief1",196,331; end;
+		default: warp "job_thief1",309,234; end;
+		}
+	}
+	else if (job_thief_q == 1) {
+		mes "[无关紧要先生]";
+		mes "有一股奇怪的味道从...你身上飘来。这是怎么回事呢？";
+		close;
+	}
+	mes "[无关紧要先生]";
+	mes "嘿，初心者！何不加入我们盗贼公会的行列？";
+	mes "我们随时欢迎你们这些新人加入我们的自私事业。";
+	next;
+	mes "[无关紧要先生]";
+	mes "更多情报可以在金字塔地下 1 层的地下房间里打听到。";
+	close;
+}
+
+// Monsters
+//============================================================
+job_thief1,0,0	monster	橙蘑菇	1182,180
+job_thief1,0,0	monster	绿棉虫	1184,50
+job_thief1,0,0	monster	盗虫	1183,50
+job_thief1,0,0	monster	魔菇	1014,30
+
+//============================================================
+// mapflag
+//============================================================

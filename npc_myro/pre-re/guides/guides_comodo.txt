@@ -1,0 +1,110 @@
+//===== rAthena Script =======================================
+//= Comodo Guides
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Comodo
+//===== Additional Comments: =================================
+//= Fully working
+//= 1.1 Now using duplicate command.
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.3 Updated the guide according to how it is on iRO, thanks
+//=     to Muad_Dib [MasterOfMuppets]
+//= 1.4 Removed 3 guides, and converted to use functions.
+//= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//============================================================
+
+comodo,322,178,4	script	克魔岛 解说员#cmd::CmdGuide	700,{
+	callfunc "F_CmdGuide","原住民 科科莫";
+}
+
+comodo,176,350,4	script	克魔岛 解说员#2cmd	700,{
+	callfunc "F_CmdGuide","原住民 努特可可";
+}
+
+comodo,37,219,4	script	解说员#2cmd	700,{
+	callfunc "F_CmdGuide","原住民 帕帕雅";
+}
+
+function	script	F_CmdGuide	{
+	mes "["+getarg(0)+"]";
+	mes "欢迎来到克魔岛，";
+	mes "这座梦想与幻想之都，";
+	mes "夜生活永不停歇！";
+	mes "我对这一带再熟悉不过了，";
+	mes "想找什么地方尽管告诉我。";
+	next;
+	switch(select("赌场:草裙舞舞台 ^3355FF(舞娘转职处)^000000:武器防具店:道具店:贝壳商店:卡普拉公司西部分社:村长之家:酒馆:露营区:结束对话")) {
+	case 1:
+		viewpoint 1,140,98,0,0xFF6633;
+		mes "请参照小地图上的 ^FF6633+^000000 标记，";
+		mes "那就是赌场——疲惫旅人的休息港湾，";
+		mes "也是克魔岛夜生活的中心。";
+		close;
+	case 2:
+		viewpoint 1,188,168,1,0x0000FF;
+		mes "请参照小地图上的 ^0000FF+^000000 标记，";
+		mes "那里是草裙舞舞台，";
+		mes "女性弓箭手可以在那里";
+		mes "转职成舞娘。";
+		close;
+	case 3:
+		viewpoint 1,266,70,2,0x00FFFF;
+		mes "请参照小地图上的 ^00FFFF+^000000 标记，";
+		mes "那里是武器防具店。";
+		mes "记得去看看有没有";
+		mes "克魔岛独有的特殊商品哦！";
+		close;
+	case 4:
+		viewpoint 1,86,128,3,0x515151;
+		mes "请参照小地图上的 ^515151+^000000 标记，";
+		mes "那里是道具店。";
+		mes "如果你还没去过，建议去逛逛，";
+		mes "把以后可能用到的道具备齐。";
+		close;
+	case 5:
+		viewpoint 1,298,124,4,0x3355FF;
+		mes "请参照小地图上的 ^3355FF+^000000 标记，";
+		mes "那里是贝壳商店，";
+		mes "出售只有克魔岛地区才买得到的礼物～";
+		close;
+	case 6:
+		viewpoint 1,136,202,5,0xFF5555;
+		mes "请参照小地图上的 ^FF5555+^000000 标记，";
+		mes "那里是卡普拉公司的西部分社，";
+		mes "提供不少重要的服务，";
+		mes "之后不妨去了解一下。";
+		close;
+	case 7:
+		viewpoint 1,114,294,5,0xFF5555;
+		mes "请参照小地图上的 ^FF5555+^000000 标记，";
+		mes "那里是村长之家。";
+		mes "你可以去拜访他，";
+		mes "他通常都很欢迎客人。";
+		close;
+	case 8:
+		viewpoint 1,166,298,5,0xFF5555;
+		mes "请参照小地图上的 ^FF5555+^000000 标记，";
+		mes "那里是酒馆。你可以和别的游客";
+		mes "见面聊天，在愉快的氛围里放松一下～";
+		close;
+	case 9:
+		viewpoint 1,210,308,5,0xFF5555;
+		mes "请参照小地图上的 ^FF5555+^000000 标记，";
+		mes "那里是露营区。和家人朋友一起聚聚，";
+		mes "享受克魔岛露营区特有的烤肉吧～";
+		close;
+	case 10:
+		mes "["+getarg(0)+"]";
+		mes "其实克魔岛之所以总是像夜晚一样，";
+		mes "是因为整座城建在一个巨大的洞穴里。";
+		mes "这里照不到阳光，";
+		mes "但这片黑暗并不阴沉，反而更让人兴奋～";
+		close;
+	}
+}

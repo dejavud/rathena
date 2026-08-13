@@ -1,0 +1,587 @@
+//===== rAthena Script ======================================= 
+//= Juno Monster Museum
+//===== By: ================================================== 
+//= Muad_Dib (The Prometheus Project)
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Juno Monster Museum - Non Player Character Locations
+//= - Information about various monsters
+//===== Additional Comments: ================================= 
+// 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Adapted to rAthena Scripting Language by [Lance] 
+//= 1.1a Fixed typos [Haplo]
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.3 Added a Missing "case 1:". [Samuray22]
+//	-Thanks to Dr.Evil
+//= 1.4 Corrected a few typos. (bugreport:1077) [L0ne_W0lf]
+//= 1.4a "S_BonusREward" -> "S_BonusReward" [Paradox924X]
+//============================================================ 
+
+yuno_in03,32,15,3	script	博物馆向导	67,{
+	mes "[赛妮雅]";
+	mes "欢迎光临魔物博物馆。";
+	next;
+	switch(select("魔物博物馆？:小贴士")) {
+	case 1:
+		mes "[赛妮雅]";
+		mes "魔物博物馆是由修百依蔡乐魔法学校的贤者们，在研究了";
+		mes "米德加兹大陆上栖息的每一种生物后创立的。";
+		next;
+		mes "[赛妮雅]";
+		mes "在这座博物馆里，你可以看到米德加兹的每一种魔物，";
+		mes "甚至是那些你几乎从未遭遇过的。";
+		next;
+		mes "[赛妮雅]";
+		mes "容纳魔物的玻璃管是以最新技术开发的，";
+		mes "是修茨计划的一部分。请放心，你会得到妥善的保护。";
+		next;
+		break;
+	case 2:
+		mes "[赛妮雅]";
+		mes "如果想更清楚地观看魔物，请按 ALT + O 打开选项窗口，";
+		mes "勾选不透明选项。";
+		next;
+		break;
+	}
+	mes "[赛妮雅]";
+	mes "随时都可以来找我聊天。";
+	close;
+}
+	
+yuno_in03,36,21,3	script	狄奥斯#yuno	1108,{
+	end;
+}
+yuno_in03,33,21,1	script	#DEVIACE	111,{
+	mes " ";
+	mes "学名：狄奥斯";
+	mes "体型：中";
+	mes "属性：水";
+	next;
+	mes "说明：";
+	mes "这种魔物栖息在深海，身体浑圆，背部生有吸盘。";
+	mes "虽然锋利的牙齿令人生畏，但它的性格非常温和。";
+	next;
+	mes "因此，除非先受到攻击，它绝不会主动攻击海底的旅人。";
+	mes "不过，一旦被激怒，它会使用高等级魔法技能。所以";
+	mes "面对这种魔物还是小心为妙。";
+	close;
+}
+	
+yuno_in03,36,27,3	script	海豹#yuno	1317,{
+	end;
+}
+yuno_in03,33,27,1	script	#FUR_SEAL	111,{
+	mes " ";
+	mes "学名：海豹";
+	mes "体型：中";
+	mes "属性：水";
+	next;
+	mes "说明：";
+	mes "仔细观察这种魔物，你会发现它其实并不是海豹，而是";
+	mes "藏在海豹皮般的衣物里的不明魔物。";
+	next;
+	mes "据传这种魔物穿这身衣物是为了保护它敏感的皮肤";
+	mes "免受天气侵扰。海豹的衣物是制作冬季大衣的上佳材料。";
+	close;
+}
+	
+yuno_in03,36,33,3	script	贤者虫#yuno	1281,{
+	end;
+}
+yuno_in03,33,33,1	script	#SAGEWORM	111,{
+	mes " ";
+	mes "学名：贤者虫";
+	mes "体型：小";
+	mes "属性：无";
+	next;
+	mes "说明：";
+	mes "一种奇异的野兽，长着年老学者的头颅和";
+	mes "蠕虫的尾巴。虽然身体孱弱，但它拥有足够的智慧";
+	mes "用魔法技能支援同伴。";
+	next;
+	mes "正如其学者般的外表所示，它通常出现在书籍或书架附近。";
+	close;
+}
+	
+yuno_in03,39,39,3	script	海妖#yuno	1216,{
+	end;
+}
+yuno_in03,38,39,1	script	#PENOMANA	111,{
+	mes " ";
+	mes "学名：海妖";
+	mes "体型：中";
+	mes "属性：毒";
+	next;
+	mes "说明：";
+	mes "这种魔物栖息在洞穴最深处，那里有足够的湿气";
+	mes "防止它干枯。";
+	next;
+	mes "与外形相似的海葵不同，它能利用吸盘上的许多小附肢";
+	mes "朝敌人移动。";
+	next;
+	mes "它身上细长的触手会射出致命毒液，足以立刻杀死敌人。";
+	close;
+}
+	
+yuno_in03,39,44,3	script	啤酒企鹅#yuno	1391,{
+	end;
+}
+yuno_in03,37,44,3	script	#GALAPAGO	111,{
+	mes " ";
+	mes "学名：啤酒企鹅";
+	mes "体型：小";
+	mes "属性：地";
+	next;
+	mes "说明：";
+	mes "它是一种鸟，但可惜身体太重，飞不起来。";
+	mes "它对阳光非常敏感，所以总是随身带着水壶、戴着太阳镜。";
+	next;
+	mes "虽然贪吃，但它总会合作攻击猎物以及天敌。";
+	mes "除此之外，啤酒企鹅是一种相当悠闲的魔物。";
+	close;
+}
+	
+yuno_in03,15,21,5	script	幽灵剑士#yuno	1163,{
+	end;
+}
+yuno_in03,19,21,1	script	#RAYDRIC	111,{
+	mes " ";
+	mes "学名：幽灵剑士";
+	mes "体型：大";
+	mes "属性：暗";
+	next;
+	mes "说明：";
+	mes "一套被城堡守卫的灵魂驱动的铠甲。这个灵魂被强大的诅咒";
+	mes "束缚在这套铠甲中。";
+	next;
+	mes "由于幽灵剑士生前是城堡守卫，它拥有迅捷的动作";
+	mes "和强大的攻击力。";
+	close;
+}
+	
+yuno_in03,15,27,5	script	魔灵娃娃#yuno	1250,{
+	end;
+}
+yuno_in03,19,27,1	script	#CHEPET	111,{
+	mes " ";
+	mes " 学名：魔灵娃娃";
+	mes " 体型：中";
+	mes " 属性：火";
+	next;
+	mes "说明：";
+	mes "一种藏在漂亮娃娃里的邪恶生物。它划燃娃娃手中的火柴";
+	mes "攻击路人。由于只栖息在少数几个地方，";
+	mes "是非常稀有的魔物。";
+	close;
+}
+	
+yuno_in03,15,33,5	script	薇欧莉#yuno	1390,{
+	end;
+}
+yuno_in03,19,33,1	script	#VIOLY	111,{
+	mes " ";
+	mes " 学名：薇欧莉";
+	mes " 体型：中";
+	mes " 属性：无";
+	next;
+	mes "说明：";
+	mes "一种外表像漂亮娃娃的生物，长着美丽的金色头发。";
+	mes "由于它总是面带安详地拉着小提琴，人们一开始并不会意识到它是魔物。";
+	next;
+	mes "遇到薇欧莉时务必万分小心。否则，它会用迷人的歌声瞬间夺走你的灵魂。";
+	close;
+}
+	
+yuno_in03,10,39,5	script	爱丽丝#yuno	1275,{
+	end;
+}
+yuno_in03,12,39,1	script	#ALICE	111,{
+	mes " ";
+	mes " 学名：爱丽丝 ";
+	mes " 体型：中";
+	mes " 属性：无";
+	next;
+	mes "说明：";
+	mes "爱丽丝是作为城堡女仆助手而制造的机器人。";
+	mes "人们知道，即便城堡早已废弃，它们仍会留下来";
+	mes "自动完成自己的工作。";
+	next;
+	mes "在没有任何可见能源的情况下它是如何运转的，";
+	mes "至今仍是科学上的谜团。";
+	close;
+}
+	
+yuno_in03,10,45,5	script	风灵龟#yuno	1315,{
+	end;
+}
+yuno_in03,12,45,1	script	#ASSULTER	111,{
+	mes " ";
+	mes " 学名：风灵龟";
+	mes " 体型：中";
+	mes " 属性：风";
+	next;
+	mes "说明：";
+	mes "与龟岛上的其他乌龟不同，这种乌龟";
+	mes "用两条腿站立，用另外两条腿挥舞着背上的";
+	mes "大型手里剑攻击路人。";
+	next;
+	mes "有趣的是，遇到危险的敌人时，它会制造分身";
+	mes "以造成更大伤害。它用手里剑造成的伤害非常可观，";
+	mes "但它的爪击更具威胁。";
+	close;
+}
+	
+yuno_in03,38,50,3	script	大嘴鸟蛋#yuno	1047,{
+	end;
+}
+yuno_in03,34,54,3	script	盗虫卵#yuno	1048,{
+	end;
+}
+yuno_in03,12,50,3	script	白蚁幼虫#yuno	1097,{
+	end;
+}
+
+yuno_in03,18,96,5	script	流浪者#yuno	1208,{
+	end;
+}
+yuno_in03,20,96,1	script	#WANDER_MAN	111,{
+	mes " ";
+	mes " 学名：流浪者";
+	mes " 体型：中";
+	mes " 属性：风";
+	next;
+	mes "说明：";
+	mes "因诅咒而复生的不死战士。从他精湛的剑术来看，";
+	mes "生前一定是一位非常出色的战士。";
+	next;
+	mes "流浪者的移动速度惊人，能在一瞬间一剑斩杀敌人。";
+	close;
+}
+	
+yuno_in03,16,100,5	script	毛毛虫#yuno	1300,{
+	end;
+}
+yuno_in03,18,100,1	script	#CATERPILLAR	111,{
+	mes " ";
+	mes " 学名：毛毛虫";
+	mes " 体型：小";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "虽然这种生物的眼睛因长期生活在地下";
+	mes "而退化，但它用触角和身上的附肢感知黑暗环境中的物体。";
+	next;
+	mes "据传毛毛虫是克瑞米的进阶形态恐怖克瑞米的幼虫。";
+	close;
+}
+	
+yuno_in03,16,104,5	script	盗虫（雄）#yuno	1054,{
+	end;
+}
+yuno_in03,18,104,1	script	#THIEF_BUG__	111,{
+	mes " ";
+	mes " 学名：盗虫";
+	mes " ^FFFFFF学名：^000000（雄）";
+	mes " 体型：中";
+	mes " 属性：暗";
+	next;
+	mes "说明：";
+	mes "虽然它有着蓝色的大身体，但和其他盗虫一样敏捷而贪食。";
+	next;
+	mes "不过，由于它肩负着保护雌性和幼崽免受危险的重任，它比其他盗虫更强壮。";
+	close;
+}
+	
+yuno_in03,16,108,5	script	三叶虫#yuno	1279,{
+	end;
+}
+yuno_in03,18,108,1	script	#TRI_JOINT	111,{
+	mes " ";
+	mes " 学名：三叶虫";
+	mes " 体型：小";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "三叶虫是一种覆着坚硬外壳的史前魔物，它用触角";
+	mes "代替眼睛，因此能生活在黑暗的地方。";
+	next;
+	mes "近来，由于在许多洞穴中发现了大量三叶虫，贤者们正兴奋地研究它们，以进一步了解米德加兹魔物的演化。";
+	close;
+}
+	
+yuno_in03,16,111,5	script	卷甲虫#yuno	1194,{
+	end;
+}
+yuno_in03,18,111,1	script	#ARCLOUSE	111,{
+	mes " ";
+	mes " 学名：卷甲虫";
+	mes " 体型：中";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "一种硬壳魔物，会蜷起身体攻击敌人。";
+	mes "卷甲虫倾向于群居，是非常好斗的生物。";
+	next;
+	mes "与外表相反，它们的移动速度快得惊人，常被";
+	mes "拿来与大嘴鸟相比。";
+	close;
+}
+	
+yuno_in03,16,117,5	script	蜻蜓#yuno	1321,{
+	end;
+}
+yuno_in03,18,116,1	script	#DRAGON_TAIL	111,{
+	mes " ";
+	mes " 学名：蜻蜓";
+	mes " 体型：中";
+	mes " 属性：风";
+	next;
+	mes "说明：";
+	mes "一种被归类为蜻蜓目的昆虫。它用强壮的尾巴吸取";
+	mes "敌人的血液，或射出催眠毒液使敌人昏睡。";
+	close;
+}
+	
+yuno_in03,46,96,3	script	鹗枭首领#yuno	1320,{
+	end;
+}
+yuno_in03,44,96,1	script	#OWL_DUKE	111,{
+	mes " ";
+	mes " 学名：鹗枭首领";
+	mes " 体型：大";
+	mes " 属性：无 ";
+	next;
+	mes "说明：";
+	mes "一只穿着伯爵服装的猫头鹰。它阴暗而优雅的外表";
+	mes "看起来极具威慑力。鹗枭首领其实并不是猫头鹰，";
+	mes "而是大脚上长着锋利爪子的恶魔。";
+	next;
+	mes "它擅长使用许多雷电魔法。看着它攻击敌人时，你能感受到";
+	mes "鹗枭首领贵族般的傲慢。";
+	close;
+}
+	
+yuno_in03,48,100,3	script	水雷#yuno	1142,{
+	end;
+}
+yuno_in03,46,101,1	script	#MARINE_SPHERE	111,{
+	mes " ";
+	mes " 学名：水雷";
+	mes " 体型：小";
+	mes " 属性：水";
+	next;
+	mes "说明：";
+	mes "一种在深海中游荡的奇异生物。被触碰时";
+	mes "会以巨大的力量爆炸，因此得名'海中之弹'。";
+	next;
+	mes "如果一颗水雷被另一颗的爆炸波及，会引发连锁爆炸，";
+	mes "可能导致危险的连锁反应。";
+	close;
+}
+	
+yuno_in03,48,104,3	script	曼陀罗魔花#yuno	1020,{
+	end;
+}
+yuno_in03,46,105,1	script	#MANDRAGORA	111,{
+	mes " ";
+	mes " 学名：曼陀罗魔花";
+	mes " 体型：中";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "一种食虫植物，会吞下一切活物。发现猎物时，它会先用";
+	mes "长长的触手攻击，使其麻痹。";
+	next;
+	mes "一旦麻痹，猎物会被放入它身上的大管子里，在那里被慢慢";
+	mes "消化。虽然这根管子上有骷髅标记，但曼陀罗魔花其实并不含";
+	mes "任何毒素。";
+	next;
+	mes "这个消化管还散发着非常独特却令人作呕的气味，";
+	mes "对吸引猎物毫无帮助。";
+	close;
+}
+	
+yuno_in03,48,108,3	script	邪恶向日葵#yuno	1368,{
+	end;
+}
+yuno_in03,46,108,1	script	#GEOGRAPHER	111,{
+	mes " ";
+	mes " 学名：邪恶向日葵";
+	mes " 体型：中";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "一种外形像向日葵的食虫植物。它用嘴周围花瓣般的触手";
+	mes "引诱并缠住猎物。";
+	next;
+	mes "与曼陀罗魔花不同，邪恶向日葵没有储存猎物的管子。所以它会";
+	mes "一点一点慢慢吃掉猎物。";
+	next;
+	mes "虽然邪恶向日葵的根又小又短，但足够坚韧强壮，";
+	mes "能支撑上半身的重量。";
+	next;
+	mes "这种魔物的命名者——一位发现该物种后立刻被吃掉的";
+	mes "人类邪恶向日葵——将永远不会被遗忘……";
+	close;
+}
+	
+yuno_in03,48,112,3	script	草精#yuno	1162,{
+	end;
+}
+yuno_in03,46,112,1	script	#RAFFLESIA	111,{
+	mes " ";
+	mes " 学名：草精";
+	mes " 体型：小";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "一种蓬松多叶、濒临灭绝的魔物。草精是米德加兹";
+	mes "最稀有的魔物，因此受法律保护。";
+	next;
+	mes "正因如此，大多数贤者研究这种魔物时都困难重重。";
+	mes "不过，有少数贤者正在寻找人工培育并拯救草精的方法。";
+	close;
+}
+	
+yuno_in03,48,116,3	script	灰森灵#yuno	1215,{
+	end;
+}
+yuno_in03,45,116,1	script	#STEM_WORM	111,{
+	mes " ";
+	mes " 学名：灰森灵";
+	mes " 体型：中";
+	mes " 属性：风";
+	next;
+	mes "说明：";
+	mes "一种变异的虫尾，长着圆滚滚的灰褐色身体和";
+	mes "小小的头。它覆有鳞片，还有一条长长的茎状尾巴，攻击时";
+	mes "像鞭子一样使用。";
+	close;
+}
+
+yuno_in03,24,124,3	script	火焰妖#yuno	1367,{
+	end;
+}
+yuno_in03,24,122,1	script	#BLAZZER	111,{
+	mes " ";
+	mes " 学名：火焰妖";
+	mes " 体型：中";
+	mes " 属性：火";
+	next;
+	mes "说明：";
+	mes "这是一种在火山地带附近被目击到的火球。";
+	mes "由于这种魔物的突然出现，贤者们认为朱诺附近迟早";
+	mes "会发生火山活动。";
+	next;
+	mes "火焰妖会喷出伤害路人的毒气。目前尚不清楚这是攻击行为";
+	mes "还是火焰妖的一种交流方式。";
+	close;
+}
+	
+yuno_in03,28,124,5	script	飞行魔书#yuno	1195,{
+	end;
+}
+yuno_in03,28,122,1	script	#RIDEWORD	111,{
+	mes " ";
+	mes " 学名：飞行魔书";
+	mes " 体型：小";
+	mes " 属性：无";
+	next;
+	mes "说明：";
+	mes "一本长着锋利牙齿的";
+	mes "被诅咒的魔书。它会攻击附近的一切生物。";
+	close;
+}
+	
+yuno_in03,31,124,3	script	邪骸食人鱼#yuno	1064,{
+	end;
+}
+yuno_in03,31,122,1	script	#MEGALODON	111,{
+	mes " ";
+	mes " 学名：邪骸食人鱼";
+	mes " 体型：中";
+	mes " 属性：不死";
+	next;
+	mes "说明：";
+	mes "一条因诅咒而复生的骷髅鱼。虽然看起来很吓人，但它";
+	mes "性情温和，不会主动攻击海底的旅人。";
+	close;
+}
+	
+yuno_in03,35,124,3	script	沙妖#yuno	1386,{
+	end;
+}
+yuno_in03,35,122,1	script	#SLEEPER	111,{
+	mes " ";
+	mes " 学名：沙妖";
+	mes " 体型：中";
+	mes " 属性：地";
+	next;
+	mes "说明：";
+	mes "不明的沙之生物。通常待在地下，但当旅人踩上";
+	mes "沙地时，它可能会突然现身攻击他们。";
+	next;
+	mes "它比沙妖小，能掀起沙暴进行间接攻击。";
+	close;
+}
+	
+yuno_in03,39,124,3	script	狂暴木乃伊#yuno	1297,{
+	end;
+}
+yuno_in03,39,122,1	script	#ANCIENT_MUMMY	111,{
+	mes " ";
+	mes " 学名：狂暴木乃伊";
+	mes " 体型：中";
+	mes " 属性：不死";
+	next;
+	mes "说明：";
+	mes "一具被诅咒获得永生的木乃伊。虽然缠着腐朽的";
+	mes "绷带，狂暴木乃伊还戴着饰有蛇的华丽发饰。";
+	next;
+	mes "这种头饰表明狂暴木乃伊生前是地位显赫的人物。";
+	next;
+	mes "由于狂暴木乃伊已在冥界游荡了很久，它已没有任何";
+	mes "意识，会攻击附近的一切生物。";
+	close;
+}
+	
+yuno_in03,18,122,5	script	恶魔侍者#yuno	1374,{
+	end;
+}
+yuno_in03,19,120,1	script	#INCUBUS	111,{
+	mes " ";
+	mes " 学名：恶魔侍者";
+	mes " 体型：中";
+	mes " 属性：暗";
+	next;
+	mes "说明：";
+	mes "这种恶魔以惊人美丽的外表引诱人类。当它伪装成";
+	mes "男性人类时，我们称之为恶魔侍者。";
+	mes "伪装成女性时，则称之为恶魔女仆。";
+	next;
+	mes "这种恶魔专挑意志薄弱的人下手，最终把他们带入地狱。";
+	close;
+}
+	
+yuno_in03,44,120,3	script	恶魔女仆#yuno	1370,{
+	end;
+}
+yuno_in03,42,120,1	script	#SUCCUBUS	111,{
+	mes " ";
+	mes " 学名：恶魔女仆";
+	mes " 体型：中";
+	mes " 属性：暗";
+	next;
+	mes "说明：";
+	mes "这种恶魔以惊人美丽的外表引诱人类。当它伪装成";
+	mes "女性人类时，我们称之为恶魔女仆。";
+	mes "伪装成男性时，则称之为恶魔侍者。";
+	next;
+	mes "这种恶魔专挑意志薄弱的人下手，最终把他们带入地狱。";
+	close;
+}

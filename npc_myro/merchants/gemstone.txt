@@ -1,0 +1,101 @@
+//===== rAthena Script ======================================= 
+//= Gemstone Trader
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Trade various colors of gemstones for other color gemstones.
+//===== Additional Comments: ================================= 
+//= 1.0 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Any notes pertaining to the prior trader may be found
+//=     in the cities/payon.txt
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.2 Updated input with min/max values. [L0ne_W0lf]
+//=     Added a checkweight. 
+//= 1.3 Fixed checks. [Euphy]
+//============================================================ 
+
+payon,173,238,5	script	杰依德#pay	754,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF等一下！现在你身上的物品实在太多了。";
+		mes "请把一部分物品存进卡普拉仓库，";
+		mes "然后再过来吧。^000000";
+		close;
+	}
+	mes "[杰依德]";
+	mes "带两颗相同颜色的魔力矿石给我，";
+	mes "我就把它们变成其他颜色的魔力矿石。";
+	next;
+	switch(select("把蓝色魔力矿石换成红色的！:把红色魔力矿石换成黄色的！:把黄色魔力矿石换成蓝色的！")) {
+	case 1: callsub S_TradeGems,717,716;
+	case 2: callsub S_TradeGems,716,715;
+	case 3: callsub S_TradeGems,715,717;
+	}
+
+S_TradeGems:
+	.@item_req = getarg(0);
+	.@item_id = getarg(1);
+
+	if (countitem(.@item_req) < 2) {
+		mes "[杰依德]";
+		mes "哈……！你在开玩笑吧？";
+		mes "至少也要给我 2 颗 "+ getitemname(.@item_req) +"，我才能帮你这个忙！";
+		close;
+	}
+	else {
+		.@gems = countitem(.@item_req) /2;
+		mes "[杰依德]";
+		mes "用你现在身上的 "+ getitemname(.@item_req) +"，";
+		mes "总共可以做出 "+ .@gems +" 颗 "+ getitemname(.@item_id) +"。";
+		mes "你想怎么做？";
+		next;
+		switch(select("能换多少换多少。:我要自己设定数量。:算了。")) {
+		case 1:
+			delitem .@item_req,.@gems * 2;
+			getitem .@item_id,.@gems;
+			break;
+		case 2:
+			mes "[杰依德]";
+			mes "那么，你要几颗？";
+			mes "最多只能输入 100。";
+			next;
+			while(1) {
+				input .@input,0,101;
+				if (.@input == 0) {
+					mes "[杰依德]";
+					mes "一颗都不要？看来你是改变主意了……";
+					close;
+				}
+				else if (.@input > 100) {
+					mes "[杰依德]";
+					mes "呃……我记得说过，";
+					mes "输入的数量不能超过 100 吧……？";
+					next;
+				}
+				else if (.@gems < .@input) {
+					// Custom dialogue
+					mes "[杰依德]";
+					mes "呃……你没有那么多魔力矿石可以换啊……";
+					next;
+				}
+				else break;
+			}
+			delitem .@item_req,.@input * 2;
+			getitem .@item_id,.@input;
+			break;
+		case 3:
+			mes "[杰依德]";
+			mes "好，没问题。随时欢迎再来。";
+			close;
+		}
+		mes "[杰依德]";
+		mes "拿去吧。随时欢迎再来。";
+		mes "嗯，干嘛那样看着我？";
+		mes "我脸上有什么东西吗？";
+		close;
+	}
+}

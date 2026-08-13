@@ -1,0 +1,241 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Earthworm Peelings)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild17,208,346,5	script	肖恩#Hode_Hunt	707,{
+	if (checkquest(60104) != -1) {
+		if (checkquest(60104,HUNTING) != 2 ) {
+			mes "[肖恩]";
+			mes "你猎完 50 只蚯蚓了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[肖恩]";
+				mes "嗯，我看你还没猎够 50 只。……";
+				close;
+			case 2:
+				mes "[肖恩]";
+				mes "记住，我需要帮忙猎杀蚯蚓，去猎 50 只吧。";
+				close;
+			case 3:
+				mes "[肖恩]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[肖恩]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60104;
+					close;
+				case 2:
+					mes "[肖恩]";
+					mes "请去杀 50 只蚯蚓。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[肖恩]";
+			mes "厉害，你完成得真快。";
+			getexp 15775,1125;
+			erasequest 60104;
+			close;
+		}
+	}
+	if (checkquest(60105) != -1) {
+		if (checkquest(60105,HUNTING) != 2 ) {
+			mes "[肖恩]";
+			mes "你猎完 50 只蚯蚓了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[肖恩]";
+				mes "嗯，我看你还没猎够 100 只。……";
+				close;
+			case 2:
+				mes "[肖恩]";
+				mes "记住，我需要帮忙猎杀蚯蚓，去猎 100 只吧。";
+				close;
+			case 3:
+				mes "[肖恩]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[肖恩]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60105;
+					close;
+				case 2:
+					mes "[肖恩]";
+					mes "请去杀 100 只蚯蚓。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[肖恩]";
+			mes "厉害，你完成得真快。";
+			getexp 15775,1125;
+			getexp 15775,1125;
+			erasequest 60105;
+			close;
+		}
+	}
+	if (checkquest(60106) != -1) {
+		if (checkquest(60106,HUNTING) != 2 ) {
+			mes "[肖恩]";
+			mes "你猎完 150 只蚯蚓了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[肖恩]";
+				mes "嗯，我看你还没猎够 150 只。……";
+				close;
+			case 2:
+				mes "[肖恩]";
+				mes "记住，我需要帮忙猎杀蚯蚓，去猎 150 只吧。";
+				close;
+			case 3:
+				mes "[肖恩]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[肖恩]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60106;
+					close;
+				case 2:
+					mes "[肖恩]";
+					mes "请去杀 150 只蚯蚓。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[肖恩]";
+			mes "厉害，你完成得真快。";
+			getexp 15775,1125;
+			getexp 15775,1125;
+			getexp 15775,1125;
+			erasequest 60106;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 24) {
+		//for maximum level
+		if (BaseLevel < 61) {
+			mes "[肖恩]";
+			mes "等等！你能看见我？";
+			mes "唉，我的技术还没练到家。";
+			next;
+			mes "[肖恩]";
+			mes "嘿，你能帮帮我吗？";
+			next;
+			switch(select("当然:不")) {
+			case 1:
+				mes "[肖恩]";
+				mes "多谢了，朋友！";
+				next;
+				switch(select("收集物品:猎杀蚯蚓:取消")) {
+				case 1:
+					// Item turn in
+					mes "[肖恩]";
+					mes "我想收集 ^00CE0025 张蚯蚓皮^000000。";
+					mes "你帮忙的话我会酬谢你。";
+					next;
+					switch(select("我有 25 张蚯蚓皮:你刚说要什么？")) {
+					case 1:
+						/*
+						if (checkweight(502,10) == 0) {
+							mes "[肖恩]";
+							mes "嘿，看来你背上的重量";
+							mes "快把你压垮了。";
+							mes "等你减轻点负重再来吧。";
+							close;
+						}
+						*/
+						if (countitem(1055) > 24) {
+							mes "谢谢你带来的 25 张蚯蚓";
+							mes "皮！";
+							mes "这是我答应给你的酬劳，希望你把我传授的经验分享给其他人。";
+							delitem 1055,25; //Earthworm_Peeling
+							getexp 15775,1125;
+							//getitem 502,10; //Orange_Potion
+							close;
+						}
+						else {
+							mes "[肖恩]";
+							mes "我没看到^00CE00蚯蚓皮^000000。";
+							mes "你想骗我吗？";
+							close;
+						}
+					case 2:
+						mes "[肖恩]";
+						mes "我需要 ^00CE0025 张蚯蚓皮^000000。";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[肖恩]";
+					mes "啊，好，你可以帮我猎杀一些蚯蚓。";
+					mes "你想猎多少只？";
+					next;
+					switch(select("50 只蚯蚓:100 只蚯蚓:150 只蚯蚓")) {
+					case 1:
+						mes "[肖恩]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60104;
+						close;
+					case 2:
+						mes "[肖恩]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60105;
+						close;
+					case 3:
+						mes "[肖恩]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60106;
+						close;
+					}
+				case 3:
+					mes "[肖恩]";
+					mes "如果你改变主意，请再回来。";
+					close;
+				}
+			case 2:
+				mes "[肖恩]";
+				mes "如果你改变主意，请再回来。";
+				close;
+			}
+		}
+		else {
+			mes "[肖恩]";
+			mes "你实在太强了，不该来对付这些东西！";
+			close;
+		}
+	}
+	else {
+		mes "[肖恩]";
+		mes "你需要帮助，但我给不了你。";
+		mes "等你变强、见识更多之后再回来吧。";
+		close;
+	}
+}

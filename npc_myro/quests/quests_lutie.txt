@@ -1,0 +1,371 @@
+//===== rAthena Script ======================================= 
+//= 圣诞镇相关任务 NPC
+//===== By: ================================================== 
+//= TonyMan & Samuray22
+//===== Current Version: ===================================== 
+//= 1.3b
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= 红晕、蛋糕帽、蜡烛头饰、厨师帽、狸猫帽、蓝白蛋壳帽、
+//= 魔菇帽、神秘的水果皮帽任务
+//===== Additional Comments: ================================= 
+//= 1.1 Optimized [Lupus]
+//= 1.2 Fixed Chef Hat items [Lupus]
+//= 1.3 Update NPC to the Official One. [Samuray22]
+//= 1.3a Changed item names to item IDs. [Samuray22]
+//= 1.3b Removed a scrap " left in a delitem. [L0ne_W0lf]
+//= 1.4 Updated NPCs once again. [L0ne_W0lf]
+//============================================================ 
+
+xmas,117,295,4	script	自动贩卖机男子	704,{
+	mes "[提提库普]";
+	mes "嗯……？";
+	mes "我，提提库普，受人尊敬的玩具工厂厂长兼天才发明家，";
+	mes "又创造了一项杰作！我刚刚造出了世界上最精密的自动贩卖机！";
+	next;
+	switch(select("跟他聊聊自动贩卖机:贩卖机里的物品:不聊了")) {
+	case 1:
+		mes "[提提库普]";
+		mes "看到我左边的那个小雪人了吗？看到了吗？仔细看看它的嘴，";
+		mes "你会发现它造得特别大。可以说，大得有点超出一般的用途了……";
+		next;
+		mes "[提提库普]";
+		mes "你看，那个雪人其实是一台了不起的自动贩卖机，是我用血、汗、";
+		mes "泪水和雪发明出来的。";
+		next;
+		mes "[提提库普]";
+		mes "你可以把各种东西塞进它嘴里，只要放入正确的物品，";
+		mes "就能换到一些帽子……";
+		next;
+		mes "[提提库普]";
+		mes "那些你一直梦想戴上的时髦帽子……！哇哈哈哈～！";
+		next;
+		mes "[提提库普]";
+		mes "哦，我的这项创造真是太完美了！";
+		emotion ET_CHUPCHUP;
+		next;
+		mes "[提提库普]";
+		mes "还有那些头饰——！我……我按捺不住了！";
+		next;
+		mes "^3355FF玩具工厂厂长提提库普兴奋地上蹿下跳。他显然是疯了，^000000";
+		mes "^3355FF不过说不定还真是个天才。^000000";
+		emotion ET_SURPRISE;
+		close;
+	case 2:
+		mes "[提提库普]";
+		mes "哦对！你得知道往贩卖机里放什么物品才能换到你想要的东西，";
+		mes "是吧？尽管问吧……问我～";
+		emotion ET_AHA;
+		next;
+		switch(select("狸猫帽:魔菇帽:神秘的水果皮帽:蓝白蛋壳帽:红晕:厨师帽:蜡烛头饰:蛋糕帽:结束对话")) {
+		case 1:
+			mes "[提提库普]";
+			mes "狸猫帽？";
+			mes "1个猫耳发圈";
+			mes "20个龙鳞";
+			mes "200个强韧鳞梗";
+			mes "300张海獭的皮革";
+			break;
+		case 2:
+			mes "[提提库普]";
+			mes "魔菇帽？";
+			mes "850个毒魔菇芽孢";
+			mes "300块燃烧一半的木材";
+			mes "1条细长舌头";
+			break;
+		case 3:
+			mes "[提提库普]";
+			mes "神秘的水果皮帽？";
+			mes "1顶水果皮帽";
+			mes "500片蜻蜓的翅膀";
+			break;
+		case 4:
+			mes "[提提库普]";
+			mes "蓝白蛋壳帽？";
+			mes "1顶蛋壳帽";
+			mes "1瓶蓝色染料";
+			mes "50个沙漠之狼之指甲";
+			break;
+		case 5:
+			mes "[提提库普]";
+			mes "红晕？！";
+			mes "你！";
+			mes "你心里有鬼吧……";
+			mes "嘿嘿～总之";
+			mes "100条艾丽斯的围裙";
+			break;
+		case 6:
+			mes "[提提库普]";
+			mes "厨师帽？";
+			mes "120个小蛋糕";
+			mes "1瓶白色染料";
+			mes "330根柔毛";
+			mes "450个龙鳞";
+			break;
+		case 7:
+			mes "[提提库普]";
+			mes "蜡烛头饰？";
+			mes "1个火线头饰";
+			mes "50根火柴";
+			mes "100个蜂胶";
+			break;
+		case 8:
+			mes "[提提库普]";
+			mes "蛋糕帽？";
+			mes "10个糖果";
+			mes "5个拐杖糖";
+			mes "15块姜饼";
+			mes "20个小蛋糕";
+			mes "10个钢铁";
+			break;
+		case 9:
+			mes "[提提库普]";
+			mes "随时来问我。这种问题对我这样的天才来说根本不算什么！";
+		}
+		next;
+		mes "[提提库普]";
+		mes "太开心了！！";
+		mes "我是个天才～！";
+		mes "哦呵呵";
+		mes "哦呵呵呵！";
+		close;
+	case 3:
+		mes "[提提库普]";
+		mes "有时候，我自己都不敢相信这项发明有多伟大……！";
+		next;
+		mes "[提提库普]";
+		mes "我……";
+		mes "我爱你";
+		mes "雪人先生";
+		mes "自动贩卖机。";
+		emotion ET_CHUPCHUP;
+		next;
+		mes "^3355FF玩具工厂厂长提提库普开始上蹿下跳，^000000";
+		mes "^3355FF发出无法自已的狂喜尖叫。到了这个地步，^000000";
+		mes "^3355FF很难不让人怀疑他的理智，还有他的天才。^000000";
+		close;
+	}
+}
+
+xmas,115,297,4	script	自动贩卖机	111,{
+	mes "[奥迪]";
+	mes "^555555令人心动的物品贩卖机。由伟大的提提库普发明。^000000";
+	mes "^555555请选择想要的物品，并把所需物品放入雪人口中。^000000";
+	next;
+	switch(select("^FF3355注意事项（必读）^000000:狸猫帽:魔菇帽:神秘的水果皮帽:蓝白蛋壳帽:红晕:厨师帽:蜡烛头饰:蛋糕帽:取消")) {
+	case 1:
+		mes "[奥迪]";
+		mes "你好～！";
+		mes "有一件重要的事必须告诉你。";
+		mes "这台贩卖机无法区分特殊物品和普通物品。";
+		next;
+		mes "[奥迪]";
+		mes "所以如果你使用了^FF3355精炼过或镶了卡片^000000的物品，";
+		mes "制作新物品时卡片和精炼都会消失。";
+		next;
+		mes "[奥迪]";
+		mes "所以在交换制作物品之前，";
+		mes "请把不打算使用的贵重物品都存进卡普拉仓库。";
+		next;
+		mes "[奥迪]";
+		mes "请牢记这一点，因为本贩卖机不提供任何退货、退款或换货服务。";
+		next;
+		mes "[奥迪]";
+		mes "祝你玩得开心！";
+		mes "谢谢惠顾！";
+		close;
+	case 2:
+		if ((countitem(2213) > 0) && (countitem(1036) > 19) && (countitem(7012) > 199) && (countitem(7065) > 299)) {
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 2213,1;  //Cat_Hairband
+			delitem 1036,20;  //Dragon_Scale
+			delitem 7012,200;  //Tough_Scalelike_Stem
+			delitem 7065,300;  //Sea_Otter_Leather
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			getitem 5033,1; // Smokie_Hat
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 3:
+		if ((countitem(7033) > 849) && (countitem(7068) > 299) && (countitem(1015) > 0)) {
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 7033,850;  //Poison_Spore
+			delitem 7068,300;  //Burn_Tree
+			delitem 1015,1;  //Thin_N'_Long_Tongue
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			mes "^3355FF*吱吱*^000000";
+			getitem 5029,1; // Spore_Hat
+			next;
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 4:
+		if ((countitem(5037) > 0) && (countitem(7064) > 499)) {
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 5037,1;  //Fruit_Shell
+			delitem 7064,500;  //Dragon_Fly_Wing
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			mes "^3355FF*哔哔啵啵*^000000";
+			mes "^3355FF*哔——————*^000000";
+			emotion ET_O;
+			getitem 5050,1; // Mystery_Fruit_Shell
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 5:
+		if ((countitem(5015) > 0) && (countitem(978) > 0) && (countitem(7030) > 49)){ 
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 5015,1;  //Egg_Shell
+			delitem 978,1;  //Cobaltblue_Dyestuffs
+			delitem 7030,50;  //Claw_Of_Desert_Wolf
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哦哦咦咦～～*^000000";
+			getitem 5039,1; // Mottled_Egg_Shell
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 6:
+		if (countitem(7047) > 99) {
+			mes "^3355FF你小心翼翼地把100条围裙全部放进雪人的嘴里。^000000";
+			next;
+			delitem 7047,100;  //Alice's_Apron
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			mes "^3355FF*啾啾*^000000";
+			mes "^3355FF*唰——！*^000000";
+			getitem 5040,1; // Blush
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			next;
+			mes "[提提库普]";
+			mes "你换到了红晕？！哼。看来你真的很喜欢光彩照人的样子～！";
+			mes "现在你该体会到我的天才了吧，嗯？";
+			close;
+		}
+		break;
+	case 7:
+		if ((countitem(539) > 119) && (countitem(982) > 0) && (countitem(949) > 329) && (countitem(1036) > 449)) {
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 539,120;  //Piece_Of_Cake
+			delitem 982,1;  //White_Dyestuffs
+			delitem 949,330;  //Feather
+			delitem 1036,450;  //Dragon_Scale
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			mes "^3355FF*呜—————*^000000";
+			getitem 5026,1; // Hat_Of_Cook
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 8:
+		if ((countitem(2279) > 0) && (countitem(7035) > 49) && (countitem(526) > 99)) {
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 2279,1;  //Bomb_Wick
+			delitem 7035,50;  //Matchstick
+			delitem 526,100;  //Royal_Jelly
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			getitem 5028,1; // Candle
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 9:
+		if ((countitem(529) > 9) && (countitem(530) > 4) && (countitem(538) > 14) && (countitem(539) > 19) && (countitem(999) > 9)) { 
+			mes "^3355FF你小心翼翼地把物品放进雪人的嘴里。^000000";
+			next;
+			delitem 529,10;  //Candy
+			delitem 530,5;  //Candy_Striper
+			delitem 538,15;  //Well_Baked_Cookie
+			delitem 539,20;  //Piece_Of_Cake
+			delitem 999,10;  //Steel
+			emotion ET_O;
+			mes "^3355FF*嗡嗡嗡～～*^000000";
+			mes "^3355FF*滋滋滋*^000000";
+			mes "^3355FF*咔嚓咔嚓*^000000";
+			mes "^3355FF*哐当！*^000000";
+			getitem 5024,1; // Hat_Of_Cake
+			next;
+			mes "[奥迪]";
+			mes "^555555谢谢惠顾。^000000";
+			mes "^555555欢迎再来！^000000";
+			mes "^555555哦，请告诉你的朋友！^000000";
+			close;
+		}
+		break;
+	case 10:
+		mes "[奥迪]";
+		mes "^555555请……^000000";
+		mes "^555555放入……^000000";
+		mes "^555555物品。^000000";
+		close;
+	}
+	emotion ET_X;
+	mes "[奥迪]";
+	mes "^555555错误 错误！^000000";
+	mes "^555555物品不正确！^000000";
+	next;
+	mes "[提提库普]";
+	mes "我……";
+	mes "我想很多人为了得到红晕，什么事都做得出来吧。";
+	close;
+}

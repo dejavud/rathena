@@ -1,0 +1,126 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//= 1.4 Creators did not get their homunculus skills [Lemongrass]
+//============================================================ 
+
+valkyrie,53,50,3	script	创造者#Valkyrie	122,{
+	if (Class == Job_Creator && bioeth == 13 && getskilllv("AM_BIOETHICS") == 0) {
+		mes "[创造者]";
+		mes "啊，你是来找回";
+		mes "那些失去的记忆的吗？";
+		mes "没错，你一定是为了";
+		mes "那曾属于你的";
+		mes "生命奥秘而来……";
+		next;
+		if (select("是:不") == 1) {
+			mes "[创造者]";
+			mes "闭上双眼，";
+			mes "让心灵平静下来。";
+			mes "我们将回到你的过去，";
+			mes "重新拾起你";
+			mes "失落记忆的碎片。";
+			next;
+			mes "[创造者]";
+			mes "当你睁开双眼时，";
+			mes "你会清晰地记起生命的奥秘。";
+			mes "你也会记住这份重任——";
+			mes "要将这些奥秘";
+			mes "用在正途上……";
+			next;
+			skill "AM_BIOETHICS",1,SKILL_PERM;
+			mes "[创造者]";
+			mes "睁开双眼吧……";
+			mes "既然你已经回想起";
+			mes "创造人工生命的方法，";
+			mes "我只希望你尊重";
+			mes "自己的每一个创造物。";
+			close;
+		}
+		mes "[创造者]";
+		mes "如果你想找回";
+		mes "失去的记忆，";
+		mes "请再来找我。";
+		mes "创造生命的奥秘";
+		mes "可不是儿戏……";
+		close;
+	}
+	else if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[创造者]";
+			mes "恭喜你。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		mes "[创造者]";
+		mes "像我这样的人会在这里，";
+		mes "确实挺奇怪的。";
+		mes "但即使是精通科学之道的人，";
+		mes "也能成为英雄。";
+		next;
+		mes "[创造者]";
+		mes "就我而言，";
+		mes "让我赢得瓦尔哈拉一席之地的，";
+		mes "不是我使用的手段，";
+		mes "而是我为之奋斗的目标……";
+		close;
+	}
+	else if (ADVJOB == Job_Creator && Class == Job_Merchant_High && JobLevel > 39) {
+		mes "[创造者]";
+		mes "嗯……";
+		mes "是时候了。";
+		mes "米德加兹需要你这样的";
+		mes "天才，多多益善。";
+		next;
+		mes "[创造者]";
+		mes "你想成为创造者吗？";
+		next;
+		if (select("不。:是。") == 1) {
+			mes "[创造者]";
+			mes "等你准备好了，";
+			mes "随时回来找我。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[创造者]";
+			mes "你还有技能可以学习。";
+			mes "请先用完所有剩余的技能点，再来找我。";
+			close;
+		}
+		jobchange Job_Creator;
+		if (bioeth == 13)
+			skill "AM_BIOETHICS",1,SKILL_PERM;
+		set ADVJOB,0;
+		mes "[创造者]";
+		mes "恭喜！";
+		mes "作为创造者，";
+		mes "我希望你将渊博的学识";
+		mes "用在正途上。";
+		close;
+	}
+	else {
+		mes "[创造者]";
+		mes "欢迎来到瓦尔哈拉，";
+		mes "这里是荣誉殿堂。";
+		next;
+		mes "[创造者]";
+		mes "待在这里的期间，";
+		mes "请随意一些。荣耀归于战士们！";
+		close;
+	}
+}
+

@@ -1,0 +1,953 @@
+//===== rAthena Script ======================================= 
+//= 吟游诗人转职任务
+//===== By: ==================================================
+//= Muad_Dib(The Prometheus Project), Lupus, Samuray22
+//===== Current Version: ===================================== 
+//= 2.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 吟游诗人职业任务
+//===== Additional Comments: =================================
+//= 2.1b Updated to the Official One. [Samuray22]
+//= 2.2 Fixed BUG when baby classes weren't able to get a job,
+//=	- fixed bug with final prize [Lupus] HAVE TO CHANE ALL ITEMS to numeric IDs
+//= 2.3 Updated NPC dialogs and cutins using Aegis 10.3 files. [L0ne_W0lf]
+//=	- Fixed error with the present checking. (Lupus beat me to committing)
+//=	- Changed the reward checking to use callsub (fixed the flow of the script)
+//=	- Optimized and changed the flow of things slightly.
+//=	- Temporary character variables "@" are now ".@"
+//=	- Fixed some indentation.
+//=	- Changed item names to item IDs
+//= 2.4 Fixed hang up on bard quest. ($kiN.) [L0ne_W0lf]
+//= 2.5 Added Quest Log commands. [Kisuka]
+//= 2.6 Removed the need for use of 'goto.' [L0ne_W0lf]
+//============================================================
+
+// Ayealo
+//============================================================
+comodo,226,123,5	script	流浪的吟游诗人	741,{
+	if(Upper == 1) {
+		mes "[拉洛]";
+		mes "命中注定要成为神的人";
+		mes "在这个时代有很多";
+		mes "但他们活着的时候从不了解自己的命运。";
+		mes "最终沦为平庸的凡人……";
+		next;
+		mes "[拉洛]";
+		mes "风啊云啊，请把这个消息带给他们，";
+		mes "那些追逐衣食住行和财富的人。";
+		mes "告诉他们，他们在虚度光阴……";
+		mes "告诉他们，他们忘记了人生最重要的目标……";
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
+	}
+	else if(BaseJob != Job_Archer) {
+		if(BaseJob == Job_Bard) {
+			mes "[拉洛]";
+			mes "哦嘿！最近歌唱得怎么样了？";
+			mes "不知道你的歌声有没有进步。";
+			next;
+			mes "[拉洛]";
+			mes "你没忘记到各个城镇传播好消息吧？";
+			mes "也别忘了学新歌……";
+			next;
+			mes "[拉洛]";
+			mes "永远不要忘记积极的态度和快乐的真谛。";
+			mes "我们的歌应该把幸福和欢乐带给大家。";
+		}
+		else if(Class == Job_Novice) {
+			cutin "job_bard_aiolo01",2;
+			mes "[拉洛]";
+			mes "涌上心头的悲伤……";
+			mes "不会停留……";
+			mes "这就是我烦恼的原因吗，";
+			mes "这就是我软弱的原因吗，";
+			mes "这一定就是我忘不了你的原因……";
+			next;
+			mes "[拉洛]";
+			mes "哦，抱歉。我刚才专心写词，没看到你。";
+			mes "想听我的歌吗？要我为你唱一首吗？";
+			next;
+			mes "[拉洛]";
+			mes "嘿……去问别人吧。";
+			mes "我正在作新歌。";
+		}
+		else {
+			cutin "job_bard_aiolo01",2;
+			mes "[拉洛]";
+			mes "啦啦啦，啦啦啦。美丽的克魔岛。";
+			mes "总是充满欢乐的时光~";
+			next;
+			mes "[拉洛]";
+			if (Sex == SEX_MALE) {
+				mes "忘掉你的烦恼~";
+				mes "尽情享乐~";
+			}
+			else mes "可爱的小姐，来跳支舞吧~";
+			mes "青春一去不复返~";
+		}
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
+	}
+	else if(BARD_Q == 0) {
+		cutin "job_bard_aiolo01",2;
+		mes "[拉洛]";
+		if (Sex == SEX_MALE) mes "你好！开朗的弓箭手。";
+		else mes "你好！美丽的弓箭手小姐。";
+		mes "像我这样的流浪者能帮你什么忙呢？";
+		next;
+		switch(select("你的歌声真好听。:能为我唱首歌吗？:没什么。")) {
+		case 1:
+			mes "[拉洛]";
+			mes "哈哈哈！那当然！";
+			mes "带着快乐的心情唱歌，歌声总会变得更好。";
+			next;
+			mes "[拉洛]";
+			mes "但是，对吟游诗人来说，歌声就是生命。";
+			mes "有时候嗓子会哑，你可得小心。";
+			break;
+
+		case 2:
+			mes "[拉洛]";
+			mes "唱歌啊……让我想想。";
+			mes "好，想到一首了……";
+			next;
+			mes "[拉洛]";
+			mes "我要唱的是……战鼓。";
+			mes "*咳咳……*清嗓……哆、来、咪……";
+			mes "1、2、3、4……";
+			next;
+			mes "^000088战马奔腾越过地平线";
+			mes "尘土遮蔽了远方的太阳";
+			mes "当夜空中睁开千万只眼睛";
+			mes "城堡的火焰将熊熊燃烧。^000000";
+			next;
+			mes "^000088我听见了……我的心跳。";
+			mes "我感觉到了……血液在血管里奔涌。";
+			mes "……还有铠甲的重量。";
+			mes "我看见了……我的敌人。^000000";
+			next;
+			mes "^000088更响，更响，更响亮……";
+			mes "赐予战士们力量吧！";
+			mes "更高，更高，更高昂……";
+			mes "这一天将永不重来！^000000";
+			next;
+			mes "^000088震撼天空，响彻大地。";
+			mes "让我的心再次澎湃！";
+			mes "让号角吹响，让城墙回响。";
+			mes "这一刻将永不重来！^000000";
+			next;
+			mes "[拉洛]";
+			mes "嗯……这首歌总是唱不腻。";
+			mes "怎么样？不觉得是首好歌吗？";
+			next;
+			if (select("是的，非常好听。:不，不怎么样……") == 1) {
+				mes "[拉洛]";
+				mes "谢谢！你喜欢我的歌，我也很开心。";
+				next;
+				if (Sex == SEX_MALE && JobLevel > 39) {
+					mes "[拉洛]";
+					mes "如果有更多人四处游历歌唱就好了……";
+					mes "嗯，现在这样也挺好……哼哼。";
+					set BARD_Q,1;
+					setquest 3000;
+					close2;
+					cutin "job_bard_aiolo01",255;
+					end;
+				}
+				mes "[拉洛]";
+				mes "想再听我的歌，随时开口。";
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+			cutin "job_bard_aiolo02",2;
+			mes "[拉洛]";
+			mes "嗯……是我的感觉迟钝了吗，我得再加把劲。";
+			mes "总之……谢谢收听。";
+			break;
+
+		case 3:
+			cutin "job_bard_aiolo02",2;
+			mes "[拉洛]";
+			mes "喂，遇到吟游诗人却不点歌，可不太礼貌哦。";
+			mes "算了……反正你看起来一副赶时间的样子。";
+			next;
+			mes "[拉洛]";
+			mes "打猎是好事……但别忘了偶尔放松一下。";
+			mes "青春短暂，一旦流逝就不会再来……";
+			break;
+		}
+		close2;
+		cutin "job_bard_aiolo02",255;
+		end;
+	}
+	else if(BARD_Q == 1) {
+		cutin "job_bard_aiolo01",2;
+		mes "[拉洛]";
+		mes "嘿，弓箭手朋友。";
+		mes "像我这样的流浪者能帮你什么忙呢？";
+		next;
+		switch(select("你的歌声真好听。:能为我唱首歌吗？:没什么。")) {
+		case 1:
+			mes "[拉洛]";
+			mes "呵呵，你的嗓子也挺不错嘛？";
+			mes "有没有想过往歌唱方面发展？";
+			next;
+			if (select("当然有!:我恐怕不行……") == 1) {
+				mes "[拉洛]";
+				mes "哈哈，态度不错。想成为吟游诗人就得这样。";
+				mes "那我就帮你成为吟游诗人吧。";
+				next;
+				mes "[拉洛]";
+				mes "不过在那之前……你能带一朵花给我吗？";
+				mes "我要闻到花香才有教书的兴致。";
+				next;
+				mes "[拉洛]";
+				mes "什么花倒无所谓，但尽量带一朵我喜欢的来。";
+				mes "还有，别随便买一朵花糊弄我，好吗？";
+				set BARD_Q,2;
+				changequest 3000,3001;
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+			mes "[拉洛]";
+			mes "哈哈，真是个胆小鬼。";
+			mes "别这么看轻自己。";
+			next;
+			mes "[拉洛]";
+			mes "你很有天赋。";
+			mes "改变主意的话再来找我。";
+			break;
+
+		case 2:
+			mes "[拉洛]";
+			mes "嗯……看来你有点歌唱天赋？";
+			mes "别光会点歌……唱给别人听也很有趣哦。";
+			next;
+			mes "[拉洛]";
+			mes "试着享受吟游诗人的生活吧。";
+			mes "从一个城镇到另一个城镇，为人们歌唱。听起来很棒吧？";
+			break;
+
+		case 3:
+			mes "[拉洛]";
+			mes "嗯……我也搞不懂怎么回事，总之享受生活吧。";
+			mes "你看起来太紧绷了。";
+			next;
+			mes "[拉洛]";
+			mes "那么~祝你玩得开心~";
+			break;
+		}
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
+	}
+	else if(BARD_Q == 2) {
+		cutin "job_bard_aiolo01",2;
+		mes "[拉洛]";
+		mes "欢迎！弓箭手朋友。";
+		mes "带花来了吗？让我看看。";
+		next;
+		mes "[拉洛]";
+		//Good Flowers
+		if (countitem(629) > 0) {
+			mes "哦！是呢喃花！";
+			mes "它装满了我的回忆……";
+			next;
+			delitem 629,1; //Singing Flower
+			mes "[拉洛]";
+			mes "我的朋友柴可夫斯基以前很喜欢它。";
+			mes "不知道他现在在做什么……";
+		}
+		else if(countitem(703) > 0) {
+			mes "啊……可爱的西纳雷花……";
+			mes "它虽然没有香味，却是一朵温婉可爱的小花。";
+			next;
+			delitem 703,1; //Hinalle
+			mes "[拉洛]";
+			mes "我跌倒的时候，它的叶子曾给我力量。";
+			mes "我真的很喜欢这朵花，谢谢你。";
+		}
+		else if(countitem(704) > 0) {
+			mes "芦荟……这可是稀罕的花。";
+			mes "你怎么弄到的？挺有本事嘛？";
+			next;
+			delitem 704,1; //Aloe
+			mes "[拉洛]";
+			mes "叶子很好用，芦荟肉也很好吃……";
+			mes "不过它开花的时候绝对是最美的。";
+		}
+		else if(countitem(708) > 0) {
+			mes "曼特花……闻到它，所有的辛苦都能忘掉。";
+			mes "好久不见，真高兴！";
+			next;
+			delitem 708,1; //Ment
+			mes "[拉洛]";
+			mes "听说用它能做出止痛药……";
+			mes "不过那样就太浪费了……谢啦！";
+		}
+		else if(countitem(709) > 0) {
+			mes "哦，这不是迷幻药吗？";
+			mes "这是一种危险又美丽的花……";
+			next;
+			delitem 709,1; //Izidor
+			mes "[拉洛]";
+			mes "深紫色让人着迷……";
+			mes "谢谢，我真的很喜欢这朵花。";
+		}
+		else if(countitem(748) > 0) {
+			mes "哦，永恒玫瑰。永不凋零的坚强花朵。";
+			mes "送给女朋友最合适了。";
+			next;
+			delitem 748,1; //Witherless_Rose
+			mes "[拉洛]";
+			mes "不知道像我这样的流浪者收下它合不合适。";
+			mes "哈哈，应该没关系吧……对吧？";
+		}
+		else if(countitem(749) > 0 ) {
+			mes "冰雕玫瑰……这已经不能算是花了，";
+			mes "但它依然美丽……晶莹剔透的玫瑰。";
+			next;
+			delitem 749,1; //Frozen_Rose
+			mes "[拉洛]";
+			mes "虽然不再有香味，但还是可以叫它花。";
+			mes "那我就感激地收下了。";
+		}
+		else if(countitem(710) > 0) {
+			mes "哦，这不是幻想花吗！？";
+			mes "哇，你怎么得到这么稀有的花！！";
+			next;
+			delitem 710,1; //Illusion_Flower
+			mes "[拉洛]";
+			mes "非常感谢，啊……我感觉天堂就在眼前。";
+			mes "多么美妙的感觉！我太开心了！";
+		}
+		//Bad Flowers
+		else if(countitem(712) > 0) {
+			cutin "job_bard_aiolo02",2;
+			mes "诶？这只是朵普通的花。";
+			mes "我喜欢……但还不够。";
+			next;
+			mes "[拉洛]";
+			mes "普隆德拉的女孩那里就能买到这种花。";
+			mes "请带一朵不一样的花来。";
+			close2;
+			cutin "job_bard_aiolo02",255;
+			end;
+		}
+		else if(countitem(744) > 0) {
+			mes "哦不，你带了一束花束来？";
+			mes "这种东西可不能送给我。";
+			next;
+			mes "[拉洛]";
+			mes "把这个拿去送给毕业的贤者什么的吧。";
+			mes "它很适合当那种礼物……换一朵别的花来。";
+			close2;
+			cutin "job_bard_aiolo01",255;
+			end;
+		}
+		else if(countitem(745) > 0) {
+			cutin "job_bard_aiolo02",2;
+			mes "喂喂……你是去参加婚礼了吗？";
+			mes "你指望一个大男人拿捧花做什么？";
+			next;
+			mes "[拉洛]";
+			mes "不是给我的。拿去送给女士什么的吧。";
+			mes "这不是我想要的那种花。";
+			close2;
+			cutin "job_bard_aiolo02",255;
+			end;
+		}
+		else if(countitem(2207) > 0) {
+			mes "嗯……花朵头饰。";
+			mes "挺好看……但这个还不够好。";
+			next;
+			mes "[拉洛]";
+			mes "我喜欢有香味又美丽的花。";
+			mes "我不喜欢戴在头上的假花。";
+			close2;
+			cutin "job_bard_aiolo01",255;
+			end;
+		}
+		else if(countitem(1032) > 0) {
+			cutin "job_bard_aiolo02",2;
+			mes "……啊，你怎么带这么丑的东西来？";
+			mes "你到底有没有在思考？";
+			next;
+			mes "[拉洛]";
+			mes "如果你是想逗我笑，那尝试得不错……";
+			mes "但现在去带一朵正常的花来。";
+			close2;
+			cutin "job_bard_aiolo02",255;
+			end;
+		}
+		else {
+			cutin "job_bard_aiolo02",2;
+			mes "嗯？什么嘛……你什么都没带。";
+			mes "我不是让你带一朵花来吗？";
+			next;
+			mes "[拉洛]";
+			mes "好吧……你想自学的话，那就这样吧。";
+			mes "谁都可以出去唱两句。";
+			close2;
+			cutin "job_bard_aiolo02",255;
+			end;
+		}
+		next;
+		cutin "job_bard_aiolo01",2;
+		mes "[拉洛]";
+		mes "如我所承诺的，我会帮你成为吟游诗人。";
+		mes "不过这可不简单，朋友。哈哈！";
+		next;
+		mes "[拉洛]";
+		mes "学唱歌，重要的是要结识很多人。";
+		mes "你还得了解各个村庄发生的所有事情……";
+		next;
+		mes "[拉洛]";
+		mes "有个叫圣诞镇的地方，那里有一个会说话的雪人。";
+		mes "去那里带一份礼物回来。";
+		next;
+		set BARD_Q,3;
+		changequest 3001,3002;
+		set xmas_npc,1;
+		mes "[拉洛]";
+		mes "如果你和^008800雪诺^000000成为朋友，你会得到一些东西。";
+		mes "顺便也和镇上的居民聊聊……";
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
+	}
+	else if ((BARD_Q >= 3) || (BARD_Q <= 5)) {
+		if (BARD_Q == 3) {
+			if(xmas_npc > 10) { //this var is set in LUTIE.TXT
+				cutin "job_bard_aiolo01",2;
+				mes "[拉洛]";
+				mes "旅途如何？认识了不少人吧？";
+				mes "你应该学到了比礼物更重要的东西。";
+				next;
+				mes "[拉洛]";
+				mes "那么，你想试着唱唱看吗……？";
+				mes "我唱一段短短的旋律……";
+				mes "你跟着唱。";
+				if(checkquest(3003) == -1) {
+					changequest 3002,3003;
+				}
+				next;
+				mes "[拉洛]";
+				mes "我开始唱了。";
+				mes "*咳咳* 清清嗓子";
+				mes "1, 2, 3, 4";
+				next;
+			}
+			else {
+				cutin "job_bard_aiolo01",2;
+				set xmas_npc,1;
+				mes "[拉洛]";
+				mes "诶，你还没和他成为朋友吗？";
+				mes "光靠聊天是不够的。";
+				next;
+				mes "[拉洛]";
+				mes "如果你和^008800雪诺^000000成为朋友，你会得到一些东西。";
+				mes "也和村里的居民聊聊……";
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+		}
+		else if (BARD_Q == 4) {
+			cutin "job_bard_aiolo01",2;
+			mes "[拉洛]";
+			mes "嗯……这次你能唱得更好，对吧？";
+			mes "再试一次，你可以的。";
+			next;
+			mes "[拉洛]";
+			mes "我唱一段……";
+			mes "你跟着唱。";
+			next;
+			mes "[拉洛]";
+			mes "开始了。";
+			mes "*咳咳*";
+			mes "1, 2, 3, 4";
+			next;
+		}
+		if (BARD_Q != 5) {
+			set .@bard_s, rand(1,5);
+			if (.@bard_s == 1) {
+				mes "^3377FF曾经有一个人^000000";
+				mes "据说他长生不老。";
+				mes "他的名字是齐格飞，";
+				mes "英雄齐格蒙特的儿子。";
+				mes "邪恶的巨人法夫纳，";
+				mes "化作巨龙吞掉了他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "曾经有一个人") 
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF曾经有一个人";
+				mes "据说他长生不老。^000000";
+				mes "他的名字是齐格飞，";
+				mes "英雄齐格蒙特的儿子。";
+				mes "邪恶的巨人法夫纳，";
+				mes "化作巨龙吞掉了他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "据说他长生不老。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF曾经有一个人";
+				mes "据说他长生不老。";
+				mes "他的名字是齐格飞，^000000";
+				mes "英雄齐格蒙特的儿子。";
+				mes "邪恶的巨人法夫纳，";
+				mes "化作巨龙吞掉了他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "他的名字是齐格飞，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF曾经有一个人";
+				mes "据说他长生不老。";
+				mes "他的名字是齐格飞，";
+				mes "英雄齐格蒙特的儿子。^000000";
+				mes "邪恶的巨人法夫纳，";
+				mes "化作巨龙吞掉了他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "英雄齐格蒙特的儿子。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF曾经有一个人";
+				mes "据说他长生不老。";
+				mes "他的名字是齐格飞，";
+				mes "英雄齐格蒙特的儿子。";
+				mes "邪恶的巨人法夫纳，^000000";
+				mes "化作巨龙吞掉了他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "邪恶的巨人法夫纳，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF曾经有一个人";
+				mes "据说他长生不老。";
+				mes "他的名字是齐格飞，";
+				mes "英雄齐格蒙特的儿子。";
+				mes "邪恶的巨人法夫纳，";
+				mes "化作巨龙吞掉了他。^000000";
+				next;
+				input .@Song$;
+				if (.@Song$ != "化作巨龙吞掉了他。")
+					set .@w_point,.@w_point+1;
+			}
+			else if (.@bard_s == 2) {
+				mes "^3377FF一个没钱没装备的商人，^000000";
+				mes "一个什么都卖不掉的商人。";
+				mes "但他高傲得不肯乞讨。";
+				mes "于是他卖东西攒了些钱。";
+				mes "起初他只卖红色药水。";
+				mes "有人说他也卖过番薯。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "一个没钱没装备的商人，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF一个没钱没装备的商人，";
+				mes "一个什么都卖不掉的商人。^000000";
+				mes "但他高傲得不肯乞讨。";
+				mes "于是他卖东西攒了些钱。";
+				mes "起初他只卖红色药水。";
+				mes "有人说他也卖过番薯。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "一个什么都卖不掉的商人。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF一个没钱没装备的商人，";
+				mes "一个什么都卖不掉的商人。";
+				mes "但他高傲得不肯乞讨。^000000";
+				mes "于是他卖东西攒了些钱。";
+				mes "起初他只卖红色药水。";
+				mes "有人说他也卖过番薯。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "但他高傲得不肯乞讨。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF一个没钱没装备的商人，";
+				mes "一个什么都卖不掉的商人。";
+				mes "但他高傲得不肯乞讨。";
+				mes "于是他卖东西攒了些钱。^000000";
+				mes "起初他只卖红色药水。";
+				mes "有人说他也卖过番薯。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "于是他卖东西攒了些钱。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF一个没钱没装备的商人，";
+				mes "一个什么都卖不掉的商人。";
+				mes "但他高傲得不肯乞讨。";
+				mes "于是他卖东西攒了些钱。";
+				mes "起初他只卖红色药水。^000000";
+				mes "有人说他也卖过番薯。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "起初他只卖红色药水。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF一个没钱没装备的商人，";
+				mes "一个什么都卖不掉的商人。";
+				mes "但他高傲得不肯乞讨。";
+				mes "于是他卖东西攒了些钱。";
+				mes "起初他只卖红色药水。";
+				mes "有人说他也卖过番薯。^000000";
+				next;
+				input .@Song$;
+				if (.@Song$ != "有人说他也卖过番薯。")
+					set .@w_point,.@w_point+1;
+			}
+			else if (.@bard_s == 3) {
+				mes "^3377FF众神永远不会老去。^000000";
+				mes "美丽无比的女神伊登，";
+				mes "美丽优雅的女神伊登，";
+				mes "奥丁的儿媳，布拉基的妻子。";
+				mes "她篮子里甜美的苹果，";
+				mes "全亏了她甜美的苹果。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "众神永远不会老去。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF众神永远不会老去。";
+				mes "美丽无比的女神伊登，^000000";
+				mes "美丽优雅的女神伊登，";
+				mes "奥丁的儿媳，布拉基的妻子。";
+				mes "她篮子里甜美的苹果，";
+				mes "全亏了她甜美的苹果。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "美丽无比的女神伊登，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF众神永远不会老去。";
+				mes "美丽无比的女神伊登，";
+				mes "美丽优雅的女神伊登，^000000";
+				mes "奥丁的儿媳，布拉基的妻子。";
+				mes "她篮子里甜美的苹果，";
+				mes "全亏了她甜美的苹果。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "美丽优雅的女神伊登，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF众神永远不会老去。";
+				mes "美丽无比的女神伊登，";
+				mes "美丽优雅的女神伊登，";
+				mes "奥丁的儿媳，布拉基的妻子。^000000";
+				mes "她篮子里甜美的苹果，";
+				mes "全亏了她甜美的苹果。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "奥丁的儿媳，布拉基的妻子。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF众神永远不会老去。";
+				mes "美丽无比的女神伊登，";
+				mes "美丽优雅的女神伊登，";
+				mes "奥丁的儿媳，布拉基的妻子。";
+				mes "她篮子里甜美的苹果，^000000";
+				mes "全亏了她甜美的苹果。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "她篮子里甜美的苹果，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF众神永远不会老去。";
+				mes "美丽无比的女神伊登，";
+				mes "美丽优雅的女神伊登，";
+				mes "奥丁的儿媳，布拉基的妻子。";
+				mes "她篮子里甜美的苹果，";
+				mes "全亏了她甜美的苹果。^000000";
+				next;
+				input .@Song$;
+				if (.@Song$ != "全亏了她甜美的苹果。")
+					set .@w_point,.@w_point+1;
+			}
+			else if (.@bard_s == 4) {
+				mes "^3377FF布拉基，布拉基，^000000";
+				mes "永远传颂诗神的名字。";
+				mes "我的歌声是他的呼吸，";
+				mes "我的心灵是他的意志，";
+				mes "所有流浪的诗人都是他的子民，";
+				mes "一切赞美都归于他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "布拉基，布拉基，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF布拉基，布拉基，";
+				mes "永远传颂诗神的名字。^000000";
+				mes "我的歌声是他的呼吸，";
+				mes "我的心灵是他的意志，";
+				mes "所有流浪的诗人都是他的子民，";
+				mes "一切赞美都归于他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "永远传颂诗神的名字。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF布拉基，布拉基，";
+				mes "永远传颂诗神的名字。";
+				mes "我的歌声是他的呼吸，^000000";
+				mes "我的心灵是他的意志，";
+				mes "所有流浪的诗人都是他的子民，";
+				mes "一切赞美都归于他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "我的歌声是他的呼吸，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF布拉基，布拉基，";
+				mes "永远传颂诗神的名字。";
+				mes "我的歌声是他的呼吸，";
+				mes "我的心灵是他的意志，^000000";
+				mes "所有流浪的诗人都是他的子民，";
+				mes "一切赞美都归于他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "我的心灵是他的意志，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF布拉基，布拉基，";
+				mes "永远传颂诗神的名字。";
+				mes "我的歌声是他的呼吸，";
+				mes "我的心灵是他的意志，";
+				mes "所有流浪的诗人都是他的子民，^000000";
+				mes "一切赞美都归于他。";
+				next;
+				input .@Song$;
+				if (.@Song$ != "所有流浪的诗人都是他的子民，")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF布拉基，布拉基，";
+				mes "永远传颂诗神的名字。";
+				mes "我的歌声是他的呼吸，";
+				mes "我的心灵是他的意志，";
+				mes "所有流浪的诗人都是他的子民，";
+				mes "一切赞美都归于他。^000000";
+				next;
+				input .@Song$;
+				if (.@Song$ != "一切赞美都归于他。")
+					set .@w_point,.@w_point+1;
+			}
+			else {
+				mes "^3377FF更响，更响，更响亮。^000000";
+				mes "赐予战士们力量吧！";
+				mes "震撼天空，响彻大地。";
+				mes "让我的心再次澎湃！";
+				mes "让城墙为之回响。";
+				mes "这一天将永不重来！";
+				next;
+				input .@Song$;
+				if (.@Song$ != "更响，更响，更响亮。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF更响，更响，更响亮。";
+				mes "赐予战士们力量吧！^000000";
+				mes "震撼天空，响彻大地。";
+				mes "让我的心再次澎湃！";
+				mes "让城墙为之回响。";
+				mes "这一天将永不重来！";
+				next;
+				input .@Song$;
+				if (.@Song$ != "赐予战士们力量吧！")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF更响，更响，更响亮。";
+				mes "赐予战士们力量吧！";
+				mes "震撼天空，响彻大地。^000000";
+				mes "让我的心再次澎湃！";
+				mes "让城墙为之回响。";
+				mes "这一天将永不重来！";
+				next;
+				input .@Song$;
+				if (.@Song$ != "震撼天空，响彻大地。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF更响，更响，更响亮。";
+				mes "赐予战士们力量吧！";
+				mes "震撼天空，响彻大地。";
+				mes "让我的心再次澎湃！^000000";
+				mes "让城墙为之回响。";
+				mes "这一天将永不重来！";
+				next;
+				input .@Song$;
+				if (.@Song$ != "让我的心再次澎湃！")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF更响，更响，更响亮。";
+				mes "赐予战士们力量吧！";
+				mes "震撼天空，响彻大地。";
+				mes "让我的心再次澎湃！";
+				mes "让城墙为之回响。^000000";
+				mes "这一天将永不重来！";
+				next;
+				input .@Song$;
+				if (.@Song$ != "让城墙为之回响。")
+					set .@w_point,.@w_point+1;
+
+				mes "^3377FF更响，更响，更响亮。";
+				mes "赐予战士们力量吧！";
+				mes "震撼天空，响彻大地。";
+				mes "让我的心再次澎湃！";
+				mes "让城墙为之回响。";
+				mes "这一天将永不重来！^000000";
+				next;
+				input .@Song$;
+				if (.@Song$ != "这一天将永不重来！")
+					set .@w_point,.@w_point+1;
+			}
+
+			if (.@w_point) {
+				cutin "job_bard_aiolo02",2;
+				mes "[拉洛]";
+				mes "喂，你唱错词了！";
+				mes "连跟着唱都不会吗……？";
+				next;
+				mes "[拉洛]";
+				mes "你的咬字非常不清楚。";
+				mes "下次唱好一点。";
+				close2;
+				cutin "job_bard_aiolo02",255;
+				end;
+			}
+			mes "[拉洛]";
+			mes "..........";
+			next;
+			set BARD_Q,5;
+			mes "[拉洛]";
+			mes "太棒了！一次就唱完了！";
+			mes "你可以成为出色的吟游诗人。";
+			next;
+			mes "[拉洛]";
+			mes "嗯……这么说你不打算成为吟游诗人了。";
+			mes "但我想送你一份纪念品……";
+			next;
+			mes "[拉洛]";
+			mes "你想现在就转职吗？";
+			mes "还是想要一份礼物。";
+			next;
+			set .@selection,select("请直接帮我转职。:能送我礼物就太感谢了。");
+		}
+		if ((.@selection == 1) || (BARD_Q == 5)) {
+			if(SkillPoint) {
+				cutin "job_bard_aiolo01",2;
+				mes "[拉洛]";
+				mes "啊……什么都好，但你还有剩余的技能点。";
+				mes "去把剩下的技能学完再来。";
+				next;
+				mes "[拉洛]";
+				mes "我还要送你一份小礼物……";
+				mes "所以去带一些树枝来。";
+				mes "什么种类都行，只要是同一种 60 个就行……";
+				close2;
+				cutin "job_bard_aiolo01",255;
+				end;
+			}
+			else {
+				switch(BARD_Q) {
+				case 5:
+					if(countitem(1019) > 59) callsub S_ChangeJob,1019,1901;
+					else if(countitem(1068) > 59) callsub S_ChangeJob,1068,1903;
+					else if(countitem(1067) > 59) callsub S_ChangeJob,1067,1903;
+					else if(countitem(1066) > 59) {
+						if(JobLevel > 49) callsub S_ChangeJob,1066,1910;
+						else callsub S_ChangeJob,1066,1905;
+					}
+					cutin "job_bard_aiolo01",2;
+					mes "[拉洛]";
+					mes "嗯？看来你还没把树枝准备齐？";
+					mes "你想就这样直接转职吗？";
+					next;
+					if (select("是的，直接帮我转职吧。:不，我去把它们准备齐。") == 2)
+						break;
+				default:
+					completequest 3003;
+					callfunc "Job_Change",Job_Bard;
+					callfunc "F_ClearJobVar";		//clears all job variables for the current player
+					mes "[拉洛]";
+					mes "非常好！希望你唱出快乐动听的歌。";
+					mes "像风一样，像云一样生活吧！";
+					next;
+					mes "[拉洛]";
+					mes "下次再见！";
+					close2;
+					cutin "job_bard_aiolo01",255;
+					end;
+				}
+			}
+		}
+		changequest 3003,3004;
+		mes "[拉洛]";
+		mes "嗯……很好，去带一些树枝来。";
+		mes "什么种类都行，只要是同一种 60 个就行……";
+		next;
+		mes "[拉洛]";
+		mes "等你带来之后，我会送你一份礼物。";
+		mes "一路平安。";
+		close2;
+		cutin "job_bard_aiolo01",255;
+		end;
+	}
+	cutin "job_bard_aiolo01",2;
+	mes "[拉洛]";
+	mes "咻~咻~咻~";
+	close2;
+	cutin "job_bard_aiolo01",255;
+	end;
+
+S_ChangeJob:
+	completequest 3004;
+	callfunc "Job_Change",Job_Bard;
+	callfunc "F_ClearJobVar";
+	mes "[拉洛]";
+	mes "干得好。我用这些给你做个转职纪念品。";
+	mes "稍等一下。";
+	next;
+	mes "[拉洛]";
+	mes "^3355FF刮刮 刨刨 当当^000000";
+	mes "^3355FF吱吱 嘎嘎 沙沙^000000";
+	delitem getarg(0),60;
+	getitem getarg(1),1;
+	next;
+	mes "[拉洛]";
+	mes "拿好，纪念品。唱歌的时候很有用。";
+	mes "希望你唱出快乐的歌。";
+	next;
+	mes "[拉洛]";
+	mes "下次见！";
+	close2;
+	cutin "job_bard_aiolo01",255;
+	end;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Converted to rAthena format by Dr.Evil
+//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
+//= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
+//= 1.1a minor song test fix [Lupus]
+//= 1.2 Fixed wrong item ID, added missing commands [Lupus]
+//= 1.3 Updated flower sub-quest according to official [Lupus]
+//= 1.4 Changed priority for the gifts. Now you can win the 1st
+//=     prize, too. Added Izidor flower [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
+//============================================================ 

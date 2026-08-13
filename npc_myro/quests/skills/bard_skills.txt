@@ -1,0 +1,1289 @@
+//===== rAthena Script ======================================= 
+//= Bard Skill Quest
+//===== By: ================================================== 
+//= Lupus, Reddozen; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Official quest for the Bard skill "Pang Voice"
+//= Prerequisite: Geffen Bard Quest
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//=     Somehow eA engine doesn't let you keep learn't skill
+//= 1.2 Added to correct locations, correct NPC's, fixed [Reddozen]
+//=     some of the items required and made them into real
+//=     quests.
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a Tixed an item ID typo. Thanks, 2Spiritual Kid
+//= 1.3b Split into different files [DracoRPG]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Checks the proper variable now. (bard_q -> gef_bard_q) [L0ne_W0lf]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Added missing checkweights. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+prontera,174,328,3	script	青年#bard_q1	89,3,3,{
+	if (BaseJob == Job_Bard) {
+		emotion ET_HUK;
+		mes "[胆小的青年]";
+		mes "呃？哇啊啊--!";
+		mes "你、你们--是、是--";
+		if (Upper != 1)
+			mes "是讨厌的吟游诗人！";
+		else
+			mes "是讨厌的乐师！";
+		mes "别、别过来！";
+		mes "我... 我讨厌你们这些人！";
+		next;
+		if (select("什--? 到底为什么?:嘿，别紧张，朋友。") == 1) {
+			mes "[胆小的青年]";
+			mes "不、不要看我！";
+			mes "我知道你想";
+			mes "干什么！求你了，我又没";
+			mes "对你做过什么！";
+			mes "离、离我远点！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "呃...";
+			mes "我真的没想";
+			mes "对你做什么。";
+			mes "你何不放松一点，--";
+			next;
+			mes "[胆小的青年]";
+			mes "放松?! 我告诉别人";
+			mes "你们有多危险时，";
+			mes "没人相信我。你们自以为";
+			mes "讲几个笑话、唱几首好歌";
+			mes "就很了不起了，但我清楚";
+			mes "你们有什么样的能力！";
+			close;
+		}
+		else {
+			mes "[胆小的青年]";
+			mes "不、不要看我！";
+			mes "我知道你想";
+			mes "干什么！求你了，我又没";
+			mes "对你做过什么！";
+			mes "离、离我远点！";
+			next;
+			if (select("请他喝一杯。:安抚他你很安全。") == 1) {
+				mes "[" + strcharinfo(0) + "]";
+				mes "听着，我不知道你";
+				mes "对我有什么成见，但";
+				mes "你真的需要放松。";
+				mes "来，我请你喝一杯。";
+				next;
+				if (countitem(12112) > 0) {
+					mes "[胆小的青年]";
+					mes "哦~! 那不是";
+					mes "热带苏格拉特饮料吗？";
+					mes "那可是我在这世上";
+					mes "最喜欢的饮料！";
+					if (qskill_bard == 9) {
+						mes "太感谢了--等等。";
+						next;
+						mes "[胆小的青年]";
+						mes "这是什么";
+						mes "奇怪的把戏吧？";
+						mes "我居然差点";
+						mes "上、上当了！请、请";
+						mes "离我远点！";
+						close;
+					}
+					else if (qskill_bard > 0) {
+						next;
+						mes "[胆小的青年]";
+						mes "等等，我见过你。";
+						mes "你还给我带过";
+						mes "和这一样的饮料。你...";
+						mes "你没有学会那、那个";
+						mes "奇、奇怪的技能吧？";
+						mes "等等，不会的。你不可能...";
+						next;
+						mes "[" + strcharinfo(0) + "]";
+						mes "哦，拜托~";
+						mes "你知道吗，我觉得";
+						mes "也许是你";
+						mes "担心过头了。";
+						close;
+					}
+					else {
+						next;
+						mes "[胆小的青年]";
+						mes "^333333*咕嘟咕嘟*^000000";
+						mes "啊~ 哦，你不知道";
+						mes "我有多久";
+						mes "没喝到这饮料了！";
+						mes "味道真好，";
+						mes "现在我感觉好放松...";
+						next;
+						switch(select("看吧？我一点也不危险~:那为什么我这样的人会可怕?")) {
+						case 1:
+							mes "[胆小的青年]";
+							mes "嗯... 也许吧。";
+							mes "也许你们这些吟游诗人";
+							mes "和乐师并不都那么";
+							mes "坏。但我永远忘不了";
+							mes "那个吟游诗人对我做的事...";
+							next;
+							mes "[胆小的青年]";
+							mes "一切都要从我";
+							mes "在巫巴拉旅行时说起，";
+							mes "我遇到一个奇怪的吟游诗人，";
+							mes "他正拜在村里的";
+							mes "雨檀族萨满";
+							mes "普楚查尔坦门下学习。";
+							next;
+							mes "[胆小的青年]";
+							mes "我和那个吟游诗人相处得还不错，";
+							mes "直到他带我去了巫巴拉的蹦极跳台。";
+							mes "他坚持要我至少跳一次，才算";
+							mes "''完整的巫巴拉体验。'' 我拒绝了，";
+							mes "因为他们根本不用蹦极绳。";
+							next;
+							mes "[胆小的青年]";
+							mes "那个吟游诗人似乎很生气，";
+							mes "声称那绝对安全，";
+							mes "还说只有几个人";
+							mes "跳下去摔死了。然后，他";
+							mes "就... 用那种可怕的眼神盯着我。";
+							next;
+							mes "[胆小的青年]";
+							mes "他的眼里满是";
+							mes "怒火！我记得他";
+							mes "嘴里念念有词，然后";
+							mes "突然间，我就失去了";
+							mes "对身体的控制！我的手脚";
+							mes "竟然自己动了起来！";
+							next;
+							mes "[胆小的青年]";
+							mes "没过多久，我发现自己";
+							mes "拼命克制着，才没有";
+							mes "从蹦极跳台上跳下去。";
+							mes "可我越是抗拒，身体就越是";
+							mes "剧烈地朝边缘扑去。";
+							mes "太可怕了！";
+							next;
+							mes "[胆小的青年]";
+							mes "那是我一生中最恐怖的";
+							mes "经历！光是差点丢命";
+							mes "就够糟了，更可怕的是";
+							mes "那种完全无法控制";
+							mes "自己身体的感觉，";
+							mes "简直让人崩溃！";
+							next;
+							mes "[" + strcharinfo(0) + "]";
+							mes "等等，你是说";
+							mes "一个吟游诗人对你做了这些？";
+							mes "我从没听说过哪首歌";
+							mes "或技能有这种效果。真是太奇怪了...";
+							next;
+							mes "[胆小的青年]";
+							mes "嗯，在我亲身经历之前，";
+							mes "我也从没听说过";
+							mes "这种能力。哦，直到现在";
+							mes "我还会在噩梦中";
+							mes "看到他那邪恶的";
+							mes "笑容...";
+							next;
+							mes "[胆小的青年]";
+							mes "总之，谢谢你的";
+							mes "饮料，它真的帮我";
+							mes "平复了情绪。但我必须";
+							mes "警告你，别去找那个";
+							mes "奇怪的吟游诗人。他肯定是某种恶魔之类的...";
+							next;
+							if (JobLevel > 39) {
+								mes "[胆小的青年]";
+								mes "但是... 如果你真的";
+								mes "想获得那种力量，";
+								mes "我也拦不住你。";
+								mes "好在没人知道";
+								mes "他在哪里~";
+								delitem 12112,1; //Tropical_Sograt
+								set qskill_bard,1;
+							}
+							else {
+								mes "[胆小的青年]";
+								mes "就算你能找到那个";
+								mes "吟游诗人，让他教你";
+								mes "那招是怎么做到的，我敢说";
+								mes "他提到过至少要";
+								mes "^660000职业等级 40^000000 才能";
+								mes "驾驭那种力量...";
+								delitem 12112,1; //Tropical_Sograt
+							}
+							close;
+						case 2:
+							mes "[胆小的青年]";
+							mes "^333333*唉*^000000 嗯，也许吟游诗人";
+							mes "和乐师并不都很可怕。但任何吟游诗人";
+							mes "都会让我想起旅行时遇到的那一个。";
+							mes "光是想想那次经历，";
+							mes "我就起鸡皮疙瘩。";
+							next;
+							mes "[胆小的青年]";
+							mes "一切都要从我";
+							mes "在巫巴拉旅行时说起，";
+							mes "我遇到一个奇怪的吟游诗人，";
+							mes "他正拜在村里的";
+							mes "雨檀族萨满";
+							mes "普楚查尔坦门下学习。";
+							next;
+							mes "[胆小的青年]";
+							mes "我和那个吟游诗人相处得还不错，";
+							mes "直到他带我去了巫巴拉的蹦极跳台。";
+							mes "他坚持要我至少跳一次，才算";
+							mes "''完整的巫巴拉体验。'' 我拒绝了，";
+							mes "因为他们根本不用蹦极绳。";
+							next;
+							mes "[胆小的青年]";
+							mes "那个吟游诗人似乎很生气，";
+							mes "声称那绝对安全，";
+							mes "还说只有几个人";
+							mes "跳下去摔死了。然后，他就...";
+							mes "用那种可怕的眼神盯着我。";
+							next;
+							mes "[胆小的青年]";
+							mes "他的眼里满是";
+							mes "怒火！我记得他";
+							mes "嘴里念念有词，然后";
+							mes "突然间，我就失去了";
+							mes "对身体的控制！我的手脚";
+							mes "竟然自己动了起来！";
+							next;
+							mes "[胆小的青年]";
+							mes "没过多久，我发现自己";
+							mes "拼命克制着，才没有";
+							mes "从蹦极跳台上跳下去。";
+							mes "可我越是抗拒，身体就越是";
+							mes "剧烈地朝边缘扑去。";
+							mes "太可怕了！";
+							next;
+							mes "[胆小的青年]";
+							mes "那是我一生中最恐怖的";
+							mes "经历！光是差点丢命";
+							mes "就够糟了，更可怕的是";
+							mes "那种完全无法控制";
+							mes "自己身体的感觉，";
+							mes "简直让人崩溃！";
+							next;
+							mes "[" + strcharinfo(0) + "]";
+							mes "等等，你是说";
+							mes "一个吟游诗人对你做了这些？";
+							mes "我从没听说过哪首歌";
+							mes "或技能有这种效果。真是太奇怪了...";
+							next;
+							mes "[胆小的青年]";
+							mes "嗯，在我亲身经历之前，";
+							mes "我也从没听说过";
+							mes "这种能力。哦，直到现在";
+							mes "我还会在噩梦中";
+							mes "看到他那邪恶的";
+							mes "笑容...";
+							next;
+							mes "[胆小的青年]";
+							mes "总之，谢谢你的";
+							mes "饮料，它真的帮我";
+							mes "平复了情绪。但我必须";
+							mes "警告你，别去找那个";
+							mes "奇怪的吟游诗人。他肯定是某种恶魔之类的...";
+							next;
+							if (JobLevel > 39) {
+								mes "[胆小的青年]";
+								mes "但是... 如果你真的";
+								mes "想获得那种力量，";
+								mes "我也拦不住你。";
+								mes "好在没人知道";
+								mes "他在哪里~";
+								delitem 12112,1; //Tropical_Sograt
+								set qskill_bard,1;
+							}
+							else {
+								mes "[胆小的青年]";
+								mes "就算你能找到那个";
+								mes "吟游诗人，让他教你";
+								mes "那招是怎么做到的，我敢说";
+								mes "他提到过至少要";
+								mes "^660000职业等级 40^000000 才能";
+								mes "驾驭那种力量...";
+								delitem 12112,1; //Tropical_Sograt
+							}
+							close;
+						}
+					}
+				}
+				else {
+					mes "[胆小的青年]";
+					mes "呃...?! 嗯，谢、谢谢";
+					mes "你的好意，";
+					mes "但我对喝的东西";
+					mes "很挑、很挑剔。";
+					mes "而、而且，我不知道";
+					mes "能不能信、信任你。";
+					next;
+					mes "[胆小的青年]";
+					mes "我想没什么能让我";
+					mes "改、改变主意！";
+					mes "不过... 如果你能带来";
+					mes "我最爱的饮料，";
+					mes "热带苏格拉特饮料，";
+					mes "我倒是可以考虑一下...";
+					close;
+				}
+			}
+			mes "[" + strcharinfo(0) + "]";
+			mes "别担心，";
+			mes "我不会伤害你。";
+			next;
+			mes "[胆小的青年]";
+			mes "他、他们也都这么说，";
+			mes "就在他们钻进你的脑子、";
+			mes "把它狠狠搅乱之前！";
+			if (qskill_bard == 9) {
+				mes "别、别碰我！";
+				mes "...啊！离我远点！";
+			}
+			else {
+				mes "就算你没、没有";
+				mes "那种能力，也离我远点！";
+			}
+			close;
+		}
+	}
+	else {
+		mes "[胆小的青年]";
+		mes "哦... 天哪。";
+		mes "刚才是不是有个";
+		mes "吟游诗人？哦，我";
+		mes "最怕那些家伙了！";
+		mes "还有那些乐师，";
+		mes "更可怕！";
+		next;
+		mes "[胆小的青年]";
+		mes "别误会，我喜欢";
+		mes "歌曲和娱乐，";
+		mes "但你得明白！";
+		mes "他们有些人拥有";
+		mes "你难以置信的能力！";
+		mes "我... 我亲眼见过！";
+		close;
+	}
+
+OnTouch:
+	if (BaseJob == Job_Bard) {
+		emotion ET_HUK;
+	}
+	end;
+}
+
+morocc_in,169,72,7	script	吟游诗人#bs	741,3,3,{
+	if (BaseJob == Job_Bard) {
+		if (Class == Job_Clown && qskill_bard == 9) {
+			if (getskilllv("BA_PANGVOICE") != 0) {
+				mes "[瑞奥特]";
+				mes "格嘿嘿~";
+				mes "我教你的东西";
+				mes "用得还顺手吗？只是";
+				mes "要小心，别乱用那个技能。否则，";
+				mes "人们会像讨厌我一样讨厌你。";
+				next;
+				mes "[瑞奥特]";
+				mes "不过，对敌人和";
+				mes "偶尔遇到的醉鬼用，";
+				mes "那就完全是另一回事了！";
+				mes "哇哈哈哈！";
+				close;
+			}
+			else {
+				mes "[瑞奥特]";
+				mes "不会吧！我教你的";
+				mes "东西你全忘了？";
+				mes "怎么会这样？算了，";
+				mes "如果你愿意，我不介意";
+				mes "再教你一次。";
+				next;
+				if (select("不用了，谢谢。:谢谢，那就麻烦你了。") == 1) {
+					mes "[瑞奥特]";
+					mes "什么...?";
+					mes "你真的";
+					mes "不想学吗？";
+					mes "我向你保证";
+					mes "没有任何附加条件。";
+					mes "如果你改变主意...";
+					close;
+				}
+				mes "[瑞奥特]";
+				mes "首先，你必须狠狠地";
+				mes "盯住目标的眼睛，";
+				mes "专注于支配的念头。";
+				mes "这是催眠的基础。";
+				mes "现在听好这段咒语...";
+				next;
+				mes "[瑞奥特]";
+				mes "唔嗯嗯 巴拉拉拉";
+				mes "唔嗯嗯嗯 巴拉拉~";
+				mes "库库库里里诶诶诶";
+				mes "库库库里里诶诶诶";
+				mes "噢嗯 关德尔杰德尔";
+				mes "呜哦 诶 诶 诶 诶......";
+				specialeffect EF_TALK_FROSTJOKE;
+				next;
+				mes "[瑞奥特]";
+				mes "苦痛之音用来";
+				mes "迷惑他人，扰乱";
+				mes "他们对身体的控制。它不是致命技能，";
+				mes "但能有效扰乱敌人的心智。要明智地使用这个技能。";
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				close;
+			}
+		}
+		else if (qskill_bard > 8) {
+			mes "[瑞奥特]";
+			mes "格嘿嘿~";
+			mes "我教你的东西";
+			mes "用得还顺手吗？只是";
+			mes "要小心，别乱用那个技能。否则，";
+			mes "人们会像讨厌我一样讨厌你。";
+			next;
+			mes "[瑞奥特]";
+			mes "不过，对敌人和";
+			mes "偶尔遇到的醉鬼用，";
+			mes "那就完全是另一回事了！";
+			mes "哇哈哈哈！";
+			close;
+		}
+		else if (qskill_bard == 8) {
+			if (countitem(7277) > 0) {
+				mes "[瑞奥特]";
+				mes "啊，你如约带来了";
+				mes "姚君制作的";
+				mes "僵尸娃娃。";
+				mes "啊，没错，这就是她的";
+				mes "手艺，一如既往地无可挑剔。";
+				mes "你做得很好~";
+				next;
+				mes "[瑞奥特]";
+				mes "为了履行我这边的";
+				mes "约定，现在我就传授";
+				mes "你我独有的技能。";
+				mes "这是我听了巫巴拉的";
+				mes "雨檀族萨满的咒语后";
+				mes "开发出来的。";
+				next;
+				mes "[瑞奥特]";
+				mes "首先，你必须狠狠地";
+				mes "盯住目标的眼睛，";
+				mes "专注于支配的念头。";
+				mes "这是催眠的基础。";
+				mes "现在听好这段咒语...";
+				next;
+				mes "[瑞奥特]";
+				mes "''蟾蜍的腿，妖犬的心，";
+				mes "旋转的星辰，洒落的 zeny，";
+				mes "手脚被缚。这声音";
+				mes "是你的，这声音";
+				mes "是我的。天旋地转，";
+				mes "天旋地转，天旋地转...!''";
+				specialeffect2 EF_TALK_FROSTJOKE;
+				delitem 7277,1; //Munak_Doll
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				set qskill_bard,9;
+				next;
+				mes "[瑞奥特]";
+				mes "记住，说什么不重要，";
+				mes "重要的是怎么说。";
+				mes "用禁忌般诱人的韵律";
+				mes "催眠诱导你的目标，";
+				mes "他们就再也";
+				mes "逃不出你的手掌心！";
+				next;
+				mes "[瑞奥特]";
+				mes "啊，还可以用手法";
+				mes "转移目标的注意力，";
+				mes "掩盖你的真实意图！我发现";
+				mes "配合冷笑话技能施放效果最好。";
+				mes "这个技能的名字是 ''苦痛之音!''";
+				next;
+				mes "[瑞奥特]";
+				mes "''苦痛之音'' 会让目标";
+				mes "受到精神上的冲击，暂时";
+				mes "失去对身体的控制。";
+				mes "这个技能并不能真正控制受害者，";
+				mes "但他们通常会以为被控制了...";
+				next;
+				mes "[瑞奥特]";
+				mes "使用这个技能要审慎！";
+				mes "别乱用，否则人们";
+				mes "会像讨厌我一样";
+				mes "讨厌你。不过 ''苦痛之音''";
+				mes "在某些场合还是很受欢迎的。";
+				next;
+				mes "[瑞奥特]";
+				mes "尽管对你的敌人";
+				mes "使用苦痛之音，";
+				mes "没人会责怪你。";
+				mes "偶尔对恶霸和醉鬼用一下，";
+				mes "也不会有人追究...";
+				close;
+			}
+			mes "[瑞奥特]";
+			mes "哼。还没";
+			mes "找到僵尸娃娃吗？";
+			mes "别担心，我是个";
+			mes "有耐心的人。尽快";
+			mes "帮我弄一个来就行。";
+			close;
+		}
+		else if (qskill_bard == 7) {
+			if (countitem(574) > 4) {
+				mes "[瑞奥特]";
+				mes "啊，你如约带来了";
+				mes "伊赫尔下的";
+				mes "新鲜鸡蛋。";
+				mes "去尼夫海姆一定很危险，";
+				mes "但这些蛋的味道绝对值得。";
+				next;
+				next;
+				mes "[瑞奥特]";
+				mes "为了履行我这边的";
+				mes "约定，现在我就传授";
+				mes "你我独有的技能。";
+				mes "这是我听了巫巴拉的";
+				mes "雨檀族萨满的咒语后";
+				mes "开发出来的。";
+				next;
+				mes "[瑞奥特]";
+				mes "首先，你必须狠狠地";
+				mes "盯住目标的眼睛，";
+				mes "专注于支配的念头。";
+				mes "这是催眠的基础。";
+				mes "现在听好这段咒语...";
+				next;
+				mes "[瑞奥特]";
+				mes "''蟾蜍的腿，妖犬的心，";
+				mes "旋转的星辰，洒落的 zeny，";
+				mes "手脚被缚。这声音";
+				mes "是你的，这声音";
+				mes "是我的。天旋地转，";
+				mes "天旋地转，天旋地转...!''";
+				specialeffect2 EF_TALK_FROSTJOKE;
+				delitem 574,5; //Egg
+				skill "BA_PANGVOICE",1,SKILL_PERM;
+				set qskill_bard,9;
+				next;
+				mes "[瑞奥特]";
+				mes "记住，说什么不重要，";
+				mes "重要的是怎么说。";
+				mes "用禁忌般诱人的韵律";
+				mes "催眠诱导你的目标，";
+				mes "他们就再也";
+				mes "逃不出你的手掌心！";
+				next;
+				mes "[瑞奥特]";
+				mes "啊，还可以用手法";
+				mes "转移目标的注意力，";
+				mes "掩盖你的真实意图！我发现";
+				mes "配合冷笑话技能施放效果最好。";
+				mes "这个技能的名字是 ''苦痛之音!''";
+				next;
+				mes "[瑞奥特]";
+				mes "''苦痛之音'' 会让目标";
+				mes "受到精神上的冲击，暂时";
+				mes "失去对身体的控制。";
+				mes "这个技能并不能真正控制受害者，";
+				mes "但他们通常会以为被控制了...";
+				next;
+				mes "[瑞奥特]";
+				mes "使用这个技能要审慎！";
+				mes "别乱用，否则人们";
+				mes "会像讨厌我一样";
+				mes "讨厌你。不过 ''苦痛之音''";
+				mes "在某些场合还是很受欢迎的。";
+				next;
+				mes "[瑞奥特]";
+				mes "尽管对你的敌人";
+				mes "使用苦痛之音，";
+				mes "没人会责怪你。";
+				mes "偶尔对恶霸和醉鬼用一下，";
+				mes "也不会有人追究...";
+				close;
+			}
+			else {
+				mes "[瑞奥特]";
+				mes "嗯... 你带的";
+				mes "蛋不够啊...";
+				mes "这可不行。伊赫尔";
+				mes "还要过一阵子";
+				mes "才能下更多的蛋。";
+				mes "是啊，这不够...";
+				next;
+				mes "[瑞奥特]";
+				mes "嗯，为了补足缺的蛋，";
+				mes "去帮我找 ^4D4DFF1 个僵尸娃娃^000000。";
+				mes "我知道姚君的僵尸娃娃";
+				mes "都是精品，我可是她作品";
+				mes "的狂热收藏家。";
+				next;
+				mes "[瑞奥特]";
+				if (countitem(574) > 0) {
+					mes "在这期间，";
+					mes "我就先享用你带来的";
+					mes "这几个蛋了！";
+					mes "嘿嘿嘿嘿嘿！";
+					delitem 574,countitem(574); //Egg
+				}
+				set qskill_bard,8;
+				close;
+			}
+		}
+		else if (qskill_bard > 1 && qskill_bard < 7) {
+			mes "[瑞奥特]";
+			mes "这么说，你收集";
+			mes "伊赫尔的蛋";
+			mes "遇到困难了？我知道";
+			mes "她可是只跑得飞快的鸡。";
+			mes "不过要在她栖息的地方活命，";
+			mes "不快可不行。";
+			close;
+		}
+		else {
+			mes "[瑞奥特]";
+			mes "哼噗！";
+			mes "诶嘿嘿嘿！";
+			emotion ET_KIK;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "呃...";
+			mes "有什么好笑的？";
+			next;
+			if (gef_bard_q == 30 || gef_bard_q == 31) {
+				mes "[瑞奥特]";
+				mes "嗯？啊！那可是";
+				if (gef_bard_q == 30) {
+					mes "只有基诺凯蒂";
+					mes "才会送出的黑色印章。";
+					mes "他居然愿意把这个送给你，";
+					mes "你一定是个";
+					mes "情感丰富的人。";
+				}
+				else {
+					mes "只有埃兰德";
+					mes "才会送出的银色印章。";
+					mes "他居然愿意和你交朋友，";
+					mes "你一定是个心地善良的人。";
+					mes "怎么样，不错吧？";
+				}
+				next;
+				mes "[瑞奥特]";
+				mes "格嘿嘿~";
+				mes "嘿，看看";
+				mes "那边那两个";
+				mes "醉鬼。";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "嗯，我看到了。";
+				mes "但那两个家伙";
+				mes "有什么特别的？";
+				next;
+				mes "[瑞奥特]";
+				mes "只管...";
+				mes "继续看。";
+				next;
+				mes "^3355FF瑞奥特死死地盯着";
+				mes "其中一个醉汉，";
+				mes "用低沉沙哑的声音";
+				mes "含糊地念念有词。";
+				mes "其中一个男人";
+				mes "开始微微抽搐。^000000";
+				next;
+				mes "[微醉的客人]";
+				mes "嘿...! ^333333*嗝!*^000000";
+				mes "你干什么?!";
+				mes "手、手放老实点！";
+				mes "我看起来";
+				mes "像女人吗？";
+				next;
+				mes "[烂醉的客人]";
+				mes "你说什么";
+				mes "呢？什、什么?! 我的";
+				mes "手怎么全搂在";
+				mes "你身上了？对、对不起，我本来";
+				mes "只是想往那边走--";
+				mes "我不是想抱你！";
+				next;
+				mes "[微醉的客人]";
+				mes "撞到我就算了，";
+				mes "但整个抱住？";
+				mes "喂，有没有搞错！";
+				mes "那绝对是故意的！";
+				mes "什、什么？我的手！它...";
+				mes "它自己在动?!";
+				next;
+				mes "[烂醉的客人]";
+				mes "啊！你、你";
+				mes "干什么！别、别";
+				mes "摸我的屁股！";
+				next;
+				mes "^3355FF两个男人继续";
+				mes "手舞足蹈，";
+				mes "毫无方向地乱动着。";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "那两个人...";
+				mes "那两个人恐怕";
+				mes "是喝得太多了。";
+				next;
+				mes "[瑞奥特]";
+				mes "不，他们只是";
+				mes "暂时失去了";
+				mes "对身体的控制。这是我";
+				mes "那个能扰乱心智的技能";
+				mes "的效果。";
+				next;
+				if (qskill_bard == 1) {
+					mes "[" + strcharinfo(0) + "]";
+					mes "扰乱心智？";
+					mes "等等，你就是那个";
+					mes "让人身不由己地从";
+					mes "巫巴拉蹦极跳台上";
+					mes "跳下去的吟游诗人？";
+					next;
+					mes "[瑞奥特]";
+					mes "啊？你怎么";
+					mes "知道那件事的？";
+					mes "我并不以此为荣，";
+					mes "（虽然当时";
+					mes "确实很好笑）";
+					mes "不过没错，那是我干的。";
+					next;
+					if (select("请教我那个技能!:哦，好吧。只是确认一下。") == 1) {
+						mes "[瑞奥特]";
+						mes "嗯？你想学我刚才";
+						mes "那样扰乱心智？";
+						mes "嗯，这个技能是我发明的，";
+						mes "不过雨檀族萨满";
+						mes "帮了我不少忙。";
+						mes "让我想想...";
+						next;
+						mes "[瑞奥特]";
+						mes "好吧。如果你想";
+						mes "让我教你，就去给我找";
+						mes "5 个蛋，要一只叫伊赫尔的";
+						mes "母鸡下的。伊赫尔下的蛋";
+						mes "品质最高：又好吃，";
+						mes "对吟游诗人的嗓子又好~";
+						next;
+						mes "[瑞奥特]";
+						mes "不过，这只鸡栖息在";
+						mes "一个古怪又危险的地方。";
+						mes "你得探索巫巴拉那棵巨大而神秘的树";
+						mes "才能到那里。上次我去的时候，";
+						mes "差点把命丢了。";
+						next;
+						mes "[瑞奥特]";
+						mes "好了...";
+						mes "别忘了回来这里，";
+						mes "给我带";
+						mes "^4D4DFF5 个伊赫尔的蛋^000000，好吗？";
+						set qskill_bard,2;
+						close;
+					}
+					mes "[瑞奥特]";
+					mes "小子，你还挺好奇的。";
+					mes "不过既然你知道那件事，";
+					mes "又碰到了我，你肯定";
+					mes "经常四处旅行。我欣赏";
+					mes "你这样经验丰富的";
+					mes "老练冒险家。";
+					close;
+				}
+				mes "[" + strcharinfo(0) + "]";
+				mes "什...?";
+				mes "我才不信你。";
+				mes "扰乱心智？这";
+				mes "根本说不通！";
+				mes "他们只是喝醉了...";
+				next;
+				mes "[瑞奥特]";
+				mes "竟敢质疑我的";
+				mes "能力？算了，我想";
+				mes "我也不能太生气。";
+				mes "大多数相信我的人，";
+				mes "这时候通常都骂我是";
+				mes "万恶之源了...";
+				close;
+			}
+			mes "[瑞奥特]";
+			mes "呃，没什么。说起来，";
+			mes "你没有吟游诗人";
+			mes "印章吗？这说明你";
+			mes "很少和吟游诗人";
+			mes "圈子里的人来往。";
+			mes "真可惜...";
+			next;
+			mes "[瑞奥特]";
+			mes "*唉* 好吧，我知道";
+			mes "怎么才能认识更多吟游诗人。";
+			mes "何不去和埃兰德交个朋友？";
+			mes "在吉芬找一个穿绿衣服的";
+			mes "吟游诗人，就能找到他了。";
+			close;
+		}
+	}
+	else {
+		mes "[瑞奥特]";
+		mes "哼噗！";
+		mes "诶嘿嘿嘿！";
+		emotion ET_KIK;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "呃...";
+		mes "有什么好笑的？";
+		next;
+		if (gef_bard_q == 30 || gef_bard_q == 31) {
+			mes "[瑞奥特]";
+			mes "嗯？啊！那可是";
+			if (gef_bard_q == 30) {
+				mes "只有基诺凯蒂";
+				mes "才会送出的黑色印章。";
+				mes "他居然愿意把这个送给你，";
+				mes "你一定是个";
+				mes "情感丰富的人。";
+			}
+			else {
+				mes "只有埃兰德";
+				mes "才会送出的银色印章。";
+				mes "他居然愿意和你交朋友，";
+				mes "你一定是个心地善良的人。";
+				mes "怎么样，不错吧？";
+			}
+			next;
+			mes "[瑞奥特]";
+			mes "格嘿嘿~";
+			mes "嘿，看看";
+			mes "那边那两个";
+			mes "醉鬼。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "嗯，我看到了。";
+			mes "但他们";
+			mes "怎么了？";
+			next;
+			mes "[瑞奥特]";
+			mes "只管...";
+			mes "继续看。";
+			close;
+		}
+		mes "[瑞奥特]";
+		mes "呃，没什么。说起来，";
+		mes "我注意到你没有";
+		mes "吟游诗人印章。这说明";
+		mes "你平时很少";
+		mes "接触吟游诗人。你真的";
+		mes "该改变一下了。";
+		next;
+		mes "[瑞奥特]";
+		mes "只要你愿意给他们机会，";
+		mes "吟游诗人和乐师";
+		mes "能帮上不少忙。";
+		mes "来，何不";
+		mes "去吉芬找找埃兰德？";
+		mes "他可是个红人...";
+		close;
+	}
+
+OnTouch:
+	emotion ET_KIK;
+	end;
+}
+
+// Yhelle the Chicken
+//============================================================ 
+niflheim,239,70,1	script	伊赫尔#bard_chick1	800,3,3,{
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	disablenpc "伊赫尔#bard_chick1";
+	donpcevent "伊赫尔#bard_chick2::OnEnable";
+	mes "^3355FF察觉到你靠近，";
+	mes "母鸡飞快地";
+	mes "逃走了。^000000";
+	close;
+
+OnInit:
+	disablenpc "伊赫尔#bard_chick5";
+	disablenpc "伊赫尔#bard_chick4";
+	disablenpc "伊赫尔#bard_chick3";
+	disablenpc "伊赫尔#bard_chick2";
+	end;
+
+OnEnable:
+	enablenpc "伊赫尔#bard_chick1";
+	end;
+
+OnDisable:
+	disablenpc "伊赫尔#bard_chick1";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",1,2; close;
+}
+
+niflheim,185,205,3	script	伊赫尔#bard_chick2	800,3,3,{
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	disablenpc "伊赫尔#bard_chick2";
+	donpcevent "伊赫尔#bard_chick3::OnEnable";
+	mes "^3355FF察觉到你靠近，";
+	mes "母鸡飞快地";
+	mes "逃走了。^000000";
+	close;
+
+OnEnable:
+	enablenpc "伊赫尔#bard_chick2";
+	end;
+
+OnDisable:
+	disablenpc "伊赫尔#bard_chick2";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",2,3; close;
+}
+
+niflheim,85,203,5	script	伊赫尔#bard_chick3	800,3,3,{
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	disablenpc "伊赫尔#bard_chick3";
+	donpcevent "伊赫尔#bard_chick4::OnEnable";
+	mes "^3355FF察觉到你靠近，";
+	mes "母鸡飞快地";
+	mes "逃走了。^000000";
+	close;
+
+OnEnable:
+	enablenpc "伊赫尔#bard_chick3";
+	end;
+
+OnDisable:
+	disablenpc "伊赫尔#bard_chick3";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",3,4; close;
+}
+
+niflheim,149,81,7	script	伊赫尔#bard_chick4	800,3,3,{
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	disablenpc "伊赫尔#bard_chick4";
+	donpcevent "伊赫尔#bard_chick5::OnEnable";
+	mes "^3355FF察觉到你靠近，";
+	mes "母鸡飞快地";
+	mes "逃走了。^000000";
+	close;
+
+OnEnable:
+	enablenpc "伊赫尔#bard_chick4";
+	end;
+
+OnDisable:
+	disablenpc "伊赫尔#bard_chick4";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",4,5; close;
+}
+
+niflheim,209,144,3	script	伊赫尔#bard_chick5	800,3,3,{
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	disablenpc "伊赫尔#bard_chick5";
+	donpcevent "伊赫尔#bard_chick1::OnEnable";
+	mes "^3355FF察觉到你靠近，";
+	mes "母鸡飞快地";
+	mes "逃走了。^000000";
+	close;
+
+OnEnable:
+	enablenpc "伊赫尔#bard_chick5";
+	end;
+
+OnDisable:
+	disablenpc "伊赫尔#bard_chick5";
+	end;
+
+OnTouch:
+	callfunc "F_BardSkillYhelle",5,1; close;
+}
+
+// Drunken Men
+//============================================================ 
+morocc_in,178,73,3	script	客人#bard_skill01	54,{
+	mes "[微醉的客人]";
+	mes "你觉得这世上";
+	mes "最好的酒";
+	mes "是什么？我觉得是";
+	mes "特里-- 特里斯坦？";
+	mes "叫什么来着？";
+	next;
+	mes "[烂醉的客人]";
+	mes "哦！13 年陈酿特里斯坦？";
+	mes "那确实是好酒，";
+	mes "但太贵了，";
+	mes "不是特别的日子";
+	mes "可喝不起。^333333*嗝*^000000 就我个人而言，";
+	mes "我更喜欢维... 呃，维...";
+	next;
+	mes "[微醉的客人]";
+	mes "朱红色海滩饮料？";
+	mes "嗯，那真的很棒，";
+	mes "喝上一口";
+	mes "就会醉倒！是啊...";
+	mes "热... 热带！人们说";
+	mes "那个也不错。等等，什么？";
+	next;
+	mes "[微醉的客人]";
+	mes "嘿...! ^333333*嗝!*^000000";
+	mes "你干什么?!";
+	mes "手、手放老实点！";
+	mes "我看起来";
+	mes "像女人吗？";
+	next;
+	mes "[烂醉的客人]";
+	mes "你说什么";
+	mes "呢？什、什么?! 我的";
+	mes "手怎么全搂在";
+	mes "你身上了？对、对不起，我本来";
+	mes "只是想往那边走--";
+	mes "我不是想抱你！";
+	next;
+	mes "[微醉的客人]";
+	mes "撞到我就算了，";
+	mes "但整个抱住？";
+	mes "喂，有没有搞错！";
+	mes "那绝对是故意的！";
+	mes "什、什么？我的手！它...";
+	mes "它自己在动?!";
+	next;
+	mes "[烂醉的客人]";
+	mes "啊！你、你";
+	mes "干什么！别、别";
+	mes "摸我的屁股！";
+	next;
+	mes "^3355FF屋里的一个吟游诗人";
+	mes "目不转睛地看着";
+	mes "两个醉汉，对着他们的";
+	mes "醉态咯咯直笑。记住：";
+	mes "喝太多酒可不好！^000000";
+	close;
+}
+
+morocc_in,175,70,7	script	客人#bard_skill02	50,{
+	mes "[微醉的客人]";
+	mes "你觉得这世上";
+	mes "最好的酒";
+	mes "是什么？我觉得是";
+	mes "特里-- 特里斯坦？";
+	mes "叫什么来着？";
+	next;
+	mes "[烂醉的客人]";
+	mes "哦！13 年陈酿特里斯坦？";
+	mes "那确实是好酒，";
+	mes "但太贵了，";
+	mes "不是特别的日子";
+	mes "可喝不起。^333333*嗝*^000000 就我个人而言，";
+	mes "我更喜欢维... 呃，维...";
+	next;
+	mes "[微醉的客人]";
+	mes "朱红色海滩饮料？";
+	mes "嗯，那真的很棒，";
+	mes "喝上一口";
+	mes "就会醉倒！是啊...";
+	mes "热... 热带！人们说";
+	mes "那个也不错。等等，什么？";
+	next;
+	mes "[微醉的客人]";
+	mes "嘿...! ^333333*嗝!*^000000";
+	mes "你干什么?!";
+	mes "手、手放老实点！";
+	mes "我看起来";
+	mes "像女人吗？";
+	next;
+	mes "[烂醉的客人]";
+	mes "你说什么";
+	mes "呢？什、什么?! 我的";
+	mes "手怎么全搂在";
+	mes "你身上了？对、对不起，我本来";
+	mes "只是想往那边走--";
+	mes "我不是想抱你！";
+	next;
+	mes "[微醉的客人]";
+	mes "撞到我就算了，";
+	mes "但整个抱住？";
+	mes "喂，有没有搞错！";
+	mes "那绝对是故意的！";
+	mes "什、什么？我的手！它...";
+	mes "它自己在动?!";
+	next;
+	mes "[烂醉的客人]";
+	mes "啊！你、你";
+	mes "干什么！别、别";
+	mes "摸我的屁股！";
+	next;
+	mes "^3355FF屋里的一个吟游诗人";
+	mes "目不转睛地看着";
+	mes "两个醉汉，对着他们的";
+	mes "醉态咯咯直笑。记住：";
+	mes "喝太多酒可不好！^000000";
+	close;
+}
+
+// Bartender
+//============================================================ 
+morocc_in,166,76,7	script	酒保#bard_qskill	46,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF请留步！";
+		mes "你随身携带的物品太多，";
+		mes "没有足够的物品栏空间来接收任何奖励。";
+		mes "请腾出更多物品栏空间，再来接受这个挑战。";
+		close;
+	}
+	mes "[酒保]";
+	mes "那么你想";
+	mes "点些什么？";
+	next;
+	switch(select("热带苏格拉特饮料:朱红色海滩饮料:不用了，谢谢。")) {
+	case 1:
+		if (MaxWeight - Weight < 2000) {
+			mes "[酒保]";
+			mes "你确定还带得动";
+			mes "更多东西吗？";
+			mes "该死，我看可不像。";
+			mes "减轻点负担吧，";
+			mes "把一些东西存进";
+			mes "卡普拉仓库，好吗？";
+			close;
+		}
+		if (Zeny < 1000) {
+			mes "[酒保]";
+			mes "你确定现在买得起吗？";
+			mes "这饮料要";
+			mes "1,000 zeny，你最好";
+			mes "先看看手上的现金。";
+			mes "呃，等你有钱了";
+			mes "再来吧。";
+			close;
+		}
+		mes "[酒保]";
+		mes "给你，";
+		mes "1 杯热带苏格拉特饮料。";
+		mes "味道香甜温和，";
+		mes "但如果不注意，";
+		mes "你马上就会醉倒。";
+		mes "慢慢喝。";
+		set Zeny, Zeny-1000;
+		getitem 12112,1; //Tropical_Sograt
+		close;
+
+	case 2:
+		if (MaxWeight - Weight < 2000) {
+			mes "[酒保]";
+			mes "你确定还带得动";
+			mes "更多东西吗？";
+			mes "该死，我看可不像。";
+			mes "减轻点负担吧，";
+			mes "把一些东西存进";
+			mes "卡普拉仓库，好吗？";
+			close;
+		}
+		if (Zeny < 1000) {
+			mes "[酒保]";
+			mes "你确定现在买得起吗？";
+			mes "这饮料要";
+			mes "1,000 zeny，你最好";
+			mes "先看看手上的现金。";
+			mes "呃，等你有钱了";
+			mes "再来吧。";
+			close;
+		}
+		mes "[酒保]";
+		mes "给你。";
+		mes "好好享受美酒，";
+		mes "但别喝得";
+		mes "酩酊大醉。";
+		set Zeny, Zeny-1000;
+		getitem 12113,1; //Vermilion_The_Beach
+		close;
+
+	case 3:
+		mes "[酒保]";
+		mes "那好吧。";
+		mes "回头见。";
+		close;
+	}
+}
+
+// Function
+//============================================================ 
+function	script	F_BardSkillYhelle	{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "^3355FF请留步！";
+		mes "你随身携带的物品太多，";
+		mes "没有足够的物品栏空间来接收任何奖励。";
+		mes "请腾出更多物品栏空间，再来接受这个挑战。";
+		close;
+	}
+	emotion ET_HUK, playerattached();
+	emotion ET_HUK;
+	mes "[母鸡伊赫尔]";
+	mes "咯咯-咯咯咯?";
+	mes "咯咯咯咯咯！";
+	next;
+	if (rand(1,3) == 2) {
+		disablenpc "伊赫尔#bard_chick"+getarg(0);
+		donpcevent "伊赫尔#bard_chick"+getarg(1)+"::OnEnable";
+		mes "^3355FF察觉到你靠近，";
+		mes "母鸡飞快地";
+		mes "逃走了。^000000";
+		if (qskill_bard > 1 && qskill_bard < 7) {
+			mes "^3355FF你在母鸡伊赫尔";
+			mes "栖息的地方找到了 ^3333331 个蛋^3355FF。^000000";
+			set qskill_bard,qskill_bard+1;
+			getitem 574,1; //Egg
+		}
+	}
+	else {
+		disablenpc "伊赫尔#bard_chick"+getarg(0);
+		donpcevent "伊赫尔#bard_chick"+getarg(1)+"::OnEnable";
+		mes "^3355FF察觉到你靠近，";
+		mes "母鸡飞快地";
+		mes "逃走了。^000000";
+	}
+	return;
+}

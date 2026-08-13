@@ -1,0 +1,918 @@
+//===== rAthena Script =======================================
+//= Hair Dresser
+//===== By: ==================================================
+//= Muad_Dib, Samuray22, Kisuka
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Allows you to change your hairstyle.
+//===== Additional Comments: =================================
+//= 1.2 Rescripted to the Aegis 10.3 Standards. [Samuray22]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.4 Added Lighthalzen Hair Dresser. [L0ne_W0lf]
+//= 1.5 Moving NPC Hair Dresser to Pre-Renewal [JohnnyPlayy]
+//============================================================
+
+// Hair Dresser Veronica
+// ============================================================
+alberta_in,55,142,7	script	造型师#alb	91,{
+	mes "[维罗妮卡]";
+	mes "欢迎光临维罗妮卡发廊。";
+	mes "有什么可以帮您？";
+	next;
+	switch(select("查看发型。:更换发型。:结束对话。")) {
+	case 1:
+		mes "[维罗妮卡]";
+		mes "我们总共有 19 种发型，从 1 号到 19 号。";
+		mes "您想看哪一种？";
+		mes "如果想取消，";
+		mes "请输入 0。";
+		next;
+		input .@style;
+		if(.@style > 19) {
+			mes "[维罗妮卡]";
+			mes "哎呀，抱歉，";
+			mes "没有那种发型。";
+			mes "请输入 1 到 19";
+			mes "之间的数字。";
+			next;
+		} else if(.@style == 0) {
+			mes "[维罗妮卡]";
+			mes "那么，您觉得这些发型怎么样？";
+			mes "想了解哪种发型都可以问我。";
+			mes "能为您打理头发，";
+			mes "是我的荣幸。";
+			close;
+		}
+		else {
+			callsub L_cutin,.@style;
+			mes "[维罗妮卡]";
+			switch(.@style) {
+			case 1:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''装死''式发型！";
+					mes "是很不错的基础款发型。";
+					mes "我发现通常是那些";
+					mes "可爱又保守的人";
+					mes "比较偏爱这种发型。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''急救''式发型！";
+					mes "齐肩的直发，";
+					mes "适合干练利落的冒险家。";
+					mes "看来这是";
+					mes "新手们的首选发型。";
+					close2; cutin "",255; end;
+			case 2:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''双手剑使用熟练度''";
+					mes "式发型！整天挥剑的";
+					mes "剑士们头发容易乱，";
+					mes "这种发型再适合";
+					mes "不过了。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''狂击''式发型！";
+					mes "适合不怕手上沾血的";
+					mes "强悍女性，而且她知道";
+					mes "自己挥剑时";
+					mes "头发有多好看。";
+					close2; cutin "",255; end;
+			case 3:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''心灵爆破''式发型！";
+					mes "独特的造型带点特立独行，";
+					mes "又不失优雅，";
+					mes "别有一番风味。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''冰冻术''式发型！";
+					mes "双马尾显得清纯又文静，";
+					mes "适合那些平时用魔法";
+					mes "把男生吓得远远的";
+					mes "魔法师和巫师。";
+					close2; cutin "",255; end;
+			case 4:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''二连矢''";
+					mes "式发型！头发的造型";
+					mes "能引导周围的静电，";
+					mes "让人神清气爽。";
+					mes "至少，我在美发学校";
+					mes "是这么学的。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''箭雨''式发型！";
+					mes "适合不想让发型";
+					mes "影响瞄准的女弓箭手。";
+					mes "比那种老气的";
+					mes "婆婆头";
+					mes "好看多了。";
+					close2; cutin "",255; end;
+			case 5:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''天使之障壁''式发型！";
+					mes "适合沉稳虔诚的人，";
+					mes "也适合那些害羞、";
+					mes "温文尔雅的类型。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''治愈术''式发型！";
+					mes "这种发型在牧师和服事者中";
+					mes "很流行，既适合正式场合，";
+					mes "战斗时也很实用。";
+					close2; cutin "",255; end;
+			case 6:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''手推车使用''式发型！";
+					mes "它的设计灵感来自手推车";
+					mes "……至少，我在美发学校";
+					mes "是这么学的。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''露天商店''式发型！";
+					mes "这是会赚钱的人的发型……";
+					mes "容我说一句，";
+					mes "它还很实惠。";
+					close2; cutin "",255; end;
+			case 7:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''施毒''式发型！";
+					mes "盗贼和刺客给人与动物下毒时，";
+					mes "配上这种发型帅极了。";
+					mes "这是为奔放不羁的人";
+					mes "准备的时尚~！";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''二刀连击''式发型！";
+					mes "可爱的马尾配上撩人的刘海，";
+					mes "一定能帮你";
+					mes "俘获帅哥的心。";
+					close2; cutin "",255; end;
+			case 8:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''怪物互击''式发型！";
+					mes "在骑士中很流行，硬朗粗犷的造型";
+					mes "总能吸引女士们的目光，";
+					mes "下巴刚毅的男士";
+					mes "配它最好看。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''幸运之颂歌''式发型！";
+					mes "非常优雅，很适合圣洁的牧师。";
+					mes "这种发型最受那些";
+					mes "不习惯动手打架的";
+					mes "淑女青睐。";
+					close2; cutin "",255; end;
+			case 9:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''病毒散播''式发型！";
+					mes "绝对是叛逆者的造型，";
+					mes "飘逸而华贵的发丝";
+					mes "对女孩有着致命的";
+					mes "吸引力。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''禅心''式发型！";
+					mes "为了让这刘海的特殊造型";
+					mes "更有层次感，我用了特制的";
+					mes "护发素，让你感觉像在恢复 SP";
+					mes "……虽然实际上并不会。";
+					close2; cutin "",255; end;
+			case 10:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''转生术''式发型！";
+					mes "在想要稳重中带点";
+					mes "狂野不羁的牧师中";
+					mes "很受欢迎。";
+					mes "绝对比''天使之怒''式";
+					mes "飞机头好看。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''配药''式发型！";
+					mes "外翘的发梢是新手炼金术士的";
+					mes "选择，毕竟早期的爆炸实验";
+					mes "反正都会把头发炸得翘起来。";
+					close2; cutin "",255; end;
+			case 11:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''龙知识''式发型！";
+					mes "干净利落，适合好学的人，";
+					mes "配眼镜也很好看。";
+					mes "这是很适合";
+					mes "知性人士的时尚。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''圣十字审判''式发型！";
+					mes "在虔诚的十字军中很流行，";
+					mes "战斗时头发不会乱，";
+					mes "参加宗教仪式时";
+					mes "也足够庄重。";
+					close2; cutin "",255; end;
+			case 12:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''钝器使用熟练度''式发型！";
+					mes "要精心打理，才能让这蓬乱的";
+					mes "头发看起来像是在说：";
+					mes "''我才不在乎外表''。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''抄袭''式发型！";
+					mes "流氓系的女性似乎喜欢";
+					mes "这种发型……不过我觉得";
+					mes "她们中更多人会想要";
+					mes "更狂野一点的，好配";
+					mes "那双丝袜……";
+					close2; cutin "",255; end;
+			case 13:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''雷暴术''式发型！";
+					mes "这种火辣华丽的发型";
+					mes "像雷暴一样狂野张扬。";
+					mes "……换了新造型，你也会一样耀眼。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''蓄气''";
+					mes "式发型！这种时尚";
+					mes "自带魅力：帅气，";
+					mes "带点假小子的味道，";
+					mes "却又不失可爱。";
+					close2; cutin "",255; end;
+			case 14:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''安可''式发型！";
+					mes "优雅飘逸的长发，";
+					mes "很适合诗人，或者懂得";
+					mes "欣赏男性之美的";
+					mes "男士。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''为您服务''式发型！";
+					mes "舞娘似乎喜欢这种发型，";
+					mes "不过就我个人而言，";
+					mes "我觉得这种发型";
+					mes "配眼镜非常合适。";
+					close2; cutin "",255; end;
+			case 15:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''无影之牙''式发型！";
+					mes "竖立而不羁，这种发型";
+					mes "是流行的反主流街头时尚。";
+					mes "不过参加婚礼时，";
+					mes "最好还是别梳这种";
+					mes "发型。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''反击''式发型！";
+					mes "这是气场强大的造型，";
+					mes "适合想说''你敢打我，";
+					mes "我就打回去！''的女孩。";
+					mes "它真的很能突出饱满的";
+					mes "额头和颧骨。";
+					close2; cutin "",255; end;
+			case 16:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''闪电冲击''式发型！";
+					mes "时髦又活泼，这种发型";
+					mes "是为一位喜欢超长刘海、";
+					mes "又想透过刘海看东西的";
+					mes "猎人特别设计的。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''定位陷阱''式发型！";
+					mes "这种发型专为不喜欢";
+					mes "头发被缠住的猎人打造……";
+					mes "毕竟，哪有猎人";
+					mes "会让自己的头发被陷阱困住呢？";
+					close2; cutin "",255; end;
+			case 17:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''寻找矿石''式发型！";
+					mes "实用又实惠，在铁匠中很流行。";
+					mes "有人发誓说这种发型能帮他们";
+					mes "找到矿石，但这有什么";
+					mes "科学依据吗？？";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''大地之击''式发型！";
+					mes "适合不想让头发碍事、";
+					mes "要尽情挥舞重物的女性。";
+					mes "当然，这也是";
+					mes "铁匠们的最爱。";
+					close2; cutin "",255; end;
+			case 18:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''火柱攻击''式发型！";
+					mes "这是流行的造型，";
+					mes "遮住一只眼睛，";
+					mes "营造神秘感。神秘元素";
+					mes "永远都不会过时，";
+					mes "你不觉得吗？";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''雷鸣术''";
+					mes "式发型！如闪电般利落的造型，";
+					mes "没有恼人的静电，";
+					mes "也不会凌乱。这种发型";
+					mes "配魔法师帽子好看极了。";
+					close2; cutin "",255; end;
+			case 19:
+				if(Sex == SEX_MALE) {
+					mes "哦，那是''阿修罗霸凰拳''";
+					mes "式发型！光滑的大背头";
+					mes "表明你对格斗满怀热情……";
+					mes "或者只是满怀热情。";
+					close2; cutin "",255; end;
+				}
+					mes "哦，那是''风元素领域''式发型！";
+					mes "深受好学的贤者喜爱，";
+					mes "头发编成时髦的辫子束在脑后，";
+					mes "施展风系魔法后";
+					mes "也不会四处乱飞。";
+					close2; cutin "",255; end;
+			}
+		}
+	case 2:
+		if(BaseLevel < 60) {
+			mes "[维罗妮卡]";
+			mes "哎呀，您现在的发型";
+			mes "已经很出色了。何不试试新的发饰，";
+			mes "而不是改变造型呢？";
+			close;
+		} else if((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) <100) || (countitem(1094) <100) || (countitem(1020) <100) || (countitem(1060) <100) || (countitem(7152) <100) || (Zeny < 99800)) {
+			mes "[维罗妮卡]";
+			mes "如果您想更换发型，";
+			mes "需要准备一些材料。";
+			mes "建议您把需要的";
+			mes "物品都记下来。";
+			next;
+			mes "[维罗妮卡]";
+			mes "3 个中和剂、";
+			mes "3 个混合剂、";
+			mes "100 个辫子、";
+			mes "100 个短辫子、";
+			mes "100 个长发、";
+			mes "100 个金色头发、";
+			mes "100 个光泽的头发，最后还有……";
+			next;
+			mes "[维罗妮卡]";
+			mes "您需要 99,800 Zeny。";
+			mes "准备好之后再来吧。";
+			mes "我会让您容光焕发。";
+			mes "哦呵呵呵呵~";
+			close;
+		}
+		mes "[维罗妮卡]";
+		mes "好了，请从 1 号到 19 号中";
+		mes "选择您想要的发型。";
+		mes "我会尽全力";
+		mes "让您焕发光彩。";
+		next;
+		input .@style;
+		if(.@style > 19) {
+			mes "[维罗妮卡]";
+			mes "抱歉，您选了不存在的发型。";
+			mes "请输入正确的数字。";
+			close;
+		} else if(.@style == 0) {
+			mes "[维罗妮卡]";
+			mes "您取消了请求。";
+			close;
+		} else if(getlook(1) == .@style) {
+			mes "[维罗妮卡]";
+			mes "抱歉，您现在梳的";
+			mes "就是您想要的发型。";
+			mes "请选一种";
+			mes "别的发型好吗？";
+			close;
+		}
+			callsub L_cutin,.@style;
+			mes "[维罗妮卡]";
+			mes "您选择了 " + .@style + " 号发型。";
+			mes "我这就开始为您打理。";
+			mes "可以吗？";
+			next;
+			if(select("可以，没问题。:不，让我再选一个。") == 1) {
+				if(getlook(6) == 0) {
+					mes "[维罗妮卡]";
+					mes "哎呀，您还没有染过头发呢。";
+					mes "染了头发您会更加";
+					mes "光彩照人……";
+					mes "这样吧，我免费为您染。";
+					mes "那么您想要什么颜色？";
+					next;
+					switch(select("红色。:黄色。:紫色。:橙色。:绿色。:蓝色。:白色。:深棕色。:取消。")) {
+					case 1:
+						set .@pallete,8;
+						break;
+					case 2:
+						set .@pallete,1;
+						break;
+					case 3:
+						set .@pallete,2;
+						break;
+					case 4:
+						set .@pallete,3;
+						break;
+					case 5:
+						set .@pallete,4;
+						break;
+					case 6:
+						set .@pallete,5;
+						break;
+					case 7:
+						set .@pallete,6;
+						break;
+					case 8:
+						set .@pallete,7;
+						break;
+					case 9:
+						mes "[维罗妮卡]";
+						mes "哦，我本来想免费为您染的。";
+						mes "如果改变主意，请随时再来。";
+						mes "发色能让您的造型更加分。";
+						close;
+					}
+				}
+				nude;
+				mes "[维罗妮卡]";
+				mes "好了，我们开始吧。";
+				mes "请别动，亲爱的。要是乱动，";
+				mes "可能会毁了我为您准备的";
+				mes "完美造型。相信我，";
+				mes "我会让您容光焕发~";
+				next;
+				mes "[维罗妮卡]";
+				mes "- *咔嚓 咔嚓 咔嚓 咔嚓* -";
+				mes "- *嗡嗡嗡嗡嗡嗡嗡嗡* -";
+				mes "- *咔嚓 咔嚓 咔嚓 咔嚓* -";
+				mes "- *嗡嗡嗡嗡嗡嗡嗡嗡* -";
+				next;
+				set Zeny, Zeny-99800;
+				delitem 973,3;	// Counteragent
+				delitem 974,3;	// Mixture
+				delitem 901,100;	// Danggie
+				delitem 1094,100;	// Short_Daenggie
+				delitem 1020,100;	// Long_Hair
+				delitem 1060,100;	// Golden_Hair
+				delitem 7152,100;	// Glossy_Hair
+				setlook 1,.@style;
+				setlook 6,.@pallete;
+				cutin "",255;
+				mes "[维罗妮卡]";
+				mes "好了，完成了~";
+				mes "希望您喜欢";
+				mes "这个 " + .@style + " 号发型。";
+				mes "想换新发型时，";
+				mes "随时再来。哦呵呵呵呵~";
+				setlook 1,.@style;
+				setlook 6,.@pallete;
+				close;
+			}
+			mes "[维罗妮卡]";
+			mes "好的，请重新选择";
+			mes "一种发型。我相信";
+			mes "您一定能找到最适合自己的造型。";
+			close;
+	case 3:
+		mes "[维罗妮卡]";
+		mes "每个人都有追求美的权利。";
+		mes "希望总有一天，";
+		mes "您能找到";
+		mes "适合自己的发型。";
+		close;
+	}
+
+L_cutin:
+	.@num = getarg(0);
+	if(Sex == SEX_MALE) {
+		if (.@num  < 10)
+			cutin "hair_m_0"+ .@num,4;
+		else
+			cutin "hair_m_"+ .@num,4;
+	} else {
+		if (.@num < 10)
+			cutin "hair_f_0"+ .@num,4;
+		else
+			cutin "hair_f_"+ .@num,4;
+	}
+	return;
+}
+
+
+// Lighthalzen
+lhz_in02,100,143,3	script	造型师#li2	122,{
+	mes "[夏米王子]";
+	mes "欢迎光临夏米王子";
+	mes "美容店，想要一头";
+	mes "绝~~美秀发的话，来这儿就对了。";
+	mes "别害羞，告诉我你想变得";
+	mes "多么光彩照人~";
+	next;
+	switch(select("查看所有发型:更换发型:取消")) {
+	case 1:
+		mes "[夏米王子]";
+		mes "哦，你想看看";
+		mes "我这儿所有";
+		mes "时髦的新发型吗？";
+		next;
+		mes "[夏米王子]";
+		mes "拜托，千万要从下面的发型里选一个，我来给你看预览。";
+		next;
+		switch(select("经典发型:新潮发型")) {
+		case 1:
+			if (Sex == SEX_MALE) {
+				switch(select("辫子发型:刽子手发型:王子发型:德比雅斯发型:取消")) {
+				case 1:
+					cutin "hair_m_20",4;
+					mes "[夏米王子]";
+					mes "这是^3131FF辫子发型^000000，";
+					mes "用长长的辫子";
+					mes "柔化绅士的外表，";
+					mes "显得更加蓬松有型。";
+					break;
+				case 2:
+					cutin "hair_m_21",4;
+					mes "[夏米王子]";
+					mes "哦，^3131FF刽子手发型^000000！";
+					mes "粗犷蓬乱的造型，";
+					mes "正是最近流行的";
+					mes "硬汉风格。";
+					mes "而且每个女孩都喜欢硬汉，";
+					mes "对吧？^333333*嘻嘻~*^000000";
+					break;
+				case 3:
+					cutin "hair_m_22",4;
+					mes "[夏米王子]";
+					mes "你确实有时尚眼光！";
+					mes "没错，这就是^3131FF王子发型^000000，";
+					mes "性感与品位的巅峰。";
+					mes "Magnifique，不是吗？";
+					mes "对，就选这个，就这个！";
+					break;
+				case 4:
+					cutin "hair_m_23",4;
+					mes "[夏米王子]";
+					mes "啊哈~！^3131FF德比雅斯发型^000000！";
+					mes "它和王子发型很像，";
+					mes "但后面的头发更短。";
+					mes "没错，这个造型";
+					mes "非常干净利落。";
+					break;
+				case 5:
+					cutin "hair_f_01",255;
+					mes "[夏米王子]";
+					mes "不要吗？你不想";
+					mes "看一看吗？拜托，";
+					mes "你是冒险家啊，我知道";
+					mes "你可以更大胆一点的！";
+					mes "时尚地冒险吧，你这位时尚的冒险家~";
+					emotion ET_THROB;
+					close3;
+				}
+			}
+			else {
+				switch(select("春兔发型:鹰身女妖发型:米杜沙发型:伊西斯发型:取消")) {
+				case 1:
+					cutin "hair_f_20",4;
+					mes "[夏米王子]";
+					mes "哦对，这是";
+					mes "^3131FF春兔发型^000000。";
+					mes "轻盈跳动的前刘海";
+					mes "增添了几分时髦、";
+					mes "可爱与俏皮。";
+					mes "要吗？不要吗？要吗？不要吗？哦要吧！";
+					break;
+				case 2:
+					cutin "hair_f_21",4;
+					mes "[夏米王子]";
+					mes "哦，你对";
+					mes "^3131FF鹰身女妖发型^000000感兴趣吗？";
+					mes "自然的卷度配上马尾，";
+					mes "营造出优雅，";
+					mes "又非常自然随性的感觉~";
+					break;
+				case 3:
+					cutin "hair_f_22",4;
+					mes "[夏米王子]";
+					mes "啊，^3131FF米杜沙发型^000000~";
+					mes "这些大胆飘逸的长发";
+					mes "张扬着力量与气场，";
+					mes "最适合想要让男人";
+					mes "无法抗拒的";
+					mes "职场女强人~";
+					break;
+				case 4:
+					cutin "hair_f_23",4;
+					mes "[夏米王子]";
+					mes "哦，^3131FF伊西斯发型^000000~";
+					mes "没错，在头两侧";
+					mes "梳成发髻，";
+					mes "你会非常可爱。";
+					mes "你梳起来一定迷人极了！";
+					break;
+				case 5:
+					mes "[夏米王子]";
+					mes "不要吗？你不想";
+					mes "看一看吗？拜托，";
+					mes "你是冒险家啊，我知道";
+					mes "你可以更大胆一点的！";
+					mes "时尚地冒险吧，你这位时尚的冒险家~";
+					emotion ET_THROB;
+					close;
+				}
+			}
+			break;
+		case 2:
+			if (Sex == SEX_MALE) {
+				switch(select("紧急治疗烫发:灵气剑剪:挥斧重击剪:净化剪:取消")) {
+				case 1:
+					cutin "hair_m_24",4;
+					mes "[夏米王子]";
+					mes "这是^3131FF紧急治疗烫发^000000";
+					mes "它在治疗系职业中相当流行。";
+					break;
+				case 2:
+					cutin "hair_m_25",4;
+					mes "[夏米王子]";
+					mes "你一定是在追求哪位女士吧？";
+					mes "^3131FF灵气剑剪^000000";
+					mes "可是出了名能让女士们倾倒的，你这只小老虎！";
+					break;
+				case 3:
+					cutin "hair_m_26",4;
+					mes "[夏米王子]";
+					mes "哦你这粗犷的家伙！";
+					mes "^3131FF挥斧重击剪^000000";
+					mes "用这个发型展现你的型格魅力吧。这绝对是你的菜。";
+					break;
+				case 4:
+					cutin "hair_m_27",4;
+					mes "[夏米王子]";
+					mes "啊！我看得出你只对最新潮流感兴趣。";
+					mes "直接从T台走来的就是^3131FF净化剪^000000。";
+					break;
+				case 5:
+					mes "[夏米王子]";
+					mes "不要吗？你不想";
+					mes "看一看吗？拜托，";
+					mes "你是冒险家啊，我知道";
+					mes "你可以更大胆一点的！";
+					mes "时尚地冒险吧，你这位时尚的冒险家~";
+					emotion ET_THROB;
+					close;
+				}
+			}
+			else {
+				switch(select("圣母之祈福烫发:灵魂转换剪:龙卷风剪:祈祷文剪:取消")) {
+				case 1:
+					cutin "hair_f_24",4;
+					mes "[夏米王子]";
+					mes "这是^3131FF圣母之祈福烫发^000000";
+					mes "这是一款短发烫发，方便尽情施法。";
+					break;
+				case 2:
+					cutin "hair_f_25",4;
+					mes "[夏米王子]";
+					mes "你一定是男人杀手吧？";
+					mes "^3131FF灵魂转换剪^000000";
+					mes "会让任何男人对你敞开心扉……呃，是心门！";
+					break;
+				case 3:
+					cutin "hair_f_26",4;
+					mes "[夏米王子]";
+					mes "这是一款有点潮流的发型";
+					mes "^3131FF龙卷风剪^000000";
+					mes "适合喜欢改变的冒险型人物。";
+					break;
+				case 4:
+					cutin "hair_f_27",4;
+					mes "[夏米王子]";
+					mes "啊！我看得出你只对最新潮流感兴趣。";
+					mes "直接从T台走来的就是^3131FF祈祷文剪^000000。";
+					mes "有了这个发型，你会让所有朋友羡慕不已。";
+					break;
+				case 5:
+					mes "[夏米王子]";
+					mes "不要吗？你不想";
+					mes "看一看吗？拜托，";
+					mes "你是冒险家啊，我知道";
+					mes "你可以更大胆一点的！";
+					mes "时尚地冒险吧，你这位时尚的冒险家~";
+					emotion ET_THROB;
+					close;
+				}
+			}
+		}
+		close2;
+		cutin "",255;
+		end;
+	case 2:
+		if (BaseLevel < 60) {
+			mes "[夏米王子]";
+			mes "哦，非常抱歉，";
+			mes "我只为成熟到";
+			mes "能发现自己";
+			mes "内在美的顾客服务。";
+			mes "不过等你到了那天，";
+			mes "请再来，好吗？";
+			close;
+		}
+		else if ((countitem(973) < 3) || (countitem(974) < 3) || (countitem(901) < 100) || (countitem(1094) < 100) || (countitem(1020) < 100) || (countitem(1060) < 100) || (countitem(7152) < 100) || (Zeny < 99800)) {
+			mes "[夏米王子]";
+			mes "如果你已经决定了";
+			mes "想要的发型，";
+			mes "请准备好我的服务费，";
+			mes "还有我做这次造型";
+			mes "需要的材料，好吗？";
+			mes "请带来……";
+			next;
+			mes "[夏米王子]";
+			mes "^3355FF3 个中和剂^000000、";
+			mes "^3355FF3 个混合剂^000000、";
+			mes "^3355FF100 个辫子^000000、";
+			mes "^3355FF100 个短辫子^000000……";
+			next;
+			mes "[夏米王子]";
+			mes "^3355FF100 个长发^000000、";
+			mes "^3355FF100 个金色头发^000000、";
+			mes "^3355FF100 个光泽的头发^000000";
+			mes "以及 ^3355FF99,800 Zeny^000000。";
+			mes "准备好之后，我就会";
+			mes "在你的头发上创造奇迹！";
+			close;
+		}
+		mes "[夏米王子]";
+		mes "好了，请从 20 号到 25 号中";
+		mes "选择你想要的发型。";
+		mes "以防你需要，这是发型名称列表~";
+		next;
+		mes "[夏米王子]";
+		if (Sex == SEX_MALE) {
+			mes "20 号：辫子发型";
+			mes "21 号：刽子手发型";
+			mes "22 号：王子发型";
+			mes "23 号：德比雅斯发型";
+			mes "24 号：紧急治疗烫发";
+			mes "25 号：灵气剑剪";
+			mes "26 号：挥斧重击剪";
+			mes "27 号：净化剪。";
+		}
+		else {
+			mes "20 号：春兔发型";
+			mes "21 号：鹰身女妖发型";
+			mes "22 号：米杜沙发型";
+			mes "23 号：伊西斯发型";
+			mes "24 号：圣母之祈福烫发";
+			mes "25 号：灵魂转换剪";
+			mes "26 号：龙卷风剪";
+			mes "27 号：祈祷文剪。";
+		}
+		next;
+		input .@input;
+		if (.@input == 0) {
+			mes "[夏米王子]";
+			mes "哦……？";
+			mes "你决定取消了吗？";
+			mes "好吧，你自己最清楚";
+			mes "什么适合自己。";
+			mes "不过，我好失望~";
+			close;
+		}
+		else if ((.@input < 20) || (.@input > 27)) {
+			mes "[夏米王子]";
+			mes "亲爱的，请输入";
+			mes "''20''到''25''之间的";
+			mes "数字，好吗？这样我就能";
+			mes "马上开工，把你变得";
+			mes "美~~~~不胜收！";
+			close;
+		}
+		else if (getlook(VAR_HEAD) == .@input) {
+			mes "[夏米王子]";
+			mes "哦天哪，你不会想";
+			mes "花钱换一个和现在";
+			mes "一模一样的发型吧？";
+			mes "你知道的，换发色";
+			mes "可以找别人。";
+			close;
+		}
+		else {
+			if (Sex == SEX_MALE)
+				cutin "hair_m_"+.@input+".BMP",4;
+			else
+				cutin "hair_f_"+.@input+".BMP",4;
+			mes "[夏米王子]";
+			mes "哦哦！那么，这就是";
+			mes "你想要的发型吗？";
+			mes "顺便说一下，这是 " + .@input + " 号。";
+			next;
+			switch(select("是。:不是。")) {
+			case 1:
+				if (getlook(VAR_HEADPALETTE) == 0) {
+					mes "[夏米王子]";
+					mes "哦，天哪，";
+					mes "我差点忘了！你想让我";
+					mes "免费为你染发吗？";
+					mes "这是我服务的一部分，";
+					mes "请选择一种颜色~";
+					next;
+					switch(select("红色:黄色:紫色:橙色:绿色:蓝色:白色:深棕色")) {
+					case 1:
+						set .@headpalette,8;
+						break;
+					case 2:
+						set .@headpalette,1;
+						break;
+					case 3:
+						set .@headpalette,2;
+						break;
+					case 4:
+						set .@headpalette,3;
+						break;
+					case 5:
+						set .@headpalette,4;
+						break;
+					case 6:
+						set .@headpalette,5;
+						break;
+					case 7:
+						set .@headpalette,6;
+						break;
+					case 8:
+						set .@headpalette,7;
+						break;
+					}
+				}
+				mes "[夏米王子]";
+				mes "好了，我们";
+				mes "开始吧，好吗？";
+				mes "头别动，";
+				mes "对，就是这样……";
+				next;
+				mes "^3355FF*咔嚓 咔嚓*";
+				mes "*沙沙 沙沙*";
+				mes "*咔哒 咔哒 咔哒 咔哒*";
+				mes "*嗡嗡嗡嗡嗡嗡嗡嗡嗡嗡*^000000";
+				next;
+				set Zeny, Zeny-99800;
+				delitem 973,3; //Counteragent
+				delitem 974,3; //Mixture
+				delitem 901,100; //Danggie
+				delitem 1094,100; //Short_Daenggie
+				delitem 1020,100; //Long_Hair
+				delitem 1060,100; //Golden_Hair
+				delitem 7152,100; //Glossy_Hair
+				setlook VAR_HEAD,.@input;
+				setlook VAR_HEADPALETTE,.@headpalette;
+				mes "[夏米王子]";
+				mes "好了，全部完成了！";
+				mes "哎呀呀，你看起来";
+				mes "比我想象的还要出色！";
+				mes "哦，我真不敢相信";
+				if (Sex == SEX_MALE) {
+					mes "你是多么帅气又优雅~";
+					mes "如此粗犷英俊，男子气概十足！";
+				}
+				else {
+					mes "你是多么优雅端庄！";
+					mes "简直美若天仙！";
+				}
+				emotion ET_CHUP;
+				next;
+				mes "[夏米王子]";
+				mes "你很喜欢你的新发型，";
+				mes "对吧？随时欢迎再来。";
+				mes "我会把你打造成";
+				mes "全世界最好看的人！";
+				emotion ET_BEST;
+				close3;
+			case 2:
+				mes "[夏米王子]";
+				mes "哦，你忘了哪个发型";
+				mes "对应哪个号码了吗？";
+				mes "没关系，请再确认一遍！";
+				mes "找到最适合你的那一个，";
+				mes "好吗？";
+				close3;
+			}
+		}
+		break;
+	case 3:
+		mes "[夏米王子]";
+		mes "嗯？";
+		mes "也许你欣赏不来";
+		mes "我超前的发型。";
+		mes "再见！";
+		close;
+	}
+}
+
+//===== Old Changelog: =================================
+//= 07/06/05 : Added 1st Version. [Muad_Dib]
+//= Converted to rAthena format by Dr.Evil Fixed typos [Nexon]
+//= 1.1 Removed Duplicates [Silent]
+//============================================================

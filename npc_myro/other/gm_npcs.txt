@@ -1,0 +1,166 @@
+//===== rAthena Script ======================================= 
+//= GM 管理 NPC
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= 控制各脚本中官方 GM 管理 NPC 的访问权限。
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+// callfunc("F_GM_NPC"{,<password>,<0:int | 1:str>{,<min>,<max>}})
+function	script	F_GM_NPC	{
+
+	// 要禁用所有 GM NPC，取消下面一行的注释。
+	//end;
+
+	// 要设置访问这些 NPC 所需的最低 GM 等级，请修改下面一行。
+	if (getgmlevel() < 99) {
+		// 记录事件。
+		getmapxy(.@map$,.@x,.@y,BL_NPC);
+		logmes strcharinfo(0)+" attempted to access GM NPC "+strnpcinfo(0)+" ("+.@map$+","+.@x+","+.@y+").";
+		end;
+	}
+
+	if (!getargcount()) return;
+
+	// 要禁用密码输入，取消下面一行的注释。
+	//return 1;
+
+	// 密码返回值：
+	//  1: 输入正确
+	//  0: 输入错误
+	// -1: 输入为零/取消（仅限整数）
+	// -2: 超出范围（仅限整数）
+	if (getarg(1) == 0) {
+		// 整数密码
+		if (getarg(3,0)) {
+			.@error = input(.@input,getarg(2),getarg(3));
+			if (.@error)
+				return -2;
+		} else
+			input .@input;
+		if (.@input == 0)
+			return -1;
+		else
+			return (.@input == getarg(0))?1:0;
+	} else {
+		// 字符串密码
+		input .@inputstr$;
+		return (.@inputstr$ == getarg(0))?1:0;
+	}
+}
+
+/*
+GM 管理 NPC 列表（不完整）
+--------------------------
+[ 战场 ]
+- Switch#batgnd
+- Release all#b01
+- Release all#b02
+- Release all#a01
+- Release all#a02
+
+[ 公会相关 ]
+- Event controller#aru_gd
+- Event controller#sch_gd
+- Festival Manager#gq_fes0
+- Festival Manager#gq_fes2
+- Godly Item Quests#god
+- Golbal var
+- Investment_total#fund00 (RE)
+
+[ 副本 ]
+------ 无尽之塔 -----
+- #102Administrator Mode
+- Purification Stone#et2
+- #Manager Mode1
+- #Manager Mode2
+- #Manager Mode3
+- #Manager Mode4
+- #Manager Mode5
+--------------------------
+- Nidhoggur Manager
+- Purification Admin#nyd2
+- Bakonawa's Rage (RE)
+- Bangungot Gate (RE)
+- Horror Toy Factory (RE)
+- Faceworm's Nest (RE)
+- Central Laboratory (RE)
+- Morse's Cave (RE)
+
+[ 职业相关 ]
+----- 三转 (RE) -----
+- control#arch
+- #GMhelper01_gc
+- #GMhelper02_gc
+- Worker#job_ranger
+- R.Knight Job Manager
+- #renshucheck
+- sorcereryal
+- Button Girl#wl
+- Button Girl#sura
+- Battle Test Control#ko
+- Guide#ko_helper
+- Admin1
+--------------------------
+- Soul Linker Var
+- 1st Job Quest Reset
+- Job Repair (RE)
+
+[ 任务 ]
+--------- Renewal --------
+- 13.3 Related Reset
+- Scaraba Dungeon Entrance
+- Assistant#para_suvquest
+- Guidance for quest#ml
+- Initializing Mora Sanjo
+- Theore Set Guid
+- Field Bush Switch
+- Bakonawa Intro Helper
+- Pintados Manager#pin
+- #pa0829Reactor11
+- New Oz Image#1
+- Professor Aide#worm
+--------------------------
+- Allied Manager#gm
+- #timer_alba01
+- Translator Preparation#1
+- ep13_nd2f_mng
+- Factory Quest Test
+- boss::lght_boss_admin
+- #LyozienSwitch
+- Juperos Manager
+- Extra Story Patch
+- boss::boss_aru_monas
+- Koshei GlobalVar#admin
+- Morocc GlobalVar Admin::MoroccAdmin_sec
+- Morocc GlobalVar Admin::MoroccAdmin_moc
+- Morocc Invasion Manager (disabled)
+
+[ 其他 ]
+-------- 结婚 --------
+- The King of Rune-Midgarts
+- Divorce Staff
+- Remarry Staff
+------ 依斯鲁得竞技场 ------
+- log-on-aco#arena
+- acolink#arena
+- Arena Manager#arena
+- Reward Manager#arena
+- Picture Manager#arena
+- Live Broadcast#arena
+- #arenacontrol
+--------------------------
+- Monster Race Manager
+- Vote Globalvar Girl#yuno (disabled)
+- 2013questreset2#xmas (event, disabled)
+--------------------------
+- Mercenary Switch#Spear
+- Mercenary Switch#Bow
+- Mercenary Switch#Sword
+*/

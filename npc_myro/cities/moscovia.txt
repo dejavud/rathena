@@ -1,0 +1,138 @@
+//===== rAthena Script =======================================
+//= 莫斯科比亚城
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= 莫斯科比亚城脚本
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Removed villagers (they are part of a quest). [Kisuka]
+//= 1.2 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//============================================================
+
+// 莫斯科比亚交通 :: mosk_trans
+//============================================================
+-	script	::PR_Officer_moscovia	-1,{
+	mes "[莫斯科比亚 宣传使节]";
+	mes "莫斯科比亚！你知道莫斯科比亚吗？";
+	mes "在无尽海洋上蔓延的天堂……";
+	mes "欢迎来到莫斯科比亚";
+	mes "它充满冒险和神秘。";
+	next;
+	switch(select("关于莫斯科比亚……:去莫斯科比亚。:取消")) {
+		case 1:
+			mes "[莫斯科比亚 宣传使节]";
+			mes "莫斯科比亚是一个美丽的王国，";
+			mes "位于卢恩·米德加兹";
+			mes "北边的一座岛上。";
+			next;
+			mes "[莫斯科比亚 宣传使节]";
+			mes "我相信你一定会";
+			mes "被莫斯科比亚美丽的风景";
+			mes "和华丽的宫殿";
+			mes "深深迷住。";
+			next;
+			mes "[莫斯科比亚 宣传使节]";
+			mes "现在我们漫长的冬季";
+			mes "已经过去了，";
+			mes "我很高兴能向你展示";
+			mes "我们华丽的家乡。";
+			next;
+			mes "[莫斯科比亚 宣传使节]";
+			mes "如果你想访问莫斯科比亚，";
+			mes "就趁现在这个机会！";
+			mes "我会帮你";
+			mes "愉快地去莫斯科比亚旅行！";
+			close;
+
+		case 2:
+			mes "[莫斯科比亚 宣传使节]";
+			mes "好，那我们现在开始。";
+			mes "你应该付我 10,000 Zeny";
+			mes "去莫斯科比亚。";
+			mes "但你回来时，";
+			mes "不用付钱。";
+			next;
+			mes "[莫斯科比亚 宣传使节]";
+			mes "我们现在能出发了吗？";
+			next;
+			if (select("走吧！:取消") == 2) {
+				mes "[莫斯科比亚 宣传使节]";
+				mes "如果你现在太忙，";
+				mes "请在你想去的时候再告诉我。";
+				mes "我随时准备引导任何人去莫斯科比亚。";
+				close;
+			}
+			if (Zeny < 10000) {
+				mes "[莫斯科比亚 宣传使节]";
+				mes "抱歉，但你现在";
+				mes "钱不够";
+				mes "你需要 10,000 Zeny";
+				mes "才能去莫斯科比亚";
+				mes "谢谢。";
+				close;
+			} else {
+				mes "[莫斯科比亚 宣传使节]";
+				mes "好，我们现在出发。";
+				close2;
+				set Zeny,Zeny - 10000;
+				warp "moscovia",163,55;
+				end;
+			}
+		case 3:
+			mes "[莫斯科比亚 宣传使节]";
+			mes "如果你现在太忙，";
+			mes "请在你想去的时候再告诉我。";
+			mes "我随时准备引导任何人去莫斯科比亚。";
+			close;
+	}
+}
+
+moscovia,166,53,4	script	莫斯科比亚 宣传使节#2	960,{
+	mes "[莫斯科比亚 宣传使节]";
+	mes "你的旅行怎么样？";
+	mes "你在莫斯科比亚有美好的回忆吗？";
+	mes "现在有一艘船";
+	mes "要开往卢恩·米德加兹。";
+	next;
+	if (select("回艾尔贝塔:取消") == 2) {
+		mes "[莫斯科比亚 宣传使节]";
+		mes "如果你想多看一些，";
+		mes "请慢慢来。";
+		close;
+	}
+	mes "[莫斯科比亚 宣传使节]";
+	mes "请很快再来访问。";
+	mes "好，那我们走吧。";
+	close2;
+	if (checkre(0))
+		warp "alberta",244,86;
+	else
+		warp "alberta",243,67;
+	end;
+}
+
+
+// 莫斯科比亚宫殿 :: mos_swan
+//============================================================
+moscovia,253,166,4	script	士兵#mosk1	966,{
+	mes "[士兵]";
+	mes "我们亲爱的沙皇阿列克谢三世在宫殿里。";
+	mes "他统治着莫斯科比亚。";
+	mes "请小心，别给他添麻烦。";
+	close;
+}
+
+-	script	士兵#mosk::MoscSoldier	966,{
+	mes "[士兵]";
+	mes "请保持安静，否则沙皇会生气的。";
+	close;
+}
+mosk_in,118,66,5	duplicate(MoscSoldier)	士兵#mosk02	966
+mosk_in,133,110,3	duplicate(MoscSoldier)	士兵#mosk03	966
+mosk_in,133,73,3	duplicate(MoscSoldier)	士兵#mosk04	966
+mosk_in,113,124,5	duplicate(MoscSoldier)	士兵#mosk05	966

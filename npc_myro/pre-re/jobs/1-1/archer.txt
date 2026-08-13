@@ -1,0 +1,255 @@
+//===== rAthena Script ======================================= 
+//= Archer Job Quest
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.9
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Job quest for Archer classes
+//===== Additional Comments: ================================= 
+//= 1.0 Fully working.
+//= 1.1 Added instant job change for High Novice [Lupus]
+//= 1.3 Added Baby Class support [Lupus]
+//= 1.4 Optimised and moved first checker to Jfunc1-1 [massdriller]
+//= 1.5 Now saves/restores all quest skills [Lupus]
+//= 1.6 Merged back JFunc [Lupus]
+//= 1.7 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//=     Arrow reward is now equal to the type sof trunks brought.
+//=     No longer uses function "F_ToHigh"
+//= 1.7a Fixed minor dialogue bug at Grade==25 [Lupus]
+//= 1.8 Fixed mistake in condition check. [L0ne_W0lf]
+//= 1.9 Added Quest Log commands. [L0ne_W0lf]
+//============================================================ 
+
+payon_in02,64,71,4	script	弓箭手公会员#archer	85,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
+			mes "[弓箭手公会员]";
+			mes "嘿，我认识你。";
+			mes "你以前参加过这个测试，对吧？";
+			next;
+			mes "[弓箭手公会员]";
+			mes "啊，你一定去过瓦尔哈拉，然后转世重生了。";
+			mes "哇，真了不起！";
+			next;
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[弓箭手公会员]";
+				mes "呃……";
+				mes "想成为弓箭手的话，你最好先学会所有基本技能。";
+				next;
+				mes "[弓箭手公会员]";
+				mes "好了，回头见。";
+				close;
+			}
+			mes "[弓箭手公会员]";
+			mes "既然如此，我就没什么好说的了。";
+			mes "我知道你会成为一名出色的弓箭手……";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Archer_high;
+			skill "AC_MAKINGARROW",1,SKILL_PERM;
+			skill "AC_CHARGEARROW",1,SKILL_PERM;
+			mes "[弓箭手公会员]";
+			mes "虽然这次没有特别的奖励给你，希望你别介意。";
+			mes "请多保重。";
+			close;
+		}
+		else {
+			mes "[弓箭手公会员]";
+			mes "哦……？";
+			mes "嘿，你在这里做什么……？";
+			next;
+			mes "[弓箭手公会员]";
+			mes "我看得出你不适合当弓箭手。";
+			mes "感觉你似乎注定要走另一条路……";
+			close;
+		}
+	}
+	mes "[弓箭手公会员]";
+	mes "你好。有什么可以帮你的吗？";
+	next;
+	switch(select("我想成为弓箭手。:请告诉我申请条件。:没事，谢谢。")) {
+	case 1:
+		if (BaseJob == Job_Archer) {
+			mes "[弓箭手公会员]";
+			mes "你已经是弓箭手了……";
+			close;
+		}
+		else if (BaseJob != Job_Archer && BaseJob != Job_Novice) {
+			mes "[弓箭手公会员]";
+			mes "嗯……";
+			mes "你看起来一点都不像初心者……";
+			next;
+			mes "[弓箭手公会员]";
+			mes "总之，不管你是什么职业，既然已经有职业了，";
+			mes "就不能再选择转职成弓箭手。";
+			close;
+		}
+		if (job_archer_q == 0) {
+			mes "[弓箭手公会员]";
+			mes "你想成为弓箭手吗？";
+			mes "那样的话，你需要填写这份申请表。";
+			next;
+			if (select("申请。:取消") == 1) {
+				set job_archer_q,1;
+				setquest 1004;
+				mes "[弓箭手公会员]";
+				mes "好，在这里签名。";
+				mes "好了，嗯，等你达到条件后我就会为你转职。";
+				next;
+				mes "[弓箭手公会员]";
+				mes "如果你觉得已经达到条件了，我们现在就可以检查。";
+				mes "准备好了吗？";
+				next;
+				if (select("是的，准备好了。:不，还没有。") == 1) {
+					mes "[弓箭手公会员]";
+					mes "好，让我检查一下。";
+					next;
+				}
+				else {
+					mes "[弓箭手公会员]";
+					mes "我明白了。想查看申请条件的话请自便。";
+					close;
+				}
+			}
+			else {
+				mes "[弓箭手公会员]";
+				mes "好吧。";
+				mes "下次再见。";
+				close;
+			}
+		}
+		mes "[弓箭手公会员]";
+		mes "你是……" + strcharinfo(0) + "吗？";
+		next;
+		if (!callfunc("F_CanChangeJob")) {
+			mes "[弓箭手公会员]";
+			mes "嗯，你的职业等级还不够。";
+			mes "请再确认一下申请条件。";
+			next;
+			mes "[弓箭手公会员]";
+			mes "你的职业等级必须达到 10 级，别忘了还要学会所有基本技能。";
+			mes "做到之后再来找我吧。";
+			close;
+		}
+		if (job_archer_q == 1) {
+			set .@archer_item1,countitem(1066) * 5;
+			set .@archer_item2,countitem(1067) * 3;
+			set .@archer_item3,countitem(1068) * 2;
+			set .@archer_item4,countitem(1019);
+			set .@total_archer,.@archer_item1 + .@archer_item2 + .@archer_item3 + .@archer_item4;
+			set .@total_archer2,(((.@archer_item2 + .@archer_item3) * 2) + .@archer_item4);
+			mes "[弓箭手公会员]";
+			mes "太好了！";
+			mes "那么，让我看看……";
+			next;
+			mes "[弓箭手公会员]";
+			mes "我来评估一下你带来的各种制造弓所需的原木的价值。";
+			next;
+			if (countitem(1066) == 0 && countitem(1067) == 0 && countitem(1068) == 0 && countitem(1019) == 0) {
+				mes "[弓箭手公会员]";
+				mes "嗯……";
+				mes "可惜你一样必需物品都没带来。我没什么可评估的。";
+				close;
+			}
+			mes "[弓箭手公会员]";
+			if (countitem(1066) != 0) mes " S 级原木 : " + countitem(1066) + " 个, 得分 : " + .@archer_item1 + " . ";
+			if (countitem(1067) != 0) mes " A 级原木 : " + countitem(1067) + " 个, 得分 : " + .@archer_item2 + " . ";
+			if (countitem(1068) != 0) mes " B 级原木 : " + countitem(1068) + " 个, 得分 : " + .@archer_item3 + " . ";
+			if (countitem(1019) != 0) mes " C 级原木 : " + countitem(1019) + " 个, 得分 : " + .@archer_item4 + " . ";
+			if (.@total_archer < 25) {
+				mes "总得分: ^FF0000" + .@total_archer + "^000000 / 40";
+				next;
+				mes "[弓箭手公会员]";
+				mes "不到 25 分！？你至少要拿到 25 分才行！加油，再努力一点！";
+				close;
+			}
+			else {
+				mes "总得分: ^0000FF" + .@total_archer + "^000000 / 40";
+				next;
+				mes "[弓箭手公会员]";
+				if (.@total_archer > 40) {
+					mes "哇！超过 40 分了！";
+					mes "太出色了！恭喜你！";
+				}
+				else if (.@total_archer > 30) {
+					mes "超过 30 分！干得漂亮！";
+					mes "恭喜你！";
+				}
+				else {
+					mes "*唉* 嗯，你只是勉强及格……不管怎样，干得不错。";
+				}
+			}
+			next;
+			mes "[弓箭手公会员]";
+			mes "我会把这些原木送到我们的弓制造部。";
+			mes "既然你已经达到条件，我马上为你转职！";
+			if (countitem(1066) != 0) delitem 1066,countitem(1066); //Tree_Of_Archer_1
+			if (countitem(1067) != 0) delitem 1067,countitem(1067); //Tree_Of_Archer_2
+			if (countitem(1068) != 0) delitem 1068,countitem(1068); //Tree_Of_Archer_3
+			if (countitem(1019) != 0) delitem 1019,countitem(1019); //Wooden_Block
+		}
+		next;
+		callfunc "Job_Change",Job_Archer;
+		callfunc "F_ClearJobVar";
+		completequest 1004;
+		mes "[弓箭手公会员]";
+		mes "恭喜你！";
+		mes "你现在是弓箭手了！";
+		next;
+		mes "[弓箭手公会员]";
+		mes "当然，我们期待你努力为弓箭手公会的未来做出贡献。";
+		next;
+		mes "[弓箭手公会员]";
+		mes "啊，你的弓已经从弓制造部送到了。";
+		mes "来，拿着！它是你的了～";
+		getitem 1702,1; //Bow_
+		getitem 1750,.@total_archer2; //Arrow
+		next;
+		mes "[弓箭手公会员]";
+		mes "好了，出发吧。";
+		mes "带着自豪去狩猎吧，你可是由最优秀的人训练出来的！";
+		close;
+	case 2:
+		mes "[弓箭手公会员]";
+		mes "我来说明一下成为弓箭手的条件。";
+		if (BaseJob != Job_Novice) {
+			if (BaseJob == Job_Archer) {
+				next;
+				mes "[弓箭手公会员]";
+				mes "不过……";
+				mes "你已经是弓箭手了。这些你应该早就知道了……";
+			}
+			else {
+				next;
+				mes "[弓箭手公会员]";
+				mes "等一下。你已经选择了其他职业。";
+				mes "你不需要知道这些～";
+			}
+			mes "所以……是啊……没什么必要告诉你条件……";
+		}
+		next;
+		mes "[弓箭手公会员]";
+		mes "首先，初心者的职业等级必须达到 9 级，并且学会所有基本技能。";
+		next;
+		mes "[弓箭手公会员]";
+		mes "弓箭手需要极高的专注力和反应力，";
+		mes "所以我们不接受缺乏耐心的人。";
+		next;
+		mes "[弓箭手公会员]";
+		mes "你还必须收集^FF0000原木^000000。";
+		mes "原木共有 4 种，品质各不相同。";
+		mes "我们会根据品质给你的原木打出不同的分数。";
+		next;
+		mes "[弓箭手公会员]";
+		mes "想成为弓箭手，你必须在满分 40 分中至少拿到 ^0000FF25^000000 分。";
+		mes "你可以从一种叫'柳树'的树那里得到原木。";
+		mes "不过要小心。它们可是很难缠的怪物。";
+		close;
+	case 3:
+		close;
+	}
+}

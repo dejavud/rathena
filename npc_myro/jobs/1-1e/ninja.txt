@@ -1,0 +1,535 @@
+//===== rAthena Script ======================================= 
+//= Ninja Job Quest
+//===== By: ================================================== 
+//= Legionaire, Kisuka
+//===== Current Version: ===================================== 
+//= 1.7
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Ninja Job Change Quest
+//===== Additional Comments: ================================= 
+//= 1.1 Optimized, updated, checked [Lupus]
+//= 1.2 Added Akagi [Playtester]
+//= 1.3 Updated dialogs to official ones and optimized [SinSloth]
+//= 1.4 Fixed a minor bug [SinSloth]
+//= 1.5 Updated to match AEGIS script and Added Quest Log commands. [Kisuka]
+//= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
+//= 1.7 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
+//============================================================ 
+
+alberta,30,65,3	script	亚卡其	730,{
+	if (Class == Job_Novice) {
+		if (JobLevel == 10) {
+			mes "[亚卡其]";
+			mes "嗯……";
+			mes "你一定是感应到有人在等你，";
+			mes "才来到这里的吧。";
+			mes "告诉我，你在寻求忍耐之道吗？";
+			next;
+			if(select("不是:是") == 1) {
+				mes "[亚卡其]";
+				mes "我明白了。";
+				mes "人各有志吧。";
+				mes "保重。";
+				close;
+			}
+			mes "[亚卡其]";
+			mes "很好。";
+			mes "那么，让我立刻";
+			mes "送你踏上那条道路吧……";
+			close2;
+			switch(rand(3)) {
+				case 1:
+					warp "amatsu",170,229;
+					end;
+				case 2:
+					warp "amatsu",216,188;
+					end;
+				default:
+					warp "amatsu",178,176;
+					end;
+			}
+		} else {
+			mes "[亚卡其]";
+			mes "嗯？在你变得更强一点之前，";
+			mes "我帮不了你什么……";
+			close;
+		}
+	} else {
+		mes "[亚卡其]";
+		mes "嗯……你和我……";
+		mes "论战斗力，";
+		mes "我们大概不相上下。";
+		mes "也许哪天我们可以切磋一下。";
+		close;
+	}
+}
+
+que_ng,30,65,3	script	库乌佳 加伊#nq	730,{
+	if (Upper == 2) {
+		mes "[库乌佳 加伊]";
+		mes "我……我从来没见过";
+		mes "像你这么强大的婴儿！";
+		mes "离、离我远点，你这个怪物！";
+		close;
+	}
+	if (Class == Job_Novice) {
+		if (JobLevel < 10) {
+			mes "[库乌佳 加伊]";
+			mes "嗯？你是来学怎么当忍者的吗？";
+			mes "你的经验还不够，";
+			mes "等你对付怪物更熟练了再来吧。";
+			close;
+		}
+		if (NINJ_Q == 0) {
+			mes "["+strcharinfo(0)+"]";
+			mes "打扰一下。";
+			mes "你、你好？";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "……………………………………";
+			mes "你是怎么做到的？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "做到什么？";
+			mes "我什么都没做啊，应该……";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "你、你怎么能看见我？";
+			mes "我应该是肉眼看不见的才对。";
+			mes "啊，我明白了。";
+			mes "一定是野猫乔伊派你来杀我的！";
+			mes "我才不会上你的当！去死吧！";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "等、等一下！";
+			mes "我、我根本不认识什么野猫乔伊！";
+			mes "冷静点，没必要动粗！";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "什么……？";
+			mes "你怎么躲开了";
+			mes "我所有的攻击？";
+			mes "你确实有点本事，我承认。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "……………………………………";
+			mes "我来这里，";
+			mes "是想转职成忍者。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "……哦。就这事？";
+			mes "嗯，你很有潜力，";
+			mes "但我现在帮不了你。";
+			mes "我的敌人太多了，";
+			mes "一刻都不能放松警惕。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "那个野猫乔伊";
+			mes "完全冷酷无情……！";
+			mes "他随时都可能出手！";
+			mes "为了战胜敌人，";
+			mes "他什么事都做得出来！";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "等等，等等，";
+			mes "我刚想到一件事。";
+			mes "也许你可以帮我。";
+			mes "照我说的做，如果你真心想当忍者，";
+			mes "我就教你几手我的本领。";
+			next;
+			if(select("好吧。:不用了，谢谢。") == 2) {
+				mes "[库乌佳 加伊]";
+				mes "嗯？好吧。";
+				mes "不过，我不明白为什么";
+				mes "在这种小困境里，";
+				mes "我们不能互相帮助……";
+				close;
+			}
+			mes "[库乌佳 加伊]";
+			mes "太好了！我想问问野猫乔伊，";
+			mes "他是否同意暂时停战。";
+			mes "我知道我们俩都没武器了，";
+			mes "所以应该先好好装备起来。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "请带上这封信，";
+			mes "把它交给艾音布罗克的野猫乔伊。";
+			mes "他是伪装大师，你要仔细找他。";
+			mes "啊，还有，到高处去找他。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "是啊，野猫乔伊";
+			mes "一向喜欢躲在高处。";
+			mes "总之，把信交给他之后，";
+			mes "回来告诉我他的答复。";
+			set NINJ_Q,1;
+			setquest 6015;
+			close;
+		}
+		else if (NINJ_Q == 1) {
+			mes "[库乌佳 加伊]";
+			mes "就算这件事不算太急，";
+			mes "也请快点去艾音布罗克，";
+			mes "把我的信交给野猫乔伊。";
+			close;
+		}
+		else if (NINJ_Q == 2) {
+			mes "[库乌佳 加伊]";
+			mes "你把信交给野猫乔伊了吗？";
+			mes "我还需要知道他";
+			mes "对我停战提议的答复。";
+			mes "总之，想办法催催他吧。";
+			close;
+		}
+		else if (NINJ_Q == 3) {
+			mes "[库乌佳 加伊]";
+			mes "啊，你回来了。";
+			mes "野猫乔伊让你带着";
+			mes "他的答复回来了吗？";
+			mes "好，好，快让我看看。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "什么……？！";
+			mes "他怎么能拒绝我的停战提议？！";
+			mes "这只能说明";
+			mes "他又做出一把飞刀了。";
+			mes "可恶！我必须赶上他，";
+			mes "不然我就完了！";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "听着，你得再帮我一次！";
+			mes "我需要你收集一些材料，";
+			mes "好让我打造自己的飞刀";
+			mes "去对抗野猫乔伊。";
+			mes "之后，我就帮你转职成忍者。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "你只需要给我带来";
+			mes "^3355FF5 赛依伐^000000和";
+			mes "^3355FF1 强化武器金属-级数一^000000。";
+			mes "请尽快弄到它们！";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "咦？真巧，";
+			mes "野猫乔伊居然也让我";
+			mes "收集同样的材料。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "可恶！那岂不是说……";
+			mes "你实际上帮了乔伊";
+			mes "打造他的飞刀！";
+			mes "不！我应该早点想到的！";
+			mes "好吧，现在太迟了。";
+			mes "快、快点吧！";
+			set NINJ_Q,4;
+			changequest 6017,6018;
+			close;
+		}
+		else if (NINJ_Q == 4) {
+			if (countitem(7053) < 5 || countitem(1010) < 1) {
+				mes "[库乌佳 加伊]";
+				mes "快点把";
+				mes "^3355FF5 赛依伐^000000和";
+				mes "^3355FF1 强化武器金属-级数一^000000带给我，";
+				mes "好让我打造自己的飞刀";
+				mes "对付野猫乔伊！";
+				close;
+			}
+			if (SkillPoint != 0) {
+				mes "[库乌佳 加伊]";
+				mes "哇，哇……";
+				mes "你还有剩余的技能点数。";
+				mes "转职前最好把它们";
+				mes "全部用掉，对吧？";
+				close;
+			}
+			mes "[库乌佳 加伊]";
+			mes "啊，你回来了，";
+			mes "东西都带齐了。";
+			mes "你回来得比我预想的还快，嗯？";
+			mes "很好，照约定，";
+			mes "我把你转职成忍者。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "让我正式自我介绍一下。";
+			mes "我是东牙忍者军团的上忍，";
+			mes "库乌佳 加伊，";
+			mes "负责率领搜索队";
+			mes "寻找卡兹麻大人。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "卡兹麻大人是我们村子的首领，";
+			mes "但他逃走了。";
+			mes "这导致忍者军团内部";
+			mes "发生了冲突。";
+			mes "现在的局势很不稳定……";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "起初，因为这复杂的局势，";
+			mes "我不想接受你成为忍者。";
+			mes "不过，你已经证明";
+			mes "你确实配得上";
+			mes "加入忍者的行列。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "从他的信来看，";
+			mes "连乔伊都对你评价很高。";
+			mes "只要记住，作为忍者，";
+			mes "任务高于一切。";
+			mes "但不要让任务目标";
+			mes "凌驾于你的良心之上。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "''保密高于一切。''";
+			mes "为了让我们的秘密";
+			mes "隐藏在阴影中，";
+			mes "你只能向获得许可的商人";
+			mes "购买或出售忍者武器。";
+			mes "请牢记这一点。";
+			next;
+			mes "[库乌佳 加伊]";
+			mes "从今天起，你就是";
+			mes "东牙忍者军团光荣的一员了。";
+			mes "要像风一样敏捷，";
+			mes "像落下的影子一样无声。";
+			callfunc "Job_Change",Job_Ninja;
+			set NINJ_Q,5;
+			delitem 7053,5; // Cyfar
+			delitem 1010,1; // Phracon
+			getitem 13010,1;	// Asura
+			completequest 6018;
+			close;
+		}
+		else {
+			mes "[库乌佳 加伊]";
+			mes "最近怎么样？";
+			mes "刻苦训练吧：";
+			mes "你要做到消失得无影无踪。";
+			mes "如果你能做到，";
+			mes "任何忍者都会尊敬你~";
+			close;
+		}
+	} else {
+		if (BaseClass == Job_Ninja) {
+			mes "[库乌佳 加伊]";
+			mes "最近怎么样？";
+			mes "刻苦训练吧：";
+			mes "你要做到消失得无影无踪。";
+			mes "如果你能做到，";
+			mes "任何忍者都会尊敬你~";
+			close;
+		} else {
+			mes "[库乌佳 加伊]";
+			mes "什么……？";
+			mes "你怎么能找到";
+			mes "藏在阴影中的我？！";
+			mes "你一定不是普通的冒险者，嗯？";
+			close;
+		}
+	}
+}
+
+einbroch,184,194,3	script	可疑的男子#nq	881,{
+	if (NINJ_Q == 1) {
+		mes "[可疑的男子]";
+		mes "我去过很多地方，";
+		mes "但从来没上过像";
+		mes "艾音布罗克塔这么高的建筑。";
+		mes "相比之下，";
+		mes "我家乡的建筑都太小了……";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "哦，你是天津人吗？";
+		mes "我在找一个叫野猫乔伊的人，";
+		mes "他就来自那里。";
+		next;
+		mes "[可疑的男子]";
+		mes "……不。不，我其实是依斯鲁得人，";
+		mes "我来艾音布罗克";
+		mes "只是为了找一些矿石。";
+		mes "告诉我，你为什么要找";
+		mes "这个野猫乔伊？";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "嗯，我要把这封信交给他，";
+		mes "再拿到他的答复，";
+		mes "这样我才能成为忍者。";
+		next;
+		mes "[可疑的男子]";
+		mes "真的吗？这么说起来，";
+		mes "我确实在这个镇上";
+		mes "见过他一两次。";
+		mes "不过，他更愿意别人叫他''红豹乔伊''，";
+		mes "而不是''野猫乔伊''。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "我很想帮你找到他，";
+		mes "但我得先找到";
+		mes "我要的矿石。";
+		mes "如果你不介意，能帮帮我吗？";
+		mes "之后我就能帮你找乔伊。";
+		next;
+		if(select("别担心，我自己会找到他的。:好的，我帮你。") == 1) {
+			mes "[可疑的男子]";
+			mes "你确定吗……？";
+			mes "红豹乔伊是真正的伪装大师。";
+			mes "你需要一切可能的帮助";
+			mes "才能找到他……";
+			close;
+		}
+		mes "[可疑的男子]";
+		mes "太好了，很高兴";
+		mes "听到你这么说。";
+		mes "请帮我找";
+		mes "^3355FF5 赛依伐^000000和";
+		mes "^3355FF1 强化武器金属-级数一^000000。";
+		set NINJ_Q,2;
+		changequest 6015,6016;
+		close;
+	}
+	else if (NINJ_Q == 2) {
+		if (countitem(7053) < 5 || countitem(1010) < 1) {
+			mes "[可疑的男子]";
+			mes "请尽快把";
+			mes "^3355FF5 赛依伐^000000和";
+			mes "^3355FF1 强化武器金属-级数一^000000带给我。";
+			mes "然后，我就能帮你";
+			mes "找到红豹乔伊。";
+			close;
+		}
+		mes "[可疑的男子]";
+		mes "好，好。";
+		mes "你把矿石带来了……";
+		mes "现在，轮到我帮你了。";
+		mes "来，让我看看那封信。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "？？？！！";
+		next;
+		mes "[可疑的男子]";
+		mes "怎么了？你不是把库乌佳 加伊的信带来给我了吗？";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "你是……";
+		mes "你是野猫乔伊？";
+		next;
+		mes "[可疑的男子]";
+		mes "……是的，";
+		mes "但我更愿意被叫做红豹乔伊。";
+		mes "是库乌佳 加伊派你来的，对吧？";
+		mes "只有他才那么叫我。";
+		mes "这么说你想成为忍者，嗯？";
+		mes "嗯，好吧。";
+		next;
+		mes "[红豹乔伊]";
+		mes "想成为忍者，";
+		mes "就要时刻小心";
+		mes "你所看到的和你所相信的。";
+		mes "别忘了，一旦你的秘密被发现，";
+		mes "你作为忍者就完了。";
+		next;
+		mes "[红豹乔伊]";
+		mes "记住行动要迅速，";
+		mes "永远消失得无影无踪。";
+		mes "隐藏在阴影之中，";
+		mes "才是我们真正的";
+		mes "终极力量。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "我明白了……";
+		mes "………………";
+		next;
+		mes "[红豹乔伊]";
+		mes "现在，让我读读这封信。";
+		mes "我看看……";
+		mes "嗯。我还以为库乌佳 加伊";
+		mes "又想向我挑战，";
+		mes "没想到他居然想";
+		mes "暂时停战？哈！";
+		next;
+		mes "[红豹乔伊]";
+		mes "多亏了你的帮助，";
+		mes "我现在有打造飞刀";
+		mes "所需的矿石了！";
+		mes "哈哈哈！占上风的时候我才不会同意停战！";
+		next;
+		mes "[红豹乔伊]";
+		mes "总之，让我给他写回信。";
+		mes "我也会附上";
+		mes "我对你的推荐……";
+		mes "我想你会成为一名非常出色的忍者，";
+		mes "即使我刚才骗了你。";
+		mes "嘿嘿嘿！";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "……";
+		mes "…………";
+		mes "………………";
+		next;
+		mes "[红豹乔伊]";
+		mes "给你。";
+		mes "请把这封信";
+		mes "带给库乌佳 加伊。";
+		mes "回天津要花不少时间，";
+		mes "让我直接送你过去吧……";
+		delitem 1010,1;	// Phracon
+		delitem 7053,5;	// Cyfar
+		set NINJ_Q,3;
+		changequest 6016,6017;
+		close2;
+		warp "amatsu",113,127;
+		end;
+	}
+	else if (NINJ_Q == 3) {
+		mes "[红豹乔伊]";
+		mes "嗯？我不清楚发生了什么，";
+		mes "但看来你还没把";
+		mes "我的回信交给库乌佳 加伊。";
+		mes "要我现在";
+		mes "直接送你去天津吗？";
+		next;
+		if(select("不用了，谢谢。:好的，麻烦您了。") == 1) {
+			mes "[红豹乔伊]";
+			mes "好吧。";
+			mes "我只是想帮你";
+			mes "省点时间。";
+			close;
+		}
+		mes "[红豹乔伊]";
+		mes "那么，好的。";
+		mes "暂时再见了。";
+		close2;
+		warp "amatsu",113,127;
+		end;
+	}
+	else if (NINJ_Q == 4) {
+		mes "[红豹乔伊]";
+		mes "库乌佳 加伊也让你";
+		mes "去收集材料了？";
+		mes "算了，我想";
+		mes "我也不能怪他。";
+		mes "再说，公平决斗的话";
+		mes "我应该能赢他~";
+		close;
+	}
+	else if (NINJ_Q == 5 && BaseClass == Job_Ninja) {
+		mes "[红豹乔伊]";
+		mes "哦，你是忍者了~";
+		mes "希望你继续修炼，";
+		mes "掌握所有能掌握的忍者技能。";
+		mes "永远记住";
+		mes "要融入阴影之中。";
+		close;
+	}
+	else {
+		mes "[游客]";
+		mes "我去过很多地方，";
+		mes "但从来没上过像";
+		mes "艾音布罗克塔这么高的建筑。";
+		mes "相比之下，";
+		mes "我家乡的建筑都太小了……";
+		close;
+	}
+}

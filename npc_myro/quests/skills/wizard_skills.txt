@@ -1,0 +1,402 @@
+//===== rAthena Script ======================================= 
+//= Wizard Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Sight Blaster
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+gef_tower,115,36,4	script	喵呜#q_wiz	876,{
+	if (BaseJob == Job_Wizard) {
+		if (WIZ_SK == 100) {
+			if (getskilllv("WZ_SIGHTBLASTER") == 0) {
+				mes "[喵呜]";
+				mes "什么……？！你居然忘了";
+				mes "我教你的绝世好技能？";
+				mes "转生也不是忘记的借口！";
+				mes "好吧，你想让我再教你一次？";
+				mes "好，上课了！";
+				next;
+				mes "^3355FF*砰！轰！哐！*^000000";
+				specialeffect2 EF_SUI_EXPLOSION;
+				next;
+				mes "[喵呜]";
+				mes "别以为转生了";
+				mes "就能在我面前摆架子！";
+				mes "在我再揍你一顿之前，";
+				mes "你最好想起那个技能怎么用！";
+				next;
+				mes "^3355FF在喵呜对你展开又一轮痛殴之前，";
+				mes "你奇迹般地回忆起了火狩冲击技能。^000000";
+				specialeffect2 EF_ABSORBSPIRITS;
+				skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
+				next;
+				mes "[喵呜]";
+				mes "想起来了吗？";
+				mes "很好。现在我要继续午睡了。";
+				mes "如果你敢再来烦我，";
+				mes "我会让你后悔的。";
+				mes "记住我的话！";
+				close;
+			}
+			else {
+				mes "[喵呜]";
+				mes "呼噜……呼噜……";
+				mes "凯瑟琳……我一定会让你";
+				mes "为把我变成小猫后悔的……";
+				mes "我要……要……呼噜……";
+				close;
+			}
+		}
+		else if (WIZ_SK == 0) {
+			mes "[喵呜]";
+			mes "*哈欠~*";
+			mes "好困啊……";
+			mes "嗯？你想找我说话？";
+			mes "没事的话别来烦我！";
+			next;
+			if (select("一只猫？:现在我也困了……") == 1) {
+				mes "[喵呜]";
+				mes "是啊。没错，我是猫。";
+				mes "至少现在是。该死的凯瑟琳！";
+				mes "我不就是没经她同意";
+				mes "借了几块魔力矿石吗，";
+				mes "她就把我变成这个样子。";
+				mes "我本来打算告诉她的！";
+				next;
+				mes "[喵呜]";
+				mes "等我恢复人形、";
+				mes "重获力量，我一定要";
+				mes "大闹一场。凯瑟琳、你、所有人，";
+				mes "统统把你们变成猫！";
+				close;
+			}
+			mes "[喵呜]";
+			mes "哈！也是……";
+			mes "睡个午觉真是我听过最棒的主意——";
+			mes "哦。等等。你是巫师，对吧？";
+			mes "我太困了，居然没注意到。";
+			mes "啊，这正好~";
+			next;
+			mes "[喵呜]";
+			mes "是这样，我本该代表巫师公会，";
+			mes "教巫师们这个新技能。";
+			mes "虽然我一点都不想干，";
+			mes "但我别无选择。你说怎么样？";
+			next;
+			if (select("算了，我太困了……:当然，我想学新技能。") == 1) {
+				mes "[喵呜]";
+				mes "^333333*哈欠*^000000";
+				mes "好吧。如果以后想学，";
+				mes "再来提醒我这个技能的事。";
+				mes "那么，继续午睡……";
+				mes "呼噜……呼噜……";
+				close;
+			}
+			mes "[喵呜]";
+			mes "真的？好吧，好吧。";
+			mes "先说清楚，我教这个技能，";
+			mes "只是为了让凯瑟琳";
+			mes "把我变回人形。";
+			mes "当一只猫实在太丢脸了！";
+			next;
+			mes "[喵呜]";
+			mes "等等，仔细想想，";
+			mes "那只狗玛利亚跟在凯瑟琳身边";
+			mes "那么久了，却一直没恢复人形。";
+			mes "不、不会的！";
+			mes "我现在不能失去希望！";
+			next;
+			mes "[喵呜]";
+			mes "算了，赶紧把这事儿了结吧。";
+			mes "你也知道，我们巫师";
+			mes "远程攻击技能很强，";
+			mes "但近战很弱，对吧？";
+			next;
+			mes "[喵呜]";
+			mes "我要教你的这个新技能，";
+			mes "就是为了弥补巫师职业";
+			mes "近身战斗的弱点而设计的。";
+			mes "首先，你吟唱咒语……";
+			next;
+			mes "[喵呜]";
+			mes "然后在技能持续期间，";
+			mes "你会被一面护盾保护，";
+			mes "把靠得太近的敌人推开并造成伤害。";
+			mes "在激战中是不是非常实用？";
+			next;
+			select("我能把敌人推开？");
+			mes "[喵呜]";
+			mes "当然能，嗯，学会之后就能。";
+			mes "嗯，不过你得先掌握好";
+			mes "击退理论，才能学这个技能。";
+			mes "嗯，你也许需要更好的讲解……";
+			next;
+			mes "[喵呜]";
+			mes "你知道吗？骑士们";
+			mes "差不多都是击退系技能的专家，";
+			mes "去普隆德拉找一位骑士，";
+			mes "让他给你讲讲击退理论吧。";
+			next;
+			mes "[喵呜]";
+			mes "看普隆德拉小地图上";
+			mes "11 点钟方向，就能找到";
+			mes "骑士团。那里应该有人";
+			mes "愿意教你更多";
+			mes "关于技能击退的知识……";
+			set WIZ_SK,1;
+			close;
+		}
+		else if (WIZ_SK == 1) {
+			mes "[喵呜]";
+			mes "你还在这里干什么？";
+			mes "我不是让你去普隆德拉骑士团，";
+			mes "请那里的人教你";
+			mes "击退理论吗？";
+			close;
+		}
+		else if (WIZ_SK == 2) {
+			mes "[喵呜]";
+			mes "嗯？哦，很好，你已经学会了";
+			mes "击退敌人的基础。";
+			mes "现在你差不多可以学习";
+			mes "我该教你的那个技能了。";
+			next;
+			mes "[喵呜]";
+			mes "我又不是慈善家，";
+			mes "我的教导和辛苦";
+			mes "可是要收学费的！";
+			mes "嗯，收什么当学费好呢？";
+			mes "啊，我正好缺魔力矿石~";
+			next;
+			mes "[喵呜]";
+			mes "去给我找来";
+			mes "^FF000010 水灵矿石^000000、";
+			mes "^FF000010 地灵矿石^000000、";
+			mes "^FF000010 火灵矿石^000000和";
+			mes "^FF000010 风灵矿石^000000。";
+			next;
+			mes "[喵呜]";
+			mes "这也不算多，";
+			mes "别抱怨，尽快回来。";
+			mes "你出门的时候，";
+			mes "我要再睡个午觉~";
+			set WIZ_SK,3;
+			close;
+		}
+		else if (WIZ_SK == 3) {
+			if (countitem(991) < 10 || countitem(993) < 10 || countitem(990) < 10 || countitem(992) < 10) {
+				mes "[喵呜]";
+				mes "^333333*哈欠*^000000嗯？";
+				mes "你、你居然没带齐东西";
+				mes "就敢回来？！";
+				mes "你忘了要带什么，对吧？";
+				mes "咕噜噜……";
+				next;
+				mes "[喵呜]";
+				mes "我说的是带来";
+				mes "^ff000010 水灵矿石^000000、";
+				mes "^ff000010 地灵矿石^000000、";
+				mes "^ff000010 火灵矿石^000000和";
+				mes "^ff000010 风灵矿石^000000！";
+				next;
+				mes "[喵呜]";
+				mes "这次别再忘了！";
+				mes "没找齐我要的东西之前，";
+				mes "连想都别想把我叫醒！";
+				close;
+			}
+			mes "[喵呜]";
+			mes "*哈欠~* 什、什么？";
+			mes "哦，是你啊。";
+			mes "我要的石头带来了吗？";
+			mes "嗯。很好，让我看看带齐没有……";
+			mes "一、二、三……";
+			next;
+			mes "[喵呜]";
+			mes "………………";
+			mes "算了。我懒得数了。";
+			mes "东西我收下，";
+			mes "然后教你技能，";
+			mes "这样我就能回去睡觉了。";
+			next;
+			mes "[喵呜]";
+			mes "这个技能叫做，";
+			mes "''^FF0000火狩冲击^000000。''";
+			mes "很酷吧？总之，它是火属性技能，";
+			mes "需要先施放火狩才能发动。";
+			mes "现在试试看。";
+			next;
+			specialeffect2 EF_SUI_EXPLOSION;
+			mes "^3355FF*砰！轰！*^000000";
+			next;
+			mes "[喵呜]";
+			mes "……";
+			mes "嗯。不太对，";
+			mes "不过第一次来说还不赖。";
+			mes "记住要用意念去推动。";
+			mes "呃，我们再试一次，好吗？";
+			next;
+			mes "[喵呜]";
+			mes "你要用意念。";
+			mes "推！用你的意念去推！";
+			mes "呃，就是用意念推开";
+			mes "你用火狩召唤出的火焰。";
+			mes "没那么难！";
+			next;
+			mes "[喵呜]";
+			mes "终于……！";
+			mes "你真的学会了！";
+			mes "这也太费劲了，";
+			mes "不过总算结束了。";
+			specialeffect2 EF_ABSORBSPIRITS;
+			delitem 991,10; //Crystal_Blue
+			delitem 993,10; //Yellow_Live
+			delitem 990,10; //Boody_Red
+			delitem 992,10; //Wind_Of_Verdure
+			set WIZ_SK,100;
+			skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
+			next;
+			mes "[喵呜]";
+			mes "教了这么多，我累坏了。";
+			mes "我想我现在该好好睡一觉了。";
+			mes "你走吧，如果你认识其他巫师，";
+			mes "就介绍他们来找我吧。";
+			close;
+		}
+		else {
+			mes "[喵呜]";
+			mes "呼噜……呼噜……";
+			mes "凯瑟琳……我一定会让你";
+			mes "为把我变成小猫后悔的……";
+			mes "我要……要……呼噜……";
+			close;
+		}
+	}
+	else {
+		mes "[喵呜]";
+		mes "*哈欠~*";
+		mes "好困啊……";
+		mes "嗯？你想找我说话？";
+		mes "没事的话别来烦我！";
+		next;
+		if (select("一只猫？:现在我也困了……") == 1) {
+			mes "[喵呜]";
+			mes "是啊。没错，我是猫。";
+			mes "至少现在是。该死的凯瑟琳！";
+			mes "我不就是没经她同意";
+			mes "借了几块魔力矿石吗，";
+			mes "她就把我变成这个样子。";
+			mes "我本来打算告诉她的！";
+			next;
+			mes "[喵呜]";
+			mes "等我恢复人形、";
+			mes "重获力量，我一定要";
+			mes "大闹一场。凯瑟琳、你、所有人，";
+			mes "统统把你们变成猫！";
+			close;
+		}
+		mes "[喵呜]";
+		mes "哈！也是……";
+		mes "睡午觉真是今天最棒的主意。";
+		mes "嗯。^333333*哈欠~*^000000";
+		mes "好了，睡觉时间到……";
+		mes "呼噜噜……呼噜……";
+		close;
+	}
+}
+
+prt_in,82,98,3	script	赛蒙 玫亚斯#q_wiz	46,{
+	if (WIZ_SK == 1) {
+		mes "[赛蒙]";
+		mes "啊，你一定是一位精通魔法的行家。";
+		mes "嗯，你一定是巫师。";
+		mes "还是超魔导师？";
+		mes "我实在分不清两者的区别。";
+		mes "啊，有什么可以为你效劳的？";
+		next;
+		if (select("我没事，谢谢。:我想学习击退的技巧。") == 1) {
+			mes "[赛蒙]";
+			mes "我很惊讶你选择了修行魔法：";
+			mes "从你的体格来看，";
+			mes "我觉得你更适合舞剑。";
+			mes "哈哈，不过这只是一个";
+			mes "普通骑士的看法罢了。";
+			close;
+		}
+		mes "[赛蒙]";
+		mes "等等，你是想让我教你";
+		mes "击退攻击技巧？";
+		mes "用火焰之壁或火箭术这类法术";
+		mes "自卫不是更有效吗？";
+		next;
+		select("但在近距离……");
+		mes "[赛蒙]";
+		mes "哦，我明白了。是啊，";
+		mes "巫师在近战中确实吃亏。";
+		mes "好吧，我理解你为什么";
+		mes "想学击退技巧了。";
+		mes "好，我可以教你一些基础。";
+		next;
+		mes "[赛蒙]";
+		mes "每个冒险者都知道攻击的基本功。";
+		mes "你出击，然后准备下一个动作，";
+		mes "要么是再次出击，";
+		mes "要么是闪避或防御。";
+		mes "很简单，对吧？";
+		next;
+		mes "[赛蒙]";
+		mes "要击退敌人，就必须";
+		mes "用持续发力的攻击。";
+		mes "关键在于顺势而发。";
+		mes "如果打头部，";
+		mes "击退的距离会太短。";
+		next;
+		mes "[赛蒙]";
+		mes "如果向腿部发力推击，";
+		mes "敌人会朝你倒下。";
+		mes "推击的最佳目标是躯干，";
+		mes "因为它更容易控制推击方向。";
+		next;
+		mes "[赛蒙]";
+		mes "好了，关于推击，";
+		mes "我已经尽力讲清楚了。";
+		mes "专心自行练习这套理论，";
+		mes "你应该能掌握它。";
+		mes "祝你旅途顺利，冒险者~";
+		set WIZ_SK,2;
+		close;
+	}
+	else {
+		mes "[赛蒙]";
+		mes "不要弄错了：";
+		mes "剑术是一门艺术。";
+		mes "这些技巧乍看粗蛮，";
+		mes "但其中蕴含着骑士们";
+		mes "天生领悟的精妙战略。";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Removed duplicates [Toms]
+//============================================================

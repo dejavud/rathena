@@ -1,0 +1,473 @@
+//===== rAthena Script ======================================= 
+//= Super Novice Job Quest
+//===== By: ================================================== 
+//= Darkchild
+//===== Current Version: ===================================== 
+//= 2.4
+//===== Compatible With: ===================================== 
+//= rAthena Project; SVN r15340+
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Super Novice Job Change Npc
+//= Super Novice Cart Rental Npc
+//= Some Other Useless Super Novice Npc
+//===== Additional Comments: ================================= 
+//= 1.9 Rescripted to the Aegis 10.3 Standars. [Samuray22]
+//= 2.0 Rescripted again, this time using an iRO base. [L0ne_W0lf]
+//= 2.1 Swapped use of baseclass for basejob. [L0ne_W0lf]
+//= 2.2 Added Quest Log commands. [Kisuka]
+//= 2.3 NPC "Esseray" calls Ex. Super Novice script when enabled. [Euphy]
+//= 2.4 Added an Ex. Super Novice dialog check. [Euphy]
+//============================================================ 
+
+aldeba_in,223,167,3	script	特杰雷诺#sn	709,{
+	if (BaseJob == Job_Super_Novice) {
+		mes "[特杰雷诺]";
+		mes "我相信你很享受";
+		mes "作为超级初心者的生活吧？";
+		mes "啊，很好很好……正如我所料。";
+		mes "确实，平庸之光正在你体内闪耀……";
+		next;
+		mes "[特杰雷诺]";
+		mes "我鼓励你像";
+		mes "基姆·夏恩先生那样生活……";
+		mes "成为一个样样都会……";
+		mes "……但样样不精的人。";
+		close;
+	}
+	if (countitem(938) > 29 && countitem(907) > 29 && SUPNOV_Q == 1) {
+		delitem 938,30; //Sticky_Mucus
+		delitem 907,30; //Resin
+		mes "[特杰雷诺]";
+		mes "啊，你把我想要的";
+		mes "东西带来了！";
+		mes "你证明了自己有资格";
+		mes "加入我们的";
+		mes "超级初心者协会。";
+		next;
+		mes "[特杰雷诺]";
+		mes "那么，照约定，";
+		mes "我将把你转职成";
+		mes "^3355FF超级初心--^000000咦？";
+		mes "你身后那是什么？";
+		next;
+		select("咦？:那是什么？");
+		mes "^3355FF你回头看去，但是……";
+		mes "那里什么都没有。";
+		mes "这里肯定有古怪！^000000";
+		next;
+		completequest 6010;
+		callfunc "F_ClearJobVar";
+		getitem 2339,1; //G_Strings
+		if (Upper==0) jobchange Job_Super_Novice;
+		if (Upper==2) jobchange Job_Super_Baby;
+		mes "[特杰雷诺]";
+		mes "哇哈哈！上当了吧！";
+		mes "那么……你觉得我的笑话怎么样？";
+		mes "噢，算了，忘了它吧……";
+		next;
+		mes "[特杰雷诺]";
+		mes "也忘了像我这样的成年人";
+		mes "为什么会随身带着";
+		mes "一条内裤这种事吧。";
+		next;
+		mes "[特杰雷诺]";
+		mes "重要的是……";
+		mes "你已经加入了伟大的";
+		mes "超级初心者的光荣行列。";
+		next;
+		mes "[特杰雷诺]";
+		mes "就把这条内裤当作礼物吧……";
+		mes "据说我们传说中的协会创始人";
+		mes "基姆·夏恩先生，";
+		mes "早年追求典范般的平庸时，";
+		mes "穿的就是这一件。";
+		next;
+		mes "[特杰雷诺]";
+		mes "去吧，享受你作为";
+		mes "超级初心者的新生活！";
+		mes "勇往直前，去帮助普通人，";
+		mes "同时自己也";
+		mes "做一个普通人！";
+		close;
+	}
+	if (SUPNOV_Q == 1) {
+		mes "[特杰雷诺]";
+		mes "咦？你忘了我要你";
+		mes "带什么了吗？";
+		mes "好吧，我再告诉你一次。";
+		mes "这次请记住……";
+		next;
+		mes "[特杰雷诺]";
+		mes "我要你给我带来";
+		mes "^FF000030 粘稠液体^000000和";
+		mes "^FF000030 树脂^000000。";
+		close;
+	}
+	if (BaseJob == Job_Novice && Upper != 1) {
+		mes "[特杰雷诺]";
+		mes "……嗯？";
+		mes "站住。";
+		mes "让我看看你。";
+		next;
+		mes "[特杰雷诺]";
+		mes "……";
+		mes "…………";
+		mes "………………";
+		emotion ET_THINK;
+		next;
+		mes "[特杰雷诺]";
+		mes "我看到平庸之光";
+		mes "在你体内";
+		mes "闪耀……";
+		next;
+		mes "[特杰雷诺]";
+		mes "为什么不加入我们呢，";
+		mes "年轻的初心者？";
+		mes "加入我们，领悟";
+		mes "平庸之中";
+		mes "微妙的伟大……";
+		next;
+		mes "[特杰雷诺]";
+		mes "接受我的提议吧……";
+		mes "脱下你那身";
+		mes "棕色、满是尘土的衣服，";
+		mes "绽放成……";
+		next;
+		mes "[特杰雷诺]";
+		mes "……一名^CE6300超级初心者^000000。";
+		next;
+		switch(select("接受他的提议。:拒绝他的提议。:再仔细听听。")) {
+		case 1:
+			if (!callfunc("F_CanChangeJob")) {
+				mes "[特杰雷诺]";
+				mes "嗯……但你真的领悟到";
+				mes "弱中求强的";
+				mes "价值了吗？";
+				mes "你必须向我证明，";
+				mes "你是个真正的";
+				mes "平庸之辈。";
+				next;
+				mes "[特杰雷诺]";
+				mes "以初心者的身份生活吧……";
+				mes "等你掌握了";
+				mes "基本技能";
+				mes "再回来……";
+				mes "在平庸中成长，";
+				mes "成为 10 级初心者……";
+				close;
+			}
+			if (BaseLevel < 45) {
+				mes "[特杰雷诺]";
+				mes "嗯……但你真的珍视";
+				mes "平凡冒险者那";
+				mes "悠闲的生活方式吗？";
+				mes "向我证明";
+				mes "你不贪恋力量……";
+				next;
+				mes "[特杰雷诺]";
+				mes "过着平凡的生活吧……";
+				mes "成为 45 级初心者……";
+				mes "到那时你就可以加入我们了……";
+				close;
+			}
+			mes "[特杰雷诺]";
+			mes "我从你的眼中看到了";
+			mes "过简单生活的";
+			mes "决心……";
+			next;
+			mes "[特杰雷诺]";
+			mes "只有真正的智者才能看出，";
+			mes "平凡与普通";
+			mes "才是最好的";
+			mes "生活方式。";
+			next;
+			mes "[特杰雷诺]";
+			mes "不过，我们并不是";
+			mes "谁都欢迎加入协会的。";
+			mes "你必须先通过";
+			mes "我们的资格考试。";
+			next;
+			mes "[特杰雷诺]";
+			mes "为了这次考试，";
+			mes "你必须给我带来一些";
+			mes "从普通、平平无奇的怪物身上";
+			mes "掉落的物品。";
+			next;
+			mes "[特杰雷诺]";
+			mes "嗯……";
+			mes "^FF000030 粘稠液体^000000";
+			mes "和^FF000030 树脂";
+			mes "^000000很适合用来检验你";
+			mes "对付弱小敌人的能力。";
+			next;
+			mes "[特杰雷诺]";
+			mes "另外，30 这个数字";
+			mes "很有意义。";
+			mes "它没什么特别的……";
+			mes "只是个普通的数字。";
+			mes "哈哈哈哈哈哈~";
+			next;
+			set SUPNOV_Q,1;
+			setquest 6010;
+			mes "[特杰雷诺]";
+			mes "祝你好运，我的朋友。";
+			close;
+		case 2:
+			mes "[特杰雷诺]";
+			mes "哎呀，哎呀……";
+			mes "我想简单生活的价值，";
+			mes "对你来说很难领会。";
+			mes "没……没关系……";
+			mes "你的人生是你自己的。";
+			next;
+			mes "[特杰雷诺]";
+			mes "不过，如果你有一天";
+			mes "看到了平凡之光，";
+			mes "随时欢迎你";
+			mes "来找我……";
+			next;
+			mes "[特杰雷诺]";
+			mes "随着我们的初心者协会";
+			mes "越来越受欢迎，";
+			mes "追随者越来越多，";
+			mes "我们可能会考虑";
+			mes "采用更难的考试……";
+			close;
+		case 3:
+			mes "[特杰雷诺]";
+			mes "我们的初心者协会是由";
+			mes "传说中的基姆·夏恩先生";
+			mes "创立的……";
+			mes "他也许是我们这个时代最伟大的人。";
+			next;
+			mes "[特杰雷诺]";
+			mes "他意识到世间";
+			mes "有许多苦难，";
+			mes "尤其是在";
+			mes "米德加兹的";
+			mes "普通人中间……";
+			next;
+			mes "[特杰雷诺]";
+			mes "他从遇到的形形色色的人身上";
+			mes "学到了许多技能……";
+			mes "但由于他";
+			mes "从不在一个地方久留，";
+			mes "他变得样样都会……";
+			mes "却样样不精。";
+			next;
+			mes "[特杰雷诺]";
+			mes "在分担普通人痛苦的";
+			mes "过程中，";
+			mes "他自己也成了普通人……";
+			mes "有史以来最伟大的";
+			mes "普通人。";
+			next;
+			mes "[特杰雷诺]";
+			mes "我们协会的成员";
+			mes "努力像基姆·夏恩先生";
+			mes "那样生活，";
+			mes "遵循他留给我们的准则……";
+			close;
+		}
+	}
+	else {
+		if (BaseJob == Job_Super_Novice) {
+			mes "[特杰雷诺]";
+			mes "作为超级初心者";
+			mes "过着简单的生活，";
+			mes "感觉如何？";
+			mes "我相信你一定很享受~";
+			next;
+			mes "[特杰雷诺]";
+			mes "请一边帮助普通人，";
+			mes "一边自己也做一个普通人，";
+			mes "以此作为超级初心者";
+			mes "成长吧……";
+			next;
+			mes "[特杰雷诺]";
+			mes "我鼓励你不断提升";
+			mes "你的超级初心者境界，";
+			mes "为过上格外平凡的生活";
+			mes "树立榜样。";
+			close;
+		}
+		mes "[特杰雷诺]";
+		mes "你好，我是特杰雷诺，";
+		mes "伟大的初心者协会的";
+		mes "非正式执行会长。";
+		next;
+		mes "[特杰雷诺]";
+		mes "嗯……你似乎";
+		mes "远超常人。";
+		mes "是的，你显然";
+		mes "''非凡''多于";
+		mes "''平凡''……";
+		next;
+		mes "[特杰雷诺]";
+		mes "*唉* 我想你永远";
+		mes "无法理解我们的生活方式，";
+		mes "无法理解平庸之中";
+		mes "微妙的伟大。";
+		mes "不过没关系。";
+		next;
+		mes "[特杰雷诺]";
+		mes "嗯……这世上有";
+		mes "千千万万不同的人，";
+		mes "我只是试着接受";
+		mes "我们所有的不同。";
+		mes "希望你也一样。";
+		close;
+	}
+}
+
+aldeba_in,216,169,5	script	艾赛雷依#sn	86,{
+	if (Class == Job_Super_Novice_E || Class == Job_Super_Baby_E) {
+		mes "[艾赛雷依]";
+		mes "是你！比从前更强了。";
+		mes "我就知道你能通过考验~";
+		close;
+	}
+	if (BaseJob == Job_Super_Novice) {
+		if (checkre(0))
+			callfunc "Esseray_Ex";
+		mes "[艾赛雷依]";
+		mes "嗯？嘿，你是我们伟大的";
+		mes "初心者协会的成员，";
+		mes "对吧？";
+		mes "这难道不是史上最棒的协会吗？！";
+		next;
+		mes "[艾赛雷依]";
+		mes "按照基姆·夏恩先生的准则，";
+		mes "过着平凡的生活……";
+		mes "平凡真是太好了！";
+		next;
+		mes "[艾赛雷依]";
+		mes "让我们尽可能";
+		mes "正常地生活吧！";
+		mes "顺便告诉你，";
+		mes "我是协会的第一号会员，";
+		mes "当然，是在";
+		mes "特杰雷诺先生之下！";
+		close;
+	}
+	if (BaseJob == Job_Novice && Upper != 1) {
+		mes "[艾赛雷依]";
+		mes "哈~ 你对怎样做一个正常人";
+		mes "还一无所知呢！";
+		mes "为什么不加入我们的";
+		mes "初心者协会呢？这个协会是世界上最好的~";
+		next;
+		mes "[艾赛雷依]";
+		mes "没错，超级初心者";
+		mes "是最棒的角色！";
+		mes "哈哈哈哈哈哈哈哈！";
+		close;
+	}
+	else {
+		mes "[艾赛雷依]";
+		mes "呸~！你比一般人强……";
+		mes "天哪，你甚至";
+		mes "可能是''特别''的。";
+		mes "真可惜！嗯……";
+		mes "希望你依然";
+		mes "积极地生活。";
+		close;
+	}
+}
+
+aldebaran,54,238,5	script	卡普拉服务人员#sn	117,{
+	if (BaseJob == Job_Super_Novice) {
+		mes "[卡普拉服务人员]";
+		if (Sex == SEX_MALE)
+			mes "你好，超级初心者先生~";
+		else
+			mes "你好，超级初心者女士。";
+		mes "其他卡普拉服务人员";
+		mes "不让你租用手推车，";
+		mes "你一定很失望吧。";
+		mes "不过现在别担心了……";
+		next;
+		mes "[卡普拉服务人员]";
+		mes "我会在这里提供手推车，";
+		mes "支持你们……";
+		next;
+		mes "[卡普拉服务人员]";
+		mes "^3355FF*小声说*^000000";
+		mes "^555555我本来不该这么做的，";
+		mes "因为这违反了";
+		mes "我们公司的规定。";
+		mes "但我真的很同情超级初心者";
+		mes "……所以我才这么做。^000000";
+		next;
+		mes "[卡普拉服务人员]";
+		mes "总之，您要租用手推车吗？服务费是 1,900 zeny。";
+		next;
+		if (select("租用手推车。:取消。") == 1) {
+			mes "[卡普拉服务人员]";
+			mes "哦，是这样的……";
+			mes "您学过''手推车使用''";
+			mes "技能吗？我可以把车租给您，";
+			mes "但如果您不会推它，";
+			mes "那只是在浪费";
+			mes "您的 zeny。";
+			next;
+			mes "[卡普拉服务人员]";
+			mes "所以请确认您已经学会了";
+			mes "''手推车使用''技能。";
+			next;
+			if (select("租用手推车。:取消。") == 1) {
+				if (checkcart()) {
+					mes "[卡普拉服务人员]";
+					mes "哦，您已经装备着手推车了。";
+					close;
+				}
+				if (Zeny >= 1899) {
+					set RESRVPTS, RESRVPTS + 190;
+					set Zeny, Zeny-1900;
+					if (getskilllv("MC_PUSHCART") > 0) setcart;
+					mes "[卡普拉服务人员]";
+					mes "谢谢您使用我的服务。";
+					mes "虽然对其他卡普拉服务人员来说，";
+					mes "我做的事可能不合规矩，";
+					mes "但我坚信";
+					mes "我在为顾客做正确的事。";
+					close;
+				}
+				else {
+					mes "[卡普拉服务人员]";
+					mes "很抱歉，您带的 zeny 不够。服务费是 1,900 zeny。";
+					close;
+				}
+			}
+			mes "[卡普拉服务人员]";
+			mes "请再来。";
+			mes "谢谢您使用我的服务。";
+			close;
+		}
+		mes "[卡普拉服务人员]";
+		mes "请再来。";
+		mes "谢谢您使用我的服务。";
+		close;
+	}
+	mes "[卡普拉服务人员]";
+	mes "您好--糟糕……！";
+	mes "我想我无法提供";
+	mes "您想要的服务……";
+	mes "请去找其他";
+	mes "卡普拉服务人员吧。";
+	mes "对于给您带来的不便，我深表歉意……";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Dialogs From Some Other Scripts (Most Of It)
+//= 1.3-1.5 Added Baby class support (and to the Kafta SN Cart
+//=     renter, too) [Lupus]
+//= 1.6 Added a fix which prevent High Novices passing
+//=     this Job Quests again. [Lupus]
+//= 1.7 Fixed Baby Class Support. [Lupus]
+//= 1.8 Now a Baby can become a Super Baby [Lupus]
+//============================================================ 

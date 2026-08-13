@@ -1,0 +1,280 @@
+//===== rAthena Script =======================================
+//= Old Pharmacist
+//===== By: ==================================================
+//= DZeroX
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Trade in items for potions.
+//= Breakdown of arguments used:
+//= arg(0): Herb required.
+//= arg(1): Zeny cost.
+//= arg(2): Potion given.
+//===== Additional Comments: =================================
+//= 1.0 Fully working. [DZeroX]
+//= 1.0a Minor fixes [Lupus]
+//= 1.1 Added changed the dialogs and name to fit the
+//=     the official information. [DZeroX]
+//= 1.1a Removed .GATs [Lupus]
+//= 1.1b Fixed a bug in Orange Potion creating. Copy&Pasting = bad. [L0ne_W0lf]
+//= 1.2 Added checkweight, and input min/max values. [L0ne_W0lf]
+//= 1.3 Fixed minor condition check bug. (bugreport:597) [L0ne_W0lf]
+//= 1.4 Updated to match AEGIS script. [Kisuka]
+//============================================================
+
+alberta_in,16,28,4	script	药剂师爷爷	61,{
+	if (checkweight(1201,1) == 0) {
+		mes "- 请稍等一下！ -";
+		mes "- 现在你身上的物品实在太多了。 -";
+		mes "- 请把一部分物品存进卡普拉仓库 -";
+		mes "- 之后再来吧。";
+		close;
+	}
+	mes "[药剂师爷爷]";
+	mes "嗯……你来这里做什么……？";
+	next;
+	switch(select("制作药水:聊天。:混合信息:取消")) {
+	case 1:
+		if (MaxWeight - Weight < 5000) {
+			mes "[药剂师爷爷]";
+			mes "你怎么带这么多东西！别太贪心，";
+			mes "只带需要的就够了！";
+			next;
+			mes "[药剂师爷爷]";
+			mes "你负重太大，没法从我这里拿药水……";
+			mes "先去仓库存点东西吧！";
+			close;
+		} else {
+			mes "[药剂师爷爷]";
+			mes "东西都备齐了吧？想要哪种？";
+			next;
+			switch(select("红色药水。:赤色药水。:黄色药水。:白色药水。:蓝色药水。:绿色药水。:其实，我什么都不想要。")) {
+			case 1:
+				callsub L_Making,507,3,501;
+			case 2:
+				mes "[药剂师爷爷]";
+				if (countitem(507) < countitem(713)) {
+					set .@max,countitem(507);
+				}
+				else if (countitem(508) < countitem(713)) {
+					set .@max,countitem(508);
+				}
+				else {
+					set .@max,countitem(713);
+				}
+				if ((countitem(507) < 1) || (countitem(508) < 1) || (countitem(713) == 0)) {
+					mes "你这小子！想什么呢？！";
+					mes "什么都没有就敢来这里。";
+					mes "啧！";
+					mes "滚吧！";
+					close;
+				}
+				if (Zeny < 3) {
+					mes "你这小子！想什么呢？！";
+					mes "什么都没有就敢来这里。";
+					mes "啧！";
+					mes "滚吧！";
+					close;
+				}
+				mes "要多少？";
+				next;
+				switch(select("能做多少做多少。:我要自己选数量。:其实，我什么都不想要。")) {
+				case 1:
+					if ((countitem(507) < .@max) || (countitem(508) < .@max) || (countitem(713) < .@max) || (Zeny < .@max*3)) {
+						mes "[药剂师爷爷]";
+						mes "你这小子！材料都不齐，";
+			mes "还想让我给你做药水？！";
+						close;
+					}
+					set Zeny,Zeny-(.@max*5);
+					delitem 507,.@max; //Red_Herb
+					delitem 508,.@max; //Yellow_Herb
+					delitem 713,.@max; //Empty_Bottle
+					getitem 502,.@max; //Orange_Potion
+					break;
+				case 2:
+					mes "[药剂师爷爷]";
+					mes "那就选一个 100 以内的数字，";
+					mes "不想要就输入 '0'。";
+					mes "用你现有的材料，大概能做 "+.@max+" 瓶药水。";
+					next;
+					input .@amount,0,101;
+					if (.@amount == 0) {
+						mes "[药剂师爷爷]";
+						mes "给个痛快话，行不行？！";
+						close;
+					}
+					if (.@amount > 100) {
+						mes "[药剂师爷爷]";
+						mes "你聋了吗？我说了要小于 100！";
+						close;
+					}
+					if ((countitem(507) < .@amount) || (countitem(508) < .@amount) || (countitem(713) < .@amount) || (Zeny < .@amount*3)) {
+						mes "[药剂师爷爷]";
+						mes "你这小子！材料都不齐，";
+			mes "还想让我给你做药水？！";
+						close;
+					}
+					next;
+					set Zeny,Zeny-(.@amount*5);
+					delitem 507,.@amount; //Red_Herb
+					delitem 508,.@amount; //Yellow_Herb
+					delitem 713,.@amount; //Empty_Bottle
+					getitem 502,.@amount; //Orange_Potion
+					break;
+				case 3:
+					mes "[药剂师爷爷]";
+					mes "什么？！咕噜噜……呸！";
+					mes "滚吧！";
+					close;
+				}
+				mes "[药剂师爷爷]";
+				mes "拿去吧，都做好了。但记住！";
+				mes "滥用药物可不好。";
+				close;
+			case 3:
+				callsub L_Making,508,10,503;
+			case 4:
+				callsub L_Making,509,20,504;
+			case 5:
+				callsub L_Making,510,30,505;
+			case 6:
+				callsub L_Making,511,3,506;
+			case 7:
+				mes "[药剂师爷爷]";
+				mes "什么？！咕噜噜……呸！";
+				mes "滚吧！";
+				close;
+			}
+		}
+	case 2:
+		mes "[药剂师爷爷]";
+		mes "药物能提升一个人的恢复能力，";
+		mes "但也只有到一定程度为止。";
+		mes "*叹气* 我开始想起年轻时候的日子了。";
+		mes "我一定是老了。";
+		next;
+		mes "[药剂师爷爷]";
+		mes "总之，药水就是药水。不多也不少。";
+		close;
+	case 3:
+		mes "[药剂师爷爷]";
+		mes "哼……你们这些年轻人真是烦人。";
+		mes "不过，既然你问了，";
+		mes "我就解释一下。";
+		next;
+		mes "[药剂师爷爷]";
+		mes "药草单用也有效，";
+		mes "但用我的独门技术和手艺做成药水，";
+		mes "效果会好得多。";
+		next;
+		mes "[药剂师爷爷]";
+		mes "只要你诚恳又有礼貌地求我，";
+		mes "我就给你做。当然不是免费的……";
+		mes "别担心，我只收一点手续费，不贵的。";
+		next;
+		mes "[药剂师爷爷]";
+		mes "红色药水 - ^0098E52 个红色药草、";
+		mes "1 个空瓶、2 Zeny 手续费。^000000";
+		mes "赤色药水 - ^0098E51 个红色药草、";
+		mes "1 个黄色药草、1 个空瓶、";
+		mes "5 Zeny 手续费。^000000";
+		mes "黄色药水 - ^0098E52 个黄色药草、";
+		mes "1 个空瓶、";
+		mes "10 Zeny。^000000";
+		next;
+		mes "[药剂师爷爷]";
+		mes "白色药水 - ^0098E52 个白色药草、";
+		mes "1 个空瓶、20 Zeny 手续费。^000000";
+		mes "蓝色药水 - ^0098E52 个蓝色药草、";
+		mes "1 个空瓶、30 Zeny 手续费。^000000";
+		mes "绿色药水 - ^0098E52 个绿色药草、";
+		mes "1 个空瓶、3 Zeny 手续费。^000000";
+		close;
+	case 4:
+		mes "[药剂师爷爷]";
+		mes "真是个无趣的人。";
+		mes "有话就说，干嘛不说？！";
+		close;
+	}
+	
+L_Making:
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+
+	mes "[药剂师爷爷]";
+	if ((countitem(.@item_req)/2) < countitem(713)) {
+		.@max = countitem(.@item_req) /2;
+	} else {
+		.@max = countitem(713);
+	}
+	if (countitem(.@item_req) < 2 || countitem(713) == 0) {
+		mes "你这小子！想什么呢？！";
+		mes "什么都没有就敢来这里。";
+		mes "啧！";
+		mes "滚吧！";
+		close;
+	}
+	if (Zeny < 3) {
+		mes "你这小子！想什么呢？！";
+		mes "什么都没有就敢来这里。";
+		mes "啧！";
+		mes "滚吧！";
+		close;
+	}
+	mes "要多少？";
+	next;
+	switch(select("能做多少做多少。:我要自己选数量。:其实，我什么都不想要。")) {
+	case 1:
+		if ((countitem(.@item_req) < .@max*2) || countitem(713) < .@max || (Zeny < .@max*.@req_amount)) {
+			mes "[药剂师爷爷]";
+			mes "你这小子！材料都不齐，";
+			mes "还想让我给你做药水？！";
+			close;
+		}
+		Zeny = Zeny - (.@max*.@req_amount);
+		delitem .@item_req,.@max*2;
+		delitem 713,.@max; //Empty_Bottle
+		getitem getarg(2),.@max; 
+		break;
+	case 2:
+		mes "[药剂师爷爷]";
+		mes "那就选一个 100 以内的数字，";
+		mes "不想要就输入 '0'。";
+		mes "用你现有的材料，大概能做 "+.@max+" 瓶药水。";
+		next;
+		input .@amount;
+		if (.@amount == 0) {
+			mes "[药剂师爷爷]";
+			mes "给个痛快话，行不行？！";
+			close;
+		}
+		if (.@amount > 100) {
+			mes "[药剂师爷爷]";
+			mes "你聋了吗？我说了要小于 100！";
+			close;
+		}
+		if ((countitem(.@item_req) < .@amount*2) || countitem(713) < .@amount || (Zeny < .@amount*.@req_amount)) {
+			mes "[药剂师爷爷]";
+			mes "你这小子！材料都不齐，";
+			mes "还想让我给你做药水？！";
+			close;
+		}
+		Zeny = Zeny - (.@max*.@req_amount);
+		delitem .@item_req,.@amount*2;
+		delitem 713,.@amount; //Empty_Bottle
+		getitem getarg(2),.@amount; 
+		break;
+	case 3:
+		mes "[药剂师爷爷]";
+		mes "什么？！咕噜噜……呸！";
+		mes "滚吧！";
+		close;
+	}
+	mes "[药剂师爷爷]";
+	mes "拿去吧，都做好了。但记住！";
+	mes "滥用药物可不好。";
+	close;
+}

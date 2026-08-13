@@ -1,0 +1,169 @@
+//===== rAthena Script =======================================
+//= 巴西利斯城
+//===== Description: =========================================
+//= [Official Conversion]
+//= 巴西利斯城脚本
+//===== Changelog: ===========================================
+//= 1.0 First version. Transportation and Basic NPCs. [L0ne_W0lf]
+//= 1.1 Fixed Zeny not being removed for payment. [Kisuka]
+//= 1.2 Updated dialog, added Ice Cream Maker. [L0ne_W0lf]
+//= 1.3 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//= 1.4 Added VIP features. [Euphy]
+//============================================================
+
+// 巴西利斯交通 :: brasilis_trans
+//============================================================
+-	script	::Crewman_bra2	-1,{
+	mes "[布兰妮号 船员]";
+	mes "嘿，你听说过一个叫巴西利斯的地方吗？";
+	mes "那是个热带城市，像沙漠一样热，但也下雨。那是个非常神秘的地方。";
+	next;
+	mes "[布兰妮号 船员]";
+	mes "我们最近发现了一条新航线，能轻松到达那里。";
+	if (VIP_SCRIPT) {
+		set .@cost, vip_status(VIP_STATUS_ACTIVE)?1000:10000;
+		mes "往返只要 10,000 Zeny，VIP 只要 1,000！那么你想去吗？"; //custom translation (VIP)
+	} else {
+		set .@cost,10000;
+		mes "往返只要 10,000 Zeny！那么你想去吗？";
+	}
+	next;
+	switch(select("带我去巴西利斯！:我留在这里。")) {
+	case 1:
+		if (Zeny < .@cost) {
+			mes "[布兰妮号 船员]";
+			mes "我说了 "+callfunc("F_InsertComma",.@cost)+" Zeny。";
+			close;
+		}
+		else {
+			mes "[布兰妮号 船员]";
+			mes "酷~！！走吧~！";
+			set Zeny, Zeny-.@cost;
+			close2;
+			warp "brasilis",314,60;
+			end;
+		}
+	case 2:
+		mes "[布兰妮号 船员]";
+		mes "嗯，如果你哪天有兴趣，告诉我，我可以带你去。";
+		close;
+	}
+}
+
+brasilis,316,57,3	script	布兰妮号 船员#bra1	100,{
+	mes "[布兰妮号 船员]";
+	mes "我的船要回艾尔贝塔了，你想加入吗？";
+	next;
+	switch(select("回艾尔贝塔。:还不~。")) {
+	case 1:
+		mes "[布兰妮号 船员]";
+		mes "我确实想家了。";
+		close2;
+		if (checkre(0))
+			warp "alberta",245,87;
+		else
+			warp "alberta",244,115;
+		end;
+	case 2:
+		mes "[布兰妮号 船员]";
+		mes "好，随你。那我们回来时再见。";
+		close;
+	}
+}
+
+// 巴西利斯普通 NPC :: brazil_tre
+//============================================================
+brasilis,155,165,3	script	告示牌#bra1	858,{
+	mes ":: 美术馆 ::";
+	close;
+}
+
+brasilis,191,239,3	script	告示牌#bra2	858,{
+	mes ":: 维拉斯纪念碑 ::";
+	close;
+}
+
+brasilis,240,247,3	script	告示牌#bra3	858,{
+	mes ":: 市场 ::";
+	mes " ";
+	mes "- 药水和武器 -";
+	close;
+}
+
+brasilis,303,309,3	script	告示牌#bra4	858,{
+	mes ":: 丛林缆车 ::";
+	mes "- 胆小者勿入 -";
+	close;
+}
+
+brasilis,278,137,3	script	告示牌#bra5	858,{
+	mes ":: 巴西利斯旅馆 ::";
+	close;
+}
+
+brasilis,137,77,5	script	冰淇淋宝贝	85,{
+	mes "[冰淇淋宝贝]";
+	mes "来~来~";
+	mes "冰淇淋是热天的完美零食~";
+	mes "只要 ^3355FF100 Zeny^000000~";
+	mes "冰淇淋~";
+	mes "来买冰淇淋吧！";
+	next;
+	switch(select("给我一个！:冰淇淋？:取消。")) {
+	case 1:
+		mes "[冰淇淋宝贝]";
+		mes "因为太多人想买冰凉的冰淇淋，你一次只能点 5 个。";
+		mes "那么你要几个？";
+		next;
+		while(1) {
+			input .@input; //,1,5;
+			if (.@input == 0) {
+				mes "[冰淇淋宝贝]";
+				mes "不要？";
+				mes "好吧，让开，我还要招呼客人。";
+				close;
+			}
+			else if ((.@input < 0) || (.@input > 5)) {
+				mes "[冰淇淋宝贝]";
+				mes "哇。";
+				mes "你点太多了。";
+				mes "如果吃超过 5 个，你可能得跟肚子里的怪物打一架。冷静点，伙计。";
+				next;
+			}
+			else
+				break;
+		}
+		set .@icecream_hap,.@input*100;
+		if (Zeny < .@icecream_hap) {
+			mes "[冰淇淋宝贝]";
+			mes "老兄~！你的钱不够。";
+			mes "只要 ^3355FF100 Zeny^000000~ 真的！";
+			close;
+		}
+		if (!checkweight(536,.@input)) {
+			mes "[冰淇淋宝贝]";
+			mes "你好像东西太多了。";
+			mes "买这个之前先减轻负重。";
+			close;
+		}
+		set Zeny, Zeny-.@icecream_hap;
+		getitem 536,.@input; //Ice_Cream
+		close;
+	case 2:
+		mes "[冰淇淋宝贝]";
+		mes "'冰淇淋是……";
+		mes "等等，你不知道";
+		mes "冰淇淋是什么吗？";
+		mes "你一直住在";
+		mes "哪块石头底下？";
+		next;
+		mes "[冰淇淋宝贝]";
+		mes "我都不想开始说这听起来有多奇怪。";
+		mes "总之，趁冰淇淋还冰凉，快来这里买吧。";
+		close;
+	case 3:
+		mes "[冰淇淋宝贝]";
+		mes "别错过吃全国最棒冰淇淋的机会~！";
+		close;
+	}
+}

@@ -1,0 +1,233 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Chrysalis)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+gef_fild04,191,54,3	script	哈尔古斯#Pupa_Hunt	123,{
+	if (checkquest(60110) != -1) {
+		if (checkquest(60110,HUNTING) != 2 ) {
+			mes "[哈尔古斯]";
+			mes "你清掉虫蛹了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[哈尔古斯]";
+				mes "嗯，我看你还没清掉 50 只虫蛹……";
+				close;
+			case 2:
+				mes "[哈尔古斯]";
+				mes "记住，去原野上清掉 50 只虫蛹。";
+				close;
+			case 3:
+				mes "[哈尔古斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[哈尔古斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60110;
+					close;
+				case 2:
+					mes "[哈尔古斯]";
+					mes "记住，去原野上清掉 50 只虫蛹。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[哈尔古斯]";
+			mes "哦太感谢你了。";
+			mes "我知道这事我自己大概也能做，但一直站在这里可不是件轻松的事。";
+			getexp 385,30;
+			erasequest 60110;
+			close;
+		}
+	}
+	if (checkquest(60111) != -1) {
+		if (checkquest(60111,HUNTING) != 2 ) {
+			mes "[哈尔古斯]";
+			mes "你清掉虫蛹了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[哈尔古斯]";
+				mes "嗯，我看你还没清掉 100 只虫蛹……";
+				close;
+			case 2:
+				mes "[哈尔古斯]";
+				mes "记住，去原野上清掉 100 只虫蛹。";
+				close;
+			case 3:
+				mes "[哈尔古斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[哈尔古斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60111;
+					close;
+				case 2:
+					mes "[哈尔古斯]";
+					mes "记住，去原野上清掉 100 只虫蛹。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[哈尔古斯]";
+			mes "哦太感谢你了。";
+			mes "我知道这事我自己大概也能做，但一直站在这里可不是件轻松的事。";
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60111;
+			close;
+		}
+	}
+	if (checkquest(60112) != -1) {
+		if (checkquest(60112,HUNTING) != 2 ) {
+			mes "[哈尔古斯]";
+			mes "你清掉虫蛹了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[哈尔古斯]";
+				mes "嗯，我看你还没清掉 150 只虫蛹……";
+				close;
+			case 2:
+				mes "[哈尔古斯]";
+				mes "记住，去原野上清掉 150 只虫蛹。";
+				close;
+			case 3:
+				mes "[哈尔古斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[哈尔古斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60112;
+					close;
+				case 2:
+					mes "[哈尔古斯]";
+					mes "记住，去原野上清掉 150 只虫蛹。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[哈尔古斯]";
+			mes "哦太感谢你了。";
+			mes "我知道这事我自己大概也能做，但一直站在这里可不是件轻松的事。";
+			getexp 385,30;
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60112;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 1) {
+		//for maximum level
+		if (BaseLevel < 21) {
+			mes "[哈尔古斯]";
+			mes "你是新来的吧？";
+			mes "瞧，我喜欢帮助这附近的新面孔。";
+			mes "说实话，你也不是我见过长得最好看的。";
+			next;
+			mes "[哈尔古斯]";
+			mes "话虽如此，我女儿觉得在原野上收集虫蛹很好玩，现在这里变得太难看了。";
+			mes "你愿意帮我清掉一些虫蛹，让这片原野干净点吗？";
+			next;
+			switch(select("好的，我不介意:不")) {
+			case 1:
+				mes "[哈尔古斯]";
+				mes "真的吗？你想怎么帮忙？";
+				next;
+				switch(select("收集物品:清除虫蛹:取消")) {
+				case 1:
+					// Item turn in
+					mes "[哈尔古斯]";
+					mes "你能收集 ^00CE0025 个蛹壳^000000带回来给我吗？我保证会好好酬谢你。";
+					next;
+					switch(select("我有蛹壳:你需要什么来着？")) {
+					case 1:
+						if (countitem(915) > 24) {
+							mes "[哈尔古斯]";
+							mes "真厉害，这么快就找到这么多。";
+							mes "照约定，把蛹壳给我，我会用我的智慧酬谢你。";
+							delitem 915,25; //Chrysalis
+							getexp 385,30;
+							close;
+						}
+						else {
+							mes "[哈尔古斯]";
+							mes "我需要 ^00CE0025 个蛹壳^000000，一个都不能少。";
+							close;
+						}
+					case 2:
+						mes "[哈尔古斯]";
+						mes "我需要 ^00CE0025 个蛹壳^000000。";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[哈尔古斯]";
+					mes "太感谢你了！";
+					mes "你想清掉多少只？";
+					next;
+					switch(select("50 只虫蛹:100 只虫蛹:150 只虫蛹")) {
+					case 1:
+						mes "[哈尔古斯]";
+						mes "如果你能帮我清掉原野上的 50 只虫蛹，我会很感激。";
+						setquest 60110;
+						close;
+					case 2:
+						mes "[哈尔古斯]";
+						mes "如果你能帮我清掉原野上的 100 只虫蛹，我会很感激。";
+						setquest 60111;
+						close;
+					case 3:
+						mes "[哈尔古斯]";
+						mes "如果你能帮我清掉原野上的 150 只虫蛹，我会很感激。";
+						setquest 60112;
+						close;
+					}
+				case 3:
+					mes "[哈尔古斯]";
+					mes "如果你改变主意，请再回来。";
+					close;
+				}
+			case 2:
+				mes "[哈尔古斯]";
+				mes "如果你改变主意，请再回来。";
+				close;
+			}
+		}
+		else {
+			mes "[哈尔古斯]";
+			mes "你大概能轻松帮我，但我想把酬劳留给没你这么强的人。";
+			close;
+		}
+	}
+	else {
+		mes "[哈尔古斯]";
+		mes "等你变强一点再来找我。";
+		close;
+	}
+}

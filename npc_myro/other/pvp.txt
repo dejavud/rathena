@@ -1,0 +1,367 @@
+//===== rAthena Script ======================================= 
+//= PvP NPCs
+//===== By: ==================================================
+//= kobra_k88; L0ne_W0lf, Elias (og2)
+//===== Current Version: =====================================
+//= 2.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= PvP NPCs that are found in the Inns in major cities.
+//= Includes Yoyo Mode, Nightmare Mode, and Event Mode.
+//===== Additional Comments: ================================= 
+//= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
+//= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
+//= 2.2 Some cleaning. [Euphy]
+//= 2.3 Fixed grammatical errors. [Joseph]
+//= 2.4 Fixed incorrect use of 'close' and some cleaning. [Joseph]
+//= 2.5 Renewal/Pre-Renewal split. [Euphy]
+//============================================================
+
+// Information
+//============================================================ 
+-	script	PVP 旁白::pvpe	-1,{
+	mes "[PVP 旁白]";
+	mes "你好，欢迎光临！我负责解说 PVP 模式。我是 PVP 旁白！";
+	next;
+	switch(select("什么是 PVP？:PVP 有哪些模式？:PVP 的规则是什么？:保存位置。:结束对话。")) {
+	case 1:
+		mes "[PVP 旁白]";
+		mes "简单来说，PVP 就是' 玩家对战模式 '是供人们";
+		mes "互相决斗的独特场所。";
+		next;
+		mes "[PVP 旁白]";
+		mes "只要告诉^3355FF守门人^000000你想尝试即可。他会让你进入 PVP 广场。";
+		next;
+		mes "[PVP 旁白]";
+		mes "不过，你需要至少达到 31 级。而且";
+		mes "必须支付 500 zeny 入场费才能进入 PVP 战斗广场。";
+		break;
+	case 2:
+		mes "[PVP 旁白]";
+		mes "当你符合条件时，可以在两种模式中选择其一。";
+		mes "溜溜猴模式或噩梦模式。";
+		next;
+		mes "[PVP 旁白]";
+		mes "溜溜猴模式没有风险。你可以体验 PVP而没有任何限制或";
+		mes "惩罚。建议你在这里练习技术，然后再更进一步。";
+		next;
+		mes "[PVP 旁白]";
+		mes "噩梦模式非常危险！请谨慎，被击败时你会损失";
+		mes "部分经验值。而且有小概率掉落一些装备。";
+		next;
+		mes "[PVP 旁白]";
+		mes "不过，如果获胜，奖励会非常丰厚！为避免误会，";
+		mes "去那里之前请三思……祝你好运！";
+		break;
+	case 3:
+		mes "[PVP 旁白]";
+		mes "每个战斗广场都有一排旁白，请根据你的资格选择他们。";
+		next;
+		mes "[PVP 旁白]";
+		mes "每位旁白会询问你想去哪一张共五张的 PVP 地图。";
+		mes "选择，然后进去吧！";
+		next;
+		mes "[PVP 旁白]";
+		mes "每张地图都有参与人数限制。所以你会在角落看到";
+		mes "显示数字，'参加人数/总人数'。";
+		next;
+		mes "[PVP 旁白]";
+		mes "另外，PVP 模式中有一个隐藏的 EXP 数值。这个 EXP";
+		mes "分数只在 PVP 区域内生效，所以不必担心。";
+		next;
+		mes "[PVP 旁白]";
+		mes "每位玩家一开始的EXP 通常为 5 点。如果获胜，";
+		mes "会增加 1 点";
+		next;
+		mes "[PVP 旁白]";
+		mes "同样，当你失败时……你的 EXP会减少 5 点。所以要小心！";
+		next;
+		mes "[PVP 旁白]";
+		mes "当你被击败且你的 EXP等于或小于 0 时，你将被移出 PVP";
+		mes "你的决斗就此结束！";
+		next;
+		mes "[PVP 旁白]";
+		mes "不过，如果你的 EXP 大于0。你仍然可以借助";
+		mes "其他玩家的治疗获得帮助……你明白了吗？";
+		next;
+		mes "[PVP 旁白]";
+		mes "PVP 内的战斗操作与平时相同。所有基本操作都一样。";
+		next;
+		mes "[PVP 旁白]";
+		mes "不过，有一点……在 PVP 战斗广场和 PVP 战斗区域内，";
+		mes "你无法保存位置。请牢记……这些规则有助于确保你的胜利。";
+		break;
+	case 4:
+		mes "[PVP 旁白]";
+		mes "位置保存成功……非常感谢！我们很快会再见面。";
+		if(strnpcinfo(4) == "morocc_in") { savepoint "morocc_in",141,139,1,1; }
+		if(strnpcinfo(4) == "alberta_in") { savepoint "alberta_in",22,148,1,1; }
+		if(strnpcinfo(4) == "prt_in") { savepoint "prt_in",54,137,1,1; }
+		if(strnpcinfo(4) == "geffen_in") { savepoint "geffen_in",70,59,1,1; }
+		if(strnpcinfo(4) == "payon_in01") { savepoint "payon_in01",142,46,1,1; }
+		break;
+	case 5:
+		mes "[PVP 旁白]";
+		mes "在怪物与人类战火纷飞的当下，这场";
+		mes "人与人之间的较量 - PVP -激励着我们所有人";
+		mes "变得更强。请再来吧，我们欢迎你的挑战！";
+		break;
+	}
+	close;
+}
+morocc_in,144,138,4	duplicate(pvpe)	PVP 旁白#pe1	84
+alberta_in,22,146,4	duplicate(pvpe)	PVP 旁白#pe2	84
+prt_in,56,140,4	duplicate(pvpe)	PVP 旁白#pe3	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP 旁白#pe4	84
+payon_in01,142,50,4	duplicate(pvpe)	PVP 旁白#pe5	84
+geffen_in,67,63,4	duplicate(pvpe)	PVP 旁白#pe6	84
+
+// Mode Select
+//============================================================ 
+-	script	守门人::gkut	-1,{
+	mes "[守门人]";
+	mes "很高兴为你服务。我将为你开启PVP 战斗广场！如果你对";
+	mes "PVP 模式或规则有任何疑问，请问旁白……";
+	next;
+	switch(select("^FF5533' PvP 噩梦模式'^000000:^3355FF' PvP 溜溜猴模式'^000000:^3355FF' PvP 活动模式'^000000:离开")) {
+		case 1:
+			mes "[守门人]";
+			mes "很抱歉，目前噩梦模式服务不可用。";
+			mes "请改用溜溜猴模式。对于造成的不便我们深表歉意。";
+			break;
+		case 2:
+			mes "[守门人]";
+			mes "入场费为 500 zeny。你要移动到溜溜猴模式战斗广场吗？";
+			next;
+			switch(select("移动:取消")) {
+			case 1:
+				if ((Zeny > 499) && (BaseLevel > 30)) {
+					set Zeny, Zeny - 500;
+					callsub L_Warp,"pvp_y_room";
+				}
+				else {
+					mes "[守门人]";
+					mes "打扰一下，你是不是没做好准备？请再次确认你已备好";
+					mes "500 zeny 入场费，并且至少达到 31 级！";
+				}
+				close;
+			case 2:
+				mes "[守门人]";
+				mes "在怪物与人类战火纷飞的当下，这场";
+				mes "人与人之间的较量 - PVP -激励着我们所有人";
+				mes "变得更强。请再来吧，我们欢迎你的挑战！";
+				close;
+			}
+		case 3:
+			mes "[守门人]";
+			mes "欢迎！请再次确认你已持有入场券或观战券。";
+			next;
+			if ((countitem(7028) == 0) && (countitem(7029) == 0)) {
+				mes "[守门人]";
+				mes "咦？你没有吗？那么很抱歉，本战斗广场只供持有";
+				mes "入场券或观战券的人使用。没有票你不能进入。";
+				close;
+			}
+			mes "[守门人]";
+			mes "好的，感谢参与。祝你玩得愉快！";
+			if (Zeny >= 500) set Zeny, Zeny - 500;
+			callsub L_Warp,"pvp_room";
+			break;
+		case 4:
+			mes "[守门人]";
+			mes "在怪物与人类战火纷飞的当下，这场";
+			mes "人与人之间的较量 - PVP -激励着我们所有人";
+			mes "变得更强。请再来吧，我们欢迎你的挑战！";
+			break;
+	}
+	close;
+
+L_Warp:
+	set .@map$,getarg(0);
+	if (checkre(0)) {
+		switch(rand(1,10)) {
+			case 1: warp .@map$,34,38; break;
+			case 2: warp .@map$,46,38; break;
+			case 3: warp .@map$,58,38; break;
+			case 4: warp .@map$,70,38; break;
+			case 5: warp .@map$,82,38; break;
+			case 6: warp .@map$,82,58; break;
+			case 7: warp .@map$,65,58; break;
+			case 8: warp .@map$,49,58; break;
+			case 9: warp .@map$,33,58; break;
+			case 10: warp .@map$,52,24; break;
+		}
+	} else
+		warp .@map$,51,23;
+	return;
+}
+morocc_in,144,142,4	duplicate(gkut)	守门人#gke1	83
+alberta_in,26,146,4	duplicate(gkut)	守门人#gke2	83
+prt_in,52,140,4	duplicate(gkut)	守门人#gke3	83
+geffen_in,63,63,4	duplicate(gkut)	守门人#gke4	83
+payon_in01,140,53,4	duplicate(gkut)	守门人#gke5	83
+
+// PVP Warper Function
+//============================================================ 
+// Note: The warper NPCs are in the pre-re/re paths.
+
+//callfunc "F_PVP_FSRS"{,<min_lvl>,<max_lvl>};
+function	script	F_PVP_FSRS	{
+	if (getargcount()) {
+		setarray .@lvl[0], getarg(0), getarg(1);
+		if (BaseLevel < .@lvl[0] || BaseLevel > .@lvl[1]) {
+			mes "[PVP 战斗广场接待员]";
+			mes "抱歉，你的基础等级必须在 LV "+ .@lvl[0] +" 到 LV "+ .@lvl[1] +" 之间。";
+			close;
+		}
+	}
+	if (strnpcinfo(4) == "pvp_y_room") {
+		set .@base$, "pvp_y_"+strnpcinfo(2);
+		setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
+		setarray .@Name$[0],	"普隆德拉",		"依斯鲁德",		"裴扬",		"艾尔贝塔",		"梦罗克";
+		setarray .@Limit[0],	128,			128,			128,			128,			128;
+	} else {
+		setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";
+		setarray .@Name$[0],	"三明治",		"锁定",		"四间房",	"十字之下",	"罗盘室";
+		setarray .@Limit[0],	64,				32,				32,				32,				32;
+	}
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
+	set .@menu$, .@menu$+"取消。";
+	set .@i, select(.@menu$)-1;
+	if (.@i == 5) close;
+	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
+		mes "[PVP 战斗广场接待员]";
+		mes "这张地图目前已满。";
+		close;
+	}
+	warp .@Maps$[.@i],0,0;
+	end;
+}
+
+
+
+// Event Contestant Entrance
+//============================================================ 
+pvp_room,54,85,4	script	登记职员#1	105,{
+	if (countitem(7028) == 0) {
+		mes "[PVP 战斗广场登记员]";
+		mes "咦？你是怎么进来的？这里仅限参赛选手进入。";
+		mes "观战相关事宜请前往右侧的登记员处。";
+		close;
+	}
+	set .@size, getarraysize(.warp_x);
+	if (.@size == 0) {
+		setarray .warp_x,40,59,20,40;
+		setarray .warp_y,59,40,40,20;
+	}
+	if (select("前往战斗广场:取消") == 1) {
+		mes "[PVP 战斗广场登记员]";
+		mes "'"+ strcharinfo(0) +"'你准备好了吗？！";
+		next;
+		if (select("准备好了！:还没有！") == 1) {
+			mes "[PVP 战斗广场登记员]";
+			mes "好！我送你进去祝你好运！";
+			close2;
+			delitem 7028,1; //Invite_For_Duel
+			set .@rand, rand(.@size);
+			warp "pvp_2vs2", .warp_x[.@rand], .warp_y[.@rand];
+			deletearray .warp_x[.@rand],1;
+			deletearray .warp_y[.@rand],1;
+			end;
+		}
+		mes "[PVP 战斗广场登记员]";
+		mes "准备好后随时回来。";
+		close;
+	}
+	close;
+
+OnInit:
+	waitingroom "战斗广场 参赛选手专用入口",0;
+	end;
+}
+
+// Spectator Entrance
+//============================================================ 
+-	script	观众入口#dum::PVPSpectator	-1,{
+	if (countitem(7029) == 0) {
+		mes "[PVP 竞技广场登记员]";
+		mes "这里是观众入口。";
+		mes "参赛选手入口相关事宜请前往左侧的登记员处。";
+		close;
+	}
+	if (select("前往竞技广场:取消") == 1) {
+		mes "[PVP 战斗广场登记员]";
+		mes "好的，感谢参与。祝你玩得愉快！";
+		close2;
+		delitem 7029,1; //Admission_For_Duel
+		switch(rand(1,4)) {
+			case 1: warp "pvp_2vs2",39,7; end;
+			case 2: warp "pvp_2vs2",39,73; end;
+			case 3: warp "pvp_2vs2",7,39; end;
+			case 4: warp "pvp_2vs2",73,39; end;
+		}
+	}
+	close;
+
+OnInit:
+	waitingroom "竞技广场 观众入口",0;
+	end;
+}
+pvp_room,62,85,4	duplicate(PVPSpectator)	观众入口#1	105
+pvp_room,70,85,4	duplicate(PVPSpectator)	观众入口#2	105
+pvp_room,78,85,4	duplicate(PVPSpectator)	观众入口#3	105
+pvp_room,86,85,4	duplicate(PVPSpectator)	观众入口#4	105
+
+// Spectator Warps
+//============================================================ 
+-	script	PvP场地工作人员#dum::PVPSpecWarp	-1,{
+OnTouch_:
+	mes "[PvP场地工作人员]";
+	mes "有什么可以帮你？";
+	if (select("前往中央观众席。:离开战斗广场。") == 1) {
+		warp "pvp_2vs2",38,38;
+		end;
+	}
+	warp "pvp_room",84,39;
+	end;
+}
+pvp_2vs2,5,4,0	duplicate(PVPSpecWarp)	PvP场地工作人员#1	45,1,1
+pvp_2vs2,5,74,0	duplicate(PVPSpecWarp)	PvP场地工作人员#2	45,1,1
+pvp_2vs2,74,74,0	duplicate(PVPSpecWarp)	PvP场地工作人员#3	45,1,1
+pvp_2vs2,74,5,0	duplicate(PVPSpecWarp)	PvP场地工作人员#4	45,1,1
+
+pvp_2vs2,40,40,0	script	PvP场地工作人员#5	45,1,1,{
+	mes "[PvP场地工作人员]";
+	mes "有什么可以帮你？";
+	switch(select("前往侧边观众席。:离开战斗广场。")) {
+	case 1:
+		switch(rand(1,4)) {
+			case 1: warp "pvp_2vs2",39,7; end;
+			case 2: warp "pvp_2vs2",39,73; end;
+			case 3: warp "pvp_2vs2",7,39; end;
+			case 4: warp "pvp_2vs2",73,39; end;
+		}
+	case 2:
+		warp "pvp_c_room",84,39;
+		end;
+	}
+}
+
+// PVP Area Exit warp
+//============================================================ 
+pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
+OnTouch_:
+	mes "[PvP场地工作人员]";
+	mes "你在战斗广场玩得愉快吗？请问你想去哪里？";
+	next;
+	switch(select("普隆德拉。:梦罗克。:吉芬。:裴扬。:艾尔贝塔。:取消。")) {
+		case 1: warp "prontera",107,60; end;
+		case 2: warp "morocc",157,96; end;
+		case 3: warp "geffen",120,36; end;
+		case 4: warp "payon",96,100; end;
+		case 5: warp "alberta",41,243; end;
+		case 6: close;
+	}
+}

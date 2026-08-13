@@ -1,0 +1,77 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,56,3	script	乐师女#Valkyrie	101,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[乐师女]";
+			mes "恭喜你。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		mes "[乐师女]";
+		mes "向左移，";
+		mes "向右移～！";
+		mes "然后踏步……！";
+		mes "舞蹈可以不只是爱好。";
+		mes "对我来说，";
+		mes "它是一种生活方式～";
+		close;
+	}
+	else if (ADVJOB == Job_Gypsy && Class == Job_Archer_High && JobLevel > 39) {
+		mes "[乐师女]";
+		mes "米德加兹大陆";
+		mes "需要有才华的女性，";
+		mes "在善与恶的战斗中";
+		mes "微妙地改变力量平衡。";
+		next;
+		mes "[乐师女]";
+		mes "你准备好承担这个角色，";
+		mes "成为乐师女了吗？";
+		next;
+		if (select("不。:是。") == 1) {
+			mes "[乐师女]";
+			mes "等你准备好了，";
+			mes "随时回来找我。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[乐师女]";
+			mes "你还有技能可以学习。";
+			mes "请先用完所有剩余的技能点，再来找我。";
+			close;
+		}
+		jobchange Job_Gypsy;
+		set ADVJOB,0;
+		mes "[乐师女]";
+		mes "恭喜！";
+		mes "作为乐师女，我知道";
+		mes "你的表演将打动";
+		mes "所有观众的心……";
+		close;
+	}
+	mes "[乐师女]";
+	mes "欢迎来到瓦尔哈拉，";
+	mes "这里是荣誉殿堂。";
+	next;
+	mes "[乐师女]";
+	mes "待在这里的期间，";
+	mes "请随意一些。荣耀归于战士们！";
+	close;
+}

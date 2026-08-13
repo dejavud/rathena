@@ -1,0 +1,309 @@
+//===== rAthena Script =======================================
+//= BattleGround System - KvM Item Dealer
+//===== Description: =========================================
+//= [Official Conversion]
+//= Kreiger Von Midgard Battleground Point redemption NPC
+//= * NOTE * 
+//= KvM Does NOT use items, but a character variable to
+//= keep track of points. This NPC when talked to will
+//= convert already-given tokens and convert them to points.
+//= under the player variable kvm_point.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//============================================================
+
+bat_room,151,144,3	script	KVM后勤军官#a	734,{
+	if (countitem(6376)) {// KVM_Badge
+		set .@pointstoadd,countitem(6376);
+		delitem 6376,.@pointstoadd;
+		set kvm_point,kvm_point+.@pointstoadd;
+		mes "[后勤军官]";
+		mes "这些是"+getitemname(6376)+"吗？";
+		mes "这种货币我们已经不再收受了，";
+		mes "不过我可以帮你兑换。";
+		mes "你有"+.@pointstoadd+"个"+getitemname(6376)+"？";
+		mes "好了，换好了。你现在有^580080"+ kvm_point +"^000000点KVM点数。";
+		next;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[后勤军官]";
+	mes "你好？";
+	mes "我负责用KVM点数";
+	mes "兑换奖励道具。选错道具";
+	mes "概不退换，请谨慎选择。";
+	mes "请选择下一步。";
+	next;
+	set .@name$,strcharinfo(0);
+	switch(select("阅读KVM目录。:购买KVM道具。:确认KVM点数。:KVM奖励说明。:KVM点数说明。")) {
+	case 1:
+		mes "[后勤军官]";
+		mes "这是KVM道具的目录。";
+		mes "每件武器需要2,000点，";
+		mes "防具则需要10到1,200点";
+		mes "不等。选择奖励时";
+		mes "请多加小心。";
+		close2;
+		readbook 11017,1;
+		end;
+	case 2:
+		mes "[后勤军官]";
+		mes "你想看哪一类道具？";
+		mes "道具的详细属性，";
+		mes "请参照";
+		mes "^3131FF目录^000000。";
+		next;
+		switch(select("武器:防具/饰品:量产型防具/饰品:普及型防具/饰品")) {
+		case 1:
+			mes "[后勤军官]";
+			mes "你选择了武器类。";
+			mes "请选择子分类。";
+			next;
+			switch(select("短剑/剑/矛:法杖/钝器/斧头/手里剑:弓/拳刃/乐器/鞭子:书籍/拳套:左轮手枪/步枪/枪械/榴弹发射器")) {
+			case 1:
+				mes "[后勤军官]";
+				mes "你选择了短剑/剑/矛类。";
+				mes "请选择子分类。";
+				next;
+				switch(select("短剑:单手剑:双手剑:单手矛:双手矛")) {
+				case 1: callsub PurchaseItem,13042,0,1; //Krieger_Dagger1 
+				case 2:
+					mes "[后勤军官]";
+					mes "你选择了单手剑类。";
+					mes "单手剑共有3种：荣耀焰形剑、荣耀西洋剑和荣耀圣剑。";
+					mes "想了解详细信息，请参照KVM目录。";
+					mes "请选择其中一种。";
+					next;
+					switch(select("荣耀焰形剑:荣耀西洋剑:荣耀圣剑")) {
+					case 1: callsub PurchaseItem,13416,0,0; //Krieger_Onehand_Sword1
+					case 2: callsub PurchaseItem,13417,0,0; //Krieger_Onehand_Sword2
+					case 3: callsub PurchaseItem,13418,0,0; //Krieger_Onehand_Sword3
+					}
+				case 3: callsub PurchaseItem,1187,0,1; //Krieger_Twohand_Sword1
+				case 4: callsub PurchaseItem,1426,0,1; //Krieger_Onehand_Spear1
+				case 5: callsub PurchaseItem,1486,0,1; //Krieger_Twohand_Spear1
+				}
+			case 2:
+				mes "[后勤军官]";
+				mes "你选择了法杖/钝器/斧头/手里剑类。";
+				mes "请选择子分类。";
+				next;
+				switch(select("法杖:钝器:单手斧:双手斧:手里剑")) {
+				case 1:
+					mes "[后勤军官]";
+					mes "你选择了法杖类。";
+					mes "法杖共有3种：双手武器荣耀毁灭之杖、单手荣耀魔杖和荣耀治疗之杖。";
+					mes "想了解详细信息，请参照KVM目录。";
+					mes "请选择其中一种。";
+					next;
+					switch(select("荣耀毁灭之杖:荣耀魔杖:荣耀治疗之杖")) {
+					case 1: callsub PurchaseItem,2002,0,0; //Krieger_Twohand_Staff1
+					case 2: callsub PurchaseItem,1640,0,0; //Krieger_Onehand_Staff1
+					case 3: callsub PurchaseItem,1641,0,0; //Krieger_Onehand_Staff2
+					}
+				case 2: callsub PurchaseItem,1546,0,1; //Krieger_Onehand_Mace1
+				case 3: callsub PurchaseItem,1310,0,1; //Krieger_Onehand_Axe1
+				case 4: callsub PurchaseItem,1382,0,1; //Krieger_Twohand_Axe1
+				case 5: callsub PurchaseItem,13307,0,1; //Krieger_Huuma_Shuriken1
+				}
+			case 3:
+				mes "[后勤军官]";
+				mes "你选择了弓/拳刃/乐器/鞭子类。";
+				mes "请选择子分类。";
+				next;
+				switch(select("弓:拳刃:乐器:鞭子")) {
+				case 1: callsub PurchaseItem,1743,0,1; //Krieger_Bow1
+				case 2:
+					mes "[后勤军官]";
+					mes "你选择了拳刃类。";
+					mes "拳刃共有2种：荣耀血之咆哮和荣耀拳刃。";
+					mes "想了解详细信息，请参照KVM目录。";
+					mes "请选择其中一种。";
+					next;
+					switch(select("荣耀血之咆哮:荣耀拳刃")) {
+					case 1: callsub PurchaseItem,1281,0,0; //Krieger_Katar1
+					case 2: callsub PurchaseItem,1282,0,0; //Krieger_Katar2
+					}
+				case 3: callsub PurchaseItem,1927,0,1; //Krieger_Instrument1
+				case 4: callsub PurchaseItem,1981,0,1; //Krieger_Whip1
+				}
+			case 4:
+				mes "[后勤军官]";
+				mes "你选择了书籍/拳套类。";
+				mes "请选择子分类。";
+				next;
+				switch(select("书籍:拳套")) {
+				case 1:
+					mes "[后勤军官]";
+					mes "你选择了书籍类。";
+					mes "书籍共有2种：荣耀圣典和荣耀启示录。";
+					mes "想了解详细信息，请参照KVM目录。";
+					mes "请选择其中一种。";
+					next;
+					switch(select("荣耀圣典:荣耀启示录")) {
+					case 1: callsub PurchaseItem,1576,0,0; //Krieger_Book1
+					case 2: callsub PurchaseItem,1577,0,0; //Krieger_Book2
+					}
+				case 2:
+					mes "[后勤军官]";
+					mes "你选择了拳套类。";
+					mes "拳套共有2种：荣耀之爪和荣耀拳套。";
+					mes "想了解详细信息，请参照KVM目录。";
+					mes "请选择其中一种。";
+					next;
+					switch(select("荣耀之爪:荣耀拳套")) {
+					case 1: callsub PurchaseItem,1826,0,0; //Krieger_Knuckle1
+					case 2: callsub PurchaseItem,1827,0,0; //Krieger_Knuckle2
+					}
+				}
+			case 5:
+				mes "[后勤军官]";
+				mes "你选择了左轮手枪/步枪/枪械/榴弹发射器类。";
+				mes "请选择子分类。";
+				next;
+				switch(select("左轮手枪:步枪:机关枪:霰弹枪:榴弹发射器")) {
+				case 1: callsub PurchaseItem,13110,0,1; //Krieger_Pistol1
+				case 2: callsub PurchaseItem,13176,0,1; //Krieger_Rifle1
+				case 3: callsub PurchaseItem,13177,0,1; //Krieger_Gatling1
+				case 4: callsub PurchaseItem,13178,0,1; //Krieger_Shotgun1
+				case 5: callsub PurchaseItem,13179,0,1; //Krieger_Launcher1
+				}
+			}
+		case 2:
+			mes "[后勤军官]";
+			mes "你选择了防具/饰品类。";
+			mes "请选择子分类。";
+			next;
+			switch(select("铠甲:披肩:鞋子:饰品")) {
+			case 1: callsub PurchaseItem,2394,1,2; //Krieger_Suit1
+			case 2: callsub PurchaseItem,2549,2,2; //Krieger_Muffler1
+			case 3: callsub PurchaseItem,2444,3,2; //Krieger_Shoes1
+			case 4: callsub PurchaseItem,2772,4,2; //Krieger_Ring1
+			}
+		case 3:
+			mes "[后勤军官]";
+			mes "你选择了量产型防具/饰品类。";
+			mes "请选择子分类。";
+			next;
+			switch(select("量产型铠甲:量产型鞋子:量产型饰品")) {
+			case 1: callsub PurchaseItem,2395,5,3; //Krieger_Suit2
+			case 2: callsub PurchaseItem,2445,6,3; //Krieger_Shoes2
+			case 3: callsub PurchaseItem,2773,7,3; //Krieger_Ring2
+			}
+		case 4:
+			mes "[后勤军官]";
+			mes "你选择了普及型防具/饰品类。";
+			mes "请选择子分类。";
+			next;
+			switch(select("普及型铠甲:普及型鞋子:普及型饰品")) {
+			case 1: callsub PurchaseItem,2396,8,4; //Krieger_Suit3
+			case 2: callsub PurchaseItem,2446,9,4; //Krieger_Shoes3
+			case 3: callsub PurchaseItem,2774,10,4; //Krieger_Ring3
+			}
+		}
+	case 3:
+		mes "[后勤军官]";
+		mes ""+ .@name$ +"，你目前的点数是^580080"+ kvm_point +"^000000点KVM点数。";
+		close;
+	case 4:
+		mes "[后勤军官]";
+		mes "KVM奖励分为3大类：武器/防具/饰品。";
+		next;
+		mes "[后勤军官]";
+		mes "武器奖励每件需要2,000点KVM点数。";
+		mes "防具奖励分为3种，每件分别需要840/630/580点KVM点数。";
+		mes "饰品奖励每件需要1,200点KVM点数。";
+		next;
+		mes "[后勤军官]";
+		mes "克瑞格武器都是LV 4武器，可以精炼升级，并带有特殊效果：屠杀、破坏和祝福。";
+		next;
+		mes "[后勤军官]";
+		mes "三种防具全部穿戴时，可以获得特殊的套装效果。";
+		mes "另外，克瑞格饰品与勋章一起佩戴时，也能获得特殊的套装奖励。";
+		next;
+		mes "[后勤军官]";
+		mes "最后，还有量产型铠甲和饰品奖励。";
+		mes "60级以上的玩家可以装备量产型铠甲，普及型铠甲同样有等级限制。";
+		close;
+	case 5:
+		mes "[后勤军官]";
+		mes "在克瑞格·冯·米德加兹（KVM）中获胜、失败或平局时，都会获得KVM点数。";
+		mes "用这些点数可以兑换特殊奖励。";
+		close;
+	}
+
+PurchaseItem:
+	// Pricing for Weapon, Suit1, Muffler1, Shoes1, Ring1m Suit2, Shoes2, Ring2, Suit3, Shoes3, Ring3
+	setarray .@prices[0],2000,840,630,580,1200,120,70,200,15,10,30;
+
+	.@item_id = getarg(0);
+	.@req_setting = getarg(1);
+	.@item_type = getarg(2);
+
+	mes "[后勤军官]";
+
+	if (!.@item_type)
+		mes "你选择了^ff0000"+ getitemname(.@item_id) +"^000000。";
+	else if (.@item_type == 1)
+		mes "只有一把"+ callfunc("F_GetWeaponType",.@item_id) +"："+ getitemname(.@item_id) +"。";
+	else if (.@item_type == 2) {
+		mes "你选择了"+ callfunc("F_GetArmorType",.@item_id) +"。";
+		mes "80级以上玩家可以装备的这件防具是：^ff0000"+ getitemname(.@item_id) +"^000000。";
+	}
+	else if (.@item_type == 3) {
+		mes "你选择了量产型"+ callfunc("F_GetArmorType",.@item_id) +"。";
+		mes "量产型"+ callfunc("F_GetArmorType",.@item_id) +"只有一种：^ff0000"+ getitemname(.@item_id) +"^000000。";
+	}
+	else if (.@item_type == 4) {
+		mes "你选择了普及型"+ callfunc("F_GetArmorType",.@item_id) +"。";
+		mes "普及型"+ callfunc("F_GetArmorType",.@item_id) +"只有一种：^ff0000"+ getitemname(.@item_id) +"^000000。";
+	}
+
+	if (!.@req_setting)
+		mes "这件道具需要^0000ff2,000^000000点KVM点数，"+ .@name$ +"，你的点数是：^580080"+ kvm_point +"^000000。";
+	else if (.@req_setting == 4)
+		mes "这件道具需要^0000ff1,200^000000点KVM点数，"+ .@name$ +"，你的点数是：^580080"+ kvm_point +"^000000。";
+	else
+		mes "这件道具需要^0000ff"+ .@prices[.@req_setting] +"^000000点KVM点数，"+ .@name$ +"，你的点数是：^580080"+ kvm_point +"^000000。";
+
+	mes "你确定要这件道具吗？";
+	next;
+	switch(select("不，我不买了。:是，我要购买。")) {
+	case 1:
+		mes "[后勤军官]";
+		mes "你选择了不购买。";
+		mes "购买道具时请多加小心，售出不退。";
+		break;
+	case 2:
+		if (kvm_point >= .@prices[.@req_setting]) {
+			kvm_point = kvm_point -.@prices[.@req_setting];
+			getitem .@item_id,1;
+			mes "[后勤军官]";
+			mes "你购买了"+ getitemname(.@item_id) +"。";
+			if (!.@req_setting)
+				mes "你的KVM点数减少了^0000ff"+ .@req_setting +"^000000点，现在是^580080"+kvm_point+"^000000点。";
+			if (.@req_setting == 4)
+				mes "你的KVM点数减少了^0000ff1,200^000000点，现在是^580080"+kvm_point+"^000000点。";
+			else
+				mes "你的KVM点数减少了^0000ff"+ .@prices[.@req_setting] +"^000000点，现在是^580080"+kvm_point+"^000000点。";
+		}
+		else {
+			mes "[后勤军官]";
+			if (!.@req_setting)
+				mes "购买这件道具需要^0000ff2,000^000000点KVM点数。";
+			else if (.@req_setting == 4)
+				mes "购买这件道具需要^0000ff1,200^000000点KVM点数。";
+			else
+				mes "购买这件道具需要^0000ff"+ .@prices[.@req_setting] +"^000000点KVM点数。";
+			mes "而你目前只有^580080"+ kvm_point +"^000000点KVM点数。";
+			mes "点数还不够。";
+			mes "攒够点数之后，请再来吧。";
+		}
+	}
+	close;
+}

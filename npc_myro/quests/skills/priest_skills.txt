@@ -1,0 +1,378 @@
+//===== rAthena Script ======================================= 
+//= Priest Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Redempito
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+prt_church,111,112,1	script	莉努斯修女	79,{
+	if (BaseJob == Job_Priest) {
+		if (PRIEST_SK == 100) {
+			if (getskilllv("PR_REDEMPTIO") == 0) {
+				mes "[莉努斯修女]";
+				mes "嗯？我们以前见过，";
+				mes "对吧？不过话说回来，";
+				mes "牧师们看久了";
+				mes "都长得差不多。啊，";
+				mes "你就是我教过";
+				mes "救赎的人之一吗？";
+				next;
+				mes "[莉努斯修女]";
+				mes "啊，你已经忘了";
+				mes "是吗？没关系，";
+				mes "我可以再教你一遍。这个技能可以让你";
+				mes "牺牲自己的生命，";
+				mes "复活倒下的队友。";
+				next;
+				mes "[莉努斯修女]";
+				mes "^3131FF啊，神圣而崇高的存在啊，";
+				mes "我们向您祈祷。请向我们";
+				mes "展现您的慈悲，用您的光芒";
+				mes "指引我们。请赐予我们";
+				mes "力量，去行走这条";
+				mes "爱与牺牲之路。救赎！^000000";
+				skill "PR_REDEMPTIO",1,SKILL_PERM;
+				next;
+				mes "[莉努斯修女]";
+				mes "好了……";
+				mes "你现在应该";
+				mes "已经能施展救赎了。";
+				mes "希望你在冒险中";
+				mes "好好运用它~";
+				close;
+			}
+			else {
+				mes "[莉努斯修女]";
+				mes "我会一直为你的";
+				mes "平安祈祷。请多保重，";
+				mes "也希望你能把";
+				mes "爱与慈悲带给你";
+				mes "旅途中遇到的每一个人。";
+				close;
+			}
+		}
+		else if (PRIEST_SK == 0) {
+			set redemp,1014;
+			if (getskilllv("PR_REDEMPTIO")) {
+				mes "[莉努斯修女]";
+				mes "我会一直为你的";
+				mes "平安祈祷。请多保重，";
+				mes "也希望你能把";
+				mes "爱与慈悲带给你";
+				mes "旅途中遇到的每一个人。";
+				set PRIEST_SK,100;
+				close;
+			}
+			mes "[莉努斯修女]";
+			mes "请施以慈悲，";
+			mes "让您的光芒普照";
+			mes "世界。用您仁慈的智慧";
+			mes "指引她……";
+			mes "祝福她，愿她";
+			mes "蒙受您的恩典庇护。";
+			next;
+			select("你在为谁祈祷呢，修女?");
+			mes "[莉努斯修女]";
+			mes "哦！你吓我一跳！";
+			mes "我在为谁祈祷？";
+			mes "嗯，我曾经认识一位年轻、";
+			mes "活泼又开朗的修女，";
+			mes "她还有点厚脸皮。但我和她";
+			mes "有许多快乐的回忆。";
+			next;
+			mes "[莉努斯修女]";
+			mes "有一天，一群冒险者";
+			mes "来到普隆德拉教堂，想雇一位牧师陪他们";
+			mes "去^3131DD古城^000000。也许命中注定，当时她是唯一";
+			mes "有空的牧师。";
+			next;
+			mes "[莉努斯修女]";
+			mes "我记得她当时";
+			mes "铁了心要加入那些";
+			mes "冒险者，我们别无选择，";
+			mes "只好让她去。";
+			mes "尽管如此，我们很多人都觉得";
+			mes "那实在太危险了……";
+			next;
+			mes "[莉努斯修女]";
+			mes "我听说，起初他们";
+			mes "这支杂牌队伍";
+			mes "成功消灭了";
+			mes "大量的怪物。";
+			mes "但作为牧师在后方支援他们，";
+			mes "对她来说一定很艰难……";
+			next;
+			mes "[莉努斯修女]";
+			mes "然后，悲剧发生了。";
+			mes "被流浪者包围后，";
+			mes "冒险者们一个接一个";
+			mes "地倒下了。很快，";
+			mes "年轻的修女成了队伍里唯一还站着的人。";
+			next;
+			mes "[莉努斯修女]";
+			mes "独自面对毫无胜算的";
+			mes "绝境，那可怜的女孩";
+			mes "别无选择，只能孤注一掷。";
+			mes "她开始咏唱";
+			mes "那古老的圣言……";
+			next;
+			select("古老的圣言……?");
+			mes "[莉努斯修女]";
+			mes "没错！^FF0000救赎^000000！";
+			mes "那是只有最杰出的";
+			mes "牧师才能施展的";
+			mes "技能！而她";
+			mes "不过是个经验尚浅的";
+			mes "年轻修女，竟然敢尝试！";
+			next;
+			mes "[莉努斯修女]";
+			mes "救赎是最后的";
+			mes "手段，它可以";
+			mes "高尚地拯救他人的";
+			mes "生命，代价是";
+			mes "^3131FF牺牲你自己的生命^000000。";
+			next;
+			mes "[莉努斯修女]";
+			mes "是啊，我记得那些年";
+			mes "她对钻研牧师和";
+			mes "服事者的技能";
+			mes "并不怎么上心。令人惊讶的是，";
+			mes "她学到的东西居然够她";
+			mes "尝试施展救赎了……";
+			next;
+			mes "[莉努斯修女]";
+			mes "奇迹般地，她成功";
+			mes "复活了队友们。";
+			mes "他们迅速用一片世界树之叶";
+			mes "救回了她的性命，然后打败了流浪者，";
+			mes "平安归来。";
+			next;
+			mes "[莉努斯修女]";
+			mes "因为这次成功，尽管";
+			mes "她过去犯过许多错误，";
+			mes "她还是被擢升为大祭司。";
+			mes "如今她游历世界，尽其所能地";
+			mes "帮助冒险者们。";
+			next;
+			mes "[莉努斯修女]";
+			mes "不过，嗯，对我而言";
+			mes "她永远是那个朝气蓬勃、";
+			mes "快乐无忧的女孩。";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "等等，你还没有";
+			mes "回答我的问题。";
+			mes "你是在为这位";
+			mes "修女祈祷吗？如果是，";
+			mes "她是不是遇到了什么危险？";
+			next;
+			mes "[莉努斯修女]";
+			mes "嗯，几个月前，";
+			mes "她前往修发兹共和国的";
+			mes "城市^3131FF里希塔乐^000000执行任务。";
+			mes "我只是有些担心，因为";
+			mes "我已经有一阵子";
+			mes "没有她的消息了。";
+			next;
+			mes "[莉努斯修女]";
+			mes "我每天都来这里";
+			mes "为她祈祷，希望她";
+			mes "能平安归来，和我";
+			mes "分享她冒险的故事。";
+			mes "哦，我们可以聊上一整夜！那一定很开心！";
+			next;
+			mes "[莉努斯修女]";
+			mes "天哪，我一直";
+			mes "顾着自己说！很抱歉";
+			mes "耽误你时间，你是不是";
+			mes "还有事要去办？那么，";
+			mes "我会为你的平安祈祷的~";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "在我走之前，能不能";
+			mes "告诉我你刚才提到的";
+			mes "那位大祭司的名字？";
+			mes "如果我见到她，";
+			mes "我会让她联系你的。";
+			next;
+			mes "[莉努斯修女]";
+			mes "哦，谢谢你！她的名字";
+			mes "是大祭司索林。嗯，";
+			mes "^3131FF玛格蕾塔·索林^000000。如果你";
+			mes "碰巧找到她，请";
+			mes "告诉她，我一直在";
+			mes "为她的平安祈祷。";
+			set PRIEST_SK,1;
+			close;
+		}
+		else if (PRIEST_SK == 1) {
+			mes "[莉努斯修女]";
+			mes "哦，你好~";
+			mes "你今天";
+			mes "过得怎么样？";
+			next;
+			if (select("请教我^3131FF救赎^000000。:取消") == 1) {
+				mes "[莉努斯修女]";
+				mes "哦，救赎";
+				mes "是个很适合你学的技能~";
+				mes "它很难施展，但一旦成功，你就能复活";
+				mes "所有倒下的队友。";
+				next;
+				mes "[莉努斯修女]";
+				mes "当然，代价";
+				mes "是你必须^3131FF牺牲";
+				mes "自己的生命^000000";
+				mes "才能使用这个技能。那么，要学";
+				mes "救赎，你必须先";
+				mes "学会^3131FF1级复活术^000000。";
+				next;
+				mes "[莉努斯修女]";
+				mes "啊，你还必须";
+				mes "带给我";
+				mes "^3131FF30瓶圣水和";
+				mes "20颗蓝宝石^000000，";
+				mes "这样才能尝试";
+				mes "学习这个技能。";
+				set PRIEST_SK,2;
+				next;
+				mes "[莉努斯修女]";
+				mes "嗯，但如果你";
+				mes "学习救赎失败，你会";
+				mes "损失1瓶圣水和";
+				mes "1颗蓝宝石，";
+				mes "而且得重新再试一次……";
+				close;
+			}
+			mes "[莉努斯修女]";
+			mes "祈祷让我感到";
+			mes "平静和";
+			mes "安慰。也许这就是";
+			mes "我选择这份";
+			mes "职业的原因之一吧……";
+			close;
+		}
+		else if (PRIEST_SK == 2) {
+			if (getskilllv("ALL_RESURRECTION") > 0) {
+				if (countitem(523) > 29 && countitem(717) > 19) {
+					mes "[莉努斯修女]";
+					mes "哦，看来你已经";
+					mes "带来了学习救赎";
+					mes "所需的一切。";
+					mes "你准备好尝试了吗？如果";
+					mes "失败，你会损失1瓶圣水";
+					mes "和1颗蓝宝石，好吗？";
+					next;
+					mes "[莉努斯修女]";
+					mes "现在，请";
+					mes "集中精神，";
+					mes "跟着我念这段";
+					mes "特别的祷文。";
+					next;
+					mes "[莉努斯修女]";
+					mes "^3131FF啊，神圣而崇高的存在啊，";
+					mes "我们向您祈祷。请向我们";
+					mes "展现您的慈悲，用您的光芒";
+					mes "指引我们。请赐予我们";
+					mes "力量，去行走这条";
+					mes "爱与牺牲之路。救赎！^000000";
+					next;
+					set .@redem_s,JobLevel+getskilllv("ALL_RESURRECTION");
+					set .@red_suc,rand(1,100);
+					if( .@redem_s < 31 ) {
+						if( .@red_suc > 20 && .@red_suc < 41 )
+							set .@success,1;
+					} else if( .@redem_s < 41 ) {
+						if( .@red_suc > 10 && .@red_suc < 41 )
+							set .@success,1;
+					} else {
+						if( .@red_suc > 10 && .@red_suc < 51 )
+							set .@success,1;
+					}
+
+					if (.@success) {
+						specialeffect2 EF_HEALSP;
+						mes "[莉努斯修女]";
+						mes "恭喜！";
+						mes "你成功";
+						mes "学会了救赎！";
+						mes "请记住，只有在";
+						mes "最危急的情况下";
+						mes "才能使用这个技能。";
+						delitem 717,20; //Blue_Gemstone
+						delitem 523,30; //Holy_Water
+						set PRIEST_SK,100;
+						skill "PR_REDEMPTIO",1,SKILL_PERM;
+						close;
+					}
+					else {
+						specialeffect2 EF_POISONHIT;
+						mes "[莉努斯修女]";
+						mes "哦不！很抱歉，";
+						mes "你没能";
+						mes "学会救赎。嗯，";
+						mes "我会一直在这里等你，";
+						mes "等你准备好了，";
+						mes "我们再试一次，好吗？";
+						delitem 717,1; //Blue_Gemstone
+						delitem 523,1; //Holy_Water
+						close;
+					}
+
+				}
+				else {
+					mes "[莉努斯修女]";
+					mes "如果你想尝试学习";
+					mes "救赎，请带来";
+					mes "^3131FF20颗蓝宝石^000000";
+					mes "和^3131FF30瓶圣水^000000。啊，还有，";
+					mes "你需要先学会";
+					mes "^3131FF1级复活术^000000。";
+					close;
+				}
+			}
+			else {
+				mes "[莉努斯修女]";
+				mes "如果你想尝试学习";
+				mes "救赎，请带来";
+				mes "^3131FF20颗蓝宝石^000000";
+				mes "和^3131FF30瓶圣水^000000。啊，还有，";
+				mes "你需要先学会";
+				mes "^3131FF1级复活术^000000。";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[莉努斯修女]";
+		mes "请施以慈悲，";
+		mes "让您的光芒普照";
+		mes "世界。用您仁慈的智慧";
+		mes "指引她……";
+		mes "祝福她，愿她";
+		mes "蒙受您的恩典庇护。";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

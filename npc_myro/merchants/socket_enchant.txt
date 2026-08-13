@@ -1,0 +1,368 @@
+//===== rAthena Script =======================================
+//= Episode 11.1 Socket Enchant NPC
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 2.0a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Adds slots to selected weapons and armor.
+//===== Additional Comments: =================================
+//= 0.1a added missing L_No: to 2 funcs [Lupus]
+//= 0.1b Removed duplicates [Toms]
+//= 0.2 Added missing next;'s [Evera]
+//= 0.3 Fixed Zweihander[+] id [Lupus]
+//= 1.0 Fixed ingredients check [Lupus]
+//= 1.1 Updated to official. [SinSloth]
+//= 1.1b Optimized/cleaned [ultramage]
+//= 1.2 Fixed some typos and a nasty bug. [SinSloth]
+//= 1.3 Fixed a wrong item ID with Sphinx Hat. [SinSloth]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.5 Removed Ontouch trigger area from NPCs. [L0ne_W0lf]
+//= 1.6 Replaced effect numerics with constants. [Samuray22]
+//= 1.7 Adjusted prices on some armor and weapons. [L0ne_W0lf]
+//= 1.8 Added missing Gae Bolg and Dragon Slayer. [Kisuka]
+//= 1.9 Moved Episode 12 items to separate NPC.
+//=     Some cleanup & optimization. [Gepard]
+//= 2.0 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 2.0a Added 'disable_items' command. [Euphy]
+//============================================================
+
+-	script	世亚布连#dummy::SocketEnchant	-1,{
+	if (checkweight(1201,1) == 0)
+	{
+		mes "- 等一下！！ -";
+		mes "- 你现在携带的 -";
+		mes "- 物品太多了。 -";
+		mes "- 请减轻一些重量 -";
+		mes "- 之后再来试试吧。 -";
+		close;
+	}
+	mes "[世亚布连]";
+	mes "我是专门给武器和防具打洞的工程师。";
+	mes "手续费、所需材料和成功率，都要看我处理的具体装备而定。";
+	next;
+	mes "[世亚布连]";
+	mes "打洞看起来简单，实际上比想象中复杂得多。";
+	mes "如果你对我的服务有兴趣，就告诉我吧。";
+	next;
+	switch(select("给武器打洞:给防具打洞:打洞须知:取消"))
+	{
+		case 1:
+			mes "[世亚布连]";
+			mes "想给武器打洞吗？";
+			mes "我按打洞难度把武器分级，C 级最容易，S 级最难。";
+			mes "你想试试哪个级别？";
+			next;
+			switch(select("C 级:B 级:A 级:S 级"))
+			{
+				case 1:
+					mes "[世亚布连]";
+					mes "C 级吗？";
+					mes "这个级别我只能给特定装备打洞，请从下面选一件，我们来试试看。";
+					next;
+					switch(select("德瑞尹长戟:鞭子:小提琴"))
+					{
+						case 1: callfunc "Func_Socket",1460,1461,40,66,200,1010,10;
+						case 2: callfunc "Func_Socket",1950,1951,40,66,200,1010,10;
+						case 3: callfunc "Func_Socket",1901,1902,40,66,200,1010,10;
+					}
+				case 2:
+					mes "[世亚布连]";
+					mes "B 级吗？";
+					mes "好的，这是中等难度的装备。";
+					mes "请选择你想让我试着打洞的武器。";
+					next;
+					switch(select("链锤:长柄短剑:角弓:步兵长矛:海东剑:鲁特琴:钢铁鞭子:虎爪拳套:埃布尔雷弓"))
+					{
+						case 1: callfunc "Func_Socket",1519,1520,40,61,300,1010,10;
+						case 2: callfunc "Func_Socket",1219,1220,40,61,300, 984, 1,999,5;
+						case 3: callfunc "Func_Socket",1714,1716,40,61,300, 984, 2,999,5;
+						case 4: callfunc "Func_Socket",1407,1408,40,61,200,1010,10;
+						case 5: callfunc "Func_Socket",1123,1128,40,61,300, 984, 2,999,5;
+						case 6: callfunc "Func_Socket",1905,1906,40,61,300,1011,10;
+						case 7: callfunc "Func_Socket",1954,1955,40,61,300,1011,10;
+						case 8: callfunc "Func_Socket",1801,1802,40,61,300,1010,10;
+						case 9: callfunc "Func_Socket",1713,1715,40,61,300, 984, 2,999,5;
+					}
+				case 3:
+					mes "[世亚布连]";
+					mes "哦，A 级啊。";
+					mes "这可是高风险领域！";
+					mes "好吧，想让我给哪件武器试着打洞？";
+					next;
+					switch(select("猎人之弓:高等生存的魔杖(INT):巨大双手剑:水纹之剑:刺杀拳刃:贝利斯塔强弩:昏迷之锤:秘拳套 闪光:十字巨剑"))
+					{
+						case 1: callfunc "Func_Socket",1718,1726,40,61,500,984,2,999,10;
+						case 2: callfunc "Func_Socket",1619,1620,40,61,500,984,5,999,10;
+						case 3: callfunc "Func_Socket",1168,1171,40,61,800,984,5,999,10;
+						case 4: callfunc "Func_Socket",1129,1149,40,61,500,984,2,999,10;
+						case 5: callfunc "Func_Socket",1261,1266,40,61,700,984,5,999,10;
+						case 6: callfunc "Func_Socket",1722,1727,40,61,500,984,5,999,10;
+						case 7: callfunc "Func_Socket",1522,1532,40,61,500,984,2,999,10;
+						case 8: callfunc "Func_Socket",1814,1816,40,61,500,984,5,999,10;
+						case 9: callfunc "Func_Socket",1163,1172,40,61,500,984,2,999,10; // NPC says "5 Oridecon" (Aegis) but takes only 2
+					}
+				case 4:
+					mes "[世亚布连]";
+					mes "哇，哇，哇……";
+					mes "S 级？好吧……";
+					mes "要是真能成功，简直是奇迹。";
+					mes "那么……想给哪件武器打洞？";
+					next;
+					switch(select("刚尼尔长矛:巨毒短剑:破甲短锥:砂尘短剑:卡卡普剑:狂击之剑:死神之镰:生存的魔杖(DEX)"))
+					{
+						case 1: callfunc "Func_Socket", 1413, 1418,40,51,1000,984,5,999,10;
+						case 2: callfunc "Func_Socket", 1239,13016,40,51,1000,984,5,999,10;
+						case 3: callfunc "Func_Socket", 1230,13017,40,51,2000,984,5,999,10;
+						case 4: callfunc "Func_Socket", 1236,13018,40,51,1000,984,5,999,10;
+						case 5: callfunc "Func_Socket",13002,13019,40,51,1000,984,5,999,10;
+						case 6: callfunc "Func_Socket", 1135,13400,40,51,1000,984,5,999,10;
+						case 7: callfunc "Func_Socket", 1466, 1476,40,51,1000,984,5,999,10;
+						case 8: callfunc "Func_Socket", 1617, 1618,40,51,2000,984,5,999,10;
+					}
+			}
+		case 2:
+			mes "[世亚布连]";
+			mes "你说防具吗？";
+			mes "好的，没问题。";
+			mes "防具按工作难度分为 4 个级别。";
+			mes "C 级最容易，S 级最难。";
+			mes "你想试试哪个级别？";
+			next;
+			switch(select("C 级:B 级:A 级:S 级"))
+			{
+				case 1:
+					mes "[世亚布连]";
+					mes "C 级防具吗？";
+					mes "听起来很合理。";
+					mes "想给哪件防具试着打洞？";
+					next;
+					switch(select("大衣:长大衣:头箍:圣职之帽"))
+					{
+						case 1: callfunc "Func_Socket",2307,2308,40,66,200,999,3;
+						case 2: callfunc "Func_Socket",2309,2310,40,66,200,999,3;
+						case 3: callfunc "Func_Socket",2232,2233,40,66,200,999,3;
+						case 4: callfunc "Func_Socket",2216,2217,40,66,200,999,3;
+					}
+				case 2:
+					mes "[世亚布连]";
+					mes "你选了中等的 B 级。";
+					mes "那么，你有什么防具？";
+					next;
+					switch(select("镜盾:钢铁锁子甲:圣职之衣:丝质外袍:战士长靴:长靴:披肩:铁盾:圆盾:钢盾:妖道帽"))
+					{
+						case 1:  callfunc "Func_Socket",2107,2108,40,61,250,999,5;
+						case 2:  callfunc "Func_Socket",2314,2315,40,61,250,999,5;
+						case 3:  callfunc "Func_Socket",2325,2326,40,61,300,999,5;
+						case 4:  callfunc "Func_Socket",2321,2322,40,61,300,999,5;
+						case 5:  callfunc "Func_Socket",2405,2406,40,61,300,999,5;
+						case 6:  callfunc "Func_Socket",2403,2404,40,61,300,999,5;
+						case 7:  callfunc "Func_Socket",2503,2504,40,61,300,999,5;
+						case 8:  callfunc "Func_Socket",2101,2102,40,61,300,999,5;
+						case 9:  callfunc "Func_Socket",2103,2104,40,61,300,999,5;
+						case 10: callfunc "Func_Socket",2105,2106,40,61,250,999,5;
+						case 11: callfunc "Func_Socket",5046,5168,40,61,250,999,5;
+					}
+				case 3:
+					mes "[世亚布连]";
+					mes "哦，A 级啊。";
+					mes "这可是高风险领域！";
+					mes "好吧，想让我给哪件防具试着打洞？";
+					next;
+					switch(select("宝石头盔:软呢帽:谎言记录本:紧身便衣:秘银金属盔甲:钢铁盔甲:盗贼之衣:重靴:修女的帽子:斗篷:金属头盔:忍服 血樱:兽人头盔:伯爵斗篷:神圣之帽:黄金帽:敏捷别针:僵尸帽"))
+					{
+						case 1:  callfunc "Func_Socket",2230,2231,40,61,400,985,1;
+						case 2:  callfunc "Func_Socket",5114,5120,40,61,400,985,1;
+						case 3:  callfunc "Func_Socket",2109,2121,40,61,400,985,1;
+						case 4:  callfunc "Func_Socket",2330,2331,40,61,400,985,1;
+						case 5:  callfunc "Func_Socket",2341,2342,40,61,400,985,1;
+						case 6:  callfunc "Func_Socket",2316,2317,40,61,400,985,1;
+						case 7:  callfunc "Func_Socket",2335,2336,40,61,400,985,1;
+						case 8:  callfunc "Func_Socket",2411,2412,40,61,400,985,1;
+						case 9:  callfunc "Func_Socket",5092,5093,40,61,400,985,1;
+						case 10: callfunc "Func_Socket",2505,2506,40,61,400,985,1;
+						case 11: callfunc "Func_Socket",2228,2229,40,61,400,985,1;
+						case 12: callfunc "Func_Socket",2337,2359,40,61,400,985,1;
+						case 13: callfunc "Func_Socket",2299,5157,40,61,400,985,1;
+						case 14: callfunc "Func_Socket",2507,2525,40,61,400,985,1;
+						case 15: callfunc "Func_Socket",2251,5158,40,61,400,985,1;
+						case 16: callfunc "Func_Socket",2246,5159,40,61,400,985,1;
+						case 17: callfunc "Func_Socket",2605,2625,40,61,400,985,1;
+						case 18: callfunc "Func_Socket",2264,5167,40,61,300,985,1;
+					}
+				case 4:
+					mes "[世亚布连]";
+					mes "嗯……S 级？";
+					mes "你确定吗？";
+					mes "好吧……告诉我你想打洞的防具，我会告诉你需要什么。";
+					next;
+					switch(select("山羊头盔:尖角发圈:骨制头盔:海盗船长帽:王冠:后冠:人面狮身帽:创作者外袍:智力耳环:力量戒指:神射手套"))
+					{
+						case 1:  callfunc "Func_Socket",2256,5160,40,51,2000,985,2;
+						case 2:  callfunc "Func_Socket",2258,5161,40,51,2000,985,2;
+						case 3:  callfunc "Func_Socket",5017,5162,40,51,2000,985,2;
+						case 4:  callfunc "Func_Socket",5019,5163,40,51,2000,985,2;
+						case 5:  callfunc "Func_Socket",2235,5165,40,51,2000,985,2;
+						case 6:  callfunc "Func_Socket",2234,5164,40,51,2000,985,2;
+						case 7:  callfunc "Func_Socket",5053,5166,40,51,1000,985,2;
+						case 8:  callfunc "Func_Socket",2343,2360,40,51,1000,985,2;
+						case 9:  callfunc "Func_Socket",2602,2622,40,51,1000,985,2;
+						case 10: callfunc "Func_Socket",2601,2621,40,51,1000,985,2;
+						case 11: callfunc "Func_Socket",2619,2671,40,51,1000,985,2;
+					}
+			}
+		case 3:
+			mes "[世亚布连]";
+			mes "说实话，打洞这门手艺我还没完全摸透。";
+			mes "它太复杂了，我要是说清楚每个影响因素，那就是在骗你。";
+			mes "不过，我还是发现了一些规律……";
+			next;
+			mes "[世亚布连]";
+			mes "在某些城镇，精炼等级越低的装备，打洞成功率越高。";
+			mes "在另一些城镇则正好相反。";
+			mes "是不是很奇怪？";
+			next;
+			mes "[世亚布连]";
+			mes "哦，还有件很重要的事你得知道。";
+			mes "如果你让我给某件装备打洞，千万别在背包里放好几件同名的。";
+			next;
+			mes "[世亚布连]";
+			mes "举个例子：如果你背包里有一件 +7 披肩和一件普通披肩，我会随机拿其中一件来打洞。";
+			mes "记住要小心点。";
+			next;
+			mes "[世亚布连]";
+			mes "再说一遍，^FF0000只带一件你想打洞的装备^000000。";
+			mes "其他同名装备都放进卡普拉仓库，明白了吗？";
+			close;
+		case 4:
+			mes "[世亚布连]";
+			mes "慢走啊，冒险家。";
+			mes "哪天想给装备打洞了，随时来找我。";
+			mes "再见~";
+			close;
+	}
+}
+
+function	script	Func_Socket	{
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(4);
+	setarray .@item_req[0], getarg(5), getarg(7,0);
+	setarray .@req_amount[0], getarg(6), getarg(8,0);
+
+	disable_items;
+	mes "[世亚布连]";
+	mes "想给 "+ getitemname(.@item_id) +" 打洞吗？";
+	mes "好的，请带来 ^FF0000"+ .@req_amount[0] +" 个"+ getitemname(.@item_req[0]) +"^000000、"+ (.@item_req[1] != 0 && .@req_amount[1] != 0 ? ("^FF0000"+ .@req_amount[1] +" 个"+ getitemname(.@item_req[1]) +"^000000、") : "") +"以及 ^FF0000" + (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 Zeny^000000 的手续费。";
+	mes "啊，别忘了把那件 "+ getitemname(.@item_id) +" 也带来！";
+	next;
+	mes "[世亚布连]";
+	if (getiteminfo(.@item_id, ITEMINFO_LOCATIONS) & EQP_HAND_R) // weapon
+	{
+		mes "只要材料和 Zeny 齐了，我现在就可以试着打洞。";
+		mes "不过你得知道，我是有可能失败的。";
+		mes "所以，我得先给你一个忠告……";
+		next;
+		mes "[世亚布连]";
+		mes "如果这次给武器打洞失败，^FF0000武器^000000和^FF0000插在上面的卡片都会被摧毁^000000。";
+	}
+	else // armor
+	{
+		mes "只要材料、手续费和防具都齐了，我们就可以开始打洞。";
+		mes "但在那之前，我必须提醒你其中的风险。";
+		next;
+		mes "[世亚布连]";
+		mes "如果这次给防具打洞失败，^FF0000防具^000000、^FF0000它的精炼等级^000000和^FF0000插在上面的卡片都会被摧毁^000000。";
+	}
+	mes "你还想试着打洞吗？";
+	next;
+	switch(select("尝试打洞:取消"))
+	{
+		case 1:
+			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no getarg(7) and getarg(8) provided, check itemcount against 0 (we still need a valid item ID though)
+			{
+				mes "[世亚布连]";
+				mes "那么，开工了！";
+				mes "你最好祈祷能成功。";
+				next;
+				set .@a, rand(1,100);
+				if ((.@a > getarg(2)) && (.@a < getarg(3)))
+				{
+					specialeffect getarg(3) == 51 ? EF_LORD : EF_SANCTUARY; // only S Class items have Lord of Vermillion effect
+					mes "[世亚布连]";
+					mes "太好了，看来成功了。";
+					mes "做得相当漂亮。恭喜你！";
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
+					getitem getarg(1),1;
+					next;
+					mes "[世亚布连]";
+					mes "再见啦，朋友！";
+					close;
+				}
+				else
+				{
+					specialeffect EF_SUI_EXPLOSION;
+					mes "[世亚布连]";
+					mes "哇！……非常抱歉，失败了。";
+					mes "不过这可不是我的错。";
+					mes "这是运气问题，是上天注定的，懂吗？";
+					mes "别太沮丧，下次再试吧。";
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
+					next;
+					mes "[世亚布连]";
+					mes "祝你下次好运！";
+					close;
+				}
+			}
+			else
+			{
+				mes "[世亚布连]";
+				mes "我很想帮你打洞，但你还缺了些东西。";
+				mes "装备、材料和 Zeny 都带齐了吗？";
+				close;
+			}
+		case 2:
+			mes "[世亚布连]";
+			mes "需要时间考虑一下，是吧？";
+			mes "好吧，我能理解。";
+			mes "不过记住，总是求稳的话，人生可就没意思了~";
+			close;
+	}
+}
+
+payon,140,151,5	duplicate(SocketEnchant)	世亚布连#pay	84
+lhz_in02,281,35,5	duplicate(SocketEnchant)	世亚布连#lhz	84
+prt_in,33,70,5	duplicate(SocketEnchant)	世亚布连#prt	84
+morocc,51,41,4	duplicate(SocketEnchant)	世亚布连#moc	84
+
+-	script	年轻人#dummy::SocketMan	-1,{
+	mes "[年轻人]";
+	mes "我在考虑成为一名打洞工程师。";
+	mes "这是个能给装备打洞的新兴行业，要是能吃上这碗饭，一定很赚。";
+	next;
+	mes "[年轻人]";
+	mes "据我了解，打洞能不能成功，运气成分很大。";
+	mes "有时会失败，但如果运气爆棚，甚至能打出两个洞。";
+	mes "厉害吧，嗯？";
+	next;
+	mes "[年轻人]";
+	mes "不过也别高兴得太早。";
+	mes "只有特定装备才能承受打出两个洞。";
+	mes "要学的东西还多着呢，我离当学徒都还早……";
+	close;
+}
+
+prt_in,31,57,1	duplicate(SocketMan)	年轻人#prt	97
+payon,143,143,7	duplicate(SocketMan)	年轻人#pay	97
+morocc,60,42,3	duplicate(SocketMan)	年轻人#moc	97
+lhz_in02,269,33,5	duplicate(SocketMan)	年轻人#lhz	97

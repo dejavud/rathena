@@ -1,0 +1,1629 @@
+//===== rAthena Script =======================================
+//= 铁匠职业任务
+//===== By: ==================================================
+//= EREMES THE CANIVALIZER(Aegis)
+//= Translated by: yoshiki.
+//= Converted by: Komurka.
+//= Optimized and further edited by kobra_k88.
+//= Further bugfixed and tested by Lupus
+//===== Current Version: =====================================
+//= 2.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 铁匠职业的转职任务。
+//===== Additional Comments: =================================
+//= Changed some npc names to the iRO names. Changed some variable
+//= names and labels. Edited some text.[kobra_k88]
+//= Removed "if (JobLevel > 48) goto higher". It was a left over line.
+//= Thx to "Decker".[kobra_k88]
+//= Fixed some typos, thanks to Riotblade [celest]
+//= 1.3-1.5 Added Baby Class support [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
+//= 1.7 item quantity/ids typos fix
+//= 1.8 Moved the Quest to Einbroch [Poki#3]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
+//= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
+//= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
+//= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
+//= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
+//= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
+//= 2.4e Touched up a few issues as pointed out by Ultramage. [L0ne_W0lf]
+//= 2.5 Krongast is in Lighthalzen. (DarkValmir) [L0ne_W0lf]
+//= 2.6 Fixed 4 bugs [Lupus]
+//= 2.6a Typo fix [Yommy]
+//= 2.7 Added Quest Log commands. [Kisuka]
+//= 2.8 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 2.9 Updated with some extra conditions. [Euphy]
+//==============================================================
+
+ein_in01,18,28,4	script	奥提雷根#BLS	731,{
+	if (Upper == 1) {
+		mes "[奥提雷根]";
+		mes "嘿，嘿。我没工夫闲聊，忙得很。这么多商人都想成为铁匠。";
+		next;
+		mes "[奥提雷根]";
+		mes "等等，我好像见过你。";
+		mes "嗯……";
+		next;
+		mes "[奥提雷根]";
+		mes "是你弄坏我的武器跑了吗？还是逼我打造武器的那个？";
+		next;
+		mes "[奥提雷根]";
+		mes "……";
+		mes "我怎么也想不起你是谁。这是似曾相识吗？";
+		next;
+		mes "[奥提雷根]";
+		mes "啊！！真烦人！不过你确实有些特别。算了。祝你愉快～";
+		close;
+	}
+	mes "[奥提雷根]";
+	mes "欢迎！";
+	mes "我们是钢铁的工匠，";
+	mes "铁匠公会。";
+	next;
+	mes "[奥提雷根]";
+	mes "我们把灵魂的热忱";
+	mes "与激情倾注于技艺之中。";
+	mes "将金属熔铸成新武器";
+	mes "和工具，简直是一门艺术！";
+	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
+	next;
+
+	// Third class check - precedes other BaseClass dialogue.
+	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
+		mes "[奥提雷根]";
+		mes "你……看起来面生。但似乎又和我们公会有些渊源。哈哈～";
+		mes "我说得对吗？";
+		close;
+	}
+
+	if (BaseClass == Job_Novice) {
+		mes "[奥提雷根]";
+		if (Sex == SEX_FEMALE) {
+			mes "哦～";
+			mes "多么漂亮的";
+			mes "女士啊！";
+		}
+		mes "你有兴趣";
+		mes "成为铁匠吗？";
+		next;
+		mes "[奥提雷根]";
+		mes "先得成为商人，才能成为铁匠。去艾尔贝塔学习商人的本领吧。";
+		close;
+	}
+	else if (BaseClass == Job_Swordman) {
+		mes "[奥提雷根]";
+		mes "哦，想打造武器吗？抱歉，我手头实在有很多事要忙。";
+		close;
+	}
+	else if (BaseClass == Job_Archer) {
+		mes "[奥提雷根]";
+		mes "哦……";
+		mes "我们这里没什么能给你的。除非你会制作，不然也帮不上忙……";
+		close;
+	}
+	else if (BaseClass == Job_Mage) {
+		mes "[奥提雷根]";
+		mes "哦？魔法师来做什么？真意外。这种粗活通常入不了你们的眼。";
+		close;
+	}
+	else if (BaseClass == Job_Acolyte) {
+		mes "[奥提雷根]";
+		mes "哦！如果我没看错，你是神职人员吧？走之前请为我祝福吧！";
+		close;
+	}
+	else if (BaseClass == Job_Thief) {
+		mes "[奥提雷根]";
+		mes "抱歉……";
+		mes "这里实在没什么可偷的。嗯，后面倒是放着一把短剑，不过……";
+		close;
+	}
+	else if (BaseJob == Job_Alchemist) {
+		mes "[奥提雷根]";
+		mes "最近药剂生意怎么样？";
+		mes "唉，我的锻造生意似乎没什么起色了。";
+		close;
+	}
+	else if (BaseJob == Job_Blacksmith) {
+		mes "[奥提雷根]";
+		mes "哦！好久不见。";
+		mes "来找克里斯托弗买材料吗？我被困在桌前，手痒得想敲铁砧。";
+		close;
+	}
+	else if (BaseJob == Job_Merchant) {
+		if (SkillPoint) {
+			mes "[奥提雷根]";
+			mes "技能点没用完，不能转职铁匠。请用完技能点后再来吧。";
+			close;
+		}
+		if (BSMITH_Q == 0) {
+			mes "[奥提雷根]";
+			mes "何必再苦苦挣扎";
+			mes "赚那点zeny呢，";
+			mes "加入精英的铁匠行列吧？";
+			mes "有兴趣的话，填一下这份申请表，写上名字";
+			mes "和职业等级。";
+			next;
+			switch(select("填写申请表。:有什么条件？:嗯，我需要考虑一下。")) {
+			case 1:
+				if (SkillPoint) {
+					mes "[奥提雷根]";
+					mes "技能点没用完，不能转职铁匠。请用完技能点后再来吧。";
+					close;
+				}
+				else if (JobLevel > 39 && BSMITH_Q == 0) {
+					mes "[奥提雷根]";
+					mes "嗯……";
+					mes "看起来你达到了";
+					mes "职业等级";
+					mes "要求。";
+					next;
+					mes "[奥提雷根]";
+					mes "公会不是谁都收的。只收真心想成为伟大铁匠的资深商人。";
+					next;
+					mes "^3355FF*翻动纸张的声音*^000000";
+					next;
+					mes "[奥提雷根]";
+					mes "嗯……";
+					mes "艾音贝赫的铁匠^8E6B23格舒彭斯特^000000来信说人手不够。你的第一场考验就是去帮他。";
+					next;
+					set BSMITH_Q,1;
+					setquest 2000;
+					mes "[奥提雷根]";
+					mes "小心点，祝你好运！";
+					close;
+				}
+				else if (JobLevel < 40) {
+					mes "[奥提雷根]";
+					mes "嗯，看来你当商人的经验还不够。我们要求职业等级至少40级。";
+					next;
+					mes "[奥提雷根]";
+					mes "让你白跑一趟真抱歉，但规矩就是规矩。等你准备好了再来吧。";
+					close;
+				}
+			case 2:
+				mes "[奥提雷根]";
+				mes "条件吗？商人职业等级须40以上，还要通过铁匠公会的考试。";
+				next;
+				mes "[奥提雷根]";
+				mes "考试可能包含艰难的任务，但绝非不可能完成。你需要把特定物品送到世界各地";
+				mes "才能完成考试。";
+				close;
+			case 3:
+				mes "[奥提雷根]";
+				mes "嗯……";
+				mes "希望还能再见到你。";
+				close;
+			}
+		}
+		else if (BSMITH_Q > 0  && BSMITH_Q < 8) {
+			mes "[奥提雷根]";
+			mes "你还没出发吗？";
+			mes "去艾音贝赫找^8E6B23格舒彭斯特^000000。帮完他的忙，就回来找我。";
+			close;
+		}
+		else if (BSMITH_Q > 8 && BSMITH_Q < 15) {
+			mes "[奥提雷根]";
+			mes "给^8E6B23格舒彭斯特^000000干的活还顺心吗？他可是出了名的挑剔……";
+			close;
+		}
+		else if (BSMITH_Q == 15) {
+			mes "[奥提雷根]";
+			mes "干得漂亮！！";
+			mes "你通过了第一场考试……";
+			next;
+			mes "[奥提雷根]";
+			mes "嗯？你看起来很惊讶。";
+			mes "我猜你不知道考试不止一场吧。";
+			mes "哈哈，别担心，不用跑太远。";
+			mes "下一场考试的详情，去和建筑里的公会成员谈吧。";
+			next;
+			if (select("我想快点转职！不过……算了。:哼！受够了！") == 1) {
+				set BSMITH_Q,16;
+				changequest 2013,2014;
+				mes "[奥提雷根]";
+				mes "抱歉，不过你能理解的，对吧？我们不能随随便便就把人收进";
+				mes "我们的公会！";
+				next;
+				mes "[奥提雷根]";
+				mes "如果不坚持标准，";
+				mes "我们就无法维护铁匠公会的声望！";
+				mes "不能让公会蒙羞！*咳咳*总之，你现在去和里面的公会成员谈谈。";
+				close;
+			}
+			mes "[奥提雷根]";
+			mes "你是说你要";
+			mes "退出申请？这是对公会的侮辱！";
+			mes "出去！就凭这种态度，别想成为铁匠公会的一员！";
+			next;
+			mes "[奥提雷根]";
+			mes "你没骨气！";
+			mes "连这点都受不了，你永远成不了铁匠！";
+			close;
+		}
+		else if (BSMITH_Q == 16) {
+			mes "[奥提雷根]";
+			mes "嗯？你还没和公会成员谈过吗？";
+			mes "如果还没有，建议你尽快去谈。";
+			close;
+		}
+		else if (BSMITH_Q == 17 && countitem(1005) > 0 && JobLevel > 39) {
+			mes "[奥提雷根]";
+			if (ismounting()) {
+				mes "你正骑着坐骑，无法转职。";
+				mes "请下坐骑后再试一次！";
+				close;
+			}
+			mes "很好，你眼中的光芒说明你成功了。现在传授你铁匠的锻造之术。";
+			if (checkquest(2015) != -1) {
+				changequest 2015,2016;
+			}
+			next;
+			set .@joblvl,JobLevel;
+			callfunc "Job_Change",Job_Blacksmith;
+			callfunc "F_ClearJobVar";		// clears all job variables for the current player
+			mes "[奥提雷根]";
+			mes "永远记住，我们是创造者，是金属的艺术家。当心不要堕入自私";
+			mes "和贪婪的陷阱。";
+			next;
+			delitem 1005,1; //Hammer_Of_Blacksmith
+			completequest 2016;
+			mes "[奥提雷根]";
+			mes "这是一份小礼物，";
+			mes "纪念你";
+			mes "铁匠生涯的开始。";
+			mes "恭喜你！！！";
+			if (.@joblvl > 48)
+				getitem 999,30; //Steel
+			else 
+				getitem 999,5; //Steel
+			close;
+		}
+	}
+}
+
+ein_in01,201,27,3	script	格舒彭斯特#alberta	63,{
+	mes "[格舒彭斯特]";
+	mes "你好啊！";
+	mes "我是^8E6B23格舒彭斯特^000000，";
+	mes "职业是铁匠。";
+	mes "幸会幸会！";
+	next;
+	if (BaseJob == Job_Merchant) {
+		mes "[格舒彭斯特]";
+		mes "哦呵呵！";
+		mes "你是商人！";
+		mes "太好了！我正";
+		mes "需要帮手！";
+		next;
+		if (BSMITH_Q == 0) {
+			mes "[格舒彭斯特]";
+			mes "不过，当然，";
+			mes "你忙的话";
+			mes "我就不打扰了。";
+			mes "忙你的去吧～";
+			next;
+			mes "[格舒彭斯特]";
+			mes "毕竟……";
+			mes "我应该最懂";
+			mes "忙碌的滋味～";
+			close;
+		}
+		else if ((BSMITH_Q == 1) || (BSMITH_Q == 2)) {
+			if (BSMITH_Q == 1) {
+				mes "[格舒彭斯特]";
+				mes "如果我没猜错，你就是铁匠公会派来的帮手吧？可靠的人不好找，所以我总是";
+				mes "人手不够。";
+				next;
+				mes "[格舒彭斯特]";
+				mes "嗯，不管怎样，";
+				mes "你就是派来的帮手，对吧？好，我有些工作必须";
+				mes "马上处理！";
+				next;
+				mes "[格舒彭斯特]";
+				mes "前阵子我雇了个没经验的小伙计，买错了材料！太糟糕了……";
+				next;
+				mes "[格舒彭斯特]";
+				mes "谁都讨厌因愚蠢的错误赔钱。不过，我有个难一点的活给你。";
+				next;
+				mes "[格舒彭斯特]";
+				mes "不过我想确认你有商人的基本知识。可以问你几个问题吗？";
+				next;
+				set .@selection,select("可以。:嗯，能给我点时间准备吗？");
+			}
+			else if (BSMITH_Q == 2) {
+				mes "[格舒彭斯特]";
+				mes "那么，这次";
+				mes "有好好";
+				mes "准备吗？";
+				next;
+				mes "[格舒彭斯特]";
+				mes "我承认，指望谁第一次就考满分太不近人情了，所以我给你";
+				mes "一点优待……";
+				next;
+				mes "[格舒彭斯特]";
+				mes "你可以答错";
+				mes "一题！";
+				mes "好了，开始";
+				mes "提问吧～";
+				next;
+			}
+			if (.@selection != 2) {
+				if (rand(2)) {
+					mes "[格舒彭斯特]";
+					mes "1. 下列哪个地区与特产的搭配";
+					mes "是错误的？";
+					next;
+					if (select("梦罗克 - 盗贼装:艾尔贝塔 - 双手斧:坤顿 - 狂暴药水:艾尔贝塔 - 剑锤") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "2. 什么异常状态";
+					mes "可以由";
+					mes "^8E6B23重锤落下^000000技能造成？";
+					next;
+					if (select("眩晕:黑暗:沉默:睡眠") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "3. 下列哪个技能商人";
+					mes "无法使用？";
+					next;
+					if (select("露天商店:折扣:超额收费:敏捷提升") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "4. 哪里能找到";
+					mes "卖蓝色宝石的商店？";
+					next;
+					if (select("艾尔贝塔:梦罗克:吉芬:普隆德拉") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "5. 请指出";
+					mes "道具商人的位置";
+					mes "（在吉芬）？";
+					next;
+					if (select("从广场往8点钟方向:从广场往11点钟方向:从广场往6点钟方向:从广场往5点钟方向") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "6. 哪种武器";
+					mes "商人";
+					mes "无法使用？";
+					next;
+					if (select("刺剑:环柄军刀:锁链:圣经") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "7. 下列哪件装备";
+					mes "防御力最高？";
+					next;
+					if (select("内裤:貂皮大衣:木制铠甲:丝绸长袍") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "8. 3级武器的";
+					mes "^8E6B23安全^000000精炼上限";
+					mes "是多少？";
+					next;
+					if (select("最高 + 3:最高 + 4:最高 + 5:最高 + 6") == 3)
+						set .@black_q,.@black_q+10;
+					mes "9. 用^8E6B23树干^000000";
+					mes "可以制作";
+					mes "什么物品？";
+					next;
+					if (select("斗笠:幽灵头巾:华丽山羊角:鹿角") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "10. 作为商人";
+					mes "最重要的是……？";
+					next;
+					select("信用:诚信:金钱:口才");
+					set .@black_q,.@black_q+10;
+				}
+				else {
+					mes "[格舒彭斯特]";
+					mes "1. 下列哪个城市与特产的搭配是错误的？";
+					next;
+					if (select("艾尔帕兰 - 世界树之叶:艾尔贝塔 - 铁锤:坤顿 - 狂暴药水:艾尔帕兰 - 铁锤") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "2. 一个杰勒比";
+					mes "值多少zeny？";
+					next;
+					if (select("1 zeny:2 zeny:3 zeny:4 zeny") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "3. 商人使用";
+					mes "^8E6B23露天商店^000000技能";
+					mes "需要什么？";
+					next;
+					if (select("必须有手推车。:必须有要卖的物品。:必须手持武器。:必须穿着防具。") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "4. 在哪里";
+					mes "可以转职";
+					mes "成为商人？";
+					next;
+					if (select("艾尔贝塔:梦罗克:吉芬:普隆德拉") == 1)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "5. 请指出";
+					mes "武器商人的位置";
+					mes "（在梦罗克）？";
+					next;
+					if (select("从城市中心往7点钟方向:从城市中心往11点钟方向:从城市中心往6点钟方向:从城市中心往5点钟方向") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "6. 什么武器";
+					mes "商人";
+					mes "无法使用？";
+					next;
+					if (select("左手剑:双手大剑:锁链:双手斧") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "7. 下列哪件装备";
+					mes "防御力最高？";
+					next;
+					if (select("内裤:貂皮大衣:木制铠甲:丝绸长袍") == 2)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "8. 3级武器的";
+					mes "^8E6B23安全^000000精炼上限";
+					mes "是多少？";
+					next;
+					if (select("最高 + 3:最高 + 4:最高 + 5:最高 + 6") == 3)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "9. 哪种怪物";
+					mes "不掉铁矿石？";
+					next;
+					if (select("螳螂:钢铁螳螂:杰洛姆:虎蜥人") == 4)
+						set .@black_q,.@black_q+10;
+					mes "[格舒彭斯特]";
+					mes "10. 对商人来说";
+					mes "最重要的是什么？";
+					next;
+					select("口才:信用:金钱:经验");
+					set .@black_q,.@black_q+10;
+				}
+				mes "[格舒彭斯特]";
+				mes "嗯。干得不错！";
+				next;
+				mes "[格舒彭斯特]";
+				mes "让我看看……你的分数是……" + .@black_q + "分。";
+				if (.@black_q == 100) {
+					set BSMITH_Q,3;
+					if (checkquest(2001) != -1) {
+						changequest 2001,2002;
+					} else {
+						changequest 2000,2002;
+					}
+					mes "哦呵呵～";
+					mes "这个分数";
+					mes "完全没问题！";
+					next;
+					mes "[格舒彭斯特]";
+					mes "我要委托你一份工作！";
+					mes "给我点时间做必要的准备。";
+					mes "你回来的时候，我就准备好了！";
+					close;
+				}
+				set BSMITH_Q,2;
+				if (checkquest(2001) == -1) {
+					changequest 2000,2001;
+				}
+				mes ".............";
+				next;
+				mes "[格舒彭斯特]";
+				if (BSMITH_Q == 2) {
+					mes "该怎么说呢？";
+					mes "你怎么又没考过？！";
+					mes "如果你打算以这种水平做事，我可不敢把任何工作交给你……";
+					close;
+				}
+				mes "嗯……";
+				mes "说出来很痛心，但你似乎还得再学习学习。这种分数";
+				mes "永远成不了";
+				mes "铁匠！";
+				close;
+			}
+			mes "[格舒彭斯特]";
+			mes "啊，晚点回来我当然不介意。毕竟有备无患。";
+			mes "小心一点";
+			mes "总没错～";
+			close;
+		}
+		/*
+		else if (BSMITH_Q == 2) {
+			mes "[格舒彭斯特]";
+			mes "那么，这次";
+			mes "有好好";
+			mes "准备吗？";
+			next;
+			mes "[格舒彭斯特]";
+			mes "我承认，指望谁第一次就考满分太不近人情了，所以我给你";
+			mes "一点优待……";
+			next;
+			mes "[格舒彭斯特]";
+			mes "你可以答错";
+			mes "一题！";
+			mes "好了，开始";
+			mes "提问吧～";
+			next;
+			goto L_AskQuestions;
+		}
+		*/
+		else if (BSMITH_Q == 3) {
+			mes "[格舒彭斯特]";
+			mes "嗯……";
+			mes "那些订单";
+			mes "放哪儿去了……";
+			next;
+			mes "^3355FF*翻动纸张的声音*";
+			mes "*纸张沙沙作响*^000000";
+			next;
+			mes "[格舒彭斯特]";
+			mes "哦！在这里！";
+			mes "这是拖延得";
+			mes "最久的一笔订单……";
+			mes "嘿嘿～";
+			next;
+			mes "[格舒彭斯特]";
+			mes "那么，制作这个";
+			mes "你需要……";
+			next;
+			switch(rand(1,5)) {
+			//Steel, Rotten_Bandage, Blue_Gemstone, Arc_Wand
+			case 1: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 4; changequest 2002,2003; break;
+			//Sparkling_Dust, Skel_Bone, Zargon, Gladius
+			case 2: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 5; changequest 2002,2004; break;
+			//Coal, Shell, Boody_Red, Tsurugi
+			case 3: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 6; changequest 2002,2005; break;
+			//Iron_Ore, Eye_Bandage, Blue_Gemstone, Arbalest
+			case 4: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 7; changequest 2002,2006; break;
+			//Iron, Green_Herb, Animal's_Skin, Ring_Pommel_Saber
+			default: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 8; changequest 2002,2007; break;
+			}
+			set BSMITH_Q,.@items[8];
+			mes "[格舒彭斯特]";
+			mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000，";
+			mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000，";
+			mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000，还有";
+			mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000，都是";
+			mes "在NPC商店";
+			mes "就能买到的东西。";
+			next;
+			mes "[格舒彭斯特]";
+			mes "收集这些物品就是你的考验。碰巧也能帮我省钱。听好了……";
+			next;
+			mes "[格舒彭斯特]";
+			mes "好了～";
+			mes "祝你第一份工作";
+			mes "顺利！";
+			close;
+		}
+		else if (BSMITH_Q > 3 && BSMITH_Q < 9) {
+			switch(BSMITH_Q) {
+			case 4: setarray .@items[0], 999,1, 930,1, 717,2, 1610,1, 9; break;
+			case 5: setarray .@items[0], 1001,2, 932,1, 912,1, 1219,1, 10; break;
+			case 6: setarray .@items[0], 1003,1, 935,2, 990,2, 1119,1, 11; break;
+			case 7: setarray .@items[0], 1002,1, 2212,1, 717,2, 1713,1, 12; break;
+			case 8: setarray .@items[0], 998,1, 511,1, 919,2, 1122,1, 13; break;
+			}
+			mes "[格舒彭斯特]";
+			mes "啊，你回来了！";
+			mes "我要的东西";
+			mes "都带来了吗？";
+			next;
+			if (countitem(.@items[0]) >= .@items[1] && countitem(.@items[2]) >= .@items[3] && countitem(.@items[4]) >= .@items[5] && countitem(.@items[6]) >= .@items[7]) {
+				mes "[格舒彭斯特]";
+				mes "等等……";
+				mes "我不是说要";
+				mes "3个钢铁吗？";
+				next;
+				mes "[格舒彭斯特]";
+				mes "哦，好像是";
+				mes "2个来着。让我看看……";
+				mes "嗯，都齐了！";
+				mes "现在，稍等一下。";
+				next;
+				mes "[格舒彭斯特]";
+				mes "哦，你要确认身上没有携带^FF0000超过一个"+getitemname(.@items[6])+"^000000，背包里应该只有一个从NPC商店买来的"+getitemname(.@items[6])+"。";
+				next;
+				if (select("哦，能稍等我一下吗？:哦，我要的东西都带来了。") == 1) {
+					mes "[格舒彭斯特]";
+					mes "嗯，最好把";
+					mes "其余的物品";
+					mes "存进";
+					mes "卡普拉仓库。";
+					close;
+				}
+				mes "[格舒彭斯特]";
+				mes "好。";
+				mes "太棒了～！！";
+				next;
+				mes "[格舒彭斯特]";
+				mes "^3355FF*哐当……！*^000000";
+				next;
+				mes "[格舒彭斯特]";
+				mes "^3355FF*乒乒乓乓！*^000000";
+				next;
+				delitem .@items[0],.@items[1];
+				delitem .@items[2],.@items[3];
+				delitem .@items[4],.@items[5];
+				delitem .@items[6],.@items[7];
+				set BSMITH_Q,.@items[8];
+				mes "[格舒彭斯特]";
+				mes "呜呼~~~";
+				mes "完成了……";
+				switch(BSMITH_Q) {
+				case 9:
+					mes "好，把这个送到吉芬交给^8E6B23贝苏里斯特^000000。记得带回收据。";
+					getitem 1610,1; //Arc_Wand
+					if (checkquest(2003) != -1) {
+						changequest 2003,2008;
+					}
+					next;
+					mes "[格舒彭斯特]";
+					mes "嗯……？";
+					mes "那是什么表情？";
+					mes "这可不是普通的";
+					mes "弧杖！仔细看看";
+					mes "手柄……";
+					next;
+					mes "^3355FF手柄上写着：";
+					mes "'超级弧杖";
+					mes "格舒彭斯特";
+					mes "2型。'看起来";
+					mes "确实有着";
+					mes "完全不同的手感。^000000";
+					next;
+					mes "[格舒彭斯特]";
+					mes "总之，把这个";
+					mes "送到吉芬交给^8E6B23贝苏里斯特^000000，";
+					break;
+				case 10:
+					mes "好，把这个送到梦罗克交给^8E6B23薇可宾^000000。记得带回收据。";
+					getitem 1219,1; //Gladius
+					if (checkquest(2004) != -1) {
+						changequest 2004,2009;
+					}
+					next;
+					mes "[格舒彭斯特]";
+					mes "嗯……？";
+					mes "那是什么表情？";
+					mes "这可不是普通的";
+					mes "短剑！仔细看看";
+					mes "手柄……";
+					next;
+					mes "^3355FF手柄上写着：";
+					mes "'超级短剑";
+					mes "格舒彭斯特";
+					mes "2型。'看起来";
+					mes "确实有着";
+					mes "完全不同的手感。^000000";
+					next;
+					mes "[格舒彭斯特]";
+					mes "总之，把这个";
+					mes "送到梦罗克交给^8E6B23薇可宾^000000，";
+					break;
+				case 11:
+					mes "好，把这个送到里希塔乐交给^8E6B23克朗加斯特^000000。记得带回收据。";
+					getitem 1119,1; //Tsurugi
+					if (checkquest(2005) != -1) {
+						changequest 2005,2010;
+					}
+					next;
+					mes "[格舒彭斯特]";
+					mes "嗯……？";
+					mes "那是什么表情？";
+					mes "这可不是普通的";
+					mes "太刀！仔细看看";
+					mes "刀刃……";
+					next;
+					mes "^3355FF刀刃上写着：";
+					mes "'利刃";
+					mes "格舒彭斯特";
+					mes "太刀特制版。'";
+					mes "手感确实";
+					mes "和普通太刀";
+					mes "完全不同……^000000";
+					next;
+					mes "[格舒彭斯特]";
+					mes "总之，把这个";
+					mes "送到里希塔乐交给^8E6B23克朗加斯特^000000";
+					break;
+				case 12:
+					mes "好，把这个送到斐扬交给^8E6B23塔尔皮兹^000000。记得带回收据。";
+					getitem 1713,1; //Arbalest
+					if (checkquest(2006) != -1) {
+						changequest 2006,2011;
+					}
+					next;
+					mes "[格舒彭斯特]";
+					mes "嗯……？";
+					mes "那是什么表情？";
+					mes "这可不是普通的";
+					mes "十字弩！仔细看看";
+					mes "弩身……";
+					next;
+					mes "^3355FF弩身上写着：";
+					mes "格舒彭斯特";
+					mes "十字弩豪华版。";
+					mes "确实比普通十字弩";
+					mes "豪华得多。^000000";
+					next;
+					mes "[格舒彭斯特]";
+					mes "总之，把这个";
+					mes "送到斐扬交给^8E6B23塔尔皮兹^000000，";
+					break;
+				case 13:
+					mes "好，把这个送到虎格交给^8E6B23比斯马克^000000。记得带回收据。";
+					getitem 1122,1; //Ring_Pommel_Saber
+					if (checkquest(2007) != -1) {
+						changequest 2007,2012;
+					}
+					next;
+					mes "[格舒彭斯特]";
+					mes "嗯……？";
+					mes "那是什么表情？";
+					mes "这可不是普通的";
+					mes "环柄军刀！";
+					mes "仔细看看";
+					mes "手柄……";
+					next;
+					mes "^3355FF手柄上写着：";
+					mes "'绿色草药";
+					mes "环柄军刀";
+					mes "格舒彭斯特";
+					mes "2型。'看起来";
+					mes "确实有着";
+					mes "完全不同的手感。^000000";
+					next;
+					mes "[格舒彭斯特]";
+					mes "剑中蕴含绿色草药之力！中毒垂死的人，用它刺一下就能得救！";
+					next;
+					mes "[格舒彭斯特]";
+					mes "总之，把这个";
+					mes "送到虎格交给^8E6B23比斯马克^000000";
+				}
+				mes "别忘了带回收据！";
+				close;
+			}
+			else {
+				mes "[格舒彭斯特]";
+				mes "你还没把";
+				mes "物品都带来。";
+				mes "需要我再提醒你吗？";
+				mes "给我带来……";
+				next;
+				mes "[格舒彭斯特]";
+				mes "^8E6B23"+.@items[1]+" "+getitemname(.@items[0])+"^000000，";
+				mes "^8E6B23"+.@items[3]+" "+getitemname(.@items[2])+"^000000，";
+				mes "^8E6B23"+.@items[5]+" "+getitemname(.@items[4])+"^000000，还有";
+				mes "^8E6B23"+.@items[7]+" "+getitemname(.@items[6])+"^000000，都是";
+				mes "在NPC商店";
+				mes "就能买到的东西。";
+				next;
+				mes "[格舒彭斯特]";
+				mes "下次回来时，";
+				mes "务必带齐我要的东西。";
+				mes "记住，";
+				mes "这是考验！";
+				mes "偷懒的话";
+				mes "成不了铁匠！";
+				close;
+			}
+		}
+		else if (BSMITH_Q > 8 && BSMITH_Q < 14) {
+			mes "[格舒彭斯特]";
+			mes "你怎么";
+			mes "还在这里？";
+			mes "快去送货";
+			mes "吧～！";
+			mes "忘了要去";
+			mes "哪里吗？";
+			next;
+			mes "[格舒彭斯特]";
+			if (BSMITH_Q == 9) {
+				mes "在吉芬，";
+				mes "从城市中心往11点钟方向，就能找到^8E6B23贝苏里斯特^000000。别忘了收据。";
+			}
+			else if (BSMITH_Q == 10) {
+				mes "在梦罗克找";
+				mes "剑锤商人^8E6B23薇可宾^000000。别忘了收据。";
+			}
+			else if (BSMITH_Q == 11) {
+				mes "里希塔乐，从中心往6点钟方向，武器店附近能找到^8E6B23克朗加斯特^000000。别忘了收据。";
+			}
+			else if (BSMITH_Q == 12) {
+				mes "在斐扬，从城市中心往5点钟方向，就能找到^8E6B23塔尔皮兹^000000。别忘了收据。";
+			}
+			else {
+				mes "在虎格，从城市中心往1点钟方向，飞空艇附近就能找到^8E6B23比斯马克^000000。别忘了收据。";
+			}
+			close;
+		}
+		else if (BSMITH_Q == 14) {
+			mes "[格舒彭斯特]";
+			mes "嗯……？";
+			mes "送货";
+			mes "完成了吗？";
+			mes "让我看看收据～";
+			next;
+			if (select("是的，给您。:收据？我，呃，放在哪里了。") == 1) {
+				if (countitem(1073) > 0) {
+					set BSMITH_Q,15;
+					delitem 1073,1; //Merchant_Voucher_1
+					if (checkquest(2008) != -1) {
+						changequest 2008,2013;
+					}
+					else if (checkquest(2009) != -1) {
+						changequest 2009,2013;
+					}
+					else if (checkquest(2010) != -1) {
+						changequest 2010,2013;
+					}
+					else if (checkquest(2011) != -1) {
+						changequest 2011,2013;
+					}
+					else {
+						changequest 2012,2013;
+					}
+					mes "[格舒彭斯特]";
+					mes "哦呵呵～";
+					mes "太好了！";
+					mes "你真是个";
+					mes "出色的商人！";
+					next;
+					mes "[格舒彭斯特]";
+					mes "干得好！";
+					mes "回艾音布罗克找^8E6B23奥提雷根^000000，就是申请时你第一个见到的人。";
+					next;
+					mes "[格舒彭斯特]";
+					mes "我相信你会成为";
+					mes "出色的铁匠！";
+					close;
+				}
+				set BSMITH_Q,3;
+				mes "[格舒彭斯特]";
+				mes "你是说……";
+				mes "你没拿到";
+				mes "收据？";
+				mes "什么……？";
+				next;
+				mes "[格舒彭斯特]";
+				mes "收据是";
+				mes "商人最好的朋友！";
+				mes "对你的工作必不可少！";
+				mes "你的考验";
+				mes "必须从头再来！";
+				close;
+			}
+			mes "[格舒彭斯特]";
+			mes "找到收据";
+			mes "再回来吧～";
+			mes "你没忘了";
+			mes "拿收据吧。";
+			mes "对吧……？";
+			close;
+		}
+		else if (BSMITH_Q == 15) {
+			mes "[格舒彭斯特]";
+			mes "谢谢你。";
+			mes "多谢你的帮忙。";
+			mes "回艾音布罗克";
+			mes "去见^8E6B23奥提雷根^000000吧！";
+			close;
+		}
+		mes "[格舒彭斯特]";
+		mes "嗯……？";
+		mes "你在我这里的考验";
+		mes "已经结束了！";
+		mes "而且难得的是，";
+		mes "我今天不需要帮忙了。";
+		close;
+	}
+	else {
+		mes "[格舒彭斯特]";
+		mes "当铁匠";
+		mes "真是太棒了！";
+		mes "你不觉得吗？";
+		mes "哈哈哈哈！！";
+		close;
+	}
+}
+
+geffen,46,164,1	script	贝苏里斯特#BLS	69,{
+	if (BSMITH_Q == 9 && countitem(1610) > 0) {
+		mes "[贝苏里斯特]";
+		mes "哦，你好！";
+		mes "你是来送";
+		mes "我的弧杖的吗？";
+		next;
+		mes "[贝苏里斯特]";
+		mes "你确定这就是我订的东西，对吧？我是说，如果是用过的，";
+		mes "我可不要。";
+		next;
+		if (select("哎呀，这是我自己在用的东西……:我确定！是全新的！") == 1) {
+			mes "[贝苏里斯特]";
+			mes "这个嘛……";
+			mes "我想我还能";
+			mes "再等等。";
+			mes "请快点";
+			mes "送货来～";
+			close;
+		}
+		mes "[贝苏里斯特]";
+		mes "你";
+		mes "完全确定？";
+		set BSMITH_Q,14;
+		delitem 1610,1; //Arc_Wand
+		next;
+		mes "[贝苏里斯特]";
+		mes "谢谢你大老远送来。见到格舒彭斯特替我揍他一顿，太慢了……";
+		next;
+		mes "[贝苏里斯特]";
+		mes "请稍等，";
+		mes "我给你开张收据～";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[贝苏里斯特]";
+		mes "给你。";
+		mes "非常感谢！";
+		mes "哦，祝你好运～";
+		mapannounce "geffen","嘿，" +strcharinfo(0)+ "，非常感谢你送货来～",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[贝苏里斯特]";
+		mes "谢谢你。";
+		mes "多谢";
+		mes "你送货来～";
+		close;
+	}
+	else {
+		mes "[贝苏里斯特]";
+		mes "哦……";
+		mes "好久没去";
+		mes "艾尔贝塔了。";
+		next;
+		mes "[贝苏里斯特]";
+		mes "我前些时候";
+		mes "从那里订了东西，";
+		mes "但货";
+		mes "还没送到……";
+		next;
+		mes "[贝苏里斯特]";
+		mes "我在想……";
+		mes "铁匠公会是不是";
+		mes "人手不够？他们迟到，我想不出别的原因……";
+		next;
+		mes "[贝苏里斯特]";
+		mes "我的特制弧杖";
+		mes "什么时候才能到？";
+		close;
+	}
+}
+
+morocc,27,112,4	script	薇可宾#BLS	725,{
+	if (BSMITH_Q == 10 && countitem(1219) > 0) {
+		cutin "Job_Black_hucke01",2;
+		mes "[薇可宾]";
+		mes "……！";
+		mes "到了！";
+		next;
+		mes "[薇可宾]";
+		mes "这就是我订的东西，对吧？";
+		mes "用过的或者旧的短剑我可不要！";
+		next;
+		if (select("哎呀，不是这个。:我保证是全新的。") == 1) {
+			cutin "Job_Black_hucke03",2;
+			mes "[薇可宾]";
+			mes "哦……！";
+			mes "快把我的";
+			mes "短剑拿来～";
+			next;
+			mes "- 她似乎很不高兴。 -";
+			close2;
+			cutin "Job_Black_hucke03",255;
+			end;
+		}
+		cutin "Job_Black_hucke02",2;
+		mes "[薇可宾]";
+		mes "哈哈哈！";
+		mes "终于到了！现在……";
+		mes "让我";
+		mes "看看！";
+		next;
+		mes "- 她看起来非常高兴。 -";
+		next;
+		set BSMITH_Q,14;
+		delitem 1219,1; //Gladius
+		cutin "Job_Black_hucke01",2;
+		mes "[薇可宾]";
+		mes "你是";
+		mes "艾音布罗克铁匠公会的？";
+		mes "给格舒彭斯特带个话！";
+		next;
+		cutin "Job_Black_hucke03",2;
+		mes "[薇可宾]";
+		mes "'^660000你迟到了！";
+		mes "你知道我等了";
+		mes "多久吗？！^000000'";
+		next;
+		cutin "Job_Black_hucke02",2;
+		mes "[薇可宾]";
+		mes "不过，这也是";
+		mes "一件精工细作的物品。";
+		mes "告诉他，我对做工很满意。";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		emotion ET_THROB;
+		mes "[薇可宾]";
+		mes "这是收据。";
+		mes "我想你";
+		mes "干得不错。";
+		mapannounce "morocc","谢谢送货，" + strcharinfo(0) + "～！",bc_map;
+		close2;
+		cutin "Job_Black_hucke02",255;
+		end;
+	}
+	else if (BSMITH_Q == 14) {
+		emotion ET_THROB;
+		cutin "Job_Black_hucke02",2;
+		mes "[薇可宾]";
+		mes "谢谢送货。";
+		close2;
+		cutin "Job_Black_hucke02",255;
+		end;
+	}
+	else {
+		cutin "Job_Black_hucke03",2;
+		mes "[薇可宾]";
+		mes "...";
+		next;
+		mes "[薇可宾]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[薇可宾]";
+		mes "他们迟到了。";
+		mes "迟到了，";
+		mes "迟到了，";
+		mes "迟到了～！";
+		next;
+		mes "[薇可宾]";
+		mes "从格舒彭斯特那里发货要多久？吉芬铁匠公会通常很快的……";
+		next;
+		emotion ET_THROB;
+		mes "[薇可宾]";
+		mes "哦……";
+		mes "真让人";
+		mes "心烦……";
+		close2;
+		cutin "Job_Black_hucke03",255;
+		end;
+	}
+}
+
+lighthalzen,209,80,4	script	克朗加斯特#BLS	734,{
+	if (BSMITH_Q == 11 && countitem(1119) > 0) {
+		mes "[克朗加斯特]";
+		mes "哦哦哦～";
+		mes "到了吗？";
+		mes "很好。";
+		mes "让我看看。";
+		next;
+		mes "[克朗加斯特]";
+		mes "你确定这就是我";
+		mes "订的东西，对吧？用过的我可不要。";
+		next;
+		if (select("哎呀，这把是用过的！:刚打造出来的，是全新的。") == 1) {
+			mes "[克朗加斯特]";
+			mes "嗯！";
+			mes "请把对的剑";
+			mes "送来！";
+			mes "我已经等了";
+			mes "够久了……";
+			close;
+		}
+		mes "[克朗加斯特]";
+		mes "你反复确认过了？";
+		mes "那好，我收下了！";
+		next;
+		set BSMITH_Q,14;
+		delitem 1119,1; //Tsurugi
+		mes "[克朗加斯特]";
+		mes "哦呵……";
+		mes "这东西不错。";
+		mes "比我预期的";
+		mes "好多了。";
+		next;
+		mes "[克朗加斯特]";
+		mes "有了这把剑……";
+		mes "我的绝技会更强！甚至能完善我的快攻技巧！我爱死它了！";
+		next;
+		mes "[克朗加斯特]";
+		mes "那好。";
+		mes "我给你";
+		mes "开张收据。";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[克朗加斯特]";
+		mes "这是";
+		mes "你的收据。";
+		mes "多谢";
+		mes "惠顾！";
+		mapannounce "lighthalzen",strcharinfo(0)+"……谢谢送货。",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[克朗加斯特]";
+		mes "谢谢你。";
+		mes "多谢你送货。";
+		close;
+	}
+	else {
+		mes "[克朗加斯特]";
+		mes "...";
+		next;
+		mes "[克朗加斯特]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[克朗加斯特]";
+		mes "我订的剑";
+		mes "到底什么时候才到？";
+		mes "我要用它试试我的绝技，^2F4F4F利刃^000000。";
+		next;
+		mes "[克朗加斯特]";
+		mes "啊啊啊啊！";
+		mes "我一定要";
+		mes "那把剑！";
+		close;
+	}
+}
+
+payon,214,79,4	script	塔尔皮兹#BLS	59,{
+	if (BSMITH_Q == 12 && countitem(1713) > 0) {
+		mes "[塔尔皮兹]";
+		mes "哦～";
+		mes "终于到了吗？";
+		mes "我订的包裹？";
+		next;
+		mes "[塔尔皮兹]";
+		mes "嗯，这就是我订的东西，对吧？用过的十字弩我可不要。";
+		next;
+		if (select("哎呀，这把是用过的。:我确定是全新的。") == 1) {
+			mes "[塔尔皮兹]";
+			mes "嗯。";
+			mes "请快点";
+			mes "把对的物品";
+			mes "带来。";
+			mes "我已经等了";
+			mes "太久了……";
+			close;
+		}
+		mes "[塔尔皮兹]";
+		mes "那么，你确定？";
+		mes "让我看看……";
+		next;
+		set BSMITH_Q,14;
+		delitem 1713,1; //Arbalest
+		mes "[塔尔皮兹]";
+		mes "*呼啸*";
+		mes "非常棒！！";
+		next;
+		mes "[塔尔皮兹]";
+		mes "这真是高品质的定制品。我爱这个放眼罩的盒子！真的好喜欢～";
+		next;
+		mes "[塔尔皮兹]";
+		mes "谢谢你！";
+		mes "这种品质的东西，";
+		mes "就算用过了也能卖个好价钱！";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[塔尔皮兹]";
+		mes "给！";
+		mes "请收下";
+		mes "你的收据。";
+		mes "真的很感激";
+		mes "你的辛苦。";
+		mapannounce "payon","谢谢，" +strcharinfo(0)+ "，你真的送到了。每次看到它，我都更喜欢它～",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[塔尔皮兹]";
+		mes "真的，";
+		mes "怎么夸都不为过。";
+		mes "这是";
+		mes "顶级的做工～！";
+		close;
+	}
+	else {
+		mes "[塔尔皮兹]";
+		mes "唉……";
+		mes "我的订单";
+		mes "什么时候到？";
+		next;
+		mes "[塔尔皮兹]";
+		mes "一把定制的十字弩，";
+		mes "配一个能放眼罩的高级盒子。只有一个人做得出来……";
+		next;
+		mes "[塔尔皮兹]";
+		mes "啊啊啊……";
+		mes "等待";
+		mes "真是难以忍受！";
+		close;
+	}
+}
+
+hugel,168,183,1	script	比斯马克#BLS	118,{
+	if (BSMITH_Q == 13 && countitem(1122) > 0) {
+		mes "[比斯马克]";
+		mes "仁慈的神啊……";
+		mes "您派来了";
+		mes "一位天使……？";
+		mes "那是我订的环柄军刀";
+		mes "吗？那是我唯一的希望……";
+		next;
+		mes "[比斯马克]";
+		mes "^666666*呜*^000000这就是我订的东西，对吧？我需要一把特制的";
+		mes "来止住这毒……";
+		next;
+		if (select("哎呀，这是我自己用的环柄军刀。:我确定就是这把。") == 1) {
+			mes "[比斯马克]";
+			mes "不……不要……";
+			mes "快点……！";
+			mes "我需要那把剑";
+			mes "是因为它的";
+			mes "解……解药！";
+			next;
+			mes "^3355FF看起来";
+			mes "他正在慢慢死去……！";
+			mes "你最好快点。^000000";
+			close;
+		}
+		mes "[比斯马克]";
+		mes "^666666*咯*^000000";
+		mes "给我……！";
+		mes "求你了！";
+		next;
+		set BSMITH_Q,14;
+		delitem 1122,1; //Ring_Pommel_Saber
+		mes "^3355FF比斯马克";
+		mes "用那把蕴含";
+		mes "绿色草药之力的";
+		mes "环柄军刀";
+		mes "反复刺向自己。^000000";
+		next;
+		mes "[比斯马克]";
+		mes "^666666*咯*^000000";
+		mes "*喘气*";
+		next;
+		mes "[比斯马克]";
+		mes "请……";
+		mes "扶我起来。";
+		mes "毒素";
+		mes "还在我体内";
+		mes "流动……";
+		next;
+		mes "[比斯马克]";
+		mes "哎哟！！";
+		mes "好烧啊！";
+		next;
+		mes "[比斯马克]";
+		mes "*喘气*";
+		mes "*呼*好了，";
+		mes "我能感觉到";
+		mes "解药起作用了。";
+		mes "正是我需要的。";
+		next;
+		getitem 1073,1; //Merchant_Voucher_1
+		mes "[比斯马克]";
+		mes "这是";
+		mes "你的收据。";
+		mes "拿……拿去……！";
+		mes "它是你的了！";
+		mapannounce "hugel","谢谢，" +strcharinfo(0)+ "，谢谢送货。你救了我的命……",bc_map;
+		close;
+	}
+	else if (BSMITH_Q == 14) {
+		mes "[比斯马克]";
+		mes "谢谢你。";
+		mes "你救了";
+		mes "我的命……";
+		close;
+	}
+	else {
+		mes "[比斯马克]";
+		mes "^666666*咯*^000000";
+		mes "^666666*呜 呜*^000000";
+		mes "我的订单";
+		mes "什么时候到……？";
+		next;
+		mes "[比斯马克]";
+		mes "我体内的毒……";
+		mes "这痛苦……";
+		mes "痛不欲生……神啊……";
+		next;
+		mes "[比斯马克]";
+		mes "解药";
+		mes "什么时候";
+		mes "才能到？！";
+		close;
+	}
+}
+
+ein_in01,24,41,5	script	米特马尤#moc	726,{
+	if (BSMITH_Q == 16) {
+		emotion ET_SCRATCH;
+		mes "[米特马尤]";
+		mes "哦……你就是那个想成为铁匠的人？";
+		mes "不错，嘿嘿。";
+		mes "正如你之前的考验所体会到的，商人不会立刻晋升为铁匠。";
+		next;
+		mes "[米特马尤]";
+		mes "你对锻造真正了解多少？准备好回答我的问题了吗？";
+		next;
+		if (select("是:还没有～") == 1) {
+			mes "[米特马尤]";
+			mes "好吧……";
+			mes "我的考试很简单。";
+			mes "我问五个问题。";
+			mes "错得太多，";
+			mes "就不及格。而且我不会";
+			mes "告诉你错在哪里。";
+			next;
+			set .@blackss_te,0;
+			mes "[米特马尤]";
+			mes "请听好，";
+			mes "仔细作答……";
+			next;
+			switch(rand(1,3)) {
+			case 1:
+				mes "[米特马尤]";
+				mes "1. 学习";
+				mes "^8E6B23折扣^000000技能";
+				mes "需要什么能力？";
+				next;
+				if (select("手推车3级:物品鉴定:金钱攻击10级:增大载重量3级") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "2. 用^8E6B23重锤落下^000000";
+				mes "攻击时，";
+				mes "能对敌人造成";
+				mes "什么异常状态？";
+				next;
+				if (select("眩晕:黑暗:混乱:沉默") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "3. 用满级的";
+				mes "金钱攻击技能攻击时，";
+				mes "要花多少zeny？";
+				mes "（金钱攻击10级）";
+				next;
+				if (select("900 zeny:1000 zeny:2000 zeny:100,000 zeny") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "4. ^8E6B23折扣^000000";
+				mes "技能满级时，";
+				mes "折扣率";
+				mes "是多少？";
+				next;
+				if (select("21 % :22 % :23 % :24 % ") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "5. ^8E6B23超额收费^000000技能满级后，";
+				mes "卖给NPC的物品";
+				mes "最多能";
+				mes "加价";
+				mes "百分之多少？";
+				next;
+				if (select("21 % :22 % :23 % :24 % ") == 3)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			case 2:
+				mes "[米特马尤]";
+				mes "1. 下列";
+				mes "哪种怪物";
+				mes "掉钢铁？";
+				next;
+				if (select("杰洛姆:螳螂:邪骸矿工:安魂曲") == 3)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "2. 下列哪种";
+				mes "属性石可以";
+				mes "用红色血液制作？";
+				next;
+				if (select("火焰之心:风之结晶:大地结晶:神秘冰霜") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "3. 你的卡普拉仓库里，";
+				mes "下列哪种属性石";
+				mes "最多？";
+				next;
+				select("翠绿之风:红色血液:绿色生命:水晶蓝");
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "4. 一般来说，";
+				mes "下列哪种属性";
+				mes "受到风属性武器";
+				mes "的伤害";
+				mes "最大？";
+				next;
+				if (select("火属性:水属性:地属性:风属性") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "5. 制作1个钢铁";
+				mes "需要";
+				mes "多少铁矿石？";
+				next;
+				if (select("5个铁矿石 :4个铁矿石:3个铁矿石:6个铁矿石") == 1)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			case 3:
+				mes "[米特马尤]";
+				mes "1. 在街上遇到陌生人时，";
+				mes "你通常";
+				mes "怎么做？";
+				next;
+				switch(select("问他们需要什么。:简短地交谈。:无视他们。:丢下物品就跑。")) {
+				case 1:
+				case 2:
+					set .@blackss_te,.@blackss_te+20;
+					break;
+				default:
+					break;
+				}
+				mes "[米特马尤]";
+				mes "2. 在哪个城市";
+				mes "可以学习";
+				mes "^8E6B23大声呐喊^000000和";
+				mes "^8E6B23更换手推车^000000技能？";
+				next;
+				if (select("艾尔帕兰:艾尔贝塔:梦罗克:伊兹鲁德") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "3. 从艾音布罗克的中心看，";
+				mes "铁匠公会在哪个方向？";
+				next;
+				if (select("11点钟方向:5点钟方向:7点钟方向:12点钟方向") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "4. 哪个城市";
+				mes "能遇到";
+				mes "最多的铁匠？";
+				next;
+				if (select("普隆德拉:梦罗克:艾尔贝塔:艾音布罗克") == 4)
+					set .@blackss_te,.@blackss_te+20;
+				mes "[米特马尤]";
+				mes "5. 下列哪种属性";
+				mes "影响";
+				mes "你作为铁匠的";
+				mes "技能？";
+				next;
+				if (select("STR :DEX:AGI :VIT ") == 2)
+					set .@blackss_te,.@blackss_te+20;
+				break;
+			}
+			mes "[米特马尤]";
+			mes "啊……";
+			mes "你答完了。";
+			mes "让我看看……";
+			next;
+			mes "[米特马尤]";
+			mes "你得了";
+			mes ""+ .@blackss_te +"分……";
+			if (.@blackss_te > 70) {
+				mes "非常好！";
+				mes "恭喜你！";
+				mes "你通过了！";
+				next;
+				mes "[米特马尤]";
+				mes "不过别自满。铁匠生活并不轻松。作为证明，送你这把铁匠之锤。";
+				set BSMITH_Q,17;
+				getitem 1005,1; //Hammer_Of_Blacksmith
+				changequest 2014,2015;
+				next;
+				mes "[米特马尤]";
+				mes "拿着这把";
+				mes "铁匠之锤回去找奥提雷根。好吗？祝你好运！";
+				close;
+			}
+			mes "你不及格！回来之前最好再学习学习。";
+			next;
+			mes "[米特马尤]";
+			mes "就凭你那点知识，拿起锤子也只会伤到自己！";
+			close;
+		}
+		mes "[米特马尤]";
+		mes "那好。";
+		mes "请做好准备，";
+		mes "准备好了";
+		mes "再回来……";
+		close;
+	}
+	else if (BSMITH_Q == 17) {
+		emotion ET_SCRATCH;
+		mes "[米特马尤]";
+		mes "没错，你刚通过了铁匠转职考试～";
+		next;
+		mes "[米特马尤]";
+		mes "何不回去找奥提雷根先生呢？";
+		next;
+		mes "[米特马尤]";
+		mes "别忘了带上铁匠之锤！";
+		next;
+		mes "[米特马尤]";
+		mes "哦，转职前还要确认没有剩余的技能点～";
+		close;
+	}
+	else {
+		emotion ET_SCRATCH;
+		mes "[米特马尤]";
+		mes "在梦罗克时要忍受酷热，";
+		mes "现在在艾音布罗克又要忍受烟雾！";
+		next;
+		mes "[米特马尤]";
+		mes "不过我承认，这里是铁匠的完美之地，材料充足，设备先进。";
+		next;
+		mes "[米特马尤]";
+		mes "我们铁匠正竭尽全力锻造最好的武器。";
+		next;
+		mes "[米特马尤]";
+		mes "我们以荣誉起誓！";
+		close;
+	}
+}
+
+geffen_in,109,170,3	script	铁匠公会成员#gef	726,{
+	mes "[铁匠公会成员]";
+	mes "你好，你是来参观铁匠公会的吗？";
+	next;
+	mes "[铁匠公会成员]";
+	mes "感谢你大老远来参观我们公会。不过很遗憾地告诉你，铁匠公会已经";
+	mes "搬到^3131FF修发兹共和国的'艾音布罗克'^000000去了。";
+	next;
+	mes "[铁匠公会成员]";
+	mes "你可以乘坐飞空艇前往修发兹共和国。";
+	mes "我可以提供去伊兹鲁德的传送服务，那里可以搭乘飞空艇。";
+	mes "要立刻前往伊兹鲁德吗？";
+	next;
+	switch(select("怎么去艾音布罗克:是的！:不用了，谢谢。")) {
+	case 1:
+		mes "[铁匠公会成员]";
+		mes "哎呀，你还没坐过飞空艇吗？";
+		next;
+		mes "[铁匠公会成员]";
+		mes "与卢恩·米德加兹王国不同，修发兹共和国靠'飞空艇'而非传送通行。";
+		next;
+		mes "[铁匠公会成员]";
+		mes "在^3131FF'伊兹鲁德'^000000，可以搭乘^3131FF'国际飞空艇'^000000，往返于^3131FF伊兹鲁德和修发兹共和国的朱诺^000000之间。";
+		next;
+		mes "[铁匠公会成员]";
+		mes "乘飞空艇到朱诺。然后从朱诺转乘^3131FF国内飞空艇^000000前往艾音布罗克。";
+		mes "记住，从国际转国内飞空艇时，^3131FF不要走出机场^000000。";
+		next;
+		mes "[铁匠公会成员]";
+		mes "听起来复杂，到了机场你就明白了。";
+		mes "到了铁匠公会，请代我向同事们问好！";
+		close;
+	case 2:
+		if (Zeny < 600) {
+			mes "[铁匠公会成员]";
+			mes "抱歉，你的钱不够。";
+			close;
+		}
+		set Zeny, Zeny-600;
+		warp "izlude",94,103;
+		end;
+	case 3:
+		mes "[铁匠公会成员]";
+		mes "请多保重！";
+		close;
+	}
+}

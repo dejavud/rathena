@@ -1,0 +1,10332 @@
+//===== rAthena Script ======================================= 
+//= Dandelion's Request / Morocc Invasion quest
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= A Morocc quest that is no longer used.
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed a small bug in Dandelion's Request. [SinSloth]
+//= 1.2 Moved Dandelion's Request to its own file.
+//= 1.3 Added GM management function. [Euphy]
+//============================================================ 
+
+izlude,103,106,3	script	公会成员#1	48,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59) || !(BaseJob == Job_Novice || BaseJob == Job_Super_Novice || BaseClass == Job_Swordman))
+	{
+		mes "[公会成员]";
+		mes "最近到处都在流传";
+		mes "梦罗克地区";
+		mes "有孩子失踪的消息。";
+		mes "有些公会认为";
+		mes "这其实是绑架案。";
+		next;
+		mes "[公会成员]";
+		mes "那些可怜的孩子……";
+		mes "如果我能帮上忙的话，";
+		mes "天哪，";
+		mes "我早就毫不犹豫地";
+		mes "行动了。";
+		close;
+	}
+	if(!mao_request)
+	{
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+		{
+			mes "[公会成员]";
+			mes "请问是……"+strcharinfo(0)+"吗？";
+			mes "你好，我可是在这里";
+			mes "等你从我面前经过";
+			mes "等了好久了，你知道吗？";
+			mes "初心者和超级初心者";
+			mes "真是太难找了……";
+			next;
+			mes "[公会成员]";
+			mes "总之，不知道你听说了没有，";
+			mes "最近梦罗克有很多孩子失踪了。";
+			mes "我们还不确定，但我们认为";
+			mes "这和我们刺客公会";
+			mes "最近接到的委托有关。";
+			next;
+			mes "[公会成员]";
+			mes "总之，这次的委托人";
+			mes "需要一切可能的帮助。";
+			mes "我听说过你的事迹，";
+			mes "我认为在这种特殊情况下，";
+			mes "你一定能帮上";
+			mes "我们的大忙。";
+			next;
+			mes "[公会成员]";
+			mes "这样吧，就当帮我个忙，";
+			mes "像往常一样做正确的事，";
+			mes "好吗？这封推荐信";
+			mes "可以让你开始";
+			mes "这次任务，";
+			mes "拿好了。";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+		{
+			mes "[公会成员]";
+			mes "嘿，" + strcharinfo(0) + "！";
+			mes "太好了，我就知道你";
+			mes "迟早会出现的。";
+			mes "听着，我是作为";
+			mes "剑士协会的代表";
+			mes "在这里工作的。";
+			next;
+			mes "[公会成员]";
+			mes "听着，现在有件大事要发生，";
+			mes "我认为这是剑士协会";
+			mes "有史以来参与的";
+			mes "最重要的事情。";
+			mes "收拾行囊，马上出发去梦罗克！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "要一路去梦罗克……？";
+			mes "为什么，发生什么事了？";
+			next;
+			mes "[公会成员]";
+			mes "我不清楚全部细节，";
+			mes "但刺客公会正在处理";
+			mes "一起儿童失踪案，";
+			mes "他们向我们";
+			mes "以及其他所有公会";
+			mes "请求了援助……";
+			next;
+			mes "[公会成员]";
+			mes "流氓、乐师、初心者、";
+			mes "超级初心者、牧师……";
+			mes "你能想到的都有。这次";
+			mes "行动规模很大。听着，";
+			mes "如果你愿意帮忙，这封推荐信就交给你了……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Knight) || (Class == Job_Lord_Knight))
+		{
+			mes "[公会成员]";
+			mes "" + strcharinfo(0) +"……？";
+			mes "我就知道你会出现的。";
+			mes "听着，这里有一封";
+			mes "普隆德拉骑士团给你的通知。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "给我的？听起来";
+			mes "真奇怪，能麻烦你";
+			mes "读给我听吗？";
+			next;
+			mes "[公会成员]";
+			mes "''致："+ strcharinfo(0) +"";
+			mes "以普隆德拉骑士团";
+			mes "团长的名义，我正式请求";
+			mes "你代表卢恩米德加茨的骑士，";
+			mes "与刺客公会";
+			mes "展开合作。''";
+			next;
+			mes "[公会成员]";
+			mes "请以符合骑士身份的方式，";
+			mes "在这项营救梦罗克";
+			mes "失踪儿童的特别任务中";
+			mes "全力协助";
+			mes "刺客公会。";
+			mes "——赫尔曼队长''";
+			next;
+			mes "[公会成员]";
+			mes "好了，就这些内容。";
+			mes "如果你打算遵照命令";
+			mes "行动的话，我想你会";
+			mes "需要这封推荐信的。";
+			mes "为了那些孩子，";
+			mes "我希望你能接下这个任务……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Crusader) || (Class == Job_Paladin))
+		{
+			mes "[公会成员]";
+			mes "打扰一下……？";
+			mes ""+strcharinfo(0)+"……？";
+			mes "很抱歉打扰你，";
+			mes "这里有一封来自十字军的";
+			mes "迈克尔·哈利格爵士的";
+			mes "紧急信件……";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "他们平时很少";
+			mes "送信过来。看来";
+			mes "他要说的事情";
+			mes "一定非常重要。";
+			mes "信里写了什么？";
+			next;
+			mes "[公会成员]";
+			mes "我看看……是关于";
+			mes "刺客公会正在处理的";
+			mes "儿童失踪案……啊！刺客公会";
+			mes "向十字军请求了援助。看来你是被推荐的人选。";
+			next;
+			mes "[公会成员]";
+			mes "看，这就是我要在你";
+			mes "打算接受任务时";
+			mes "交给你的推荐信。";
+			mes "为了那些失踪的孩子，";
+			mes "我真心希望你能接下任务。";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+	}
+	else if(mao_request == 1)
+	{
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+		{
+			mes "[公会成员]";
+			mes "啊，我忘了告诉你";
+			mes "去哪里了解";
+			mes "任务详情了！";
+			mes "我想想……你应该";
+			mes "去……啊，我想起来了～";
+			next;
+			mes "[公会成员]";
+			mes "在梦罗克城内的";
+			mes "绿洲西侧，";
+			mes "你会发现一栋";
+			mes "看起来非常可疑的";
+			mes "小屋。刺客公会的";
+			mes "联络人就在那附近。";
+			next;
+			mes "[公会成员]";
+			mes "只要你多加留意，";
+			mes "一定能找到的。";
+			mes "总之，我只知道这些。";
+			mes "你何不过去看看呢？";
+			close;
+		}
+		else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+		{
+			mes "[公会成员]";
+			mes "对了，这次任务，";
+			mes "你需要在梦罗克城内";
+			mes "绿洲西侧的小屋附近";
+			mes "与刺客公会的";
+			mes "联络人会合。记得多留意他。";
+			next;
+			mes "[公会成员]";
+			mes "我想你应该";
+			mes "不难找到那个人，";
+			mes "虽然盗贼和刺客";
+			mes "看起来";
+			mes "都一个样。";
+			mes "你懂我的意思吧？";
+			close;
+		}
+		else if((Class == Job_Knight) || (Class == Job_Lord_Knight) || (Class == Job_Crusader) || (Class == Job_Paladin))
+		{
+			mes "[公会成员]";
+			mes "你打算接受任务了？";
+			mes "那太好了！";
+			mes "现在，你需要在梦罗克城内";
+			mes "绿洲西侧的小屋外";
+			mes "与刺客公会的联络人会合。";
+			next;
+			mes "[公会成员]";
+			mes "我知道这些指示";
+			mes "不太清楚，但据说";
+			mes "那是一个绝密地点，";
+			mes "通常只有刺客";
+			mes "才知道……";
+			close;
+		}
+	}
+	else if(((mao_request > 2) && (mao_request < 27)) || ((mao_request > 102) && (mao_request < 125)))
+	{
+		mes "[公会成员]";
+		mes "看来你和刺客公会";
+		mes "合作得很顺利。";
+		mes "不过还是要小心。";
+		mes "这个任务背后，";
+		mes "可能还有不为人知的";
+		mes "隐情，你知道吗？";
+		close;
+	}
+	else
+	{
+		mes "[公会成员]";
+		mes "今天天气不错，是吧？";
+		mes "不过，我希望快点";
+		mes "发生点刺激的事。";
+		mes "和平固然好，但我";
+		mes "更喜欢生活偶尔";
+		mes "来点波澜。";
+		close;
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+			{
+				mes "[公会成员]";
+				mes "请问是……"+strcharinfo(0)+"吗？";
+				mes "你好，我可是在这里";
+				mes "等你从我面前经过";
+				mes "等了好久了，你知道吗？";
+				mes "初心者和超级初心者";
+				mes "真是太难找了……";
+				next;
+				mes "[公会成员]";
+				mes "总之，不知道你听说了没有，";
+				mes "最近梦罗克有很多孩子失踪了。";
+				mes "我们还不确定，但我们认为";
+				mes "这和我们刺客公会";
+				mes "最近接到的委托有关。";
+				next;
+				mes "[公会成员]";
+				mes "总之，这次的委托人";
+				mes "需要一切可能的帮助。";
+				mes "我听说过你的事迹，";
+				mes "我认为在这种特殊情况下，";
+				mes "你一定能帮上";
+				mes "我们的大忙。";
+				next;
+				mes "[公会成员]";
+				mes "这样吧，就当帮我个忙，";
+				mes "像往常一样做正确的事，";
+				mes "好吗？这封推荐信";
+				mes "可以让你开始";
+				mes "这次任务，";
+				mes "拿好了。";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+			{
+				mes "[公会成员]";
+				mes "嘿，" + strcharinfo(0) + "！";
+				mes "太好了，我就知道你";
+				mes "迟早会出现的。";
+				mes "听着，我是作为";
+				mes "剑士协会的代表";
+				mes "在这里工作的。";
+				next;
+				mes "[公会成员]";
+				mes "听着，现在有件大事要发生，";
+				mes "我认为这是剑士协会";
+				mes "有史以来参与的";
+				mes "最重要的事情。";
+				mes "收拾行囊，马上出发去梦罗克！";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "要一路去梦罗克……？";
+				mes "为什么，发生什么事了？";
+				next;
+				mes "[公会成员]";
+				mes "我不清楚全部细节，";
+				mes "但刺客公会正在处理";
+				mes "一起儿童失踪案，";
+				mes "他们向我们";
+				mes "以及其他所有公会";
+				mes "请求了援助……";
+				next;
+				mes "[公会成员]";
+				mes "流氓、乐师、初心者、";
+				mes "超级初心者、牧师……";
+				mes "你能想到的都有。这次";
+				mes "行动规模很大。听着，";
+				mes "如果你愿意帮忙，这封推荐信就交给你了……";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Knight) || (Class == Job_Lord_Knight))
+			{
+				mes "[公会成员]";
+				mes "" + strcharinfo(0) +"……？";
+				mes "我就知道你会出现的。";
+				mes "听着，这里有一封";
+				mes "普隆德拉骑士团给你的通知。";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "给我的？听起来";
+				mes "真奇怪，能麻烦你";
+				mes "读给我听吗？";
+				next;
+				mes "[公会成员]";
+				mes "''致："+ strcharinfo(0) +"";
+				mes "以普隆德拉骑士团";
+				mes "团长的名义，我正式请求";
+				mes "你代表卢恩米德加茨的骑士，";
+				mes "与刺客公会";
+				mes "展开合作。''";
+				next;
+				mes "[公会成员]";
+				mes "请以符合骑士身份的方式，";
+				mes "在这项营救梦罗克";
+				mes "失踪儿童的特别任务中";
+				mes "全力协助";
+				mes "刺客公会。";
+				mes "——赫尔曼队长''";
+				next;
+				mes "[公会成员]";
+				mes "好了，就这些内容。";
+				mes "如果你打算遵照命令";
+				mes "行动的话，我想你会";
+				mes "需要这封推荐信的。";
+				mes "为了那些孩子，";
+				mes "我希望你能接下这个任务……";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Crusader) || (Class == Job_Paladin))
+			{
+				mes "[公会成员]";
+				mes "打扰一下……？";
+				mes ""+strcharinfo(0)+"……？";
+				mes "很抱歉打扰你，";
+				mes "这里有一封来自十字军的";
+				mes "迈克尔·哈利格爵士的";
+				mes "紧急信件……";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "他们平时很少";
+				mes "送信过来。看来";
+				mes "他要说的事情";
+				mes "一定非常重要。";
+				mes "信里写了什么？";
+				next;
+				mes "[公会成员]";
+				mes "我看看……是关于";
+				mes "刺客公会正在处理的";
+				mes "儿童失踪案……啊！刺客公会";
+				mes "向十字军请求了援助。看来你是被推荐的人选。";
+				next;
+				mes "[公会成员]";
+				mes "看，这就是我要在你";
+				mes "打算接受任务时";
+				mes "交给你的推荐信。";
+				mes "为了那些失踪的孩子，";
+				mes "我真心希望你能接下任务。";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+		}
+	}
+}
+
+prontera,237,313,3	script	修女#moc	79,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59))
+	{
+		mes "[修女]";
+		mes "哦，你好～";
+		mes "愿平安与你同在，";
+		mes "冒险者。请记住，";
+		mes "无论人们多么不同，";
+		mes "我们的人性";
+		mes "将所有人联结在一起。";
+		close;
+	}
+	if(!(BaseClass == Job_Acolyte))
+	{
+		mes "[修女]";
+		mes "啊，你好。能麻烦你";
+		mes "请任何你认识的";
+		mes "普隆德拉教会相关人员";
+		mes "来和我谈谈吗？";
+		mes "服事、牧师、武僧……";
+		mes "任何人都可以。";
+		next;
+		mes "[修女]";
+		mes "我有非常重要的事情";
+		mes "要告诉他们，";
+		mes "但在紧急情况下，";
+		mes "想把所有神职人员";
+		mes "召集起来几乎是不可能的……";
+		close;
+	}
+	if(!mao_request)
+	{
+		mes "[修女]";
+		mes "哦，" + strcharinfo(0) + "！";
+		mes "我们终于见面了，";
+		mes "这一定是";
+		mes "神的安排。";
+		mes "实际上，我有一件";
+		mes "非常重要的事要拜托你。";
+		next;
+		mes "[修女]";
+		mes "你可能已经听说，";
+		mes "最近梦罗克";
+		mes "不断有儿童失踪的";
+		mes "报告传来。显然，";
+		mes "已经有人委托刺客公会";
+		mes "调查这些案件了。";
+		next;
+		mes "[修女]";
+		mes "由于事态重大，";
+		mes "刺客公会甚至";
+		mes "向普隆德拉教会请求了援助，";
+		mes "所以希望你能协助刺客公会";
+		mes "完成这次任务。";
+		next;
+		mes "[修女]";
+		mes "不过，我认为";
+		mes "刺客公会的委托人";
+		mes "可能另有所图，";
+		mes "所以我还希望你";
+		mes "多加留意，看看他们的";
+		mes "委托人是否值得信任。";
+		next;
+		mes "[修女]";
+		mes "请尽快";
+		mes "前往梦罗克。";
+		mes "到达之后，";
+		mes "你会需要主教的";
+		mes "推荐信，";
+		mes "现在就请收下吧。";
+		set mao_request,1;
+		getitem 7416,1;
+		close;
+	}
+	else if(mao_request == 1)
+	{
+		mes "[修女]";
+		mes "这次任务，你需要";
+		mes "在梦罗克城内";
+		mes "绿洲西侧的小屋附近";
+		mes "与刺客公会的";
+		mes "联络人会合。我在想，";
+		mes "他们为什么选那种地方？";
+		next;
+		mes "[修女]";
+		mes "通常情况下，";
+		mes "普隆德拉教会的代表";
+		mes "会直接拜访刺客公会。请小心。";
+		mes "刺客们如此戒备，";
+		mes "一定是因为情况非比寻常……";
+		close;
+	}
+	else if((mao_request > 2 && mao_request < 27) || (mao_request > 102 && mao_request < 125))
+	{
+		mes "[修女]";
+		mes "看到你和刺客公会";
+		mes "合作愉快，";
+		mes "我很欣慰。";
+		mes "他们的行事方式";
+		mes "与普隆德拉教会不同，";
+		mes "但我依然非常尊敬他们。";
+		next;
+		mes "[修女]";
+		mes "请记住，你在这件事上";
+		mes "代表着普隆德拉教会，";
+		mes "所以一定要";
+		mes "向刺客们展现出";
+		mes "你最好的一面，好吗？";
+		close;
+	}
+	else
+	{
+		mes "[修女]";
+		mes "虽然现在是和平时期，";
+		mes "但我心中";
+		mes "总有一种挥之不去的";
+		mes "不安。就仿佛";
+		mes "某个重大事件";
+		mes "即将发生……";
+		close;
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if(BaseClass == Job_Acolyte)
+			{
+				mes "[修女]";
+				mes "哦，" + strcharinfo(0) + "！";
+				mes "我们终于见面了，";
+				mes "这一定是";
+				mes "神的安排。";
+				mes "实际上，我有一件";
+				mes "非常重要的事要拜托你。";
+				next;
+				mes "[修女]";
+				mes "你可能已经听说，";
+				mes "最近梦罗克";
+				mes "不断有儿童失踪的";
+				mes "报告传来。显然，";
+				mes "已经有人委托刺客公会";
+				mes "调查这些案件了。";
+				next;
+				mes "[修女]";
+				mes "由于事态重大，";
+				mes "刺客公会甚至";
+				mes "向普隆德拉教会请求了援助，";
+				mes "所以希望你能协助刺客公会";
+				mes "完成这次任务。";
+				next;
+				mes "[修女]";
+				mes "不过，我认为";
+				mes "刺客公会的委托人";
+				mes "可能另有所图，";
+				mes "所以我还希望你";
+				mes "多加留意，看看他们的";
+				mes "委托人是否值得信任。";
+				next;
+				mes "[修女]";
+				mes "请尽快";
+				mes "前往梦罗克。";
+				mes "到达之后，";
+				mes "你会需要主教的";
+				mes "推荐信，";
+				mes "现在就请收下吧。";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+		}
+	}
+}
+
+alberta,129,59,3	script	公会成员#2	49,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59))
+	{
+		mes "[公会成员]";
+		mes "喂，你听说最近";
+		mes "梦罗克发生的";
+		mes "事情了吗？";
+		mes "好像有大事要发生……";
+		close;
+	}
+	if(!(Class == Job_Soul_Linker || BaseClass == Job_Merchant))
+	{
+		mes "[公会成员]";
+		mes "天哪，这里有";
+		mes "好多商人啊。";
+		mes "哇……希望我能";
+		mes "找到我要找的人……";
+		close;
+	}
+	if(!mao_request)
+	{
+		if (Class == Job_Soul_Linker)
+		{
+			mes "[公会成员]";
+			mes "^71637D站住，别走！";
+			mes "我有个提议要给你，";
+			mes "给我听好了！^000000";
+			mes " ";
+			mes "……不、不，你又来了！";
+			mes "可恶，从、从我脑子里出去！";
+			next;
+			mes "[公会成员]";
+			mes "^71637D闭嘴，这事很重要！^000000";
+			mes " ";
+			mes "不，你给我闭嘴，";
+			mes "这可是我的身体！喂，";
+			mes "多少给我一点控制权！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我……我能感觉到";
+			mes "你的身体里有";
+			mes "两个不同的灵魂。";
+			mes "我不介意听你们说。";
+			mes "但如果你们两个同时说话，";
+			mes "我会搞糊涂的……";
+			next;
+			mes "[公会成员]";
+			mes "好吧，随便你。";
+			mes " ";
+			mes "^71637D好了，刺客公会";
+			mes "正在为他们的一项任务";
+			mes "寻求外部援助。";
+			mes "非～～常重要的事。^000000";
+			next;
+			mes "[公会成员]";
+			mes "^71637D有委托人雇他们去……去……";
+			mes "嗯，你知道的……^000000";
+			mes " ";
+			mes "……调查失踪儿童？";
+			mes "^71637D对，对。就是那个。^000000";
+			next;
+			mes "[公会成员]";
+			mes "^71637D总之，这是个相当大的任务，";
+			mes "所以刺客公会";
+			mes "一直在征集援助。";
+			mes "我认为你最适合";
+			mes "代表悟灵士出面，";
+			mes "所以我决定选你。^000000";
+			next;
+			mes "[公会成员]";
+			mes "^71637D所以，去帮助刺客们吧！^000000";
+			mes " ";
+			mes "等等，别忘了";
+			mes "推荐信！";
+			mes " ";
+			mes "^71637D哦，对！给你，拿着这个！^000000";
+			set mao_request,1;
+			getitem 7416,1;
+			next;
+			mes "[公会成员]";
+			mes "好了，你要的我做到了。";
+			mes "你现在可以离开我的身体了……";
+			mes " ";
+			mes "^71637D呃，我会考虑的。^000000";
+			mes " ";
+			mes "不～～要！求～～求你了～！";
+			close;
+		}
+		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		{
+			mes "[公会成员]";
+			mes "哎呀，这不是";
+			mes ""+ strcharinfo(0) +"吗。嘿，";
+			mes "能等一下吗？";
+			mes "我有一封商人公会";
+			mes "给你的信。";
+			next;
+			mes "[公会成员]";
+			mes "不知道什么原因，";
+			mes "刺客公会一直在";
+			mes "向商人公会";
+			mes "寻求人手援助。";
+			mes "你愿意去帮助他们，";
+			mes "代表我们出面吗？";
+			next;
+			mes "[公会成员]";
+			mes "我想他们是在为";
+			mes "某个委托人工作，";
+			mes "调查那些从梦罗克";
+			mes "失踪的孩子。";
+			mes "如果你想帮忙，";
+			mes "就需要这封推荐信，好吗？";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+		{
+			mes "[公会成员]";
+			mes "哦，"+ strcharinfo(0) +"……！";
+			mes "终于遇到你了，";
+			mes "真是太好了。";
+			mes "我知道这很突然，";
+			mes "但铁匠公会在梦罗克";
+			mes "有一项任务要交给你。";
+			next;
+			mes "[公会成员]";
+			mes "是这样的，刺客公会";
+			mes "正式请求我们协助";
+			mes "一项任务，事关最近";
+			mes "从梦罗克失踪的";
+			mes "孩子们。给，拿着这封推荐信……";
+			next;
+			mes "[公会成员]";
+			mes "既然连刺客公会";
+			mes "都来求助了，";
+			mes "我毫不怀疑";
+			mes "这将是一项非常艰难的任务。";
+			mes "如果你打算参与，";
+			mes "最好做好心理准备……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
+		{
+			mes "[公会成员]";
+			mes "嘿，" + strcharinfo(0) + "？";
+			mes "我有一封";
+			mes "炼金术士公会给你的信。";
+			mes "嗯，与其说是信，";
+			mes "不如说是命令。";
+			mes "能找到你真是太幸运了。";
+			next;
+			mes "[公会成员]";
+			mes "刺客公会正式";
+			mes "请求我们公会派人";
+			mes "协助一项任务，事关";
+			mes "从梦罗克失踪的";
+			mes "孩子们，他们希望";
+			mes "我们派个人去……就是你！";
+			next;
+			mes "[公会成员]";
+			mes "或者……至少，";
+			mes "你是炼金术士公会";
+			mes "想要派出的代表人选之一。";
+			mes "你何不去呢？";
+			mes "就当是为了孩子们。";
+			mes "好好考虑一下吧。";
+			next;
+			mes "[公会成员]";
+			mes "给，带上这封推荐信，";
+			mes "尽快赶往梦罗克。";
+			mes "如果连刺客公会";
+			mes "都需要帮助，我敢肯定";
+			mes "那意味着天大的麻烦……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+	}
+	else if(mao_request == 1)
+	{
+		if (Class == Job_Soul_Linker)
+		{
+			mes "[公会成员]";
+			mes "^71637D很好，你回来了！这家伙";
+			mes "一直打岔，不让我告诉你";
+			mes "重要的事情。";
+			mes " ";
+			mes "^000000你在说什么啊？";
+			mes "那是你自己活该！";
+			next;
+			mes "[公会成员]";
+			mes "^71637D你知道梦罗克城内的";
+			mes "绿洲吧？往它的西边去，";
+			mes "你就能找到刺客公会的";
+			mes "联络人。^000000";
+			mes " ";
+			mes "就……就这些？";
+			next;
+			mes "[公会成员]";
+			mes "那么现在你能离开";
+			mes "我的身体了吗？！";
+			mes "不得不和你共用身体，";
+			mes "把我的人生都毁了！";
+			mes " ";
+			mes "^71637D好吧。行。那我能";
+			mes "去哪儿呢，嗯？你需要我！^000000";
+			close;
+		}
+		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		{
+			mes "[公会成员]";
+			mes "这么说你打算代表";
+			mes "商人们去帮助";
+			mes "刺客公会了？太好了！";
+			mes "你可以在梦罗克城内";
+			mes "绿洲西侧、小屋旁边";
+			mes "见到联络人。";
+			next;
+			mes "[公会成员]";
+			mes "嘿，祝你好运，";
+			mes "多加小心，好吗？";
+			mes "我觉得他们给你的";
+			mes "这个任务背后，";
+			mes "一定隐藏着";
+			mes "什么大事……";
+			close;
+		}
+		else if((Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+		{
+			mes "[公会成员]";
+			mes "那么你决定";
+			mes "代表铁匠们";
+			mes "协助刺客公会了？";
+			mes "那就请在梦罗克城内";
+			mes "绿洲西侧与联络人会合吧。";
+			mes "祝你好运～";
+			close;
+		}
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
+		{
+			mes "[公会成员]";
+			mes "啊，我差点忘了告诉你，";
+			mes "刺客公会的联络人";
+			mes "会在梦罗克城内";
+			mes "绿洲西侧";
+			mes "等着你。";
+			next;
+			mes "[公会成员]";
+			mes "请代表炼金术士们，";
+			mes "尽你所能地";
+			mes "帮助刺客公会，";
+			mes "并且小心";
+			mes "别惹上麻烦……";
+			close;
+		}
+	}
+	else if(((mao_request > 2) && (mao_request < 27)) || ((mao_request > 102) && (mao_request < 125)))
+	{
+		if (Class == Job_Soul_Linker)
+		{
+			mes "[公会成员]";
+			mes "^71637D执行任务时小心点……";
+			mes "这一切的背后";
+			mes "一定有大事发生，";
+			mes "我就是知道。多留个心眼。";
+			mes "嗯，啊，祝你好运！";
+			close;
+		}
+		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		{
+			mes "[公会成员]";
+			mes "这么说你和刺客们";
+			mes "合作得很愉快？";
+			mes "真是个好消息。";
+			mes "这是展现商人实力的";
+			mes "大好机会！";
+			mes "不过，还是要保持警惕。";
+			close;
+		}
+		else if((Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+		{
+			mes "[公会成员]";
+			mes "我相信你一定";
+			mes "给刺客们帮了大忙。";
+			mes "保持警惕：这一切的背后，";
+			mes "似乎有强大的势力";
+			mes "在操纵……";
+			close;
+		}
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
+		{
+			mes "[公会成员]";
+			mes "很高兴听到";
+			mes "你和刺客们";
+			mes "相处融洽。";
+			mes "齐心协力，我相信";
+			mes "无论任务是什么，";
+			mes "你们都能完成。";
+			close;
+		}
+	}
+	else
+	{
+		if (Class == Job_Soul_Linker)
+		{
+			mes "[公会成员]";
+			mes "嘿，是你啊！";
+			mes "我想那个灵魂";
+			mes "在你完成任务后";
+			mes "就立刻离开了我的身体。";
+			mes "我还以为他永远不会走呢……";
+			mes "不管他生前是什么人。";
+			next;
+			mes "[公会成员]";
+			mes "不过说真的，要不是你，";
+			mes "那个灵魂永远不会安息，";
+			mes "而我可能永远";
+			mes "都被他缠着！";
+			mes "所以……谢了，兄弟。";
+			close;
+		}
+		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High) || (Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+		{
+			mes "[公会成员]";
+			mes "今天是个宁静的日子，";
+			mes "但空气中的这份寂静";
+			mes "却让人不安。";
+			mes "就仿佛……我感觉";
+			mes "很快就要发生";
+			mes "什么不得了的事情，你懂吗？";
+			close;
+		}
+		else if((Class == Job_Alchemist) || (Class == Job_Creator))
+		{
+			mes "[公会成员]";
+			mes "啊，今天天气真好……";
+			mes "不过有时候，我真希望";
+			mes "发生点什么大事，";
+			mes "打破这份单调。";
+			close;
+		}
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if (Class == Job_Soul_Linker)
+			{
+				mes "[公会成员]";
+				mes "^71637D站住，别走！";
+				mes "我有个提议要给你，";
+				mes "给我听好了！^000000";
+				mes " ";
+				mes "……不、不，你又来了！";
+				mes "可恶，从、从我脑子里出去！";
+				next;
+				mes "[公会成员]";
+				mes "^71637D闭嘴，这事很重要！^000000";
+				mes " ";
+				mes "不，你给我闭嘴，";
+				mes "这可是我的身体！喂，";
+				mes "多少给我一点控制权！";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "我……我能感觉到";
+				mes "你的身体里有";
+				mes "两个不同的灵魂。";
+				mes "我不介意听你们说。";
+				mes "但如果你们两个同时说话，";
+				mes "我会搞糊涂的……";
+				next;
+				mes "[公会成员]";
+				mes "好吧，随便你。";
+				mes " ";
+				mes "^71637D好了，刺客公会";
+				mes "正在为他们的一项任务";
+				mes "寻求外部援助。";
+				mes "非～～常重要的事。^000000";
+				next;
+				mes "[公会成员]";
+				mes "^71637D有委托人雇他们去……去……";
+				mes "嗯，你知道的……^000000";
+				mes " ";
+				mes "……调查失踪儿童？";
+				mes "^71637D对，对。就是那个。^000000";
+				next;
+				mes "[公会成员]";
+				mes "^71637D总之，这是个相当大的任务，";
+				mes "所以刺客公会";
+				mes "一直在征集援助。";
+				mes "我认为你最适合";
+				mes "代表悟灵士出面，";
+				mes "所以我决定选你。^000000";
+				next;
+				mes "[公会成员]";
+				mes "^71637D所以，去帮助刺客们吧！^000000";
+				mes " ";
+				mes "等等，别忘了";
+				mes "推荐信！";
+				mes " ";
+				mes "^71637D哦，对！给你，拿着这个！^000000";
+				set mao_request,1;
+				getitem 7416,1;
+				next;
+				mes "[公会成员]";
+				mes "好了，你要的我做到了。";
+				mes "你现在可以离开我的身体了……";
+				mes " ";
+				mes "^71637D呃，我会考虑的。^000000";
+				mes " ";
+				mes "不～～要！求～～求你了～！";
+				close;
+			}
+			else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+			{
+				mes "[公会成员]";
+				mes "哎呀，这不是";
+				mes ""+ strcharinfo(0) +"吗。嘿，";
+				mes "能等一下吗？";
+				mes "我有一封商人公会";
+				mes "给你的信。";
+				next;
+				mes "[公会成员]";
+				mes "不知道什么原因，";
+				mes "刺客公会一直在";
+				mes "向商人公会";
+				mes "寻求人手援助。";
+				mes "你愿意去帮助他们，";
+				mes "代表我们出面吗？";
+				next;
+				mes "[公会成员]";
+				mes "我想他们是在为";
+				mes "某个委托人工作，";
+				mes "调查那些从梦罗克";
+				mes "失踪的孩子。";
+				mes "如果你想帮忙，";
+				mes "就需要这封推荐信，好吗？";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+			{
+				mes "[公会成员]";
+				mes "哦，"+ strcharinfo(0) +"……！";
+				mes "终于遇到你了，";
+				mes "真是太好了。";
+				mes "我知道这很突然，";
+				mes "但铁匠公会在梦罗克";
+				mes "有一项任务要交给你。";
+				next;
+				mes "[公会成员]";
+				mes "是这样的，刺客公会";
+				mes "正式请求我们协助";
+				mes "一项任务，事关最近";
+				mes "从梦罗克失踪的";
+				mes "孩子们。给，拿着这封推荐信……";
+				next;
+				mes "[公会成员]";
+				mes "既然连刺客公会";
+				mes "都来求助了，";
+				mes "我毫不怀疑";
+				mes "这将是一项非常艰难的任务。";
+				mes "如果你打算参与，";
+				mes "最好做好心理准备……";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Alchemist) || (Class == Job_Creator))
+			{
+				mes "[公会成员]";
+				mes "嘿，" + strcharinfo(0) + "？";
+				mes "我有一封";
+				mes "炼金术士公会给你的信。";
+				mes "嗯，与其说是信，";
+				mes "不如说是命令。";
+				mes "能找到你真是太幸运了。";
+				next;
+				mes "[公会成员]";
+				mes "刺客公会正式";
+				mes "请求我们公会派人";
+				mes "协助一项任务，事关";
+				mes "从梦罗克失踪的";
+				mes "孩子们，他们希望";
+				mes "我们派个人去……就是你！";
+				next;
+				mes "[公会成员]";
+				mes "或者……至少，";
+				mes "你是炼金术士公会";
+				mes "想要派出的代表人选之一。";
+				mes "你何不去呢？";
+				mes "就当是为了孩子们。";
+				mes "好好考虑一下吧。";
+				next;
+				mes "[公会成员]";
+				mes "给，带上这封推荐信，";
+				mes "尽快赶往梦罗克。";
+				mes "如果连刺客公会";
+				mes "都需要帮助，我敢肯定";
+				mes "那意味着天大的麻烦……";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+		}
+	}
+}
+
+geffen,123,109,3	script	学院职员	742,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59) || !(BaseClass == Job_Mage))
+	{
+		mes "[学院职员]";
+		mes "你是要去";
+		mes "格芬塔地下城吗？";
+		mes "如果遇到任何";
+		mes "使用魔法的人，";
+		mes "能请他们来见我一面吗？";
+		next;
+		mes "[学院职员]";
+		mes "魔法界的人士";
+		mes "很难召集起来，";
+		mes "而我有一条紧急消息，";
+		mes "需要让法师、巫师";
+		mes "和贤者们知道……";
+		close;
+	}
+	if(!mao_request)
+	{
+		mes "[学院职员]";
+		mes "哇，能等一下吗？";
+		mes "实际上，你也许";
+		mes "正好适合";
+		mes "这项特别任务……";
+		next;
+		mes "[学院职员]";
+		mes "刺客公会已经";
+		mes "向法师公会、巫师公会";
+		mes "以及修维彻比尔学院";
+		mes "发出了正式请求，";
+		mes "希望协助完成一项";
+		mes "涉及儿童失踪的任务……";
+		next;
+		mes "[学院职员]";
+		mes "" + strcharinfo(0) + "……";
+		mes "我希望你能代表";
+		mes "魔法界，在这项任务中";
+		mes "协助刺客们。";
+		mes "请收下";
+		mes "这封推荐信。";
+		set mao_request,1;
+		getitem 7416,1;
+		next;
+		mes "[学院职员]";
+		mes "如果你决定代表我们";
+		mes "协助刺客公会，";
+		mes "请告诉我一声，";
+		mes "我好告诉你";
+		mes "去哪里见联络人。";
+		mes "我会在这里等着……";
+		close;
+	}
+	else if(mao_request == 1)
+	{
+		mes "[学院职员]";
+		mes "你决定帮助";
+		mes "刺客公会了吗？那么";
+		mes "请前往梦罗克，";
+		mes "与你的联络人会合，";
+		mes "他会在城内绿洲的";
+		mes "西边等你。";
+		next;
+		mes "[学院职员]";
+		mes "刺客们很少求人帮忙，";
+		mes "所以我敢肯定";
+		mes "这一定是件";
+		mes "非常严重的事情。";
+		mes "请小心，为魔法界";
+		mes "争光。祝你好运……";
+		close;
+	}
+	else if((mao_request > 2 && mao_request < 27) || (mao_request > 102 && mao_request < 125))
+	{
+		mes "[学院职员]";
+		mes "我听说刺客们";
+		mes "对你运用魔法的";
+		mes "本事印象深刻。";
+		mes "与他们合作完成任务吧，";
+		mes "并且记住";
+		mes "要多加小心。";
+		close;
+	}
+	else
+	{
+		mes "[学院职员]";
+		mes "现在的天气";
+		mes "确实宜人，但是";
+		mes "最猛烈的风暴，";
+		mes "往往来临前风平浪静。";
+		mes "说实话，空气中的这份";
+		mes "平静反而让我心绪不宁……";
+		close;
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if(BaseClass == Job_Mage)
+			{
+				mes "[学院职员]";
+				mes "哇，能等一下吗？";
+				mes "实际上，你也许";
+				mes "正好适合";
+				mes "这项特别任务……";
+				next;
+				mes "[学院职员]";
+				mes "刺客公会已经";
+				mes "向法师公会、巫师公会";
+				mes "以及修维彻比尔学院";
+				mes "发出了正式请求，";
+				mes "希望协助完成一项";
+				mes "涉及儿童失踪的任务……";
+				next;
+				mes "[学院职员]";
+				mes "" + strcharinfo(0) + "……";
+				mes "我希望你能代表";
+				mes "魔法界，在这项任务中";
+				mes "协助刺客们。";
+				mes "请收下";
+				mes "这封推荐信。";
+				set mao_request,1;
+				getitem 7416,1;
+				next;
+				mes "[学院职员]";
+				mes "如果你决定代表我们";
+				mes "协助刺客公会，";
+				mes "请告诉我一声，";
+				mes "我好告诉你";
+				mes "去哪里见联络人。";
+				mes "我会在这里等着……";
+				close;
+			}
+		}
+	}
+}
+
+morocc,155,56,3	script	米娅	93,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59))
+	{
+		mes "[女孩]";
+		mes "嘿，小鬼……";
+		mes "你在这里";
+		mes "晃悠什么呢？";
+		mes "你知道像你这样的";
+		mes "孩子，最近在这座城里";
+		mes "一直有人失踪，对吧？";
+		next;
+		mes "[女孩]";
+		mes "你最好离开这里，";
+		mes "去普隆德拉或艾尔贝塔";
+		mes "之类更安全的地方玩。";
+		mes "快走吧，";
+		mes "离陌生人远点，好吗？";
+		close;
+	}
+	if(!(Class == Job_Star_Gladiator || BaseClass == Job_Thief))
+	{
+		mes "[女孩]";
+		mes "...............................";
+		mes "啊？你到底";
+		mes "想干什么？走开，";
+		mes "别跟我搭话，";
+		mes "除非你想挨揍！";
+		close;
+	}
+	if(!mao_request)
+	{
+		if (Class == Job_Star_Gladiator)
+		{
+			mes "[米娅]";
+			mes "等等！等一下！你是";
+			mes "跆拳大师，对吧？";
+			mes "还记得武贤吗？帮你";
+			mes "完成转职的那位……？";
+			mes "他给你写了这封信。";
+			next;
+			mes "[米娅]";
+			mes "听着，"+ strcharinfo(0) +"……";
+			mes "他请你在一项特别任务中";
+			mes "帮助刺客公会。";
+			mes "我想这事儿";
+			mes "相当严重。";
+			next;
+			mes "[米娅]";
+			mes "如果你有兴趣";
+			mes "协助刺客们，";
+			mes "就去城西见联络人，";
+			mes "大概就在城里";
+			mes "这一带的某个地方。好了，";
+			mes "他只告诉我这些，回见～";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		{
+			mes "[米娅]";
+			mes "嘿，" + strcharinfo(0) + "，";
+			mes "我有个重要的";
+			mes "活儿给你。刺客公会";
+			mes "居然向盗贼公会";
+			mes "和流氓公会求助了！";
+			mes "你能相信吗？";
+			next;
+			mes "[米娅]";
+			mes "总之，我们这些江湖中人";
+			mes "能帮上忙就该帮。";
+			mes "给，拿着这封推荐信，";
+			mes "去和城西的联络人杰克谈谈。";
+			mes "你最好马上就去……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Assassin) || (Class == Job_Assassin_Cross))
+		{
+			mes "[米娅]";
+			mes "" + strcharinfo(0) + "！";
+			mes "刺客公会会长";
+			mes "马上要见你。你知道";
+			mes "秘密酒吧在哪里吗？";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "啊，你、你好，米娅，";
+			mes "好久不见。";
+			mes "什么秘密酒吧？";
+			next;
+			mes "[米娅]";
+			mes "我猜你可能没听说过。";
+			mes "去和城内绿洲西边的";
+			mes "杰克谈谈就行，";
+			mes "他会让你进去的。";
+			mes "从今往后，你会有";
+			mes "大把时间待在那里的。";
+			next;
+			mes "[米娅]";
+			mes "那个酒吧大概是";
+			mes "唯一能让我们这样的";
+			mes "刺客放松的地方了。";
+			mes "不过说真的，";
+			mes "这次任务相当重大。";
+			mes "我们需要一切可能的帮助……";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+	}
+	else if(mao_request == 1)
+	{
+		if (Class == Job_Star_Gladiator)
+		{
+			mes "[米娅]";
+			mes "如果你有兴趣";
+			mes "协助刺客们，";
+			mes "就去城西见联络人，";
+			mes "大概就在城里";
+			mes "这一带的某个地方。好了，";
+			mes "他只告诉我这些，回见～";
+			close;
+		}
+		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		{
+			mes "[米娅]";
+			mes "据说城内绿洲西边";
+			mes "有一家";
+			mes "私人酒吧。";
+			mes "啊，你要和我们的";
+			mes "联络人杰克谈谈，";
+			mes "他就在酒吧外面。";
+			close;
+		}
+		else if((Class == Job_Assassin) || (Class == Job_Assassin_Cross))
+		{
+			mes "[米娅]";
+			mes "在梦罗克这里";
+			mes "往绿洲西边找，找到杰克，";
+			mes "他会让你";
+			mes "进酒吧的。我们会长";
+			mes "会在里面等你……";
+			close;
+		}
+	}
+	else if(((mao_request > 2) && (mao_request < 27)) || ((mao_request > 102) && (mao_request < 125)))
+	{
+		if((Class == Job_Star_Gladiator) || (BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		{
+			mes "[米娅]";
+			mes "最近进展怎么样？";
+			mes "我想你正在做的";
+			mes "这个任务";
+			mes "一定相当重要。";
+			mes "毕竟连基德和琳";
+			mes "都觉得很棘手……";
+			close;
+		}
+		else if((Class == Job_Assassin) || (Class == Job_Assassin_Cross))
+		{
+			mes "[米娅]";
+			mes "你现在的任务";
+			mes "进展如何？";
+			mes "会长一定又给了你";
+			mes "什么稀奇古怪";
+			mes "或者几乎不可能完成的";
+			mes "差事，对吧？";
+			close;
+		}
+	}
+	else
+	{
+		mes "[米娅]";
+		mes "最近实在太";
+		mes "安静了。我真希望";
+		mes "快点发生点";
+		mes "疯狂的事情。";
+		mes "不然的话，";
+		mes "我想我会无聊死的！";
+		close;
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if (Class == Job_Star_Gladiator)
+			{
+				mes "[米娅]";
+				mes "等等！等一下！你是";
+				mes "跆拳大师，对吧？";
+				mes "还记得武贤吗？帮你";
+				mes "完成转职的那位……？";
+				mes "他给你写了这封信。";
+				next;
+				mes "[米娅]";
+				mes "听着，"+ strcharinfo(0) +"……";
+				mes "他请你在一项特别任务中";
+				mes "帮助刺客公会。";
+				mes "我想这事儿";
+				mes "相当严重。";
+				next;
+				mes "[米娅]";
+				mes "如果你有兴趣";
+				mes "协助刺客们，";
+				mes "就去城西见联络人，";
+				mes "大概就在城里";
+				mes "这一带的某个地方。好了，";
+				mes "他只告诉我这些，回见～";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+			{
+				mes "[米娅]";
+				mes "嘿，" + strcharinfo(0) + "，";
+				mes "我有个重要的";
+				mes "活儿给你。刺客公会";
+				mes "居然向盗贼公会";
+				mes "和流氓公会求助了！";
+				mes "你能相信吗？";
+				next;
+				mes "[米娅]";
+				mes "总之，我们这些江湖中人";
+				mes "能帮上忙就该帮。";
+				mes "给，拿着这封推荐信，";
+				mes "去和城西的联络人杰克谈谈。";
+				mes "你最好马上就去……";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Assassin) || (Class == Job_Assassin_Cross))
+			{
+				mes "[米娅]";
+				mes "" + strcharinfo(0) + "！";
+				mes "刺客公会会长";
+				mes "马上要见你。你知道";
+				mes "秘密酒吧在哪里吗？";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "啊，你、你好，米娅，";
+				mes "好久不见。";
+				mes "什么秘密酒吧？";
+				next;
+				mes "[米娅]";
+				mes "我猜你可能没听说过。";
+				mes "去和城内绿洲西边的";
+				mes "杰克谈谈就行，";
+				mes "他会让你进去的。";
+				mes "从今往后，你会有";
+				mes "大把时间待在那里的。";
+				next;
+				mes "[米娅]";
+				mes "那个酒吧大概是";
+				mes "唯一能让我们这样的";
+				mes "刺客放松的地方了。";
+				mes "不过说真的，";
+				mes "这次任务相当重大。";
+				mes "我们需要一切可能的帮助……";
+				set mao_request,1;
+				close;
+			}
+		}
+	}
+}
+
+payon,231,323,3	script	公会成员#3	59,3,3,{
+
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(!(BaseLevel > 59))
+	{
+		mes "[公会成员]";
+		mes "如果你打算";
+		mes "途经梦罗克旅行，";
+		mes "请多加小心。";
+		mes "最近那里一直有";
+		mes "儿童失踪的报告……";
+		close;
+	}
+	if(!(Class == Job_Taekwon) || !(BaseClass == Job_Archer))
+	{
+		mes "[公会成员]";
+		mes "打扰一下，如果你碰巧";
+		mes "遇到任何弓箭手，";
+		mes "或者任何精通箭术的人，";
+		mes "能请他们来我这里一趟吗？";
+		mes "我有一条紧急消息";
+		mes "要告诉他们。";
+		close;
+	}
+	if(!mao_request)
+	{
+		if (Class == Job_Taekwon)
+		{
+			mes "[公会成员]";
+			mes "啊……终于！";
+			mes "又有一位";
+			mes "跆拳道修习者！你是……";
+			mes "我看看……你一定";
+			mes "就是 " + strcharinfo(0) + "，对吧？";
+			next;
+			mes "[公会成员]";
+			mes "凤凰先生委托我";
+			mes "通知所有跆拳道修习者：";
+			mes "刺客公会";
+			mes "向我们发来了请求。";
+			mes "显然，";
+			mes "他们需要一项任务的援助……";
+			next;
+			mes "[公会成员]";
+			mes "如果你有兴趣";
+			mes "协助他们，请收下";
+			mes "这封推荐信，";
+			mes "把它带给梦罗克的";
+			mes "刺客公会联络人。";
+			set mao_request,1;
+			getitem 7416,1;
+			next;
+			mes "[公会成员]";
+			mes "你可以在梦罗克城内";
+			mes "绿洲西侧的";
+			mes "某栋小屋附近";
+			mes "见到刺客公会的成员。";
+			mes "祝你好运，朋友，请带着跆拳道的荣耀出战。";
+			close;
+		}
+		else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+		{
+			mes "[公会成员]";
+			mes "" + strcharinfo(0) + "……？";
+			mes "哦，哇，我终于";
+			mes "找到你了，真是太幸运了！";
+			mes "听着，我有一封";
+			mes "伊卡洛斯公带给你的信。";
+			next;
+			mes "[公会成员]";
+			mes "看来刺客公会";
+			mes "已经正式请求他们";
+			mes "协助某项任务，所以";
+			mes "伊卡洛斯决定派你去。";
+			mes "我希望你选择代表我们，";
+			mes "去帮助那些刺客。";
+			next;
+			mes "[公会成员]";
+			mes "给，请收下";
+			mes "这封推荐信，";
+			mes "然后去梦罗克";
+			mes "绿洲西边与我们";
+			mes "刺客公会的联络人会合。";
+			mes "那么，祝你好运，伙计～";
+			set mao_request,1;
+			getitem 7416,1;
+			close;
+		}
+		else if((Class == Job_Bard) || (Class == Job_Clown))
+		{
+			mes "[公会成员]";
+			mes "嘿，" + strcharinfo(0) + "！";
+			mes "我到处找你！";
+			mes "我有一封";
+			mes "拉洛给你的信。你……";
+			mes "你还记得他，对吧？";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "当然记得！我欠";
+			mes "拉洛太多了……";
+			mes "要不是他，";
+			mes "我当初根本不可能";
+			mes "转职成乐师。";
+			mes "那么他到底需要什么？";
+			next;
+			mes "[公会成员]";
+			mes "嗯，我也不太清楚。";
+			mes "我只听到什么";
+			mes "来自刺客公会的请求，";
+			mes "还有推荐你去";
+			mes "帮助他们之类的话。对。";
+			mes "这是他写的信。";
+			set mao_request,1;
+			getitem 7416,1;
+			next;
+			mes "[公会成员]";
+			mes "只……只要去";
+			mes "梦罗克城内绿洲";
+			mes "正西边，与刺客公会的";
+			mes "联络人会合就行。";
+			mes "我相信他能";
+			mes "把一切解释得更清楚。";
+			close;
+		}
+		else if((Class == Job_Dancer) || (Class == Job_Gypsy))
+		{
+			mes "[公会成员]";
+			mes "嘿……这、这张脸！";
+			mes "和艾尔描述的一模一样！";
+			mes "你是 " + strcharinfo(0) + "，对吧？";
+			mes "太好了，我一直在";
+			mes "到处找你！";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "艾尔？哦，对了，";
+			mes "我转职考试的时候";
+			mes "她在场，还帮我";
+			mes "成为了舞娘。没错，";
+			mes "我现在想起来了……";
+			mes "那么你有什么事？";
+			next;
+			mes "[公会成员]";
+			mes "啊，对。据我所知，";
+			mes "刺客公会";
+			mes "请艾尔推荐一位";
+			mes "能在一项相当重要的";
+			mes "任务中帮助他们";
+			mes "的舞娘。";
+			next;
+			mes "[公会成员]";
+			mes "总之，艾尔派我";
+			mes "出来找你，并送上";
+			mes "这封推荐信。";
+			mes "我想她认为你能";
+			mes "做得最好。那么，嗯，恭喜～";
+			set mao_request,1;
+			getitem 7416,1;
+			next;
+			mes "[公会成员]";
+			mes "眼下，与刺客公会的";
+			mes "合作大概是你";
+			mes "的头等大事。";
+			mes "去梦罗克，";
+			mes "在城内绿洲西边";
+			mes "找到你的联络人。";
+			next;
+			mes "[公会成员]";
+			mes "那么，就这样。";
+			mes "祝你好运！啊，我差点";
+			mes "忘了。艾尔要你记住，";
+			mes "你将是所有";
+			mes "舞娘的代表，";
+			mes "所以好好干！";
+			close;
+		}
+	}
+	else if(mao_request == 1)
+	{
+		if (Class == Job_Taekwon)
+		{
+			mes "[公会成员]";
+			mes "你可以在梦罗克城内";
+			mes "绿洲西侧的";
+			mes "某栋小屋附近";
+			mes "见到刺客公会的成员。";
+			mes "祝你好运，朋友，请带着跆拳道的荣耀出战。";
+			close;
+		}
+		else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+		{
+			mes "[公会成员]";
+			mes "请带上";
+			mes "你的推荐信，";
+			mes "去梦罗克";
+			mes "绿洲西边与我们";
+			mes "刺客公会的联络人会合。";
+			mes "那么，祝你好运，伙计～";
+			close;
+		}
+		else if((Class == Job_Bard) || (Class == Job_Clown))
+		{
+			mes "[公会成员]";
+			mes "只……只要去";
+			mes "梦罗克城内绿洲";
+			mes "正西边，与刺客公会的";
+			mes "联络人会合就行。";
+			mes "我相信他能";
+			mes "把一切解释得更清楚。";
+			close;
+		}
+		else if((Class == Job_Dancer) || (Class == Job_Gypsy))
+		{
+			mes "[公会成员]";
+			mes "眼下，与刺客公会的";
+			mes "合作大概是你";
+			mes "的头等大事。";
+			mes "去梦罗克，";
+			mes "在城内绿洲西边";
+			mes "找到你的联络人。";
+			next;
+			mes "[公会成员]";
+			mes "那么，就这样。";
+			mes "祝你好运！啊，我差点";
+			mes "忘了。艾尔要你记住，";
+			mes "你将是所有";
+			mes "舞娘的代表，";
+			mes "所以好好干！";
+			close;
+		}
+	}
+	else if(((mao_request > 2) && (mao_request < 27)) || ((mao_request > 102) && (mao_request < 125)))
+	{
+		if(Class == Job_Taekwon)
+		{
+			mes "[公会成员]";
+			mes "很高兴看到";
+			mes "你和刺客们";
+			mes "合作愉快。";
+			mes "但不要放松警惕，";
+			mes "直到任务完成为止。";
+			close;
+		}
+		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		{
+			mes "[公会成员]";
+			mes "很高兴看到";
+			mes "你和刺客们";
+			mes "配合得相当默契。";
+			mes "希望你给他们留下了";
+			mes "弓箭手的好印象……";
+			close;
+		}
+		else if((Class == Job_Bard) || (Class == Job_Clown))
+		{
+			mes "[公会成员]";
+			mes "得知你成为了";
+			mes "刺客们的得力帮手，";
+			mes "拉洛一定会很高兴的。";
+			mes "但在任务完成之前，";
+			mes "请记住";
+			mes "你代表着所有的乐师！";
+			close;
+		}
+		else if((Class == Job_Dancer) || (Class == Job_Gypsy))
+		{
+			mes "[公会成员]";
+			mes "我想艾尔得知";
+			mes "刺客们对你的协助";
+			mes "感到满意，";
+			mes "一定会非常高兴。";
+			mes "但在任务结束之前，";
+			mes "在外面要多加小心，好吗？";
+			close;
+		}
+	}
+	else
+	{
+		mes "[公会成员]";
+		mes "今天是非常美好的一天——";
+		mes "让我们尽情领略";
+		mes "这日子的美好吧。";
+		mes "好日子和坏日子";
+		mes "都会过去，但每一天";
+		mes "本身都是独一无二的……";
+		mes "不为什么。";
+		close;
+	}
+
+OnTouch:
+	if(checkweight(7416,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(BaseLevel > 59)
+	{
+		if(!mao_request)
+		{
+			if (Class == Job_Taekwon)
+			{
+				mes "[公会成员]";
+				mes "啊……终于！";
+				mes "又有一位";
+				mes "跆拳道修习者！你是……";
+				mes "我看看……你一定";
+				mes "就是 " + strcharinfo(0) + "，对吧？";
+				next;
+				mes "[公会成员]";
+				mes "凤凰先生委托我";
+				mes "通知所有跆拳道修习者：";
+				mes "刺客公会";
+				mes "向我们发来了请求。";
+				mes "显然，";
+				mes "他们需要一项任务的援助……";
+				next;
+				mes "[公会成员]";
+				mes "如果你有兴趣";
+				mes "协助他们，请收下";
+				mes "这封推荐信，";
+				mes "把它带给梦罗克的";
+				mes "刺客公会联络人。";
+				set mao_request,1;
+				getitem 7416,1;
+				next;
+				mes "[公会成员]";
+				mes "你可以在梦罗克城内";
+				mes "绿洲西侧的";
+				mes "某栋小屋附近";
+				mes "见到刺客公会的成员。";
+				mes "祝你好运，朋友，请带着跆拳道的荣耀出战。";
+				close;
+			}
+			else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+			{
+				mes "[公会成员]";
+				mes "" + strcharinfo(0) + "……？";
+				mes "哦，哇，我终于";
+				mes "找到你了，真是太幸运了！";
+				mes "听着，我有一封";
+				mes "伊卡洛斯公带给你的信。";
+				next;
+				mes "[公会成员]";
+				mes "看来刺客公会";
+				mes "已经正式请求他们";
+				mes "协助某项任务，所以";
+				mes "伊卡洛斯决定派你去。";
+				mes "我希望你选择代表我们，";
+				mes "去帮助那些刺客。";
+				next;
+				mes "[公会成员]";
+				mes "给，请收下";
+				mes "这封推荐信，";
+				mes "然后去梦罗克";
+				mes "绿洲西边与我们";
+				mes "刺客公会的联络人会合。";
+				mes "那么，祝你好运，伙计～";
+				set mao_request,1;
+				getitem 7416,1;
+				close;
+			}
+			else if((Class == Job_Bard) || (Class == Job_Clown))
+			{
+				mes "[公会成员]";
+				mes "嘿，" + strcharinfo(0) + "！";
+				mes "我到处找你！";
+				mes "我有一封";
+				mes "拉洛给你的信。你……";
+				mes "你还记得他，对吧？";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "当然记得！我欠";
+				mes "拉洛太多了……";
+				mes "要不是他，";
+				mes "我当初根本不可能";
+				mes "转职成乐师。";
+				mes "那么他到底需要什么？";
+				next;
+				mes "[公会成员]";
+				mes "嗯，我也不太清楚。";
+				mes "我只听到什么";
+				mes "来自刺客公会的请求，";
+				mes "还有推荐你去";
+				mes "帮助他们之类的话。对。";
+				mes "这是他写的信。";
+				set mao_request,1;
+				getitem 7416,1;
+				next;
+				mes "[公会成员]";
+				mes "只……只要去";
+				mes "梦罗克城内绿洲";
+				mes "正西边，与刺客公会的";
+				mes "联络人会合就行。";
+				mes "我相信他能";
+				mes "把一切解释得更清楚。";
+				close;
+			}
+			else if((Class == Job_Dancer) || (Class == Job_Gypsy))
+			{
+				mes "[公会成员]";
+				mes "嘿……这、这张脸！";
+				mes "和艾尔描述的一模一样！";
+				mes "你是 " + strcharinfo(0) + "，对吧？";
+				mes "太好了，我一直在";
+				mes "到处找你！";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "艾尔？哦，对了，";
+				mes "我转职考试的时候";
+				mes "她在场，还帮我";
+				mes "成为了舞娘。没错，";
+				mes "我现在想起来了……";
+				mes "那么你有什么事？";
+				next;
+				mes "[公会成员]";
+				mes "啊，对。据我所知，";
+				mes "刺客公会";
+				mes "请艾尔推荐一位";
+				mes "能在一项相当重要的";
+				mes "任务中帮助他们";
+				mes "的舞娘。";
+				next;
+				mes "[公会成员]";
+				mes "总之，艾尔派我";
+				mes "出来找你，并送上";
+				mes "这封推荐信。";
+				mes "我想她认为你能";
+				mes "做得最好。那么，嗯，恭喜～";
+				set mao_request,1;
+				getitem 7416,1;
+				next;
+				mes "[公会成员]";
+				mes "眼下，与刺客公会的";
+				mes "合作大概是你";
+				mes "的头等大事。";
+				mes "去梦罗克，";
+				mes "在城内绿洲西边";
+				mes "找到你的联络人。";
+				next;
+				mes "[公会成员]";
+				mes "那么，就这样。";
+				mes "祝你好运！啊，我差点";
+				mes "忘了。艾尔要你记住，";
+				mes "你将是所有";
+				mes "舞娘的代表，";
+				mes "所以好好干！";
+				close;
+			}
+		}
+	}
+}
+
+morocc,43,108,5	script	印象犀利的少年	82,{
+
+	if((Class == Job_Assassin) || (Class == Job_Assassin_Cross))
+	{
+		if(mao_request == 1)
+		{
+			mes "[杰克]";
+			mes "我一直在等你。";
+			mes "呃，你何不";
+			mes "进去呢？啊，这一定是";
+			mes "你第一次来这里。";
+			next;
+			mes "[杰克]";
+			mes "嘿，你不用担心，";
+			mes "这家酒吧只招待";
+			mes "我们这样的人。";
+			mes "而且，从今往后";
+			mes "你会常来的。";
+			mes "总之，酒吧老板";
+			mes "正在里面等你。";
+			close;
+		}
+		else if(mao_request > 1)
+		{
+			mes "[杰克]";
+			mes "嘿，看来你";
+			mes "一直很忙啊。";
+			mes "真不错～";
+			mes "嘿，回头见。";
+			close;
+		}
+		else
+		{
+			mes "[杰克]";
+			mes "哇，哇……";
+			mes "等等。我还不知道";
+			mes "能不能让你进去。啊，";
+			mes "算了，你是";
+			mes "自己人。如果只是喝一杯，";
+			mes "我应该不会惹上麻烦……";
+			close;
+		}
+	}
+	if(mao_request == 1 && countitem(7416))
+	{
+		mes "[杰克]";
+		mes "哦，嘿，你一定就是";
+		mes "我一直在等的人了。";
+		mes "好了，进来吧，";
+		mes "别忘了把推荐信";
+		mes "给酒吧老板看，";
+		mes "好吗？";
+		close;
+	}
+	else if(mao_request > 1)
+	{
+		mes "[杰克]";
+		mes "虽然你不是";
+		mes "我们公会的人，";
+		mes "有点奇怪，但从今以后";
+		mes "你被允许进入";
+		mes "我们的秘密据点了。";
+		mes "但绝不要";
+		mes "把这事告诉任何人！";
+		close;
+	}
+	else
+	{
+		mes "[杰克]";
+		mes "什么？我和你";
+		mes "没什么好谈的。";
+		mes "快走吧，";
+		mes "冒险者，";
+		mes "别再烦我了。";
+		close;
+	}
+}
+
+morocc,45,110,1	script	#maobar1	45,2,2,{
+
+OnTouch_:
+	if(mao_request || Class == Job_Assassin || Class == Job_Assassin_Cross) warp "que_job01",9,94;
+	else
+	{
+		set .@mao_pass,rand(1,3);
+		if(.@mao_pass == 2)
+		{
+			mes "[杰克]";
+			mes "哦，天哪……";
+			mes "你是怎么找到";
+			mes "这个地方的？这家酒吧";
+			mes "可是刺客公会";
+			mes "守卫最严密的秘密之一！好吧，秘密已经泄露了……";
+			next;
+			mes "[杰克]";
+			mes "但我还是不能";
+			mes "让你进去。无论如何";
+			mes "都不行。对，我已经";
+			mes "下定决心了。但如果你";
+			mes "真的想进去，也许你可以，";
+			mes "我不知道……分散一下我的注意力。";
+			next;
+			switch( select( "支付1,000 Zeny","取消" ) )
+			{
+				case 1:
+					if(Zeny > 999)
+					{
+						mes "[杰克]";
+						mes "哦，天哪……我实在太";
+						mes "困了。让我";
+						mes "打个足足二十秒的哈欠。";
+						mes "*啊～～～～～～～～～～～～哈欠*";
+						set Zeny,Zeny - 1000;
+						close2;
+						warp "que_job01",9,94;
+						end;
+					}
+					mes "[杰克]";
+					mes "什么……？";
+					mes "这点钱";
+					mes "根本不算什么。";
+					mes "我看你连这里";
+					mes "一杯酒的钱都付不起。";
+					mes "还是回家喝吧，行吗？";
+					close;
+					
+				case 2:
+					mes "[杰克]";
+					mes "嗯……";
+					mes "你……你没听懂";
+					mes "我的意思，是吧？";
+					mes "算了。你最好赶紧消失。";
+					close2;
+					warp "morocc",45,103;
+					end;
+			}
+		}
+		mes "[杰克]";
+		mes "嘿……";
+		mes "你挤到我的";
+		mes "私人空间了。趁我";
+		mes "动手之前退后。";
+		mes "我发起火来连我自己都怕，";
+		mes "你这怪人。";
+		close2;
+		warp "morocc",45,103;
+		end;
+	}
+}
+
+que_job01,6,94,1	warp	#maobar2	2,2,morocc,45,103
+que_job01,17,48,1	warp	#maobar3	2,2,que_job01,68,92
+que_job01,68,96,1	warp	#maobar4	2,2,que_job01,17,53
+
+que_job01,80,77,1	script	#maobar5	45,2,2,{
+
+OnTouch_:
+	if(mao_request > 1) warp "que_job01",61,50;
+	else
+	{
+		mes "[里瑟隆]";
+		mes "哇，你不能";
+		mes "来这里。";
+		mes "喂，老板！你认识";
+		mes "这家伙吗？";
+		next;
+		if(prt_curse == 24)
+		{
+			mes "[" + strcharinfo(0) + "]";
+			mes "我，嗯，我在找";
+			mes "一个叫";
+			mes "玛尔佳娜的人？我听说";
+			mes "她就在这";
+			mes "附近的某个地方？";
+			next;
+			mes "[里瑟隆]";
+			mes "玛尔佳娜？你怎么";
+			mes "知道的？喂老板，";
+			mes "这家伙怎么办？";
+			next;
+			mes "[老板]";
+			mes "嗯。我感觉到这位";
+			mes "冒险者并无恶意。";
+			mes "我也听到传闻说";
+			mes "普隆德拉教会";
+			mes "因为某些原因";
+			mes "需要调查毒药。";
+			next;
+			mes "[老板]";
+			mes "不过，无从得知";
+			mes "这个人是否";
+			mes "由普隆德拉教会";
+			mes "派来。我想这个人";
+			mes "能不能进去，";
+			mes "就由你决定了，里瑟隆。";
+			next;
+			mes "[里瑟隆]";
+			mes "哈！你听到了吧？";
+			mes "好吧，这样如何？";
+			mes "你请我喝一杯，";
+			mes "我就让你进去。";
+			mes "而且，你在这里惹不起麻烦：这里";
+			mes "到处都是致命的刺客。";
+			next;
+			switch( select( "好啊","凭什么?!" ) )
+			{
+				case 1:
+					if (Zeny > 999)
+					{
+						mes "[里瑟隆]";
+						mes "嘿，这才对嘛！";
+						mes "喂，酒保！老规矩！";
+						mes "我喜欢你的";
+						mes "风格，";
+						mes "冒险家……";
+						set Zeny,Zeny - 1000;
+						next;
+						mes "[里瑟隆]";
+						mes "好了，你可以";
+						mes "进去了。但千万别";
+						mes "把这家酒吧的事";
+						mes "告诉任何活人。";
+						close2;
+						warp "que_job01",61,50;
+						end;
+					}
+					mes "[里瑟隆]";
+					mes "啊……";
+					mes "哦，你连在这里";
+					mes "买水的钱";
+					mes "都没有。天哪……";
+					mes "如果你真的想进去，";
+					mes "就准备好钱！";
+					close2;
+					warp "que_job01",85,77;
+					end;
+					
+				case 2:
+					mes "[里瑟隆]";
+					mes "你不是那种精明的人，";
+					mes "是吧……？好吧，好吧。";
+					mes "既然你不肯";
+					mes "帮我，";
+					mes "我为什么要帮你？走开！";
+					close2;
+					warp "que_job01",85,77;
+					end;
+			}
+		}
+		mes "[老板]";
+		mes "完全不认识。";
+		mes "别让这家伙";
+		mes "进来。";
+		next;
+		mes "[里瑟隆]";
+		mes "你听到了吧。";
+		mes "趁你还有腿，";
+		mes "赶紧离开";
+		mes "这里吧……";
+		close2;
+		warp "que_job01",85,77;
+		end;
+	}
+}
+
+que_job01,65,50,1	warp	#maobar4-2	2,2,que_job01,84,77
+
+que_job01,81,79,5	script	发呆的骑士	733,{
+
+	mes "[里瑟隆]";
+	mes "怎么了？";
+	mes "哦，我明白了……你大概";
+	mes "在奇怪为什么";
+	mes "我这样的骑士会在";
+	mes "刺客的秘密酒吧里吧。";
+	if (Class == Job_Knight || Class == Job_Lord_Knight) mes "那你呢，嗯？";
+	next;
+	mes "[里瑟隆]";
+	mes "碰巧我和这家酒吧的";
+	mes "老板是老相识。";
+	mes "我帮他办事，";
+	mes "他也帮我办事。";
+	mes "这里的规矩";
+	mes "就是这样。";
+	close;
+}
+
+que_job01,82,95,3	script	酒吧老板	46,{
+
+	if(checkweight(12112,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+	{
+		mes "[老板]";
+		mes "欢迎光临";
+		mes "我这间小酒吧。";
+		mes "你要来点什么？";
+	}
+	else if(BaseJob == Job_Thief || BaseJob == Job_Thief_High || Class == Job_Rogue || Class == Job_Stalker)
+	{
+		mes "[老板]";
+		mes "哼。你这样的";
+		mes "江湖中人是怎么";
+		mes "进来的？好吧，既然";
+		mes "是杰克放你进来的，";
+		mes "我想你应该没问题。";
+		mes "那么你想喝点什么？";
+	}
+	else
+	{
+		mes "[老板]";
+		mes "这里本来";
+		mes "只招待刺客，但";
+		mes "我想可以为你";
+		mes "破个例。见鬼，你能";
+		mes "进来就已经";
+		mes "很不容易了。那么你要喝什么？";
+	}
+	next;
+	switch( select( "点酒","询问任务","取消" ) )
+	{
+		case 1:
+			mes "[老板]";
+			mes "在这里，我只卖";
+			mes "两种酒。你要";
+			mes "热带的苏克拉特，";
+			mes "还是赤色海滩？";
+			next;
+			switch( select( "热带的苏克拉特","赤色海滩","有没有便宜点的?" ) )
+			{
+				case 1:
+					set .@maodrink,1;
+					
+				case 2:
+					if(checkweight(12112,1) != 1)
+					{
+						mes "[老板]";
+						mes "嘿，你为什么";
+						mes "带这么多东西？";
+						mes "如果你没地方放，";
+						mes "我就不能";
+						mes "给你酒。";
+						mes "清理一下你的物品栏！";
+						close;
+					}
+					if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+					{
+						if (Zeny < 800)
+						{
+							mes "[老板]";
+							mes "你知道吗……";
+							mes "这杯酒我本来要收你";
+							mes "800 Zeny，但";
+							mes "看来你现在";
+							mes "付不起。等你有钱了";
+							mes "再来，好吗？";
+							close;
+						}
+						mes "[老板]";
+						mes "大多数酒保";
+						mes "通常收1,000 Zeny，";
+						mes "但我只";
+						mes "收你800。好好享用吧，";
+						mes "朋友，像品味人生一样";
+						mes "细细品味它。";
+						set Zeny,Zeny - 800;
+						if(.@maodrink) getitem 12112,1;
+						else getitem 12113,1;
+						close;
+					}
+					if (Zeny < 1000)
+					{
+						mes "[老板]";
+						mes "嘿，你的钱";
+						mes "不够买这杯酒。";
+						mes "如果你想让我调酒，";
+						mes "就带1,000 Zeny";
+						mes "回来，好吗？";
+						close;
+					}
+					mes "[老板]";
+					mes "刺客我收";
+					mes "800 Zeny，但你嘛，";
+					mes "我要收1,000。";
+					mes "别见怪，你能来这里";
+					mes "已经很幸运了。";
+					mes "嘿，慢慢享用吧～";
+					set Zeny,Zeny - 1000;
+					if(.@maodrink) getitem 12112,1;
+					else getitem 12113,1;
+					close;
+				
+				case 3:
+					mes "[老板]";
+					mes "你说什么……？";
+					mes "我刚说过";
+					mes "我只卖两种酒。";
+					mes "想喝水的话，";
+					mes "去别的地方";
+					mes "吧。";
+					close;
+			}
+			
+		case 2:
+			if(mao_request == 1)
+			{
+				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+				{
+					mes "[老板]";
+					mes "啊，你一定是奉";
+					mes "会长的命令来的。";
+					mes "好了，进去吧。嘿，";
+					mes "不过要小心。这次";
+					mes "可不像平时的任务那么简单……";
+					set mao_request,2;
+					close;
+				}
+				mes "[老板]";
+				mes "任务……？";
+				mes "喂，你在";
+				mes "说什么啊？";
+				mes "别胡说八道了，";
+				mes "点杯酒吧。";
+				next;
+				switch( select( "出示推荐信" ) )
+				{
+					case 1:
+						break;
+				}
+				if (countitem(7416))
+				{
+					mes "[老板]";
+					mes "啊，我看你是";
+					mes "有备而来。抱歉，";
+					mes "但我们有保密规矩，";
+					mes "我发过誓";
+					mes "要遵守。好了，看到";
+					mes "那边那位骑士了吗？里瑟隆！";
+					next;
+					mes "[老板]";
+					mes "嘿，里瑟隆！让这位";
+					mes "过去，好吗？";
+					mes "对，只要和里瑟隆谈谈，";
+					mes "他就会告诉你该去哪里。";
+					next;
+					mes "[里瑟隆]";
+					mes "嘿，我什么时候";
+					mes "变成你的看门人了？！";
+					mes "呃，啊，好吧。明白了。";
+					set mao_request,2;
+					close;
+				}
+				mes "^3355FF你忘了带";
+				mes "推荐信。^000000";
+				next;
+				mes "[老板]";
+				mes "好了……";
+				mes "你现在看起来";
+				mes "非常可疑。";
+				mes "也许是我多心了，";
+				mes "但我不喜欢冒险。";
+				mes "小的们，把这家伙赶出去！";
+				close2;
+				warp "morocc",45,106;
+				end;
+			}
+			else if(mao_request == 2)
+			{
+				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+				{
+					mes "[老板]";
+					mes "直接穿过";
+					mes "里瑟隆身后的门吧。";
+					mes "你知道规矩，";
+					mes "快点，好吗？";
+					close;
+				}
+				mes "[老板]";
+				mes "如果想了解";
+				mes "你的秘密任务的详情，";
+				mes "就穿过里瑟隆";
+				mes "身后的门吧。";
+				close;
+			}
+			else if(mao_request > 2)
+			{
+				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+				{
+					mes "[老板]";
+					mes "你的任务";
+					mes "进展如何？有时候，";
+					mes "你需要放松一下，";
+					mes "休息一下。到那时候，";
+					mes "我会为你备好一杯酒。";
+					close;
+				}
+				mes "[老板]";
+				mes "任务";
+				mes "进展如何？看到你";
+				mes "和刺客们";
+				mes "相处融洽，真好。";
+				mes "总之，祝你好运，伙计。";
+				close;
+			}
+			else if(mao_request == 30 || mao_request == 128)
+			{
+				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+				{
+					mes "[老板]";
+					mes "嘿，多谢你";
+					mes "一直以来的辛苦付出，伙计。";
+					mes "回头见。";
+					close;
+				}
+				mes "[老板]";
+				mes "谢谢你的帮助，";
+				mes "虽然你经历的麻烦";
+				mes "比本该经历的";
+				mes "多了一点。总之，";
+				mes "你看起来人不错，以后随时欢迎再来。";
+				close;
+			}
+			else
+			{
+				if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+				{
+					mes "[老板]";
+					mes "这么说你还没";
+					mes "从这里接到";
+					mes "任何任务，是吧？对了，";
+					mes "你喜欢这个地方吗？";
+					mes "我自己可是";
+					mes "非常爱我这个小酒吧。";
+					next;
+					mes "[老板]";
+					mes "如果你愿意，我可以";
+					mes "向会长推荐你";
+					mes "执行任务。在那之前，";
+					mes "你要专心训练。";
+					mes "在训练之前……";
+					mes "为什么不先喝一杯呢？";
+					close;
+				}
+				mes "[老板]";
+				mes "任务……？";
+				mes "喂，你在";
+				mes "说什么啊？";
+				mes "别胡说八道了，";
+				mes "点杯酒吧。";
+				close;
+			}
+			
+		case 3:
+			mes "[老板]";
+			mes "……";
+			close;
+	}
+}
+
+que_job01,49,49,5	script	小桃	877,{
+
+	if(mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
+	{
+		mes "[小桃]";
+		mes "喵，你到底";
+		mes "怎么了？基德";
+		mes "把你带进来，你浑身是伤，";
+		mes "他让我照顾你";
+		mes "直到你醒来。";
+		mes "你没事吧，喵？";
+		next;
+		mes "[小桃]";
+		mes "哦对了，等你";
+		mes "感觉好点了，基德要你";
+		mes "去左边那间";
+		mes "指挥官的房间，喵。";
+		mes "好吗？";
+		close;
+	}
+	mes "[小桃]";
+	mes "嗯……？";
+	mes "你有什么事，";
+	mes "喵？";
+	next;
+	switch( select( "询问任务","喵、喵?" ) )
+	{
+		case 1:
+			if (mao_request > 1)
+			{
+				mes "[小桃]";
+				mes "任务……？";
+				mes "进左边那个房间";
+				mes "就行了。你分得清";
+				mes "左右吧，喵？";
+				close;
+			}
+			mes "[小桃]";
+			mes "祝你好运，喵。";
+			mes "小桃在这里守着，";
+			mes "不让不属于这里的人";
+			mes "进来，喵。";
+			close;
+		
+		case 2:
+			mes "[小桃]";
+			mes "喵，喵。";
+			mes "说来话长，喵。";
+			mes "好像是因为想要";
+			mes "一个大蝴蝶结，";
+			mes "去打猎野玫瑰，喵。一切都要从喵、喵、喵、喵说起……";
+			close;
+	}
+}
+
+que_job01,51,55,1	script	#roombar1	45,1,1,{
+
+OnTouch_:
+	if(mao_request == 2 || mao_request == 24 || mao_request == 28 || mao_request == 29 || mao_request == 123 || mao_request == 126 || mao_request == 127 || prt_curse == 24)
+	{
+		if(!$@maobar_room)
+		{
+			set $@maobar_room,1;
+			donpcevent "#maobartimer1::OnEnter";
+			if(mao_request == 2 || mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
+			{
+				donpcevent "巴尔德斯#1::OnEnter";
+				donpcevent "琳#1::OnEnter";
+				donpcevent "基德#1::OnEnter";
+			}
+			else if(mao_request == 24)
+			{
+				donpcevent "巴尔德斯#2::OnEnter";
+				donpcevent "基德#2::OnEnter";
+				donpcevent "#mao_table::OnEnter";
+			}
+			else if(mao_request == 123)
+			{
+				donpcevent "巴尔德斯#2::OnEnter";
+				donpcevent "琳#2::OnEnter";
+				donpcevent "#mao_table::OnEnter";
+			}
+			else if(prt_curse == 24) donpcevent "玛尔佳娜#poison::OnEnable";
+			mes "[小桃]";
+			mes "啊，那个地方有";
+			mes "警戒魔法保护，所以你";
+			mes "只能在那里待^4D4DFF4分钟^000000。";
+			mes "别浪费时间，喵！";
+			close2;
+			if(mao_request == 24 || mao_request == 123) warp "que_job01",15,8;
+			else warp "que_job01",11,7;
+			end;
+		}
+		mes "[小桃]";
+		mes "非常抱歉，喵～";
+		mes "已经有人";
+		mes "在里面了。晚点";
+		mes "再来吧，喵？";
+		close2;
+		warp "que_job01",52,50;
+		end;
+	}
+	mes "[小桃]";
+	mes "你、你是谁？";
+	mes "这里是禁区，";
+	mes "喵！如果你";
+	mes "没有许可，就马上";
+	mes "离开，喵！";
+	close2;
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,1,1,1	script	#maobartimer1	-1,{
+
+OnEnter:
+	initnpctimer;
+	mapannounce "que_job01","现在进入主人区域第1区。",1,0x70DBDB;
+	end;
+	
+OnStop:
+	mapannounce "que_job01","主人区域第1区的警戒魔法已解除。",1,0x70DBDB;
+	donpcevent "#maobar6::OnInit";
+	donpcevent "巴尔德斯#1::OnInit";
+	donpcevent "巴尔德斯#2::OnInit";
+	donpcevent "琳#1::OnInit";
+	donpcevent "琳#2::OnInit";
+	donpcevent "基德#1::OnInit";
+	donpcevent "基德#2::OnInit";
+	donpcevent "玛尔佳娜#poison::OnInit";
+	donpcevent "#mao_table::OnInit";
+	$@maobar_room = 0;
+	stopnpctimer;
+	end;
+	
+OnTimer240000:
+	donpcevent "#maobar6::OnEnter";
+	end;
+	
+OnTimer245000:
+	donpcevent "#maobar6::OnInit";
+	donpcevent "巴尔德斯#1::OnInit";
+	donpcevent "巴尔德斯#2::OnInit";
+	donpcevent "琳#1::OnInit";
+	donpcevent "琳#2::OnInit";
+	donpcevent "基德#1::OnInit";
+	donpcevent "基德#2::OnInit";
+	donpcevent "玛尔佳娜#poison::OnInit";
+	donpcevent "#mao_table::OnInit";
+	end;
+	
+OnTimer250000:
+	mapannounce "que_job01","主人区域第1区的警戒魔法已解除。",1,0x70DBDB;
+	$@maobar_room = 0;
+	stopnpctimer;
+	end;
+}
+
+que_job01,12,13,1	script	#maobar6	139,1,1,{
+
+OnInit:
+	disablenpc "#maobar7";
+	end;
+	
+OnEnter:
+	enablenpc "#maobar7";
+	end;
+	
+OnTouch_:
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,51,44,1	script	#roombar2	45,1,1,{
+
+OnTouch_:
+	if(mao_request == 25 || (mao_request > 102 && mao_request < 123))
+	{
+		if(mao_request == 121)
+		{
+			mes "[" + strcharinfo(0) + "]";
+			mes "我还不能";
+			mes "回去找琳……我还需要";
+			mes "彻底调查";
+			mes "塔纳托斯塔……";
+			close2;
+			warp "que_job01",52,50;
+			end;
+		}
+		if(!$@maobar_room2)
+		{
+			set $@maobar_room2,1;
+			donpcevent "#maobartimer2::OnEnter";
+			if(mao_request == 25)
+			{
+				donpcevent "巴尔德斯#3::OnEnter";
+				donpcevent "基德#3::OnEnter";
+				donpcevent "#Rabsent::OnEnter";
+			}
+			else if(mao_request == 122)
+			{
+				donpcevent "#mao_empty::OnEnter";
+			}
+			mes "[小桃]";
+			mes "啊，那个地方有";
+			mes "警戒魔法保护，所以你";
+			mes "只能在那里待^4D4DFF4分钟^000000。";
+			mes "别浪费时间，喵！";
+			close2;
+			if(mao_request > 102 && mao_request < 122) warp "que_job01",80,21;
+			else warp "que_job01",144,57;
+			end;
+		}
+		mes "^3355FF门锁着。^000000";
+		if(mao_request > 102 && mao_request < 122)
+		{
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "嘿，R！是我！";
+			mes "能麻烦你";
+			mes "开一下门吗？";
+			next;
+			mes "[R.]";
+			mes "对、对不起，但现在";
+			mes "不是时候。请";
+			mes "晚点再来！";
+			close2;
+			warp "que_job01",52,50;
+			end;
+		}
+		close2;
+		warp "que_job01",52,50;
+		end;
+	}
+	mes "[小桃]";
+	mes "这里是禁区，";
+	mes "如果你没有许可，";
+	mes "就马上";
+	mes "离开，喵！";
+	close2;
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,1,2,1	script	#maobartimer2	-1,{
+
+OnEnter:
+	initnpctimer;
+	mapannounce "que_job01","主人区域第2区的警戒魔法已启动。",1,0x70DBDB;
+	end;
+	
+OnStop:
+	mapannounce "que_job01","主人区域第2区的警戒魔法已解除。",1,0x70DBDB;
+	donpcevent "#maobar7::OnInit";
+	donpcevent "#maobar8::OnInit";
+	donpcevent "巴尔德斯#3::OnInit";
+	donpcevent "琳#3::OnInit";
+	donpcevent "基德#3::OnInit";
+	donpcevent "#Rabsent::OnInit";
+	donpcevent "#mao_empty::OnInit";
+	$@maobar_room2 = 0;
+	stopnpctimer;
+	end;
+	
+OnTimer240000:
+	donpcevent "#maobar7::OnEnter";
+	donpcevent "#maobar8::OnEnter";
+	end;
+	
+OnTimer245000:
+	donpcevent "#maobar7::OnInit";
+	donpcevent "#maobar8::OnInit";
+	donpcevent "巴尔德斯#3::OnInit";
+	donpcevent "琳#3::OnInit";
+	donpcevent "基德#3::OnInit";
+	donpcevent "#Rabsent::OnInit";
+	donpcevent "#mao_empty::OnInit";
+	end;
+	
+OnTimer250000:
+	mapannounce "que_job01","主人区域第2区的警戒魔法已解除。",1,0x70DBDB;
+	$@maobar_room2 = 0;
+	stopnpctimer;
+	end;
+}
+
+que_job01,80,17,1	script	#maobar7	45,1,1,{
+
+OnInit:
+	disablenpc "#maobar7";
+	end;
+	
+OnEnter:
+	enablenpc "#maobar7";
+	end;
+	
+OnTouch_:
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,144,51,1	script	#maobar8	45,1,1,{
+
+OnInit:
+	disablenpc "#maobar8";
+	end;
+	
+OnEnter:
+	enablenpc "#maobar8";
+	end;
+	
+OnTouch_:
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,11,4,1	script	#maoexit1	45,1,1,{
+
+OnTouch_:
+	warp "que_job01",52,50;
+	donpcevent "#maobartimer1::OnStop";
+	end;
+}
+
+que_job01,80,27,1	script	#maoexit2	45,1,1,{
+
+OnTouch_:
+	warp "que_job01",52,50;
+	donpcevent "#maobartimer2::OnStop";
+	end;
+}
+
+que_job01,144,61,1	script	#maoexit3	45,1,1,{
+
+OnTouch_:
+	warp "que_job01",52,50;
+	donpcevent "#maobartimer2::OnStop";
+	end;
+}
+
+que_job01,16,21,5	script	巴尔德斯#1	55,{
+
+	if(checkweight(7417,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if(mao_request == 2)
+	{
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "[巴尔德斯]";
+			mes "欢迎。啊，这一定是";
+			mes "你在这里接到的";
+			mes "第一项任务。";
+			mes "我是这些任务的";
+			mes "指挥官，";
+			mes "请仔细听我说。";
+			next;
+			mes "[巴尔德斯]";
+			mes "刺客公会同意执行";
+			mes "两项任务，据说";
+			mes "都与梦罗克";
+			mes "失踪的儿童有关。";
+			mes "你必须选择一项";
+			mes "你要参与的任务。";
+			next;
+		}
+		else
+		{
+			mes "[巴尔德斯]";
+			mes "很好，很好，我一直在";
+			mes "等你。由于我们的";
+			mes "时间有限，我就长话短说。";
+			mes "我是刺客公会同意接下的";
+			mes "这两项任务的指挥官。";
+			next;
+			mes "[巴尔德斯]";
+			mes "鉴于这些任务的性质";
+			mes "及其目标，";
+			mes "我们决定从外部";
+			mes "招募援助。我们认识到，";
+			mes "刺客也许并不适合";
+			mes "其中的某些目标……";
+			next;
+		}
+		mes "[巴尔德斯]";
+		mes "第一项任务的委托人";
+		mes "是蒲公英组织。";
+		mes "如果你接受，";
+		mes "你将在基德手下工作，";
+		mes "你们两人将搜寻";
+		mes "并追踪一个特定目标。";
+		next;
+		mes "[巴尔德斯]";
+		mes "另一项任务的委托人";
+		mes "是一位自称''R.''的学者。";
+		mes "他的身份核实无误，";
+		mes "似乎他所要求的";
+		mes "只是特别的保护。";
+		next;
+		mes "[巴尔德斯]";
+		mes "我跟你说实话：两位委托人";
+		mes "都让我觉得可疑，但如果";
+		mes "与他们合作能让我们";
+		mes "更接近帮助那些失踪的孩子，";
+		mes "我们就必须抓住这个机会。希望你能理解。";
+		next;
+		mes "[巴尔德斯]";
+		mes "你愿意作为蒲公英组织的猎人，";
+		mes "还是作为R.先生的保镖";
+		mes "来工作？";
+		mes "请首先选择那位";
+		mes "工作最适合你技能和能力";
+		mes "的委托人。";
+		next;
+		switch( select( "蒲公英组织","R.先生" ) )
+		{
+			case 1:
+				mes "[巴尔德斯]";
+				mes "这么说你选择";
+				mes "为蒲公英组织";
+				mes "工作了？那样的话，";
+				mes "基德就是你的直属上司。";
+				mes "我相信你们两人能合作愉快，完成此事。";
+				next;
+				mes "[基德]";
+				mes "嘿，你好～";
+				mes "我是基德。";
+				mes "很高兴认识你。";
+				emotion ET_OK, getnpcid(0, "基德#1");
+				cutin "mocseal_kid01.bmp",2;
+				next;
+				mes "[巴尔德斯]";
+				mes "好了，请拿着这份";
+				mes "书面委托书，去酒吧";
+				mes "见蒲公英组织的代表。";
+				mes "他会向你进一步";
+				mes "说明任务详情。";
+				set mao_request,3;
+				getitem 7417,1;
+				next;
+				cutin "",255;
+				mes "[巴尔德斯]";
+				mes "那么，琳，我把";
+				mes "R.先生的保镖任务";
+				mes "交给你。务必";
+				mes "密切注意他的动向。";
+				mes "就这些。解散！";
+				close2;
+				break;
+				
+			case 2:
+				mes "[巴尔德斯]";
+				mes "很好。在这项任务中，";
+				mes "琳将是你的";
+				mes "直属上司。";
+				mes "你将与她一起工作，";
+				mes "确保R.先生";
+				mes "不受任何伤害。";
+				next;
+				mes "[琳]";
+				mes "嗨呀，我是琳。";
+				mes "我很期待";
+				mes "和你";
+				mes "一起工作。嘿嘿～";
+				emotion ET_OK, getnpcid(0, "琳#1");
+				cutin "mocseal_rin01.bmp",2;
+				next;
+				mes "[巴尔德斯]";
+				mes "给，把这份书面委托书";
+				mes "带给在隔壁房间等候的";
+				mes "R.先生。";
+				mes "这份文件能向他证明，";
+				mes "你已被指派为";
+				mes "他的贴身保镖。";
+				set mao_request,103;
+				getitem 7418,1;
+				close2;
+				break;
+		}
+	}
+	else if(mao_request == 3 || mao_request == 103)
+	{
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "[巴尔德斯]";
+			mes "我们的时间";
+			mes "不多了。快去酒吧";
+			mes "见蒲公英组织的代表，";
+			mes "这样才能";
+			mes "推进任务。";
+			close;
+		}
+		mes "[巴尔德斯]";
+		mes "请尽快";
+		mes "去酒吧与";
+		mes "蒲公英组织的代表";
+		mes "会合。孩子们的性命";
+		mes "危在旦夕，我们";
+		mes "浪费不起时间。";
+		close;
+	}
+	else if(mao_request > 3 && mao_request < 5)
+	{
+		mes "[巴尔德斯]";
+		mes "你的当务之急，";
+		mes "是去和基德谈谈，";
+		mes "他是你所接受的任务中";
+		mes "你的直属上司。";
+		mes "我相信你的工作会让蒲公英组织满意。";
+		close;
+	}
+	else if(mao_request > 103 && mao_request < 105)
+	{
+		mes "[巴尔德斯]";
+		mes "你的当务之急，";
+		mes "是去和琳谈谈，";
+		mes "她是你所接受的任务中";
+		mes "你的直属上司。";
+		mes "请尽好R.先生贴身保镖的职责，全力保护他。";
+		close;
+	}
+	else if(mao_request == 28 || mao_request == 29)
+	{
+		mes "[巴尔德斯]";
+		mes "感觉怎么样？";
+		mes "虽然这次任务";
+		mes "从技术上说是失败的，";
+		mes "但我们不必";
+		mes "太过自责。";
+		mes "考虑到种种未知因素，";
+		mes "我们已经做得出奇地好了。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "等、等一下……";
+		mes "你是说我们阻止了";
+		mes "撒旦莫罗克的复活，";
+		mes "但瑞安·摩尔";
+		mes "逃走了？";
+		next;
+		mes "[琳]";
+		mes "是啊……";
+		mes "那条毒蛇";
+		mes "趁着一片混乱";
+		mes "溜走了。";
+		cutin "mocseal_rin01.bmp",2;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "琳、琳……？";
+		next;
+		mes "[琳]";
+		mes "他不但把我";
+		mes "当傻瓜耍，还";
+		mes "在我眼皮底下";
+		mes "逃走了！别去追他……";
+		mes "我要亲手";
+		mes "把他抓回来！";
+		next;
+		mes "[基德]";
+		mes "琳，我理解";
+		mes "你的感受，但";
+		mes "别太苛责自己了。";
+		mes "琳，你的工作";
+		mes "完成得很完美，";
+		mes "我们谁也料不到会这样……";
+		cutin "mocseal_kid01.bmp",0;
+		next;
+		mes "[巴尔德斯]";
+		mes "虽然我同意基德的看法，";
+		mes "但如果那真是你想要的，";
+		mes "琳，我就把带回瑞安的任务";
+		mes "托付给你。";
+		mes "大家都累坏了，先休息一下吧。";
+		next;
+		mes "[琳]";
+		mes "……对不起，巴尔德斯，";
+		mes "但我不想失去";
+		mes "摩尔的踪迹。趁现在";
+		mes "我还能动，最好马上出发……";
+		cutin "mocseal_rin01.bmp",2;
+		next;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#1::OnInit";
+		mes "[" + strcharinfo(0) + "]";
+		mes "她看起来很难过……";
+		next;
+		mes "[巴尔德斯]";
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "嗯，作为同是刺客的人，";
+			mes "我相信你能理解";
+			mes "她正在经历什么。";
+			mes "我们的自尊心太强，";
+			mes "无法对这样的失败轻描淡写。";
+		}
+		else
+		{
+			mes "嗯，她是个刺客。";
+			mes "我们所有人的自尊心";
+			mes "都太强，无法接受";
+			mes "任何形式的失败。";
+			mes "只是……只是我们的字典里";
+			mes "根本没有这个词，你明白吗？";
+		}
+		delitem 7416,countitem(7416);
+		delitem 7417,countitem(7417);
+		if(mao_request == 28) getexp 1050000,0;
+		else if(mao_request == 29) getexp 1280000,0;
+		set mao_request,30;
+		getitem 12107,1;
+		next;
+		mes "[巴尔德斯]";
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "不管我们";
+			mes "最初的目标如何，";
+			mes "我必须说，";
+			mes "你干得很出色。";
+			mes "我们没能救出孩子，";
+			mes "但阻止了撒旦莫罗克。";
+		}
+		else
+		{
+			mes "我们没能实现";
+			mes "救出那些孩子的原定目标，";
+			mes "但确实阻止了撒旦莫罗克。";
+			mes "你干得很出色，我们会";
+			mes "通知你的公会，";
+			mes "告诉他们你的优异表现。多谢相助。";
+			next;
+			mes "[巴尔德斯]";
+			mes "保重，";
+			mes "并且引以为豪吧——";
+			mes "刺客公会";
+			mes "视你为";
+			mes "宝贵的盟友。一路平安，冒险家……";
+		}
+		next;
+		mes "[巴尔德斯]";
+		mes "基德，等你";
+		mes "准备好了，我在普隆德拉";
+		mes "还有另一项任务";
+		mes "要交给你。";
+		mes "但现在，";
+		mes "我要你好好放松。";
+		next;
+		mes "[基德]";
+		mes "嘿。好吧，";
+		mes "巴尔德斯。我想";
+		mes "我的工作";
+		mes "永远也做不完～";
+		close2;
+		donpcevent "基德#1::OnInit";
+	}
+	else if(mao_request == 126 || mao_request == 127)
+	{
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "[巴尔德斯]";
+			mes "感觉怎么样？";
+			mes "我有个坏消息：";
+			mes "我们所有人，刺客公会的";
+			mes "每一个成员……我们";
+			mes "都被瑞安·摩尔耍了……";
+		}
+		else
+		{
+			mes "[巴尔德斯]";
+			mes "感觉怎么样？";
+			mes "我有个坏消息：";
+			mes "我们被分配的";
+			mes "这些任务……";
+			mes "全都是一个精密阴谋的一部分，";
+			mes "我们所有人都上当了……";
+		}
+		next;
+		mes "[琳]";
+		mes "我们被那个";
+		mes "混蛋骗了。瑞安·摩尔";
+		mes "让我们做的一切，";
+		mes "都是为了";
+		mes "撒旦莫罗克的转生。";
+		mes "他差点就得逞了……";
+		cutin "mocseal_rin01.bmp",2;
+		next;
+		mes "[琳]";
+		mes "这次让他";
+		mes "从我们手里溜走了……对不起。";
+		mes "我本该抓住他的，";
+		mes "但他有人帮忙。是我辜负了你。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "琳……";
+		next;
+		mes "[基德]";
+		mes "琳，你不必";
+		mes "道歉。你根本";
+		mes "不可能知道。";
+		mes "好了，我们理解";
+		mes "你的感受，但这";
+		mes "完全不是你的错。";
+		cutin "mocseal_kid01.bmp",0;
+		next;
+		mes "[巴尔德斯]";
+		mes "基德说得对。我们不应该";
+		mes "自责，也不应该";
+		mes "互相指责。眼下，我们可以";
+		mes "为阻止了撒旦莫罗克的复活";
+		mes "而感到欣慰，然后再";
+		mes "集中精力对付瑞安·摩尔。";
+		cutin "mocseal_kid01.bmp",255;
+		next;
+		mes "[琳]";
+		mes "别担心，巴尔德斯。";
+		mes "我会亲手";
+		mes "解决瑞安·摩尔。他不会再";
+		mes "从我手里逃走了。";
+		cutin "mocseal_rin01.bmp",2;
+		next;
+		mes "[巴尔德斯]";
+		mes "好吧，琳……";
+		mes "虽然我更希望你";
+		mes "现在先休息，但我";
+		mes "尊重你的决心。";
+		mes "好吧，我把搜寻摩尔的任务";
+		mes "托付给你。";
+		next;
+		mes "[巴尔德斯]";
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "啊，趁我还没忘，";
+			mes "让我把这次任务的";
+			mes "报酬给你。";
+			mes "虽然从技术上说，";
+			mes "我们没能达成原定目标，";
+			mes "但你的工作非常出色。";
+		}
+		else
+		{
+			mes "啊，趁我还没忘，";
+			mes "让我把这次任务的";
+			mes "报酬给你。";
+			mes "我谨代表刺客公会，";
+			mes "感谢你的";
+			mes "付出和辛勤工作。";
+		}
+		delitem 7416,countitem(7416);
+		delitem 7418,countitem(7418);
+		if(mao_request == 126) getexp 1050000,0;
+		else if(mao_request == 127) getexp 1280000,0;
+		set mao_request,128;
+		getitem 12106,1;
+		next;
+		mes "[巴尔德斯]";
+		mes "从技术上说，我们未能";
+		mes "达成原定的任务目标，";
+		mes "但我会通知你的公会，告诉他们";
+		mes "你在阻止一场世界级灾难中";
+		mes "发挥了关键作用。";
+		next;
+		mes "[琳]";
+		mes "巴尔德斯……";
+		mes "我现在就出发。";
+		mes "祝我好运吧，"+ strcharinfo(0) +"。";
+		next;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#1::OnInit";
+		mes "[巴尔德斯]";
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "那么，就这样。";
+			mes "你可以走了。";
+			mes "下次再见。";
+		}
+		else
+		{
+			mes "那么，就这样。";
+			mes "你可以走了。";
+			mes "再次感谢";
+			mes "你帮助我们。你一直是";
+			mes "刺客公会宝贵的盟友，";
+			mes "请引以为豪。";
+		}
+		next;
+		mes "[巴尔德斯]";
+		mes "基德，等你";
+		mes "准备好了，我在普隆德拉";
+		mes "还有另一项任务";
+		mes "要交给你。";
+		mes "但现在，";
+		mes "我要你好好放松。";
+		next;
+		mes "[基德]";
+		mes "嘿。好吧，";
+		mes "巴尔德斯。我想";
+		mes "我的工作";
+		mes "永远也做不完～";
+		close2;
+		donpcevent "基德#1::OnInit";
+	}
+	else if(mao_request == 30 || mao_request == 128)
+	{
+		if(Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "[巴尔德斯]";
+			mes "你可以去";
+			mes "休息了。你上次";
+			mes "接的任务";
+			mes "如此关键，";
+			mes "你完全可以";
+			mes "休个短假。";
+		}
+		else
+		{
+			mes "[巴尔德斯]";
+			mes "你给刺客公会";
+			mes "帮了大忙。";
+			mes "这里永远";
+			mes "欢迎你的援助。";
+			mes "要不是你，撒旦莫罗克";
+			mes "恐怕已经……";
+		}
+		close2;
+	}
+	cutin "",255;
+	end;
+
+OnInit:
+	disablenpc "巴尔德斯#1";
+	end;
+	
+OnEnter:
+	enablenpc "巴尔德斯#1";
+	end;
+}
+
+que_job01,17,11,3	script	巴尔德斯#2	55,{
+
+OnInit:
+	disablenpc "巴尔德斯#2";
+	end;
+	
+OnEnter:
+	disablenpc "巴尔德斯#2";
+	end;
+}
+
+que_job01,142,56,5	script	巴尔德斯#3	55,{
+
+OnInit:
+	disablenpc "巴尔德斯#3";
+	end;
+	
+OnEnter:
+	disablenpc "巴尔德斯#3";
+	end;
+}
+
+que_job01,19,18,3	script	琳#1	885,{
+
+	cutin "mocseal_rin01.bmp",2;
+	if (mao_request < 3)
+	{
+		mes "[琳]";
+		mes "嗯……如果你来这里";
+		mes "是为了我想的那件事，";
+		mes "你应该先去找";
+		mes "我们的老板巴尔德斯谈谈。";
+		close2;
+	}
+	else if(mao_request == 3)
+	{
+		mes "[琳]";
+		mes "嘿。你是要和";
+		mes "基德一起工作，对吧？他就";
+		mes "在那边。总之，";
+		mes "别担心，他这个人";
+		mes "挺好相处的。";
+		close2;
+	}
+	else if(mao_request == 103)
+	{
+		mes "[琳]";
+		mes "先办正事。";
+		mes "我们需要去和";
+		mes "隔壁房间的委托人R谈谈。";
+		mes "我在那里和你碰头。";
+		close2;
+		disablenpc "琳#1";
+	}
+	else if(mao_request == 28 || mao_request == 29)
+	{
+		mes "[琳]";
+		mes "……";
+		mes "……";
+		mes "……";
+		next;
+		mes "^3355FF琳看起来";
+		mes "极其疲惫和沮丧。";
+		mes "眼下，还是去和指挥官巴尔德斯谈谈吧。^000000";
+		close2;
+	}
+	else if(mao_request == 126 || mao_request == 127)
+	{
+		mes "[琳]";
+		mes "嘿、嘿……";
+		mes "我听说";
+		mes "基德救了你。";
+		mes "...............................";
+		mes "对不起，"+ strcharinfo(0) +"……";
+		mes "我、我让你失望了……";
+		next;
+		mes "^3355FF琳看起来";
+		mes "极其疲惫和沮丧。";
+		mes "眼下，还是去和指挥官巴尔德斯谈谈吧。^000000";
+		close2;
+	}
+	cutin "",255;
+	end;
+	
+OnInit:
+	disablenpc "琳#1";
+	end;
+
+OnEnter:
+	enablenpc "琳#1";
+	end;
+}
+
+que_job01,13,9,7	script	琳#2	885,{
+
+OnInit:
+	disablenpc "琳#2";
+	end;
+	
+OnEnter:
+	disablenpc "琳#2";
+	end;
+}
+
+que_job01,84,17,3	script	琳#2-1	885,{
+
+	if (mao_request == 103)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "什么……？";
+		mes "我以为我们";
+		mes "只需要";
+		mes "保护你？到底";
+		mes "发生什么事了？";
+		next;
+		mes "[R.]";
+		mes "很抱歉，但我必须";
+		mes "去一趟朱诺图书馆，";
+		mes "这是当务之急……";
+		cutin "mocseal_dan01.bmp",0;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "打扰一下，";
+		mes "你们到底";
+		mes "在说什么……？";
+		next;
+		mes "[琳]";
+		mes "啊，这位是"+ strcharinfo(0) +"，";
+		mes "我这次任务的搭档。";
+		if(Sex == SEX_MALE) mes "别担心，你可以信任他。";
+		else mes "别担心，你可以信任她。";
+		next;
+		mes "[R.]";
+		mes "啊，我明白了。为了";
+		mes "匿名起见，请叫我R.先生。";
+		mes "如果对你的工作有帮助，";
+		mes "你可以请琳把";
+		mes "我刚告诉她的一切解释给你听。失陪了……";
+		next;
+		mes "^3355FFR.先生从项链上";
+		mes "取下一个吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地低声念了";
+		mes "几句，才抬起头来。^000000";
+		set mao_request,104;
+		close2;
+	}
+	else if(mao_request == 104)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "那个……";
+		mes "刚才那是什么？";
+		mes "R.先生刚拿出";
+		mes "那个奇怪的吊坠，";
+		mes "然后开始祈祷";
+		mes "还是什么的。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "我想他是在祈祷……";
+		mes "不过不管是什么宗教，";
+		mes "我从来没听说过。";
+		mes "总之，这没什么大不了的。";
+		mes "让我来说明一下";
+		mes "这次任务的当前目标。";
+		next;
+		mes "[琳]";
+		mes "我们的委托人R.先生，";
+		mes "在朱诺图书馆查阅";
+		mes "重要文件时遭到了袭击。";
+		mes "他捡回了一条命，";
+		mes "但没能把所有的";
+		mes "文件都带出来。";
+		next;
+		mes "[R.]";
+		mes "那些文件里的信息";
+		mes "对我的研究至关重要，";
+		mes "而且可能提供";
+		mes "寻找那些从梦罗克";
+		mes "失踪的孩子的线索。";
+		mes "请把它们取回来！";
+		cutin "mocseal_dan01.bmp",0;
+		next;
+		mes "[琳]";
+		mes "好吧，我想就这样定了。";
+		mes "我想如果我们取回";
+		mes "那些文件，我们就离";
+		mes "找到那些失踪的孩子";
+		mes "更近一步了。那就这么办吧。";
+		cutin "mocseal_rin01.bmp",2;
+		next;
+		switch( select( "等等!","他们不会再袭击吧?" ) )
+		{
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "等等！这太冒险了！";
+				mes "万一R.先生";
+				mes "再次遭到袭击怎么办？";
+				mes "我是说，我们在这里";
+				mes "不就是为了这个吗？";
+				mes "保护他不受那些袭击者伤害？";
+				next;
+				mes "[琳]";
+				mes "说得好。我想";
+				mes "我们应该分头行动。";
+				mes "一个人留在这里";
+				mes "保护R.先生，另一个人";
+				mes "去朱诺图书馆";
+				mes "找他的研究文件。";
+				break;
+				
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "他们不会再";
+				mes "袭击吧？我们两个";
+				mes "不该都留在这里保护R.先生吗？";
+				next;
+				mes "[琳]";
+				mes "我同意你的看法，但";
+				mes "我认为我们中留下一个人，";
+				mes "就足以确保R.先生的";
+				mes "安全了。再说，我们应该";
+				mes "竭尽全力去救";
+				mes "那些失踪的孩子。";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "我想你说得对。";
+				mes "但我觉得我们应该";
+				mes "先问问R.先生";
+				mes "这样是否妥当。";
+				break;
+		}
+		next;
+		mes "[琳]";
+		mes "好吧，好吧……";
+		mes "那么您觉得怎么样，";
+		mes "R.先生？";
+		mes "这样可以吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.]";
+		mes "当然，我希望";
+		mes "自己的安全得到保障，";
+		mes "但那些文件里的信息";
+		mes "比我的性命";
+		mes "更重要。无论如何，";
+		mes "请把它们取回来。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "那么。R.先生，你";
+		mes "留在这里，我可以保护你。";
+		mes "这个地方也有警戒魔法";
+		mes "防护，所以你不会有事的。";
+		mes "那么，至于你，";
+		mes ""+ strcharinfo(0) +"……";
+		next;
+		mes "[琳]";
+		mes "你的首要任务是";
+		mes "去朱诺图书馆，";
+		mes "把R.先生的文件";
+		mes "带回来。嘿，R.先生，";
+		mes "我们怎么分辨哪些";
+		mes "是你的文件呢？";
+		next;
+		mes "[R.]";
+		mes "它们，嗯……";
+		mes "标着''摩尔''";
+		mes "这个名字。";
+		mes "只是……另一个化名罢了。";
+		next;
+		mes "[琳]";
+		mes "到了朱诺图书馆后，";
+		mes "找一个叫";
+		mes "^4D4DFF于妮亚^000000的女孩。她会";
+		mes "让你的工作轻松许多。";
+		mes "好了，祝你好运～";
+		mes "祝你好运！";
+		set mao_request,105;
+		close2;
+	}
+	else if(mao_request == 105)
+	{
+		cutin "mocseal_rin01.bmp",0;
+		mes "[琳]";
+		mes "去朱诺图书馆，";
+		mes "找一个叫";
+		mes "于妮亚的女孩谈谈。";
+		mes "如果有人挡你的路，";
+		mes "尽管收拾他们。混混们";
+		mes "怎么被教训都是活该！";
+		next;
+		mes "[琳]";
+		mes "呃，不过这完全";
+		mes "由你决定。我只是想让你";
+		mes "知道，和刺客一起行动时，";
+		mes "就算暗杀了谁也不会惹上麻烦，";
+		mes "我就是说说而已。好了，回见～";
+		close2;
+	}
+	else if(mao_request == 106)
+	{
+		cutin "mocseal_rin01.bmp",0;
+		mes "[琳]";
+		mes "啊，你找到";
+		mes "于妮亚了吗？等一下，";
+		mes "你把文件带来了吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "糟糕……";
+		mes "我想我最好";
+		mes "回去再和";
+		mes "于妮亚谈一次！";
+		cutin "mocseal_dan01.bmp",0;
+		close2;
+	}
+	else if(mao_request == 107)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "于妮亚把R.先生";
+		mes "想要的文件";
+		mes "给你了？太好了，现在";
+		mes "把文件给他送去，";
+		mes "看看他接下来";
+		mes "还要我们做什么。";
+		set mao_request,108;
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "啊，没错，这正是";
+		mes "我想要的！非常感谢";
+		mes "你的辛勤工作。哇，";
+		mes "这些文件整理得真好……";
+		close2;
+	}
+	else if(mao_request == 108)
+	{
+		mes "[琳]";
+		mes "哼。现在我们把";
+		mes "这些文件给他送来了，";
+		mes "他大概又要";
+		mes "让我们替他";
+		mes "做别的事了。";
+		mes "事情总是这样……";
+		close2;
+	}
+	else if(mao_request == 109)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[琳]";
+		mes "我想我们应该";
+		mes "照R.先生说的做。";
+		mes "去梦罗克西边的田野";
+		mes "找找那些神器或纹章中的一个，";
+		mes "我留在这里";
+		mes "保护R.先生，以防万一。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "很抱歉^A9A9A9在^000000这件事上";
+		mes "^A9A9A9楼梯^000000你得独自^A9A9A9等^000000去处理，";
+		mes "^A9A9A9我^000000但这种情况";
+		mes "是没办法避免的。";
+		close2;
+	}
+	else if(mao_request > 109 && mao_request < 115)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "我并不真的知道";
+		mes "发生了什么事，但";
+		mes "看来我们";
+		mes "别无选择，只能暂时";
+		mes "照R.摩尔先生说的做……";
+		close2;
+	}
+	else if(mao_request == 115)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "嘿……我需要单独";
+		mes "和你谈谈。这个R.摩尔……";
+		mes "我不喜欢他！有些事情";
+		mes "对不上号！";
+		mes "我一直在翻看他的";
+		mes "研究笔记，你知道吗？";
+		next;
+		mes "[琳]";
+		mes "里面全是关于";
+		mes "梦罗克、撒旦莫罗克、";
+		mes "还有塔纳托斯塔的内容……";
+		mes "这些和失踪的孩子";
+		mes "有什么联系？要我说，";
+		mes "这些都是相当阴森的东西。";
+		next;
+		mes "[琳]";
+		mes "嘿，我要你去梦罗克";
+		mes "当地的历史学家那里，";
+		mes "打听关于撒旦莫罗克之类的事情。";
+		mes "我们不知道的事情太多了，";
+		mes "我不想冒任何风险。";
+		set mao_request,116;
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "嗯……？";
+		mes "你们在那边";
+		mes "兴奋地谈论";
+		mes "什么呢？";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "哦，我们只是在";
+		mes "谈论那些元素纹章，";
+		mes "以及它们现在";
+		mes "已经处理好了。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "对了，" + strcharinfo(0) + "，";
+		mes "你是要出门吗？";
+		mes "我还有一个请——";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "我派"+ strcharinfo(0) +"";
+		mes "去买点零食，";
+		if(Sex == SEX_MALE) mes "不会太久。你要他";
+		else mes "不会太久。你要她";
+		mes "帮你带点什么回来吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "哦，好啊。你们回来的时候，";
+		mes "能给我带一杯";
+		mes "热带的苏克拉特吗？";
+		mes "我很喜欢那个。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "好了，"+ strcharinfo(0) +"，";
+		mes "你都听到^A9A9A9去^000000那位先生说了。";
+		mes "^A9A9A9找^000000尽快^A9A9A9历史学家^000000回来，";
+		mes "^A9A9A9现在^000000好吗？";
+		close2;
+	}
+	else if(mao_request == 116)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "这么快就回来了？";
+		mes "你忘了我";
+		mes "让你做什么了吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "你不是要去";
+		mes "买零食";
+		mes "吗？";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "对。^A9A9A9去^000000我想你是因为";
+		mes "^A9A9A9梦罗克^000000忘了什么东西^A9A9A9找^000000";
+		mes "^A9A9A9历史学家^000000才回来的。";
+		mes "快^A9A9A9现在^000000去吧，我们很快";
+		mes "就需要零食了。";
+		close2;
+	}
+	else if(mao_request == 117)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯，我回来了……";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "抱歉，^A9A9A9楼梯^000000搭档，";
+		mes "我忘了让你也帮我";
+		mes "带份零食^A9A9A9见^000000。";
+		mes "你能帮我带一杯，";
+		mes "嗯……";
+		mes "赤色海滩吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "零食？嗯……那";
+		mes "更像是酒吧，不是吗？";
+		mes "但如果你想要的话，";
+		mes "我很快就回来。";
+		mes "(^333333这也太鬼鬼祟祟了！";
+		mes "她是怎么那样说话的？^000000)";
+		close2;
+	}
+	else if(mao_request == 118)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "哦，很好。";
+		mes "你终于回来了～";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "啊！你终于回来了。";
+		mes "我还有一个请求，";
+		mes "必须拜托你，";
+		mes "这与失踪的孩子有关。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "是啊，好吧。";
+		mes "看是什么事，";
+		mes "也许我们会做。";
+		mes "但如果是些疯狂的";
+		mes "荒唐差事，我们就不做。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "为了我的研究，";
+		mes "我要你们";
+		mes "调查塔纳托斯塔。";
+		mes "想尽一切办法了解";
+		mes "它的来历。我本不想说这个，但是……";
+		next;
+		mes "[R.摩尔]";
+		mes "我认为，失踪的孩子";
+		mes "有可能是被绑架去";
+		mes "复活一个古老的恶魔——撒旦莫罗克。";
+		mes "我相信，通过了解撒旦莫罗克，";
+		mes "我们能更多地了解";
+		mes "那些绑架者。";
+		next;
+		mes "[R.摩尔]";
+		mes "我知道这一切听起来";
+		mes "很疯狂，但请相信我。";
+		mes "塔纳托斯塔与撒旦莫罗克";
+		mes "有着某种联系，所以";
+		mes "如果你能告诉我";
+		mes "你在那里了解到了什么……";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "塔纳托斯塔，是吗？";
+		mes "好吧，我们不是";
+		mes "不相信你，但我们需要";
+		mes "一些时间来考虑你的请求，";
+		mes "然后才能进行你要我们做的调查……";
+		set mao_request,119;
+		close2;
+	}
+	else if(mao_request == 119)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "好吧……在我们";
+		mes "动手之前，我们需要";
+		mes "绝对确认";
+		mes "几件事。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "当然。";
+		mes "你们想问";
+		mes "我什么？";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "首先，袭击你的";
+		mes "那些人。他们";
+		mes "是想复活";
+		mes "撒旦莫罗克吗？还有那些纹章……";
+		mes "它们是用来打破撒旦莫罗克的";
+		mes "封印，还是保护封印的？";
+		next;
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "哦，那些袭击我的人。";
+		mes "我完全不知道";
+		mes "他们想要什么。";
+		mes "至于那些元素纹章，";
+		mes "它们最初是一个疯子";
+		mes "为了复活撒旦莫罗克而建造的。";
+		next;
+		mes "[R.摩尔]";
+		mes "不过，那个疯子的";
+		mes "阴谋被揭穿之后，";
+		mes "纹章被改造过，";
+		mes "用来进一步加固";
+		mes "封印撒旦莫罗克的封印。";
+		next;
+		mes "[R.摩尔]";
+		mes "但作为历史学家……";
+		mes "这些关于撒旦莫罗克";
+		mes "和封印的故事";
+		mes "都只是推测。我需要";
+		mes "确凿的证据，证明撒旦莫罗克";
+		mes "的威胁确实存在。";
+		next;
+		mes "[R.摩尔]";
+		mes "如果我能得到那个，";
+		mes "人们就会更加";
+		mes "认真地对待撒旦莫罗克的威胁。";
+		mes "塔纳托斯塔也就不会";
+		mes "是什么旅游区了。";
+		next;
+		mes "[R.摩尔]";
+		mes "我恳求你们，请";
+		mes "去塔纳托斯塔，";
+		mes "试着找到某种确凿的";
+		mes "历史记载，证明撒旦莫罗克";
+		mes "确实存在于";
+		mes "我们的世界。";
+		set mao_request,120;
+		close2;
+	}
+	else if(mao_request == 120)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "我不知道该";
+		mes "相信什么，但调查";
+		mes "塔纳托斯塔似乎是我们";
+		mes "眼下最好的选择。";
+		next;
+		mes "[琳]";
+		mes "你去办那件事的时候，";
+		mes "我会试着把我们";
+		mes "目前收集到的信息";
+		mes "拼凑起来，同时";
+		mes "盯着R.摩尔先生。";
+		mes "祝你好运，多加小心。";
+		set mao_request,121;
+		close2;
+	}
+	else if(mao_request == 121)
+	{
+		mes "^3355FF琳似乎陷入了沉思，";
+		mes "仔细权衡着";
+		mes "任务的各种选择。";
+		mes "眼下，你最好";
+		mes "做好自己的分内事，";
+		mes "去调查塔纳托斯塔。^000000";
+		close2;
+	}
+	cutin "",255;
+	end;
+}
+
+que_job01,79,15,1	script	R	880,{
+
+	if(mao_request == 103)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.]";
+		mes "现在，我的性命";
+		mes "没那么重要！请让我";
+		mes "完成我的研究！";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "什么……？";
+		mes "我以为我们";
+		mes "只需要";
+		mes "保护你？到底";
+		mes "发生什么事了？";
+		next;
+		mes "[R.]";
+		mes "很抱歉，但我必须";
+		mes "去一趟朱诺图书馆，";
+		mes "这是当务之急……";
+		cutin "mocseal_dan01.bmp",0;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "打扰一下，";
+		mes "你们到底";
+		mes "在说什么……？";
+		next;
+		mes "[琳]";
+		mes "啊，这位是"+ strcharinfo(0) +"，";
+		mes "我这次任务的搭档。";
+		if(Sex == SEX_MALE) mes "别担心，你可以信任他。";
+		else mes "别担心，你可以信任她。";
+		next;
+		mes "[R.]";
+		mes "啊，我明白了。为了";
+		mes "匿名起见，请叫我R.先生。";
+		mes "如果对你的工作有帮助，";
+		mes "你可以请琳把";
+		mes "我刚告诉她的一切解释给你听。失陪了……";
+		next;
+		mes "^3355FFR.先生从项链上";
+		mes "取下一个吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地低声念了";
+		mes "几句，才抬起头来。^000000";
+		set mao_request,104;
+		close2;
+	}
+	else if(mao_request == 104)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.]";
+		mes "你的搭档应该能";
+		mes "把我已经告诉她的";
+		mes "一切转述给你，";
+		mes "包括你的工作";
+		mes "可能需要知道的";
+		mes "任何细节。请原谅，失陪了……";
+		next;
+		mes "^3355FFR.先生从项链上";
+		mes "取下一个吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地低声念了";
+		mes "几句，才抬起头来。^000000";
+		close2;
+	}
+	else if(mao_request == 105)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.]";
+		mes "朱诺图书馆";
+		mes "分为3个区域：";
+		mes "2个区域用来";
+		mes "存放书籍，";
+		mes "另一个区域";
+		mes "专门用作阅览室或自习厅。";
+		next;
+		mes "[R.]";
+		mes "你应该能在";
+		mes "那个自习厅里";
+		mes "找到于妮亚。希望";
+		mes "到那时候，她已经";
+		mes "整理好我的文件了……";
+		close2;
+	}
+	else if(mao_request == 106)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "那么你找到于妮亚，";
+		mes "从她那里拿到我的";
+		mes "研究文件了吗？如果你";
+		mes "忘了，请回朱诺图书馆";
+		mes "把它们取回来……";
+		mes "再次感谢。";
+		close2;
+	}
+	else if(mao_request == 107)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "这些就是我";
+		mes "从于妮亚那里收到的文件。";
+		mes "这是你需要的吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "啊，没错，这正是";
+		mes "我想要的！非常感谢";
+		mes "你的辛勤工作。哇，";
+		mes "这些文件整理得真好……";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "好了。你需要告诉我们，";
+		mes "你的研究和我们";
+		mes "下一项工作";
+		mes "有什么关系……";
+		mes "我们需要保护你，但如果可以，";
+		mes "我们还是想帮助";
+		mes "那些失踪的孩子。";
+		set mao_request,108;
+		close2;
+	}
+	else if(mao_request == 108)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "这些文件里的信息";
+		mes "与我接下来";
+		mes "要拜托你们的请求有关。";
+		mes "作为你们的委托人，";
+		mes "我希望你们完成这项任务，";
+		mes "把它当作任务的一部分。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "是啊，是啊，你不必";
+		mes "提醒我。再说，";
+		mes "我们刺客不喜欢";
+		mes "留下任何未完成的工作。";
+		mes "那么这次你需要我们做什么？";
+		next;
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "有四个纹章";
+		mes "隐藏在梦罗克";
+		mes "四周的四个方向，";
+		mes "它们调节着该地区";
+		mes "水、风、地、火";
+		mes "四种元素的力量。";
+		next;
+		mes "[R.摩尔]";
+		mes "梦罗克这些元素的";
+		mes "稳定性目前";
+		mes "成问题，所以";
+		mes "我要你们^4D4DFF使用附魔石^000000";
+		mes "来增强这些";
+		mes "元素纹章的力量。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "等等……涉及你";
+		mes "人身安全的请求，";
+		mes "或者任何能帮助我们";
+		mes "找到那些失踪孩子的事，";
+		mes "我们都会照办，但我们是";
+		mes "你的保镖，不是你的仆人。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "我知道，我知道……";
+		mes "但无论是什么势力";
+		mes "在破坏这些神器，";
+		mes "很可能就是绑架那些孩子的";
+		mes "元凶。";
+		mes "这值得一查……";
+		next;
+		mes "[R.摩尔]";
+		mes "不管怎样，那些人";
+		mes "袭击我，是因为";
+		mes "他们不想让我修复";
+		mes "梦罗克的元素平衡。";
+		mes "至少，我是这么认为的。";
+		set mao_request,109;
+		next;
+		mes "[R.摩尔]";
+		mes "你们现在可能";
+		mes "无法理解，但";
+		mes "相信我……你们不会";
+		mes "希望那些纹章变弱的。";
+		close2;
+	}
+	else if(mao_request == 109)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "你们何不先去";
+		mes "梦罗克西边找找";
+		mes "其中一个元素神器呢，";
+		mes "那里比较近。它应该在";
+		mes "金字塔所在的地方。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "请照他说的";
+		mes "去做吧。";
+		mes "在此期间，我会";
+		mes "留在这里，确保";
+		mes "没有人再袭击R.先生。";
+		next;
+		mes "[琳]";
+		mes "很抱歉^A9A9A9在^000000这件事上";
+		mes "^A9A9A9楼梯^000000你得独自^A9A9A9等^000000去处理，";
+		mes "^A9A9A9我^000000但这种情况";
+		mes "是没办法避免的。";
+		close2;
+	}
+	else if(mao_request > 109 && mao_request < 112)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "你应该能在";
+		mes "梦罗克西边田野的";
+		mes "某座金字塔后面";
+		mes "找到元素调节装置。";
+		mes "请使用附魔石";
+		mes "来增强纹章的力量。";
+		close2;
+	}
+	else if(mao_request == 112)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "好了，现在，我不知道";
+		mes "其他纹章的";
+		mes "位置。真希望";
+		mes "我在遇袭之前";
+		mes "有机会去寻找它们。";
+		mes "很抱歉我帮不上更多忙。";
+		next;
+		mes "[R.摩尔]";
+		mes "我没想到请求保护";
+		mes "会让我活得";
+		mes "像个囚犯……";
+		mes "我觉得……我觉得被困住了。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "嘿，你有什么毛病，";
+		mes "R.先生？！你在这里";
+		mes "舒舒服服的，旁边就是";
+		mes "酒吧，天哪，而我们却在";
+		mes "外面东奔西跑，";
+		mes "替你干所有的脏活！";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "这一点";
+		mes "倒是真的，我想……";
+		next;
+		cutin "mocseal_dan01.bmp",255;
+		mes "[" + strcharinfo(0) + "]";
+		mes "好吧，我想我这就出去，";
+		mes "试着激活";
+		mes "梦罗克城外";
+		mes "其余的";
+		mes "元素纹章。";
+		close2;
+	}
+	else if(mao_request > 112 && mao_request < 115)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "非常感谢";
+		mes "你们所有的";
+		mes "辛勤工作。";
+		mes "后世将会赞颂";
+		mes "你们的所作所为。";
+		mes "请放心……";
+		next;
+		mes "[琳]";
+		mes "什么……？";
+		mes "你刚才";
+		mes "说什么？";
+		next;
+		mes "[R.摩尔]";
+		mes "哦，没什么……";
+		mes "只是给" + strcharinfo(0) + "";
+		mes "应有的赞扬罢了。就这样。";
+		close2;
+	}
+	else if(mao_request == 115)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "很好，你来了。";
+		mes "现在，为了确保";
+		mes "所有那些可怜孩子的安全，";
+		mes "我需要你完成另一——";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "打扰一下，我不是故意";
+		mes "插嘴，但我需要";
+		mes "和你单独谈谈。这是";
+		mes "一个非常紧急的问题，";
+		mes "我需要在这里";
+		mes "和"+ strcharinfo(0) +"商量。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "……很好。";
+		mes "那么我等你们";
+		mes "回来再继续。";
+		close2;
+	}
+	else if(mao_request == 116)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "嗯……？";
+		mes "你不是要出去";
+		mes "跑腿，给我们买些";
+		mes "零食和饮料";
+		mes "吗？";
+		close2;
+	}
+	else if(mao_request == 117)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "哦，很好，你";
+		mes "回来了。零食";
+		mes "先不管，我想";
+		mes "和你谈谈我下一个";
+		mes "请求，如果你愿——";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "抱歉，^A9A9A9楼梯^000000搭档，";
+		mes "我忘了让你也帮我";
+		mes "带份零食^A9A9A9见^000000。";
+		mes "你能帮我带一杯，";
+		mes "嗯……";
+		mes "赤色海滩吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "零食？嗯……那";
+		mes "更像是酒吧，不是吗？";
+		mes "但如果你想要的话，";
+		mes "我很快就回来。";
+		mes "(^333333这也太鬼鬼祟祟了！";
+		mes "她是怎么那样说话的？^000000)";
+		close2;
+	}
+	else if(mao_request == 118)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "啊，你终于回来了。";
+		mes "我还有一个请求，";
+		mes "必须拜托你，";
+		mes "这与失踪的孩子有关。";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "是啊，好吧。";
+		mes "看是什么事，";
+		mes "也许我们会做。";
+		mes "但如果是些疯狂的";
+		mes "荒唐差事，我们就不做。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[R.摩尔]";
+		mes "为了我的研究，";
+		mes "我要你们";
+		mes "调查塔纳托斯塔。";
+		mes "想尽一切办法了解";
+		mes "它的来历。我本不想说这个，但是……";
+		next;
+		mes "[R.摩尔]";
+		mes "我认为，失踪的孩子";
+		mes "有可能是被绑架去";
+		mes "复活一个古老的恶魔——撒旦莫罗克。";
+		mes "我相信，通过了解撒旦莫罗克，";
+		mes "我们能更多地了解";
+		mes "那些绑架者。";
+		next;
+		mes "[R.摩尔]";
+		mes "我知道这一切听起来";
+		mes "很疯狂，但请相信我。";
+		mes "塔纳托斯塔与撒旦莫罗克";
+		mes "有着某种联系，所以";
+		mes "如果你能告诉我";
+		mes "你在那里了解到了什么……";
+		next;
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "塔纳托斯塔，是吗？";
+		mes "好吧，我们不是";
+		mes "不相信你，但我们需要";
+		mes "一些时间来考虑你的请求，";
+		mes "然后才能进行你要我们做的调查……";
+		set mao_request,119;
+		close2;
+	}
+	else if(mao_request == 119)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "琳有问题要问我，";
+		mes "所以我应该";
+		mes "先回答她的问题，";
+		mes "然后再拜托你";
+		mes "做任何事。";
+		close2;
+	}
+	else if(mao_request == 120)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "我恳求你们，请";
+		mes "去塔纳托斯塔，";
+		mes "试着找到某种确凿的";
+		mes "历史记载，证明撒旦莫罗克";
+		mes "确实存在于";
+		mes "我们的世界。";
+		close2;
+	}
+	else if(mao_request == 121)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[R.摩尔]";
+		mes "那么，你们要去";
+		mes "调查塔纳托斯塔了？";
+		mes "很好，很好，我很快";
+		mes "就能完成我的工作了。";
+		next;
+		mes "^3355FFR.先生从项链上";
+		mes "取下一个吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地低声念了";
+		mes "几句，才抬起头来。^000000";
+		close2;
+	}
+	cutin "",255;
+	end;
+}
+
+que_job01,147,54,3	script	琳#3	885,{
+
+OnInit:
+	disablenpc "琳#3";
+	end;
+	
+OnEnter:
+	disablenpc "琳#3";
+	end;
+}
+
+que_job01,13,17,5	script	基德#1	884,{
+
+	cutin "mocseal_kid01.bmp",2;
+	if (mao_request < 3)
+	{
+		mes "[基德]";
+		mes "……";
+		mes "……";
+		mes "嗯。嘿。";
+		close2;
+	}
+	else if(mao_request > 102 && mao_request < 126)
+	{
+		mes "[基德]";
+		mes "哦嘿，你就是和琳";
+		mes "一起工作的那个人，对吧？";
+		mes "我们都很高兴你加入了";
+		mes "那个任务。毕竟，我们不可能什么都自己干，你懂吧？";
+		close2;
+	}
+	else if(mao_request == 3)
+	{
+		mes "[基德]";
+		mes "蒲公英组织的代表";
+		mes "正在大厅里等我们，";
+		mes "你最好快点过去。";
+		mes "别担心，你一到";
+		mes "我就会过去";
+		mes "和你碰头。";
+		close2;
+		disablenpc "基德#1";
+	}
+	else if(mao_request == 28 || mao_request == 29)
+	{
+		mes "[基德]";
+		mes "哦，嘿……";
+		mes "你来了，";
+		mes "你真的回来了。";
+		next;
+		mes "[巴尔德斯]";
+		mes "打扰一下……";
+		mes "我们能";
+		mes "谈一下吗？";
+		close2;
+	}
+	else if(mao_request == 126 || mao_request == 127)
+	{
+		mes "[基德]";
+		mes "哦，嘿……";
+		mes "你来了，";
+		mes "你真的回来了。";
+		next;
+		mes "[巴尔德斯]";
+		mes "打扰一下……";
+		mes "我们能";
+		mes "谈一下吗？";
+		close2;
+	}
+	cutin "",255;
+	end;
+
+OnInit:
+	disablenpc "基德#1";
+	end;
+	
+OnEnter:
+	enablenpc "基德#1";
+	end;
+}
+
+que_job01,12,8,7	script	基德#2	884,{
+
+OnInit:
+	disablenpc "基德#2";
+	end;
+	
+OnEnter:
+	disablenpc "基德#2";
+	end;
+}
+
+que_job01,148,54,3	script	基德#3	884,{
+
+OnInit:
+	disablenpc "基德#3";
+	end;
+	
+OnEnter:
+	disablenpc "基德#3";
+	end;
+}
+
+que_job01,91,83,3	script	基德#hall	884,{
+
+	if (mao_request == 124)
+	{
+		mes "[基德]";
+		mes "有大事要发生了……";
+		mes "你得去召集";
+		mes "蒲公英的";
+		mes "其他成员，我也得去";
+		mes "联系我公会里的所有人！";
+		next;
+		mes "[蒲公英成员]";
+		mes "让我走，我能感觉到";
+		mes "梦罗克城堡";
+		mes "出事了！我们";
+		mes "必须马上过去！";
+		close2;
+	}
+	else if(mao_request < 3 || (mao_request > 102 && mao_request < 124))
+	{
+		mes "[基德]";
+		mes "……";
+		mes "……";
+		close2;
+	}
+	else if(mao_request == 3)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "哦，很好，你来得";
+		mes "正是时候。这位";
+		mes "蒲公英的成员";
+		mes "要向我们说明任务内容。";
+		mes "现在，请";
+		mes "全神贯注地听……";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "啊，你就是和基德";
+		mes "一起执行";
+		mes "这次任务的人？";
+		mes "我是你们的委托人，";
+		mes "蒲公英组织的代表。";
+		next;
+		mes "[蒲公英成员]";
+		mes "如果你还不知道的话，";
+		mes "我们是一个公益团体，";
+		mes "从事大量的志愿工作。";
+		mes "然而，我们的一个项目，";
+		mes "一家儿童托儿所，";
+		mes "被一位瑞安·摩尔先生毁掉了。";
+		next;
+		mes "[蒲公英成员]";
+		mes "他做的事太可怕了：";
+		mes "瑞安·摩尔绑架了";
+		mes "我们托儿所";
+		mes "所有的孩子！我们不禁";
+		mes "感到自责，我们正在";
+		mes "竭尽全力寻找他们……";
+		next;
+		mes "[蒲公英成员]";
+		mes "然而，我们组织的人";
+		mes "没有能力找到他，";
+		mes "更不用说对付这个";
+		mes "危险的人物了。";
+		mes "这就是为什么";
+		mes "我们在这件事上请求你的帮助。";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "孩子们就是这样";
+		mes "失踪的？";
+		mes "嗯。根据瑞安·摩尔的";
+		mes "档案，他更像是";
+		mes "一位学者或学究，";
+		mes "而不是危险的绑架犯……";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "是的，根据我们";
+		mes "交给你的档案，";
+		mes "他看起来确实";
+		mes "人畜无害，但我不认为";
+		mes "瑞安·摩尔是一个";
+		mes "我们可以小觑的人。";
+		next;
+		mes "^3355FF蒲公英组织的代表";
+		mes "从衣领下取出";
+		mes "一个项链吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地";
+		mes "低声念了几句。^000000";
+		set mao_request,4;
+		close2;
+	}
+	else if(mao_request == 4)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "(^333333基德？他……";
+		mes "他拿着那个吊坠";
+		mes "在干什么？^000000)";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "我见过他这样做";
+		mes "好几次了。我不知道，";
+		mes "我猜他只是在祈祷。";
+		mes "不过，我怀疑他祈祷的对象";
+		mes "不是任何我熟悉的";
+		mes "神明之类的……";
+		next;
+		mes "[基德]";
+		mes "总之，回到正题。";
+		mes "我们只知道，我们的目标";
+		mes "最后一次被人看到，";
+		mes "是在查看梦罗克遗迹。";
+		mes "现在，我认为我们应该";
+		mes "先去朱诺图书馆开始搜寻。";
+		next;
+		switch( select( "我们为什么要去那里?","好，我明白了!" ) )
+		{
+			case 1:
+				mes "[基德]";
+				mes "我们的目标瑞安·摩尔";
+				mes "是一位学者、学究。";
+				mes "如果他在研究";
+				mes "梦罗克遗迹，";
+				mes "那他很可能";
+				mes "事先去过朱诺图书馆。";
+				next;
+				mes "[基德]";
+				mes "如果走运的话，我们也许";
+				mes "能找到一些线索，了解";
+				mes "瑞安·摩尔想做什么，";
+				mes "以及他现在可能在哪里。";
+				mes "很不错的主意，是吧？";
+				break;
+				
+			case 2:
+				mes "[基德]";
+				mes "我知道朱诺很远，";
+				mes "但我觉得那是";
+				mes "目前最值得追查的线索。";
+				mes "这一趟不容易，";
+				mes "所以我很感谢";
+				mes "你这么通情达理。";
+				break;
+		}
+		next;
+		mes "[基德]";
+		mes "总之，如果走运的话，";
+		mes "那里也许有人";
+		mes "熟悉瑞安的研究，";
+		mes "能给我们指明";
+		mes "正确的方向。好了，我在朱诺图书馆和你碰头。";
+		set mao_request,5;
+		close2;
+	}
+	else if(mao_request > 4 && mao_request < 8)
+	{
+		mes "[基德]";
+		mes "嗯……？你怎么还";
+		mes "在这里？不必";
+		mes "等我，我会直接";
+		mes "在朱诺图书馆追上你。";
+		mes "再说，我还有其他几件事";
+		mes "要先处理……";
+		close2;
+	}
+	else if(mao_request == 8)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嘿，你，蒲公英的家伙，";
+		mes "你知道为什么梦罗克的";
+		mes "这四个方向";
+		mes "对摩尔来说";
+		mes "如此重要吗？";
+		mes "他在研究日志里";
+		mes "写了些关于这事的内容。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "嗯？不，不太清楚。";
+		mes "事实上，这反而";
+		mes "更让人费解了。";
+		mes "梦罗克这里能有什么，";
+		mes "又怎么可能";
+		mes "和失踪的孩子有关？";
+		next;
+		mes "[基德]";
+		mes "是啊，嗯，目前我们";
+		mes "只能靠这个了。";
+		mes "虽然他很可能";
+		mes "已经跑了，但我们得";
+		mes "把这条线索追查到底……如果走运，我们就能抓住摩尔。";
+		set mao_request,9;
+		close2;
+	}
+	else if(mao_request == 9)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "那么……";
+		mes "我们该怎么";
+		mes "调查梦罗克的";
+		mes "四个方向呢？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嗯……我们何不";
+		mes "这样试试？我去查看";
+		mes "梦罗克南部，看有没有";
+		mes "什么异常，你则去查看";
+		mes "梦罗克西部。";
+		next;
+		mes "[基德]";
+		mes "既然摩尔在做";
+		mes "历史研究，";
+		mes "你最好去调查";
+		mes "梦罗克西边的金字塔。";
+		mes "如果碰巧发现了什么，就回这里和我碰头。";
+		set mao_request,10;
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "祝你们两位";
+		mes "好运。虽然";
+		mes "我不知道你们";
+		mes "会发现什么，但我希望";
+		mes "那能引领你们找到瑞安·摩尔……";
+		close2;
+	}
+	else if(mao_request == 10)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "眼下，去调查";
+		mes "梦罗克西部，";
+		mes "金字塔所在的";
+		mes "地方。如果发现任何";
+		mes "可能引起摩尔兴趣的东西，";
+		mes "就回来向我报告。";
+		close2;
+	}
+	else if(mao_request == 11)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "啊，你回来了。";
+		mes "我在梦罗克南部";
+		mes "发现了某种";
+		mes "元素纹章。";
+		mes "它充满了地属性魔法……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "真的吗？我实际上";
+		mes "在梦罗克西边发现了";
+		mes "风属性纹章。你觉得";
+		mes "这是不是意味着";
+		mes "梦罗克北边和东边的田野里";
+		mes "也有元素纹章？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "我不确定，但我能感觉到";
+		mes "那些元素纹章里";
+		mes "蕴含着相当强大的力量。";
+		mes "现在，根据我们从摩尔的";
+		mes "研究中读到的内容，";
+		mes "梦罗克的四个方向必须保持平衡。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "嗯。虽然你们的任务";
+		mes "是找到瑞安·摩尔";
+		mes "并救出失踪的孩子，";
+		mes "但我们不能让摩尔";
+		mes "造成更多伤害。我们不能无视";
+		mes "那些纹章，应该去检查一下……";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "我同意……事实上，";
+		mes "我发现那个地属性纹章";
+		mes "相当不稳定。";
+		mes "眼下，去稳定";
+		mes "所有四个元素纹章吧，";
+		mes "它们就在梦罗克城外。";
+		next;
+		mes "[基德]";
+		mes "你去做那件事的时候，";
+		mes "我去拜访梦罗克";
+		mes "当地的历史学家，看看";
+		mes "能了解到关于那些纹章";
+		mes "和瑞安·摩尔意图的什么消息。";
+		set mao_request,12;
+		close2;
+	}
+	else if(mao_request == 12)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嗯……如果你想";
+		mes "稳定那些纹章，";
+		mes "你大概需要用";
+		mes "相克的、更强的属性";
+		mes "来对抗纹章的属性，";
+		mes "我猜，这样才能平衡它们。";
+		next;
+		mes "[基德]";
+		mes "你需要四种";
+		mes "元素石都备齐。";
+		mes "总之，你已经知道";
+		mes "西边的纹章在哪里了。";
+		mes "南边的纹章在梦罗克南边田野的最南端。";
+		next;
+		mes "[基德]";
+		mes "至于北边和东边";
+		mes "纹章的位置，就得";
+		mes "靠你自己了。总之，别忘了";
+		mes "带上火焰之心、神秘寒冰、";
+		mes "伟大自然和粗糙之风，好吗？";
+		close2;
+	}
+	else if(mao_request > 12 && mao_request < 16)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "你找到其他的";
+		mes "元素纹章了吗？";
+		mes "别忘了用";
+		mes "相克的、更强的";
+		mes "属性元素石";
+		mes "来稳定它们。";
+		close2;
+	}
+	else if(mao_request == 16)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "发生了那种事？";
+		mes "我真不敢相信那位历史学家";
+		mes "会那样做，基德。你";
+		mes "有没有解释你为什么";
+		mes "需要和他谈谈，";
+		mes "让他知道事情很紧急？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "见鬼，当然有……！";
+		mes "嗯，你知道的。";
+		mes "用我一贯的方式……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "我刚稳定完";
+		mes "那些元素纹章回来。";
+		mes "等等，";
+		mes "发生什么事了吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "我不确定……";
+		mes "基德不知为何";
+		mes "看起来非常沮丧。";
+		mes "我猜一定是";
+		mes "他去拜访那位历史学家时";
+		mes "发生了什么事。";
+		set mao_request,17;
+		close2;
+	}
+	else if(mao_request == 17)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "好了……";
+		mes "你知道我本来";
+		mes "要去拜访";
+		mes "我们的历史学家吧？";
+		mes "他，嗯，拒绝见我……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "什么……？！";
+		mes "他为什么要";
+		mes "那样做？";
+		next;
+		mes "[基德]";
+		mes "我完全不知道！";
+		mes "但我个人认为";
+		mes "他对刺客";
+		mes "有偏见。所以";
+		mes "我要你去";
+		mes "试着和他谈谈……";
+		next;
+		if (Class == Job_Assassin || Class == Job_Assassin_Cross)
+		{
+			mes "[" + strcharinfo(0) + "]";
+			mes "等一下。";
+			mes "我也是刺客啊！";
+			next;
+			mes "[基德]";
+			mes "是啊，但他已经";
+			mes "认出我了。至少";
+			mes "你可以乔装进去……";
+			mes "你知道，戴一顶";
+			mes "可爱的帽子什么的。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好吧，好吧。";
+			mes "我替你去";
+			mes "和他谈谈……";
+			set mao_request,18;
+			close2;
+		}
+		else
+		{
+			mes "[" + strcharinfo(0) + "]";
+			mes "好吧，好吧。";
+			mes "我替你去";
+			mes "和他谈谈……";
+			set mao_request,18;
+			close2;
+		}
+	}
+	else if(mao_request == 18)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "你应该能在";
+		mes "梦罗克旅馆找到";
+		mes "我们当地的历史学家。如果可以，";
+		mes "问问他关于梦罗克周围的";
+		mes "纹章及其重要性。";
+		next;
+		mes "[基德]";
+		mes "我们需要尽可能多地";
+		mes "收集关于瑞安·摩尔";
+		mes "研究的线索，";
+		mes "这样才能";
+		mes "更好地了解他的动机。";
+		close2;
+	}
+	else if(mao_request == 19)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嘿，你回来了。";
+		mes "那么你";
+		mes "和历史学家谈过了吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "对了，你喝的";
+		mes "那是什么？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "哦，这个？";
+		mes "这是热带的苏克拉特。";
+		mes "相信我，很好喝。";
+		mes "来，我请你喝一杯。";
+		mes "老板！再给我来一杯";
+		mes "热带的苏克拉特！";
+		next;
+		mes "[老板]";
+		mes "好了，好了～";
+		mes "马上就来。";
+		mes "给你，慢慢享用。";
+		mes "拿着。";
+		set mao_request,20;
+		getitem 12112,1;
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嘿，那个待会儿再喝。";
+		mes "你弄清楚历史学家";
+		mes "为什么拒绝";
+		mes "见我了吗？给我汇报～";
+		close2;
+	}
+	else if(mao_request == 20)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "好了，现在告诉我。";
+		mes "你和";
+		mes "历史学家谈过了吗？还有，";
+		mes "你弄清楚他为什么";
+		mes "不想和我谈了吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "哦，那个？我始终没能";
+		mes "和历史学家说上话，但";
+		mes "我和他的助手谈了。";
+		mes "原来是你在他面前";
+		mes "挥舞你的刀刃，";
+		mes "把他吓跑了……";
+		next;
+		mes "[基德]";
+		mes "你一定是在开玩笑！";
+		mes "我是个刺客！我不扮得";
+		mes "又酷又硬核，";
+		mes "还能干什么，嗯？";
+		mes "该死的胆小鬼……";
+		mes "那你还了解到了什么？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯，那些元素纹章";
+		mes "应该是用来保护";
+		mes "梦罗克城堡下面的某个封印的，";
+		mes "那个封印阻止一只叫撒旦莫罗克";
+		mes "的魔物入侵我们的世界。";
+		mes "也许这只是传说，但是……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "助手告诉我，";
+		mes "塔纳托斯塔实际上";
+		mes "原本是撒旦莫罗克";
+		mes "用来召唤";
+		mes "他的手下的地方。现在，恶魔或天使";
+		mes "之类的东西住在那座塔里。";
+		next;
+		mes "[基德]";
+		mes "好吧……";
+		mes "但这一切";
+		mes "和失踪的孩子";
+		mes "有什么关系？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯……假设";
+		mes "瑞安·摩尔的目标";
+		mes "是复活撒旦莫罗克，";
+		mes "如果它真的存在的话。";
+		mes "也许可以通过";
+		mes "献上血祭来做到这一点。";
+		set mao_request,21;
+		next;
+		mes "[基德]";
+		mes "那就意味着";
+		mes "孩子们被绑架";
+		mes "是为了——不可能！";
+		mes "这……这太变态了！";
+		close2;
+	}
+	else if(mao_request == 21)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "你知道吗……我一直在";
+		mes "想我们接下来";
+		mes "该怎么办。如果撒旦莫罗克";
+		mes "真的存在，";
+		mes "那将是一场世界级的";
+		mes "灾难，对吧？";
+		next;
+		mes "[基德]";
+		mes "然而，我们并不真的";
+		mes "知道如此强大的";
+		mes "魔物是否真的存在。";
+		mes "我不想相信，";
+		mes "但我们必须调查";
+		mes "这种可能性，找到一些证据。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "梦罗克周围有那些封印，";
+		mes "但我们不确定";
+		mes "它们是有助于封印";
+		mes "撒旦莫罗克，还是它们的魔法";
+		mes "只是让人类更容易";
+		mes "在那片沙漠里生存。";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "是啊，是啊，我知道。好了，";
+		mes "我们这么做。你去";
+		mes "塔纳托斯塔，看看能否";
+		mes "找到那些孩子、瑞安·摩尔，";
+		mes "或者撒旦莫罗克存在的";
+		mes "确凿证据。";
+		set mao_request,22;
+		next;
+		mes "[基德]";
+		mes "如果你有幸";
+		mes "在那里遇到瑞安·摩尔，";
+		mes "把他带回来，";
+		mes "死活不论，都无所谓。";
+		mes "在此期间，我去和历史学家的助手谈谈……";
+		close2;
+	}
+	else if(mao_request == 22)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "那么塔纳托斯塔的";
+		mes "调查进展如何？";
+		mes "你了解到关于";
+		mes "瑞安·摩尔或撒旦莫罗克的什么了吗？";
+		next;
+		switch( select( "是的，了解到了。","不，还没有……" ) )
+		{
+			case 1:
+				if(thana_quest > 1)
+				{
+					mes "[" + strcharinfo(0) + "]";
+					mes "嗯，我找到了一些";
+					mes "关于撒旦莫罗克的古老日志。";
+					mes "它们基本证实了";
+					mes "撒旦莫罗克是真实存在的，";
+					mes "而且被封印在梦罗克城堡下面。";
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "雷根贝勒集团";
+					mes "还负责";
+					mes "那座塔的重建工作，";
+					mes "他们最终计划修复";
+					mes "塔的全部十二层。";
+					next;
+					cutin "mocseal_kid01.bmp",2;
+					mes "[基德]";
+					mes "这么说这是真的……";
+					mes "撒旦莫罗克确实存在。";
+					mes "如果瑞安·摩尔";
+					mes "绑架了那些孩子，";
+					mes "那他一定是打算";
+					mes "牺牲他们来复活那个魔物。";
+					next;
+					cutin "mocseal_dan01.bmp",0;
+					mes "[蒲公英成员]";
+					mes "我真希望我们能说";
+					mes "这是妄下结论，";
+					mes "但摩尔的研究成果";
+					mes "和他的行为……他不可能是";
+					mes "在策划别的事情。";
+					mes "这是最坏的情况……";
+					next;
+					cutin "mocseal_kid01.bmp",2;
+					mes "[基德]";
+					mes "该死！";
+					mes "我们必须";
+					mes "现在就找到瑞安·摩尔！";
+					mes "我们的时间";
+					mes "不多了！我们该怎么办？！";
+					set mao_request,23;
+					close2;
+				}
+				else
+				{
+					cutin "mocseal_kid01.bmp",2;
+					mes "[基德]";
+					mes "嗯……你的调查";
+					mes "不够彻底。你需要";
+					mes "找到关于撒旦莫罗克的存在";
+					mes "或瑞安·摩尔意图的确凿证据。";
+					mes "快回塔纳托斯塔去找！";
+					close2;
+				}
+				break;
+				
+			case 2:
+				cutin "mocseal_kid01.bmp",2;
+				mes "[基德]";
+				mes "好吧。调查一结束";
+				mes "就马上回来。";
+				mes "我有种感觉，";
+				mes "我们已经没有";
+				mes "从容的时间了，";
+				mes "所以请快点！";
+				close2;
+				break;
+		}
+	}
+	else if(mao_request == 23)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "我们需要冷静下来……";
+		mes "如果我们让自己";
+		mes "灰心丧气，";
+		mes "对那些孩子毫无好处。";
+		mes "好了，你在塔纳托斯塔";
+		mes "找到瑞安·摩尔的踪迹了吗？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "完全没有。我一直在";
+		mes "四处打听，但没能";
+		mes "得到任何关于";
+		mes "他现在在哪里的线索。";
+		mes "我们怎么可能找到他？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "这可糟了……不仅";
+		mes "失踪的孩子身处危险，";
+		mes "而且瑞安甚至可能";
+		mes "复活撒旦莫罗克。";
+		mes "无论如何，我们都不能";
+		mes "让那种事发生。";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "我知道，我一直在";
+		mes "搜寻孩子们";
+		mes "可能被藏匿的地方，";
+		mes "但那样的地方";
+		mes "实在太多了。我们";
+		mes "真的得想想办——";
+		next;
+		cutin "mocseal_kid01.bmp",255;
+		cutin "mocseal_dan01.bmp",255;
+		mes "[里瑟隆]";
+		mes "嗯？真的很抱歉";
+		mes "打扰你们。我知道";
+		mes "我不该在你们执行任务时";
+		mes "来烦你们，但我无意中";
+		mes "听到了你们的谈话，想问问";
+		mes "你们在找的那个人的事。";
+		next;
+		mes "[蒲公英成员]";
+		mes "你是说……";
+		mes "瑞安·摩尔？";
+		next;
+		mes "[里瑟隆]";
+		mes "对。他穿的是";
+		mes "和你们一样的制服吗？";
+		mes "如果是的话，我想我之前";
+		mes "在这里见过他，他自称";
+		mes "''R.先生''。另外，我想他";
+		mes "可能也是琳的委托人……";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "什么，琳的委托人？！";
+		mes "等等，"+ strcharinfo(0) +"，你还记得";
+		mes "琳的任务是什么吗？";
+		next;
+		switch( select( "嗯，那个……","是保镖，对吧?" ) )
+		{
+			case 1:
+				mes "[基德]";
+				mes "该死！";
+				mes "我也不记得了！";
+				mes "但我有种";
+				mes "不祥的预感！";
+				mes "我们得去和";
+				mes "指挥官谈谈！";
+				set mao_request,24;
+				break;
+				
+			case 2:
+				mes "[基德]";
+				mes "没错！她本该是";
+				mes "一位叫''R.先生''的人的";
+				mes "保镖！";
+				mes "我们怎么会忽略这一点？！";
+				mes "该死，我们得马上";
+				mes "去和指挥官谈谈！";
+				set mao_request,24;
+				break;
+		}
+		next;
+		mes "[里瑟隆]";
+		mes "嘿，嘿……";
+		mes "发生什么事了？";
+		mes "我是不是不该";
+		mes "把那件事告诉你们？";
+		next;
+		mes "[基德]";
+		mes "不，不……";
+		mes "你实际上";
+		mes "帮了大忙！";
+		mes "谢谢你，里瑟隆，";
+		mes "回头我请你喝一杯～";
+		close2;
+	}
+	else if(mao_request == 24)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "现在我想起来了……！";
+		mes "琳本该是";
+		mes "给一个叫''R.先生''的人";
+		mes "当保镖！我们在找";
+		mes "瑞安·摩尔——如果他们是同一个人——那就意味着——";
+		next;
+		mes "[基德]";
+		mes "快，我们得告诉";
+		mes "我们的指挥官";
+		mes "巴尔德斯！我马上就";
+		mes "赶过去，你先尽快";
+		mes "赶到那里！";
+		close2;
+	}
+	else if(mao_request == 25)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "瑞安·摩尔应该在";
+		mes "指挥官房间另一侧的";
+		mes "那个房间里。快去查看！";
+		mes "等我抓到那家伙……";
+		close2;
+	}
+	else if(mao_request == 26 || mao_request == 27)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "梦罗克城堡";
+		mes "出大事了。如果那里";
+		mes "就是封印撒旦莫罗克的地方，";
+		mes "那么恶魔正在";
+		mes "开始复活。我们必须在撒旦莫罗克";
+		mes "进入我们的世界之前阻止它！";
+		close2;
+	}
+	else if(mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "天哪，好险！";
+		mes "我们真的很幸运。";
+		mes "是啊……我们去指挥官房间，";
+		mes "和巴尔德斯再";
+		mes "好好谈谈这件事吧。";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "我还是不敢相信……";
+		mes "那些可怜的、可怜的孩子……";
+		emotion ET_SCRATCH, playerattached();
+		close2;
+	}
+	else if(mao_request > 102 && mao_request < 126)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嘿，你是……";
+		mes "你是琳的搭档，";
+		mes "对吧？祝你和她";
+		mes "合作顺利——她";
+		mes "可能相当专横。";
+		close2;
+	}
+	else
+	{
+		cutin "mocseal_kid01.bmp",1;
+		mes "[基德]";
+		mes "该死，我觉得";
+		mes "我们都失败了。我能";
+		mes "理解琳的感受。";
+		mes "不过，我讨厌";
+		mes "袖手旁观地干等着……";
+		close2;
+	}
+	cutin "mocseal_kid01.bmp",255;
+	cutin "mocseal_dan01.bmp",255;
+	end;
+}
+
+que_job01,89,85,5	script	蒲公英成员	880,{
+
+	if(checkweight(12112,1) != 1)
+	{
+		mes "^3355FF等一下！";
+		mes "你现在携带的";
+		mes "东西太多了。";
+		mes "请先使用卡普拉服务";
+		mes "存放一些物品";
+		mes "之后再回来吧。^000000";
+		close;
+	}
+	if (mao_request == 124)
+	{
+		mes "[蒲公英成员]";
+		mes "嘿、嘿……！";
+		mes "你感觉到了吗？";
+		mes "那股极其黑暗的力量";
+		mes "令人毛骨悚然的";
+		mes "震动……";
+		next;
+		mes "[基德]";
+		mes "有大事要发生了……";
+		mes "你得去召集";
+		mes "蒲公英的";
+		mes "其他成员，我也得去";
+		mes "联系我公会里的所有人！";
+		next;
+		mes "[蒲公英成员]";
+		mes "让我走，我能感觉到";
+		mes "梦罗克城堡";
+		mes "出事了！我们";
+		mes "必须马上过去！";
+		close2;
+	}
+	else if(mao_request < 3 || (mao_request > 102 && mao_request < 124))
+	{
+		mes "[蒲公英成员]";
+		mes "你听说过";
+		mes "蒲公英组织吗？";
+		next;
+		switch( select( "听说过","没有" ) )
+		{
+			case 1:
+				mes "[蒲公英成员]";
+				mes "啊，你已经了解";
+				mes "我们了？我感到很惭愧……";
+				mes "我们让瑞安·摩尔绑架了";
+				mes "托付给我们照顾的孩子们。";
+				mes "我不知道我们";
+				mes "能否原谅自己。";
+				close2;
+				break;
+				
+			case 2:
+				mes "[蒲公英成员]";
+				mes "你真的没听说过？";
+				mes "嗯，我想我们";
+				mes "不是一个很有名或";
+				mes "很光鲜的团体。基本上，";
+				mes "我们是一个致力于改善公共福利的非营利组织。";
+				next;
+				mes "[蒲公英成员]";
+				mes "我们志愿清扫街道，";
+				mes "为低收入家庭修缮房屋，";
+				mes "甚至还运营过";
+				mes "一家托儿所。";
+				mes "然而，瑞安·摩尔绑架了所有托付给我们的孩子……";
+				next;
+				mes "[蒲公英成员]";
+				mes "我只能想象";
+				mes "那些可怜的孩子";
+				mes "正在经历怎样的痛苦。";
+				mes "我希望我们能尽快救出他们！";
+				close2;
+				break;
+		}
+	}
+	else if(mao_request == 3)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "啊，你就是和基德";
+		mes "一起执行";
+		mes "这次任务的人？";
+		mes "我是你们的委托人，";
+		mes "蒲公英组织的代表。";
+		next;
+		mes "[蒲公英成员]";
+		mes "如果你还不知道的话，";
+		mes "我们是一个公益团体，";
+		mes "从事大量的志愿工作。";
+		mes "然而，我们的一个项目，";
+		mes "一家儿童托儿所，";
+		mes "被一位瑞安·摩尔先生毁掉了。";
+		next;
+		mes "[蒲公英成员]";
+		mes "他做的事太可怕了：";
+		mes "瑞安·摩尔绑架了";
+		mes "我们托儿所";
+		mes "所有的孩子！我们不禁";
+		mes "感到自责，我们正在";
+		mes "竭尽全力寻找他们……";
+		next;
+		mes "[蒲公英成员]";
+		mes "然而，我们组织的人";
+		mes "没有能力找到他，";
+		mes "更不用说对付这个";
+		mes "危险的人物了。";
+		mes "这就是为什么";
+		mes "我们在这件事上请求你的帮助。";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "孩子们就是这样";
+		mes "失踪的？";
+		mes "嗯。根据瑞安·摩尔的";
+		mes "档案，他更像是";
+		mes "一位学者或学究，";
+		mes "而不是危险的绑架犯……";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "是的，根据我们";
+		mes "交给你的档案，";
+		mes "他看起来确实";
+		mes "人畜无害，但我不认为";
+		mes "瑞安·摩尔是一个";
+		mes "我们可以小觑的人。";
+		next;
+		mes "^3355FF蒲公英组织的代表";
+		mes "从衣领下取出";
+		mes "一个项链吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地";
+		mes "低声念了几句。^000000";
+		set mao_request,4;
+		close2;
+	}
+	else if(mao_request == 4)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "我们只知道";
+		mes "瑞安·摩尔最后一次";
+		mes "被人看到，是在";
+		mes "调查梦罗克周围的遗迹。";
+		mes "眼下，我建议你计划和基德一起行动。";
+		next;
+		mes "^3355FF蒲公英组织的代表";
+		mes "从衣领下取出";
+		mes "一个项链吊坠，";
+		mes "把它贴在额头上，";
+		mes "然后飞快地";
+		mes "低声念了几句。^000000";
+		close2;
+	}
+	else if(mao_request > 4 && mao_request < 8)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "你现在要走了吗？";
+		mes "我希望你能";
+		mes "抓住瑞安·摩尔，";
+		mes "救出那些";
+		mes "可怜的孩子。只有恶魔";
+		mes "才会堕落到绑架的地步……";
+		close2;
+	}
+	else if(mao_request == 8)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "这么说你找到了";
+		mes "某种关于瑞安";
+		mes "可能在哪里的线索？";
+		mes "我也觉得这听起来";
+		mes "像是孤注一掷，但我们必须";
+		mes "尝试一切可能的办法！";
+		close2;
+	}
+	else if(mao_request == 9)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "瑞安似乎一直在";
+		mes "进行某种非常";
+		mes "古怪的研究。";
+		mes "''梦罗克的四个方向''";
+		mes "会是什么意思呢？";
+		mes "它怎么可能有意义呢？";
+		close2;
+	}
+	else if(mao_request == 10)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "这么说你真的要去";
+		mes "查看梦罗克的";
+		mes "四个方向了……";
+		mes "梦罗克有什么能";
+		mes "引起瑞安·摩尔的兴趣呢？";
+		mes "也许他不只是个绑架犯……";
+		close2;
+	}
+	else if(mao_request == 11)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "你找到了一个";
+		mes "风形状的纹章？啊，基德";
+		mes "提到他发现了一个";
+		mes "蕴含地属性力量的";
+		mes "元素纹章。你应该";
+		mes "和他分享你的发现……";
+		close2;
+	}
+	else if(mao_request > 11 && mao_request < 16)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "我不明白这些";
+		mes "隐藏在梦罗克的";
+		mes "元素纹章装置";
+		mes "有什么如此重要。";
+		mes "瑞安·摩尔可能在策划什么……？";
+		close2;
+	}
+	else if(mao_request == 16)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "发生了那种事？";
+		mes "我真不敢相信那位历史学家";
+		mes "会那样做，基德。你";
+		mes "有没有解释你为什么";
+		mes "需要和他谈谈，";
+		mes "让他知道事情很紧急？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "见鬼，当然有……！";
+		mes "嗯，你知道的。";
+		mes "用我一贯的方式……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "我刚稳定完";
+		mes "那些元素纹章回来。";
+		mes "等等，";
+		mes "发生什么事了吗？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "我不确定……";
+		mes "基德不知为何";
+		mes "看起来非常沮丧。";
+		mes "我猜一定是";
+		mes "他去拜访那位历史学家时";
+		mes "发生了什么事。";
+		set mao_request,17;
+		close2;
+	}
+	else if(mao_request == 17)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "为什么梦罗克";
+		mes "当地的历史学家";
+		mes "会拒绝见基德呢？";
+		mes "也许他没有完全";
+		mes "理解这次任务的重要性？";
+		mes "真奇怪……";
+		close2;
+	}
+	else if(mao_request == 18)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "我们找到瑞安·摩尔的";
+		mes "线索实在太少了，";
+		mes "这完全令人沮丧。";
+		mes "我知道我们别无选择，";
+		mes "但我担心死了，";
+		mes "惦记着那些被绑架的孩子……";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "别那么";
+		mes "担心。我们只要";
+		mes "做我们一贯做的事：";
+		mes "竭尽全力。我只希望";
+		mes "这次能够奏效。";
+		close2;
+	}
+	else if(mao_request == 19)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "哦，你回来了？";
+		mes "你和历史学家";
+		mes "谈过了吗？嘿，你不在的时候，";
+		mes "我一直在";
+		mes "享用这些酒～";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "对了，你喝的";
+		mes "那是什么？";
+		next;
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "哦，这个？";
+		mes "这是热带的苏克拉特。";
+		mes "相信我，很好喝。";
+		mes "来，我请你喝一杯。";
+		mes "老板！再给我来一杯";
+		mes "热带的苏克拉特！";
+		next;
+		mes "[老板]";
+		mes "好了，好了～";
+		mes "马上就来。";
+		mes "给你，慢慢享用。";
+		mes "拿着。";
+		set mao_request,20;
+		getitem 12112,1;
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "嘿，那个待会儿再喝。";
+		mes "你弄清楚历史学家";
+		mes "为什么拒绝";
+		mes "见我了吗？给我汇报～";
+		close2;
+	}
+	else if(mao_request == 20)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "热带的苏克拉特";
+		mes "是不是很好喝？我真不敢相信";
+		mes "刺客们随时都能";
+		mes "享用这种酒～";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "别忘了";
+		mes "我们还有任务";
+		mes "要完成！来吧，";
+		mes "现在给我汇报。";
+		mes "你到底了解到了什么？";
+		close2;
+	}
+	else if(mao_request == 21)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "瑞安·摩尔……";
+		mes "失踪的孩子……";
+		mes "撒旦莫罗克和塔纳托斯塔。";
+		mes "它们不可能";
+		mes "都以某种方式联系在一起，对吧？";
+		close2;
+	}
+	else if(mao_request == 22)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "我希望你能";
+		mes "在塔纳托斯塔";
+		mes "找到瑞安·摩尔。";
+		mes "不过，那是个公共场所，";
+		mes "所以我认为他不会";
+		mes "在那里逗留太久。祝你好运……";
+		close2;
+	}
+	else if(mao_request == 23)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "那个恶魔……";
+		mes "这么说他绑架孩子";
+		mes "是为了——为了";
+		mes "牺牲他们？！这……";
+		mes "简直无法想象。";
+		mes "全都是为了复活某个死去的恶魔？他为什么要那样做？！";
+		close2;
+	}
+	else if(mao_request == 24)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "瑞安·摩尔绑架了";
+		mes "孩子们来复活";
+		mes "撒旦莫罗克，竟然还有脸";
+		mes "雇佣刺客公会";
+		mes "来保护他？！他真是";
+		mes "一个阴险的幕后主使……";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "被那家伙耍了……";
+		mes "我从来没受过";
+		mes "这样的侮辱！";
+		mes "就这么定了：那个瑞安·摩尔";
+		mes "不配";
+		mes "再呼吸一口气。";
+		close2;
+	}
+	else if(mao_request == 25)
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "我真不敢相信";
+		mes "瑞安·摩尔一直";
+		mes "就在我们眼皮底下……";
+		mes "你知道他现在在哪里吗？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "知道。知道……";
+		mes "别太";
+		mes "激动，他很快";
+		mes "就会到这里。";
+		close2;
+	}
+	else if(mao_request == 26 || mao_request == 27)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "这是个坏消息……";
+		mes "看来瑞安·摩尔";
+		mes "正在举行复活";
+		mes "撒旦莫罗克的仪式。";
+		mes "我们需要去撒旦莫罗克";
+		mes "被封印的梦罗克城堡……";
+		close2;
+	}
+	else if(mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "嗯，我们已经派了";
+		mes "一些人去追捕瑞安，";
+		mes "虽然说实话，我怀疑";
+		mes "他们能不能";
+		mes "抓到他。不过幸运的是，";
+		mes "你看起来没事……";
+		close2;
+	}
+	else if(mao_request > 102 && mao_request < 126)
+	{
+		cutin "mocseal_dan01.bmp",1;
+		mes "[蒲公英成员]";
+		mes "抱歉……";
+		mes "但我现在实在太忙了，";
+		mes "没法和你说话。";
+		mes "这件事需要";
+		mes "我全神贯注！";
+		close2;
+	}
+	else
+	{
+		cutin "mocseal_dan01.bmp",0;
+		mes "[蒲公英成员]";
+		mes "那些可怜的孩子……";
+		mes "我们该怎么";
+		mes "向他们的父母交代？";
+		mes "不过，也许这是";
+		mes "^4D4DFF芙蕾雅^000000的旨意。";
+		next;
+		mes "[蒲公英成员]";
+		mes "他们的死也许";
+		mes "很可怕，但我相信";
+		mes "那些孩子现在";
+		mes "已经安全地在芙蕾雅";
+		mes "慈爱的怀抱里了。";
+		mes "谁能理解";
+		mes "芙蕾雅的神意呢？";
+		next;
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "芙蕾雅……？";
+		mes "我以为这里的大多数人";
+		mes "都向奥丁祈祷。";
+		mes "嗯，";
+		mes "我想这也能";
+		mes "说明一些问题。";
+		close2;
+	}
+	cutin "mocseal_dan01.bmp",255;
+	cutin "mocseal_kid01.bmp",255;
+	end;
+}
+
+yuno_in04,180,106,3	script	看书的女孩	73,{
+
+	if (mao_request == 5)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "打扰一下，可以";
+		mes "问个问题吗？";
+		mes "希望也许";
+		mes "你能帮我个忙。";
+		next;
+		mes "[于妮亚]";
+		mes "诶？哦，对不起，我刚才";
+		mes "看书太入迷了！";
+		mes "那么，呃，你到底";
+		mes "想问我什么？";
+		next;
+		switch( select( "你认识瑞安·摩尔吗?","你在看什么书?" ) )
+		{
+			case 1:
+				mes "[于妮亚]";
+				mes "瑞安·摩尔？";
+				mes "我不认识什么——";
+				mes "哦，你一定是指";
+				mes "R.摩尔先生。是的，";
+				mes "如果他的名字是瑞安的话，";
+				mes "我想我就是认识。";
+				next;
+				mes "[于妮亚]";
+				mes "我是于妮亚，摩尔先生";
+				mes "目前研究项目期间的";
+				mes "临时助手。";
+				mes "不过他一直在研究什么，";
+				mes "我完全摸不着";
+				mes "头脑……";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "太好了，你最后一次";
+				mes "见到他";
+				mes "是什么时候？你看，";
+				mes "我们实际上在找他……";
+				next;
+				mes "[于妮亚]";
+				mes "实际上直到几天前，";
+				mes "我每天都能在图书馆";
+				mes "见到他。就在那时候，";
+				mes "一些奇怪的人";
+				mes "试图抓他，但幸运的是";
+				mes "他成功逃脱了。";
+				next;
+				mes "[于妮亚]";
+				mes "我记得那天";
+				mes "乱成一团，";
+				mes "摩尔先生逃跑的时候";
+				mes "甚至忘了";
+				mes "带上他的文件。";
+				next;
+				switch( select( "文件?","他去哪里了?" ) )
+				{
+					case 1:
+						mes "[于妮亚]";
+						mes "是的，他在跑掉之前";
+						mes "一直在研读";
+						mes "一些历史文件。";
+						mes "那些全是关于历史的，";
+						mes "所以我完全看不懂……";
+						set mao_request,6;
+						close;
+						
+					case 2:
+						mes "[于妮亚]";
+						mes "嗯……我真的";
+						mes "不知道？不过我保存并";
+						mes "整理了他在研究的";
+						mes "那些文件，这样等他";
+						mes "回到图书馆的时候，";
+						mes "文件就准备好了。";
+						set mao_request,6;
+						close;
+				}
+			
+			case 2:
+				mes "[于妮亚]";
+				mes "哦……你知道的。";
+				mes "就是这本小说，";
+				mes "讲一个男孩";
+				mes "成了奴隶，";
+				mes "需要替父母";
+				mes "还债的故事。";
+				mes "但后来，他坠入了爱河……";
+				next;
+				mes "[于妮亚]";
+				mes "而他爱上的";
+				mes "那个女孩？他还";
+				mes "不知道，但她竟然是";
+				mes "黑暗界的黑暗霸主！";
+				mes "至少，我想她是。书里";
+				mes "一直在暗示这一点。";
+				close;
+		}
+	}
+	else if(mao_request == 6)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "我在想，我能不能";
+		mes "看一看";
+		mes "摩尔先生研究的那些……";
+		next;
+		mes "[于妮亚]";
+		mes "嗯，我整理好的文件";
+		mes "大部分已经";
+		mes "交给别人了，但";
+		mes "现在想想，还剩几份";
+		mes "没整理好的文件，";
+		mes "你可以看看。";
+		next;
+		mes "[于妮亚]";
+		mes "实际上，拿走整理好文件的";
+		mes "那个人是代表";
+		mes "摩尔先生来取的。然后，";
+		mes "还没等我问她的名字";
+		mes "或摩尔先生的联系方式，";
+		mes "她就迅速消失了。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "该死！那些信息";
+		mes "本来会非常";
+		mes "有用的！(^333333我最好别让她";
+		mes "知道我实际上是在";
+		mes "追捕瑞安·摩尔^FFFFFF ^333333，也别让她知道他是个绑架犯。^000000)";
+		next;
+		mes "[于妮亚]";
+		mes "希望摩尔先生";
+		mes "没事。哦，你何不";
+		mes "试着读读他桌上的";
+		mes "笔记和日志呢？";
+		mes "那也许会很有帮助。";
+		set mao_request,7;
+		close;
+	}
+	else if(mao_request == 7)
+	{
+		mes "[于妮亚]";
+		mes "摩尔先生的桌子？";
+		mes "上楼去，";
+		mes "在角落里找就是了。";
+		mes "你应该能";
+		mes "很容易就在桌上";
+		mes "找到他的笔记和日志。";
+		close;
+	}
+	else if(mao_request == 105)
+	{
+		mes "[" + strcharinfo(0) + "]";
+		mes "打扰一下，我在找";
+		mes "一位叫于妮亚的小姐？";
+		next;
+		mes "[于妮亚]";
+		mes "哦，就是我！";
+		mes "那么有什么可以帮你？";
+		next;
+		switch( select( "R.先生的文件","你在看什么书?" ) )
+		{
+			case 1:
+				mes "[于妮亚]";
+				mes "R.先生？哦哦……";
+				mes "R.摩尔先生。他……";
+				mes "他没事吧？那些";
+				mes "奇怪的人在朱诺图书馆";
+				mes "袭击他的时候，";
+				mes "我吓坏了！";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "哦，他非常安全。";
+				mes "我们有专业人士";
+				mes "确保他不会出事。";
+				mes "不过是的，他要我来这里";
+				mes "取一些研究文件。你知道这事吗？";
+				next;
+				mes "[于妮亚]";
+				mes "啊，是的，我知道！";
+				mes "我一直在整理";
+				mes "那些文件，";
+				mes "等他回来。";
+				mes "在把文件交给";
+				mes "R.摩尔先生之前，";
+				mes "你想先看一下吗？";
+				next;
+				switch( select( "可以吗?","不用了，谢谢……" ) )
+				{
+					case 1:
+						break;
+					case 2:
+						break;
+				}
+				mes "[于妮亚]";
+				mes "嘿嘿～好吧～";
+				mes "首先你应该确认";
+				mes "你要送的文件";
+				mes "确实是他";
+				mes "需要的，对吧？";
+				set mao_request,106;
+				close;
+			
+			case 2:
+				mes "[于妮亚]";
+				mes "哦……你知道的。就是";
+				mes "这个故事，讲一个被诅咒的";
+				mes "家伙，他在美女面前";
+				mes "会变成胖呆子，";
+				mes "在呆板的女人面前则会变成";
+				mes "苗条英俊的美男子。";
+				next;
+				mes "[于妮亚]";
+				mes "然后他陷入了";
+				mes "一场疯狂的三角恋，现在我";
+				mes "正读到他不得不";
+				mes "同时和一位美女以及一位书呆子女孩";
+				mes "约会的地方。他接下来";
+				mes "会变成什么样子呢……？";
+				close;
+		}
+	}
+	else if(mao_request == 106)
+	{
+		mes "[于妮亚]";
+		mes "好了，这些应该就是";
+		mes "摩尔先生";
+		mes "想看的文件。";
+		mes "快速浏览一遍，";
+		mes "确认一下";
+		mes "我给你的没错。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "我看看这里……";
+		mes "有些句子";
+		mes "被划了横线……啊，这里";
+		mes "还有一些页边笔记。";
+		mes "也许这能告诉我";
+		mes "R.摩尔先生的研究……";
+		next;
+		mes "^4d4dff撒旦莫罗克出现了，";
+		mes "把世界变成了";
+		mes "人间地狱。不知何故，";
+		mes "这只魔物被封印了，";
+		mes "一座城堡和城镇建在了^FFFFFF ^4d4dff它的牢笼之上。这个地方就是梦罗克。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "哇，这实际上";
+		mes "相当有趣。但";
+		mes "我得先做好我的工作。";
+		mes "也许我晚点再问";
+		mes "R.摩尔先生这件事。";
+		mes "嘿，于妮亚，多谢你的帮忙。";
+		next;
+		mes "[于妮亚]";
+		mes "不客气～";
+		mes "哦，还有，见到摩尔先生的时候，";
+		mes "请替我";
+		mes "向他问好，好吗？";
+		set mao_request,107;
+		close;
+	}
+	else
+	{
+		mes "["+ strcharinfo(0) +"]";
+		mes "打扰一下……";
+		mes "你在看";
+		mes "什么书？";
+		next;
+		mes "[于妮亚]";
+		mes "哦……你知道的。";
+		mes "这个故事讲一个女孩";
+		mes "成为了公主。";
+		mes "然后她拥有了一整个";
+		mes "由英俊男孩组成的后宫，你看？但";
+		mes "后来，她遇到了这样一个男孩……";
+		next;
+		mes "[于妮亚]";
+		mes "这个男孩拒绝加入";
+		mes "她的后宫，这实在太讽刺了，";
+		mes "因为他才是她";
+		mes "真正想要的人。虽然世界上";
+		mes "任何其他男孩都会";
+		mes "^FF0000心甘情愿^000000地加入她的后宫。";
+		next;
+		mes "[于妮亚]";
+		mes "总之，我正读到这里——";
+		mes "他——他叫埃克斯托弗——";
+		mes "必须在剑术决斗中击败吉列尔莫伯爵，";
+		mes "赢得骑乘独角兽飞马的";
+		mes "权利。";
+		mes "哦，接下来会发生什么呢？";
+		close;
+	}
+}
+
+yuno_in04,175,129,0	script	笔记本#mao	111,{
+
+	if (mao_request == 7)
+	{
+		if(!.mao_book)
+		{
+			set .mao_book,.mao_book +1;
+			donpcevent "#maobooktimer::OnEnter";
+			mes "^3355FF你发现了一张皱巴巴的纸，";
+			mes "上面写满了潦草的字迹。";
+			mes "显然，这是从摩尔的";
+			mes "日志上撕下来的。^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "糟糕……";
+			mes "我大老远";
+			mes "跑到朱诺来，";
+			mes "就是为了翻垃圾？";
+			next;
+			cutin "mocseal_kid01.bmp",0;
+			mes "[基德]";
+			mes "为了那些";
+			mes "失踪的孩子，我们有责任";
+			mes "筛查每一件";
+			mes "可能的证据，";
+			mes "不管它看起来多么没用！";
+			mes "先别扔掉！";
+			donpcevent "基德#book::OnEnter";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我的天——！";
+			mes "你就这样";
+			mes "凭空冒出来了！";
+			next;
+			mes "[基德]";
+			mes "抱歉。我确实说过";
+			mes "会在朱诺这里";
+			mes "和你碰头。总之，";
+			mes "我们俩来仔细看看";
+			mes "这张从摩尔桌上拿来的纸。";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "……梦罗克……";
+			mes "被召唤……";
+			mes "通过那座塔……？";
+			mes "这笔迹太潦草了，";
+			mes "几乎无法辨认。";
+			mes "你能读出什么吗？";
+			next;
+			mes "[基德]";
+			mes "呃……塔……";
+			mes "普隆德拉……冲击造成了……";
+			mes "沙漠？必须……梦罗克的";
+			mes "四个方向……哦！平衡";
+			mes "梦罗克的四个方向，";
+			mes "以防止一个大恶魔。";
+			next;
+			mes "[基德]";
+			mes "抱歉，我只能读出这些，但这一定很重要：";
+			mes "如果摩尔";
+			mes "花时间把这部分写清楚，";
+			mes "那他一定是打算";
+			mes "去调查";
+			mes "梦罗克的四个方向。";
+			next;
+			mes "[基德]";
+			mes "我不确定这一切";
+			mes "可能意味着什么，但我打算";
+			mes "把他日志的这部分";
+			mes "带在身上。";
+			mes "我在梦罗克";
+			mes "和你碰头。";
+			set mao_request,8;
+			close2;
+			cutin "mocseal_kid01.bmp",255;
+			donpcevent "基德#book::OnInit";
+			donpcevent "#maobooktimer::OnStop";
+			end;
+		}
+		else
+		{
+			mes "^3355FF你发现了一本日志，";
+			mes "里面写满了无法辨认的";
+			mes "潦草字迹。";
+			mes "你不可能";
+			mes "破译里面的内容。^000000";
+			close;
+		}
+	}
+	else if(mao_request > 7)
+	{
+		mes "^3355FF你发现了一本日志，";
+		mes "缺了许多页，";
+		mes "写满了无法辨认的";
+		mes "潦草字迹。你不可能";
+		mes "破译里面";
+		mes "可能写了什么。^000000";
+		close;
+	}
+	else
+	{
+		mes "^3355FF你发现了一本";
+		mes "似乎是某人的研究日志。";
+		mes "眼下最好";
+		mes "不要碰它。^000000";
+		close;
+	}
+
+OnInit:
+	set .mao_book,0;
+	end;
+}
+
+yuno_in04,174,130,5	script	基德#book	884,{
+
+	mes "[基德]";
+	mes "……";
+	mes "……";
+	close;
+	
+OnInit:
+	disablenpc "基德#book";
+	end;
+	
+OnEnter:
+	enablenpc "基德#book";
+	end;
+}
+
+yuno_in04,1,1,1	script	#maobooktimer	-1,{
+
+OnEnter:
+	initnpctimer;
+	end;
+	
+OnStop:
+	donpcevent "笔记本#mao::OnInit";
+	stopnpctimer;
+	
+OnTimer180000:
+	donpcevent "笔记本#mao::OnInit";
+	stopnpctimer;
+}
+
+que_job01,6,79,5	script	琳#stairs	885,{
+
+OnInit:
+	disablenpc "琳#stairs";
+	end;
+	
+OnEnter:
+	enablenpc "琳#stairs";
+	end;
+}
+
+que_job01,8,77,1	script	#linstairs	139,3,3,{
+
+	if (mao_request == 109)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "好了，我们需要";
+		mes "就这次任务";
+		mes "谈一下。";
+		donpcevent "琳#stairs::OnEnter";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "哇啊——！";
+		mes "你就这样";
+		mes "凭空冒出来了！";
+		next;
+		mes "[琳]";
+		mes "吓到你了，抱歉。";
+		mes "我们没时间了，所以";
+		mes "我就开门见山了。";
+		mes "我不信任我们的委托人。";
+		mes "不过，暂时";
+		mes "我们应该照他说的做。";
+		next;
+		mes "[琳]";
+		mes "与此同时，多留个心眼。";
+		mes "如果你发现任何";
+		mes "表明R.先生出于某种原因";
+		mes "没有对我们说实话的迹象，";
+		mes "就告诉我。";
+		mes "我们很快再见。";
+		set mao_request,110;
+		close2;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#stairs::OnInit";
+		end;
+	}
+	else if(mao_request == 115)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "嘿，我得赶在R.先生";
+		mes "听到之前，赶紧和你";
+		mes "说几句……对他，";
+		mes "我不冒任何风险！";
+		donpcevent "琳#stairs::OnEnter";
+		next;
+		mes "[琳]";
+		mes "我试着去拜访我们当地的";
+		mes "历史学家，想多了解一些";
+		mes "R.先生的研究。为此，";
+		mes "我把R.先生独自留在";
+		mes "我们的魔法警戒系统下一小会儿。然而，我有点搞砸了。";
+		next;
+		mes "[琳]";
+		mes "我对那位历史学家";
+		mes "有点恼火，而他";
+		mes "有点被吓到了。现在";
+		mes "他躲在了梦罗克旅馆的";
+		mes "某个地方，我想他";
+		mes "谁也不见。";
+		next;
+		mes "[琳]";
+		mes "我要你找到梦罗克的";
+		mes "历史学家，尽你所能";
+		mes "了解关于撒旦莫罗克、";
+		mes "梦罗克和塔纳托斯塔的事情。";
+		mes "我们需要知道它们";
+		mes "与失踪的孩子有什么联系。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "我想既然他还没";
+		mes "见过我，也许他";
+		mes "会和我谈。好吧，我去。";
+		next;
+		mes "[琳]";
+		mes "太好了，多谢了。";
+		mes "好了，那么我们";
+		mes "回头见。记住，";
+		mes "梦罗克旅馆，好吗？";
+		set mao_request,116;
+		close2;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#stairs::OnInit";
+		end;
+	}
+	else if(mao_request == 117)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[" + strcharinfo(0) + "]";
+		mes "琳、琳……？";
+		mes "你在吗？";
+		donpcevent "琳#stairs::OnEnter";
+		next;
+		mes "[琳]";
+		mes "嗯，我在。";
+		mes "那么，你";
+		mes "找到那位历史学家了吗？";
+		mes "你到底了解到了什么？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯，我只能够";
+		mes "和历史学家的";
+		mes "助手谈。我看看……";
+		mes "我了解到了";
+		mes "这座城市名字的由来……";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "塔纳托斯塔曾被";
+		mes "撒旦莫罗克用来";
+		mes "把他自己的魔物";
+		mes "召唤到我们的世界。";
+		mes "现在，它正在被重建，";
+		mes "尽管那里住着这些";
+		mes "看起来像天使的恶魔……";
+		next;
+		mes "[琳]";
+		mes "哼。真奇怪。";
+		mes "我听说那些";
+		mes "实际上是真正的天使，";
+		mes "出于某种原因";
+		mes "在守护那座塔。嗯。";
+		mes "你还设法了解到了什么？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯，撒旦莫罗克，如果";
+		mes "它存在的话，也许能够";
+		mes "回到我们的世界，";
+		mes "如果封印被";
+		mes "牺牲孩子打破的话……";
+		next;
+		mes "[琳]";
+		mes "这……这听起来";
+		mes "真的很糟，特别是";
+		mes "最近有那么多孩子";
+		mes "从梦罗克失踪。";
+		mes "我们下一步怎么办？";
+		mes "我想我们去和R.先生谈谈。";
+		set mao_request,118;
+		next;
+		mes "[琳]";
+		mes "照这样下去，";
+		mes "他大概会要我们";
+		mes "去调查塔纳托斯塔。";
+		mes "眼下，我们看看他想要什么。";
+		mes "啊，还有，我们在这里谈的一切，一个字也不要说出去。";
+		close2;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#stairs::OnInit";
+		end;
+	}
+	else if(mao_request == 121 && thana_quest > 1)
+	{
+		cutin "mocseal_rin01.bmp",2;
+		mes "[琳]";
+		mes "先向我汇报。";
+		mes "你了解到关于";
+		mes "塔纳托斯塔的什么了吗？";
+		donpcevent "琳#stairs::OnEnter";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "嗯，我找到了一些";
+		mes "关于撒旦莫罗克的古老日志。";
+		mes "它们基本证实了";
+		mes "撒旦莫罗克是真实存在的，";
+		mes "而且被封印在梦罗克城堡下面。";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "雷根贝勒集团";
+		mes "还负责";
+		mes "那座塔的重建工作，";
+		mes "他们最终计划修复";
+		mes "塔的全部十二层。";
+		next;
+		mes "[琳]";
+		mes "他们为什么要做";
+		mes "这么疯狂的事？";
+		mes "如果R.先生真的在";
+		mes "阻止撒旦莫罗克归来，";
+		mes "那么袭击他的人";
+		mes "一定是想复活";
+		mes "撒旦莫罗克……";
+		next;
+		mes "[琳]";
+		mes "但如果他在撒谎，";
+		mes "他才是想把撒旦莫罗克";
+		mes "带入我们世界的人，";
+		mes "那他就被蒲公英组织";
+		mes "通缉……也就是说，他可能就是";
+		mes "基德任务的目标。";
+		next;
+		mes "[琳]";
+		mes "糟了！这可能";
+		mes "真的很糟。我需要";
+		mes "和我们的指挥官巴尔德斯";
+		mes "谈谈这件事。";
+		mes "我去做那件事的时候，";
+		mes "你去看看R.先生。";
+		next;
+		mes "[琳]";
+		mes "巴尔德斯为什么要";
+		mes "接下这两项任务？！";
+		mes "在最坏的情况下，";
+		mes "不得不阻止撒旦莫罗克";
+		mes "回到这个世界的，";
+		mes "可能就是我们……";
+		set mao_request,122;
+		close2;
+		cutin "mocseal_rin01.bmp",255;
+		donpcevent "琳#stairs::OnInit";
+		end;
+	}
+}
+
+moc_fild10,281,148,1	script	异样痕迹#water	111,{
+
+	if (mao_request == 14)
+	{
+		cutin "mocseal_ice01.bmp",2;
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，看起来像是";
+		mes "溅起的水波。^000000";
+		if(countitem(996))
+		{
+			mes "^3355FF你取出一块粗糙之风，";
+			mes "用来对抗纹章的力量。^000000";
+			next;
+			mes "^3355FF纹章对粗糙之风";
+			mes "产生了反应，";
+			mes "两样东西都剧烈地发光，";
+			mes "互相冲突着。^000000";
+			specialeffect EF_BEGINSPELL2;
+			specialeffect EF_BEGINSPELL4;
+			next;
+			cutin "mocseal_ice02.bmp",2;
+			mes "^3355FF突然，纹章喷出";
+			mes "了一些水，水在半空中";
+			mes "迅速蒸发了：看来";
+			mes "风属性中和了";
+			mes "这个纹章的水属性。^000000";
+			specialeffect EF_SPHERE;
+			delitem 996,1;
+			set mao_request,15;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好了……";
+			mes "现在我应该去寻找";
+			mes "隐藏在";
+			mes "梦罗克北边田野的纹章了。";
+			close2;
+		}
+		else
+		{
+			mes "^3355FF你大概需要一块粗糙之风";
+			mes "来对抗它的力量。^000000";
+			close2;
+		}
+	}
+	else if(mao_request > 14 && mao_request < 100)
+	{
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，看起来像是";
+		mes "溅起的水波。^000000";
+		mes "^3355FF不过，你感觉不到";
+		mes "它有什么异常。^000000";
+		cutin "mocseal_ice02.bmp",2;
+		close2;
+	}
+	else if(mao_request == 113)
+	{
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，看起来像是";
+		mes "溅起的水波。^000000";
+		cutin "mocseal_ice02.bmp",2;
+		if (countitem(995))
+		{
+			mes "^3355FF你拿出一块神秘寒冰，";
+			mes "用来增强纹章的力量。^000000";
+			next;
+			cutin "mocseal_ice01.bmp",2;
+			mes "^3355FF纹章与神秘寒冰";
+			mes "产生了共鸣，";
+			mes "空气骤然变冷，";
+			mes "绿洲中的水波";
+			mes "也翻涌起来。^000000";
+			specialeffect EF_BEGINSPELL2;
+			delitem 995,1;
+			set mao_request,114;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好了……";
+			mes "现在我应该去寻找";
+			mes "隐藏在";
+			mes "梦罗克北边田野的纹章了。";
+			close2;
+		}
+		else
+		{
+			mes "^3355FF你大概需要一块";
+			mes "神秘寒冰来增强它的力量。";
+			close2;
+		}
+	}
+	else if(mao_request > 112)
+	{
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，看起来像是";
+		mes "溅起的水波。^000000";
+		cutin "mocseal_ice01.bmp",2;
+		close2;
+	}
+	cutin "mocseal_ice01.bmp",255;
+	cutin "mocseal_ice02.bmp",255;
+	end;
+}
+
+moc_fild19,21,33,1	script	异样痕迹#wind	111,{
+
+	if (mao_request == 10)
+	{
+		cutin "mocseal_wind01.bmp",2;
+		mes "^3355FF你发现了一个闪亮的纹章，";
+		mes "看起来像是";
+		mes "风的符号。当你靠近它时，";
+		mes "你能感觉到风";
+		mes "强烈地吹拂着你的皮肤。^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "这一定就是";
+		mes "瑞安·摩尔那么";
+		mes "感兴趣的东西了。好了，";
+		mes "我最好去把";
+		mes "我在这里的发现告诉基德。";
+		set mao_request,11;
+		close2;
+	}
+	else if(mao_request == 11)
+	{
+		cutin "mocseal_wind01.bmp",2;
+		mes "^3355FF你发现了一个闪亮的纹章，";
+		mes "看起来像是";
+		mes "风的符号。当你靠近它时，";
+		mes "你能感觉到风";
+		mes "强烈地吹拂着你的皮肤。^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "太好了，既然找到了这个，";
+		mes "我真的得告诉";
+		mes "基德。希望他";
+		mes "也找到了类似的东西。";
+		close2;
+	}
+	else if(mao_request == 12)
+	{
+		if(countitem(997))
+		{
+			cutin "mocseal_wind01.bmp",2;
+			mes "^3355FF你发现了一个闪亮的纹章，";
+			mes "看起来像是";
+			mes "风的符号。当你靠近它时，";
+			mes "你能感觉到风";
+			mes "强烈地吹拂着你的皮肤。^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好了，地属性的力量";
+			mes "克制风属性。";
+			mes "我只要拿出这块";
+			mes "伟大自然，然后……诶？";
+			next;
+			mes "^3355FF风属性纹章";
+			mes "迅速对";
+			mes "伟大自然石产生了反应。^000000";
+			specialeffect EF_BEGINSPELL4;
+			specialeffect EF_BEGINSPELL5;
+			next;
+			cutin "mocseal_wind02.bmp",2;
+			mes "^3355FF风和地";
+			mes "互相中和了，";
+			mes "使这一地区的";
+			mes "风属性力量稳定了下来。^000000";
+			specialeffect EF_SPHERE;
+			delitem 997,1;
+			set mao_request,13;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "太好了，既然这个纹章";
+			mes "处理完了，我得去";
+			mes "找下一个了。我看看，";
+			mes "我得去找基德已经";
+			mes "找到的南边那个。";
+			close2;
+		}
+		else
+		{
+			cutin "mocseal_wind01.bmp",2;
+			mes "^3355FF你发现了一个闪亮的纹章，";
+			mes "看起来像是";
+			mes "风的符号。当你靠近它时，";
+			mes "你能感觉到风";
+			mes "强烈地吹拂着你的皮肤。^000000";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "风，风，风……";
+			mes "我用什么来克制";
+			mes "风属性呢？是……";
+			next;
+			switch( select( "火","冰","风","地" ) )
+			{
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "火……？不，那个……";
+					mes "风和火";
+					mes "算是相辅相成的，不是吗？";
+					close2;
+					break;
+
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "冰……？不……";
+					mes "风的力量，也就是";
+					mes "雷电的力量，胜过";
+					mes "冰和水的力量……";
+					close2;
+					break;
+
+				case 3:
+					mes "[" + strcharinfo(0) + "]";
+					mes "我想到了……！";
+					mes "我要用风";
+					mes "对抗风！不……";
+					mes "别荒唐了。";
+					close2;
+					break;
+
+				case 4:
+					mes "[" + strcharinfo(0) + "]";
+					mes "地……？";
+					mes "就是这个！我需要";
+					mes "一块伟大自然，";
+					mes "用在这个风属性纹章上！";
+					close2;
+					break;
+			}
+		}
+	}
+	else if (mao_request > 12 && mao_request < 100)
+	{
+		mes "^3355FF你发现了一个闪亮的纹章，";
+		mes "看起来像是";
+		mes "风的符号。不过，你觉得";
+		mes "它并不特别";
+		mes "值得调查。^000000";
+		cutin "mocseal_wind02.bmp",2;
+		close2;
+	}
+	else if(mao_request == 110)
+	{
+		cutin "mocseal_wind02.bmp",2;
+		mes "^3355FF你发现了一个闪亮的纹章，";
+		mes "看起来像是";
+		mes "风的符号。不过，它周围的";
+		mes "气流似乎很微弱。^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "这一定就是我要找的";
+		mes "东西了。它看起来像是";
+		mes "风属性的神器，但这里的风";
+		mes "没有应有的那么强。我想我可能需要";
+		mes "带一块^4D4DFF粗糙之风^000000来这里……";
+		set mao_request,111;
+		close2;
+	}
+	else if(mao_request == 111)
+	{
+		if (countitem(996))
+		{
+			cutin "mocseal_wind02.bmp",2;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我看看……";
+			mes "希望这块";
+			mes "粗糙之风";
+			mes "能奏效。哇。嗯……";
+			mes "有什么反应了……";
+			next;
+			mes "^3355FF元素纹章";
+			mes "迅速对粗糙之风";
+			mes "产生了反应，";
+			mes "纹章变得更加闪亮，";
+			mes "风也刮得更强了。^000000";
+			specialeffect EF_BEGINSPELL4;
+			delitem 996,1;
+			set mao_request,112;
+			next;
+			cutin "mocseal_wind01.bmp",2;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好吧，我想就这样了。";
+			mes "现在我得去和琳谈谈，";
+			mes "弄清楚梦罗克城外";
+			mes "是否还有";
+			mes "更多这样的东西。";
+			close2;
+		}
+		else
+		{
+			mes "^3355FF你需要带一块";
+			mes "粗糙之风来激活";
+			mes "这个风属性纹章。^000000";
+			cutin "mocseal_wind02.bmp",2;
+			close2;
+		}
+	}
+	else if(mao_request > 111)
+	{
+		mes "^3355FF你发现了一个闪亮的纹章，";
+		mes "看起来像是";
+		mes "风的符号。当你靠近它时，";
+		mes "你能感觉到风";
+		mes "强烈地吹拂着你的皮肤。^000000";
+		cutin "mocseal_wind01.bmp",2;
+		close2;
+	}
+	cutin "mocseal_wind01.bmp",255;
+	cutin "mocseal_wind02.bmp",255;
+	end;
+}
+
+moc_fild12,280,36,1	script	异样痕迹#earth	111,{
+
+	if (mao_request == 13)
+	{
+		if (countitem(994))
+		{
+			mes "^3355FF你发现了一个微光闪烁的";
+			mes "纹章，象征着";
+			mes "地的力量。^000000";
+			cutin "mocseal_earth01.bmp",2;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我看看……";
+			mes "我应该用这块";
+			mes "火焰之心";
+			mes "来稳定这个纹章。";
+			next;
+			mes "^3355FF你刚一拿出";
+			mes "火焰之心，石头";
+			mes "和纹章就开始";
+			mes "剧烈发光，仿佛它们的";
+			mes "力量在互相冲突。^000000";
+			specialeffect EF_BEGINSPELL5;
+			specialeffect EF_BEGINSPELL3;
+			next;
+			mes "^3355FF火焰之心随即";
+			mes "化作一阵炽热的蒸汽";
+			mes "迅速消失了。";
+			mes "这个纹章的力量";
+			mes "现在已经稳定了。^000000";
+			cutin "mocseal_earth02.bmp",2;
+			specialeffect EF_SPHERE;
+			delitem 994,1;
+			set mao_request,14;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "这倒简单。";
+			mes "好了，现在我应该";
+			mes "试着去找";
+			mes "隐藏在梦罗克东边的纹章了。";
+			close2;
+		}
+		else
+		{
+			mes "^3355FF你发现了一个微光闪烁的";
+			mes "纹章，象征着";
+			mes "地的力量。^000000";
+			cutin "mocseal_earth01.bmp",2;
+			next;
+			mes "^3355FF要对抗";
+			mes "纹章的地属性力量，";
+			mes "你大概需要";
+			mes "一块火焰之心石。^000000";
+			close2;
+		}
+	}
+	else if(mao_request > 13 && mao_request < 100)
+	{
+		mes "^3355FF你发现了一个微光闪烁的";
+		mes "纹章，象征着";
+		mes "地的力量。";
+		mes "不过，你感觉不到";
+		mes "它有什么异常。";
+		cutin "mocseal_earth02.bmp",2;
+		close2;
+	}
+	else if(mao_request == 112)
+	{
+		mes "^3355FF你发现了一个微光闪烁的";
+		mes "纹章，象征着";
+		mes "地的力量。";
+		mes "你需要一块伟大自然石";
+		mes "来增强它的力量。^000000";
+		cutin "mocseal_earth02.bmp",2;
+		next;
+		if (countitem(997))
+		{
+			mes "^3355FF你拿出一块";
+			mes "伟大自然，大地";
+			mes "随之震颤，";
+			mes "沙石朝着纹章";
+			mes "流去。^000000";
+			specialeffect EF_BEGINSPELL5;
+			delitem 997,1;
+			set mao_request,113;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "太好了，我想真的";
+			mes "奏效了！现在，我应该";
+			mes "试着去找隐藏在";
+			mes "梦罗克东边的纹章了。";
+			cutin "mocseal_earth01.bmp",2;
+			close2;
+		}
+		else
+		{
+			mes "[" + strcharinfo(0) + "]";
+			mes "下次我来这里的时候，";
+			mes "最好准备好";
+			mes "一块伟大自然……";
+			close2;
+		}
+	}
+	else if(mao_request > 111)
+	{
+		mes "^3355FF你发现了一个微光闪烁的";
+		mes "纹章，象征着";
+		mes "地的力量。^000000";
+		cutin "mocseal_earth01.bmp",2;
+		close2;
+	}
+	cutin "mocseal_earth01.bmp",255;
+	cutin "mocseal_earth02.bmp",255;
+}
+
+moc_fild07,192,166,1	script	异样痕迹#fire	111,{
+
+	if (mao_request == 15)
+	{
+		if(countitem(995))
+		{
+			mes "^3355FF你发现了一个闪闪发光的";
+			mes "纹章，象征着火。^000000";
+			cutin "mocseal_fire01.bmp",2;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "这个纹章一定";
+			mes "充满了火属性。";
+			mes "我最好看看";
+			mes "这块神秘寒冰";
+			mes "能不能稳定它。";
+			next;
+			mes "^3355FF你刚一拿出";
+			mes "神秘寒冰，";
+			mes "它就开始随着光芒脉动，";
+			mes "纹章也越发光亮";
+			mes "起来。^000000";
+			specialeffect EF_BEGINSPELL3;
+			specialeffect EF_BEGINSPELL2;
+			next;
+			mes "^3355FF该地区的空气";
+			mes "骤然变冷，";
+			mes "你的神秘寒冰";
+			mes "化作一阵冰冷的蒸汽";
+			mes "消散了。^000000";
+			cutin "mocseal_fire02.bmp",2;
+			specialeffect EF_SPHERE;
+			delitem 995,1;
+			set mao_request,16;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "看来我在这里的工作";
+			mes "完成了。现在，我最好";
+			mes "回去向基德报告。";
+			close2;
+		}
+		else
+		{
+			cutin "mocseal_fire01.bmp",2;
+			mes "^3355FF你发现了一个闪闪发光的";
+			mes "纹章，象征着火。";
+			mes "你需要一块神秘寒冰";
+			mes "来稳定它的力量。^000000";
+			close2;
+		}
+	}
+	else if(mao_request > 15 && mao_request < 100)
+	{
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，象征着火。";
+		mes "不过，你觉得眼下";
+		mes "它不值得调查。^000000";
+		cutin "mocseal_fire02.bmp",2;
+		close2;
+	}
+	else if(mao_request == 114)
+	{
+		cutin "mocseal_fire02.bmp",2;
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，象征着火。";
+		if (countitem(994))
+		{
+			mes "你需要一块火焰之心";
+			mes "来增强它的力量。^000000";
+			next;
+			mes "^3355FF你拿出一块";
+			mes "火焰之心，纹章";
+			mes "开始闪耀，";
+			mes "你周围的空气热了起来。^000000";
+			specialeffect EF_BEGINSPELL3;
+			cutin "mocseal_fire01.bmp",2;
+			delitem 994,1;
+			set mao_request,115;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "好了，这是最后一个";
+			mes "元素纹章了。";
+			mes "现在我最好回去";
+			mes "向琳报告。";
+			close2;
+		}
+		else
+		{
+			mes "你需要一块火焰之心";
+			mes "来增强它的力量。^000000";
+			close2;
+		}
+	}
+	else if(mao_request > 113)
+	{
+		mes "^3355FF你发现了一个闪闪发光的";
+		mes "纹章，象征着火。^000000";
+		cutin "mocseal_fire01.bmp",2;
+		close2;
+	}
+	cutin "mocseal_fire01.bmp",255;
+	cutin "mocseal_fire02.bmp",255;
+}
+
+morocc_in,46,125,5	script	瑟菲特	729,{
+
+	if (mao_request > 18 && mao_request < 100)
+	{
+		mes "[瑟菲特]";
+		mes "希望我提供的信息";
+		mes "能对你需要的";
+		mes "事情有所帮助。";
+		mes "梦罗克的历史";
+		mes "比大多数人意识到的";
+		mes "要丰富得多，你不觉得吗？";
+		close;
+	}
+	else if(mao_request > 116)
+	{
+		mes "[瑟菲特]";
+		mes "希望我提供的信息";
+		mes "能对你需要的";
+		mes "事情有所帮助。";
+		mes "梦罗克的历史";
+		mes "比大多数人意识到的";
+		mes "要丰富得多，你不觉得吗？";
+		next;
+		mes "[瑟菲特]";
+		mes "等我有时间的时候，";
+		mes "我真想去调查";
+		mes "那座塔纳托斯塔。";
+		mes "我有种感觉，在那里";
+		mes "能学到很多东西～";
+		close;
+	}
+	else if(mao_request == 18)
+	{
+		mes "[瑟菲特]";
+		mes "哦，我们这里平时";
+		mes "很少有客人来。";
+		mes "你是来见我们";
+		mes "当地的历史学家的吗？";
+		mes "他现在很忙，所以";
+		mes "希望你能晚点再来。";
+		next;
+		mes "[瑟菲特]";
+		mes "不过，说实话，";
+		mes "他现在有点";
+		mes "躲在被子里不敢出来。";
+		mes "有个刺客来";
+		mes "打听一些信息，";
+		mes "把他吓坏了……";
+		next;
+		mes "[瑟菲特]";
+		mes "实际上，那还挺好笑的。";
+		mes "那个人走进来，";
+		mes "亮出他的匕首，宣称";
+		mes "他需要一些";
+		mes "重要信息。我想我的老板";
+		mes "被他吓得不轻。";
+		next;
+		mes "[瑟菲特]";
+		mes "如果事情真的很重要，";
+		mes "那么如果你的问题";
+		mes "是关于梦罗克";
+		mes "最古老的历史和传说，";
+		mes "我也许能";
+		mes "回答你。";
+		next;
+		mes "^3355FF你向瑟菲特询问了";
+		mes "梦罗克周围的四个元素纹章、";
+		mes "它们的意义，";
+		mes "以及瑞安·摩尔的事。你还";
+		mes "告诉她，你已经";
+		mes "稳定了纹章的力量。^000000";
+		next;
+		mes "[瑟菲特]";
+		mes "摩尔……摩尔……";
+		mes "他的工作听起来";
+		mes "非常重要，所以我很惊讶";
+		mes "我从来没听说过他。";
+		mes "我本想问问我的老板，";
+		mes "但现在不能打扰他。啊，好吧……";
+		next;
+		mes "[瑟菲特]";
+		mes "哦，首先，知道";
+		mes "那些纹章的人";
+		mes "并不多。不过，你稳定";
+		mes "它们确实是立了大功。";
+		mes "否则，梦罗克城堡下面的";
+		mes "封印就会破裂。";
+		next;
+		mes "[瑟菲特]";
+		mes "梦罗克城堡下面的封印";
+		mes "实际上阻止着撒旦莫罗克";
+		mes "进入我们的世界。";
+		mes "如果他回来了，他可能会";
+		mes "重演过去的大破坏";
+		next;
+		mes "[瑟菲特]";
+		mes "撒旦莫罗克";
+		mes "在人间作祟的时候，";
+		mes "他把塔纳托斯塔";
+		mes "作为他的力量据点。";
+		mes "在那里，他召唤出";
+		mes "数不清的手下。";
+		next;
+		mes "[瑟菲特]";
+		mes "那座塔已经荒废多年了，";
+		mes "但最近有某个公司";
+		mes "开始重建它，";
+		mes "尽管恶魔，嗯，";
+		mes "伪装成天使的恶魔，";
+		mes "仍然在那地方自由出没。";
+		next;
+		mes "[瑟菲特]";
+		mes "撒旦莫罗克也许";
+		mes "拥有难以想象的力量，";
+		mes "但要让他回到";
+		mes "我们的世界，";
+		mes "需要费很大的工夫。";
+		mes "我看看，你可以";
+		mes "破坏梦罗克的封印……";
+		next;
+		mes "[瑟菲特]";
+		mes "还有……哦，天哪。";
+		mes "很久以前，真的有人";
+		mes "牺牲孩子，试图复活";
+		mes "撒旦莫罗克，但失败了。";
+		mes "在这里梦罗克失踪的孩子——";
+		mes "你、你不会是想说……";
+		next;
+		mes "[瑟菲特]";
+		mes "但谁又真的知道呢？";
+		mes "我是说，我们有关于";
+		mes "撒旦莫罗克的历史记载，";
+		mes "但也许那只是个传说。";
+		mes "除此之外，我们没有";
+		mes "他真实存在的证据。";
+		next;
+		mes "[瑟菲特]";
+		mes "……嗯，我是说，除了";
+		mes "那些元素纹章之外。";
+		mes "话又说回来，也许它们只是";
+		mes "调节这个地区的元素，";
+		mes "让人们能够";
+		mes "在这片沙漠里生活而已。";
+		set mao_request,19;
+		close;
+	}
+	else if(mao_request == 116)
+	{
+		mes "[瑟菲特]";
+		mes "哦，我们这里平时";
+		mes "很少有客人来。";
+		mes "你是来见我们";
+		mes "当地的历史学家的吗？";
+		mes "他现在很忙，所以";
+		mes "希望你能晚点再来。";
+		next;
+		mes "[瑟菲特]";
+		mes "不过，说实话，";
+		mes "他现在有点";
+		mes "躲在被子里不敢出来。";
+		mes "有个刺客来";
+		mes "打听一些信息，";
+		mes "但她把他吓坏了……";
+		next;
+		mes "[瑟菲特]";
+		mes "如果事情真的很重要，";
+		mes "那么如果你的问题";
+		mes "是关于梦罗克";
+		mes "最古老的历史和传说，";
+		mes "我也许能";
+		mes "回答你。";
+		next;
+		mes "^3355FF你向瑟菲特询问了";
+		mes "任何与撒旦莫罗克";
+		mes "和塔纳托斯塔相关的信息，";
+		mes "特别是它们的意义";
+		mes "以及它们之间";
+		mes "可能存在的联系。^000000";
+		next;
+		mes "^3355FF你还告诉了她";
+		mes "摩尔的研究，";
+		mes "以及隐藏在梦罗克各地、";
+		mes "已经被你平衡了的";
+		mes "元素纹章。^000000";
+		next;
+		mes "[瑟菲特]";
+		mes "摩尔……摩尔……";
+		mes "他的工作听起来";
+		mes "非常重要，所以我很惊讶";
+		mes "我从来没听说过他。";
+		mes "我本想问问我的老板，";
+		mes "但现在不能打扰他。啊，好吧……";
+		next;
+		mes "[瑟菲特]";
+		mes "哦，首先，知道";
+		mes "那些纹章的人";
+		mes "并不多。不过，你稳定";
+		mes "它们确实是立了大功。";
+		mes "否则，梦罗克城堡下面的";
+		mes "封印就会破裂。";
+		next;
+		mes "[瑟菲特]";
+		mes "梦罗克城堡下面的封印";
+		mes "实际上阻止着撒旦莫罗克";
+		mes "进入我们的世界。";
+		mes "如果他回来了，他可能会";
+		mes "重演过去";
+		mes "造成的大破坏。";
+		next;
+		mes "[瑟菲特]";
+		mes "你问起塔纳托斯塔，";
+		mes "真是巧。撒旦莫罗克";
+		mes "在我们的世界作祟的时候，";
+		mes "他用那个地方";
+		mes "召唤出成群的手下，";
+		mes "来威胁我们人类。";
+		next;
+		mes "[瑟菲特]";
+		mes "那座塔已经荒废多年了，";
+		mes "但最近有某个公司";
+		mes "开始重建它，";
+		mes "尽管恶魔，嗯，";
+		mes "伪装成天使的恶魔，";
+		mes "仍然在那地方自由出没。";
+		next;
+		mes "[瑟菲特]";
+		mes "撒旦莫罗克也许";
+		mes "拥有难以想象的力量，";
+		mes "但要让他回到";
+		mes "我们的世界，";
+		mes "需要费很大的工夫。";
+		mes "我看看，你可以";
+		mes "破坏梦罗克的封印……";
+		next;
+		mes "[瑟菲特]";
+		mes "还有……哦，天哪。";
+		mes "很久以前，真的有人";
+		mes "牺牲孩子，试图复活";
+		mes "撒旦莫罗克，但失败了。";
+		mes "在这里梦罗克失踪的孩子——";
+		mes "你、你不会是想说……";
+		next;
+		mes "[瑟菲特]";
+		mes "但谁又真的知道呢？";
+		mes "我是说，我们有关于";
+		mes "撒旦莫罗克的历史记载，";
+		mes "但也许那只是个传说。";
+		mes "除此之外，我们没有";
+		mes "他真实存在的证据。";
+		next;
+		mes "[瑟菲特]";
+		mes "……嗯，我是说，除了";
+		mes "那些元素纹章之外。";
+		mes "话又说回来，也许它们只是";
+		mes "调节这个地区的元素，";
+		mes "让人们能够";
+		mes "在这片沙漠里生活而已。";
+		set mao_request,117;
+		close;
+	}
+	else
+	{
+		mes "[瑟菲特]";
+		mes "哦，我们这里平时";
+		mes "很少有客人来。";
+		mes "你是来见我们";
+		mes "当地的历史学家的吗？";
+		mes "他现在很忙，所以";
+		mes "希望你能晚点再来。";
+		next;
+		mes "[瑟菲特]";
+		mes "最近，我一直在";
+		mes "翻阅一些";
+		mes "古老的历史记载，";
+		mes "了解到关于一只叫";
+		mes "撒旦莫罗克的魔物的事情。";
+		next;
+		mes "[瑟菲特]";
+		mes "根据传说，";
+		mes "他被封印在梦罗克";
+		mes "城堡下面，我们的城镇";
+		mes "就是以他命名的。";
+		mes "听起来相当骇人，";
+		mes "你不觉得吗？怪得不像是真的……";
+		close;
+	}
+}
+
+que_job01,15,8,1	script	#mao_table	139,1,1,{
+
+OnTouch:
+	if (mao_request == 24)
+	{
+		mes "[巴尔德斯]";
+		mes "这是个严重的消息……";
+		mes "我本来就怀疑";
+		mes "R.先生，但我从没";
+		mes "想到他竟敢";
+		mes "如此大胆……";
+		next;
+		mes "[基德]";
+		mes "该死！我知道，因为";
+		mes "事先不知道真相，";
+		mes "你不得不同时接下";
+		mes "R.先生和";
+		mes "蒲公英组织的委托，但琳";
+		mes "现在知道这件事了吗？！";
+		next;
+		mes "[巴尔德斯]";
+		mes "我想还不知道。";
+		mes "直到刚才你告诉我，";
+		mes "我才知道R.先生才是";
+		mes "真正的绑架犯。";
+		mes "但为了复活撒旦莫罗克";
+		mes "而牺牲他们……这已经超越了邪恶。";
+		next;
+		mes "[巴尔德斯]";
+		mes "R.先生……如果他就是";
+		mes "瑞安·摩尔，那么你可以在";
+		mes "另一个房间找到他。";
+		mes "去审问他，";
+		mes "证实你了解到的一切。";
+		next;
+		mes "[巴尔德斯]";
+		mes "来……";
+		mes "这边走。";
+		next;
+		donpcevent "巴尔德斯#2::OnInit";
+		mes "[基德]";
+		mes "事情变得";
+		mes "太严重了。巴尔德斯，";
+		mes "等等，我和你一起去！";
+		mes ""+ strcharinfo(0) +"，快点，快！";
+		set mao_request,25;
+		close2;
+		donpcevent "基德#2::OnInit";
+		end;
+	}
+	else if(mao_request == 123)
+	{
+		mes "[琳]";
+		mes "老板，你从一开始";
+		mes "就知道了吗？！";
+		mes "你早就知道";
+		mes "我该保护的人，";
+		mes "就是基德";
+		mes "要找的那个人？！";
+		next;
+		mes "[巴尔德斯]";
+		mes "琳，冷静点。是的，";
+		mes "我从一开始";
+		mes "就有这样的怀疑。";
+		mes "不过，我确实不知道";
+		mes "该相信R.先生";
+		mes "还是蒲公英组织。";
+		next;
+		mes "[巴尔德斯]";
+		mes "既然双方都声称";
+		mes "能帮助失踪的孩子，";
+		mes "我就赌了一把。";
+		mes "眼下，最好的做法";
+		mes "是问问R.先生的袭击者";
+		mes "是不是来自蒲公英……";
+		next;
+		mes "[琳]";
+		mes "好吧……我真不敢";
+		mes "相信……R.摩尔先生……";
+		mes "基德要追捕的";
+		mes "瑞安·摩尔……";
+		mes "这也太巧了……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "琳！抱歉";
+		mes "打断一下，但R.先生";
+		mes "不见了……我不知道";
+		mes "他在哪里！";
+		next;
+		mes "[琳]";
+		mes "什么？！你说什——";
+		mes "到、到底怎么回事？！";
+		mes "我、我脑子里";
+		mes "这声音是什么？！";
+		mapannounce "que_job01","……血液……是灵魂的……货币……",1,0x7B68EE;
+		next;
+		mes "[琳]";
+		mes "哦，不……";
+		mes "这就是";
+		mes "我最害怕的事……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "怎么……";
+		mes "怎么回事？";
+		mapannounce "que_job01","……我们……需要……纯洁之血……",1,0x7B68EE;
+		next;
+		mes "[琳]";
+		mes "我想……";
+		mes "我想这是";
+		mes "复活撒旦莫罗克的";
+		mes "仪式！R.先生一定是";
+		mes "去那里阻止他们了……";
+		mes "或者是去加入他们了！";
+		next;
+		mes "[巴尔德斯]";
+		mes "琳，去召集";
+		mes "公会里的所有人！";
+		mes "而你，去找到";
+		mes "那个怪声的";
+		mes "源头！快，没时间了！";
+		mapannounce "que_job01","……赐予……我们……永生……撒旦莫罗克……",1,0x7B68EE;
+		next;
+		mes "[琳]";
+		mes "是，长官！";
+		next;
+		donpcevent "琳#2::OnInit";
+		mes "[巴尔德斯]";
+		mes "无论付出";
+		mes "什么代价，我们都不能";
+		mes "让那个仪式完成……！";
+		mes "如果撒旦莫罗克";
+		mes "真的存在，我们就不能";
+		mes "让他进入我们的世界！";
+		set mao_request,124;
+		close2;
+		warp "que_job01",11,4;
+		end;
+	}
+
+OnInit:
+	disablenpc "#mao_table";
+	end;
+	
+OnEnter:
+	enablenpc "#mao_table";
+	end;
+}
+
+que_job01,147,55,1	script	#mao_empty	139,1,1,{
+
+OnTouch:
+	if (mao_request == 122)
+	{
+		mes "^333333……不……这";
+		mes "不可……能……^000000";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "啊？！那听起来";
+		mes "像是琳的声音……";
+		mes "他们在哪里？";
+		mes "他们去哪里了？！";
+		set mao_request,123;
+		close;
+	}
+
+OnInit:
+	disablenpc "#mao_empty";
+	end;
+	
+OnEnter:
+	enablenpc "#mao_empty";
+	end;
+}
+
+que_job01,144,57,1	script	#Rabsent	139,1,1,{
+
+OnTouch:
+	if(mao_request == 25)
+	{
+		mes "[基德]";
+		mes "瑞安·摩尔……！";
+		mes "他、他在哪里？！";
+		next;
+		mes "[巴尔德斯]";
+		mes "搞什么鬼？";
+		mes "他应该就在";
+		mes "这个房间里。等等，";
+		mes "他怎么可能穿过";
+		mes "我们的警戒魔法……？";
+		next;
+		mes "[基德]";
+		mes "琳在哪里？";
+		mes "琳？！琳，你";
+		mes "在哪里？回答我！";
+		mapannounce "que_job01","……血液……是灵魂的……货币……",1,0x7B68EE;
+		next;
+		mes "[基德]";
+		mes "天哪！那、那是";
+		mes "什么——那声音";
+		mes "是从哪里来的？！";
+		mes "我的头好像";
+		mes "要裂开了！";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "怎么……";
+		mes "怎么回事？";
+		mapannounce "que_job01","……我们……需要……更圣洁的……血……仪式……",1,0x7B68EE;
+		next;
+		mes "[基德]";
+		mes "该死，一定是他！";
+		mes "他现在就要";
+		mes "复活撒旦莫罗克了！";
+		mes "琳在哪里？！";
+		mes "她出什么事了？";
+		next;
+		mes "[巴尔德斯]";
+		mes ""+ strcharinfo(0) +"，我去召集";
+		mes "刺客公会的";
+		mes "所有成员。你和基德";
+		mes "去找到那个声音的源头，";
+		mes "阻止这一切！";
+		mapannounce "que_job01","……以撒旦莫罗克之名赐福……赐予我……永生！",1,0x7B68EE;
+		next;
+		mes "[基德]";
+		mes "是，长官！";
+		next;
+		donpcevent "基德#3::OnInit";
+		mes "[巴尔德斯]";
+		mes "我只希望";
+		mes "我们还来得及";
+		mes "阻止这一切";
+		mes "发生。快，";
+		mes "世界的命运";
+		mes "悬于一线！";
+		set mao_request,26;
+		close2;
+		warp "que_job01",144,61;
+		end;
+	}
+OnInit:
+	disablenpc "#Rabsent";
+	end;
+	
+OnEnter:
+	enablenpc "#Rabsent";
+	end;
+}
+
+moc_castle,40,20,3	script	男人	849,{
+
+	if ((mao_request > 27 && mao_request < 31) || (mao_request > 125 && mao_request < 129))
+	{
+		mes "^3355FF你发现了一具";
+		mes "死者的尸体。^000000";
+		emotion ET_SCRATCH, playerattached();
+		close;
+	}
+	mes "^3355FF你发现一个男人";
+		mes "躺在地上。他似乎";
+		mes "奄奄一息，";
+		mes "正在神志不清地呓语。^000000";
+	if (mao_request == 26 || mao_request == 27)
+	{
+		next;
+		mes "[男人]";
+		mes "咯～！新、新鲜……";
+		mes "血！嘿嘿嘿～";
+		mes "为、为了仪式，我、我要";
+		mes "献、献上……我自己……";
+		mes "作为祭品！";
+		mes "^333333*咳嗽咳嗽！*^000000";
+		if(!$mao_gate1)
+		{
+			close2;
+			warp "que_job02",14,182;
+			set $mao_gate1,1;
+			end;
+		}
+	}
+	else if(mao_request == 124 || mao_request == 125)
+	{
+		next;
+		mes "[男人]";
+		mes "咯～！新、新鲜……";
+		mes "血！嘿嘿嘿～";
+		mes "为、为了仪式，我、我要";
+		mes "献、献上……我自己……";
+		mes "作为祭品！";
+		mes "^333333*咳嗽咳嗽！*^000000";
+		if(!$mao_gate2)
+		{
+			close2;
+			warp "que_job03",14,182;
+			set $mao_gate2,1;
+			end;
+		}
+	}
+	close;
+
+OnInit:
+	set $mao_gate1,0;
+	set $mao_gate2,0;
+	end;
+}
+
+que_job02,14,182,1	script	#maogate1	139,1,1,{
+
+OnEnter:
+	enablenpc "#maogate1";
+	end;
+	
+OnStop:
+	disablenpc "#maogate1";
+	end;
+	
+OnTouch:
+	if (mao_request == 26 || mao_request == 27)
+	{
+		initnpctimer;
+		disablenpc "#maogate1";
+		donpcevent "#maogate1_talk1::OnEnter";
+	}
+	else
+	{
+		mes "^3355FF你将被";
+		mes "传送到外面。^000000";
+		close2;
+		warp "morocc",100,100;
+		set $mao_gate1,0;
+	}
+	end;
+
+OnTimer580000:
+	mapannounce "que_job02","……需要……更多鲜血……在……门关闭之前……",1,0xDDA0DD;
+	end;
+
+OnTimer590000:
+	mapannounce "que_job02","……可恶……这次……不能再失败……必须复活……",1,0xDDA0DD;
+	end;
+
+OnTimer595000:
+	mapwarp "que_job02","morocc",160,129;
+	end;
+
+OnTimer596000:
+	donpcevent "#maogate1_talk1::OnInit";
+	donpcevent "#maogate1_talk2::OnEnter";
+	donpcevent "#maogate1_talk3::OnEnter";
+	donpcevent "#maogate1_talk4::OnEnter";
+	donpcevent "#maogate1_talk5::OnEnter";
+	donpcevent "#maogate1_talk6::OnEnter";
+	donpcevent "#maogate1_talk7::OnEnter";
+	donpcevent "基德#maogate1_1::OnInit";
+	donpcevent "基德#maogate1_2::OnInit";
+	donpcevent "琳#maogate1_1::OnInit";
+	donpcevent "琳#maogate1_2::OnInit";
+	donpcevent "R#maogate1::OnInit";
+	donpcevent "#maogate1_end::OnStop";
+	donpcevent "#maogate1_end::OnInit";
+	donpcevent "#maogate1_end2::OnInit";
+	donpcevent "蒲公英#maogate1_1::OnInit";
+	donpcevent "蒲公英#maogate1_2::OnInit";
+	donpcevent "蒲公英#maogate1_3::OnInit";
+	donpcevent "蒲公英#maogate1_4::OnInit";
+	donpcevent "#maogate1_setting::OnEnter";
+	donpcevent "蒲公英成员#1_bt::OnInit";
+	donpcevent "#maogate1_battle::OnStop2";
+	donpcevent "#maogate1_battle::OnEnter";
+	end;
+
+OnTimer597000:
+	enablenpc "#maogate1";
+	set $mao_gate1,0;
+	stopnpctimer;
+	end;
+}
+
+que_job02,14,181,1	script	#maogate1_talk1	139,2,2,{
+
+OnInit:
+	disablenpc "#maogate1_talk1";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk1";
+	end;
+	
+OnTouch:
+	mes "^333333神圣……的……血之……";
+	mes "仪式……我很自豪……";
+	mes "能成、成为……最后一个……";
+	mes "祭品……嘿嘿嘿……^000000";
+	next;
+	mes "^3355FF那个怪异声音的";
+	mes "疯狂笑声";
+	mes "在你脑海中回荡，";
+	mes "你在一个陌生的地方醒来。^000000";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "我在哪里……？";
+	mes "这是什么地方？";
+	mes "啊，我的头疼，";
+	mes "但我必须阻止";
+	mes "撒旦莫罗克的复活……";
+	mapannounce "que_job02","……血液……是灵魂的……货币……",1,0x7B68EE;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "又是那个声音！";
+	mes "基德？巴尔德斯？";
+	mes "你们有谁在吗？";
+	mes "该死，看来只有我一个人。";
+	mes "我想我得独自";
+	mes "阻止这个诡异的仪式了！";
+	close2;
+	disablenpc "#maogate1_talk1";
+	end;
+}
+
+que_job02,17,150,1	script	#maogate1_talk2	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk2";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk2";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "……今晚的月亮";
+	mes "是不是很美？";
+	next;
+	mes "[?????]";
+	mes "……但我想知道……";
+	mes "为什么满月的时候";
+	mes "守卫会多一倍？";
+	next;
+	mes "[???????]";
+	mes "月亮好红……";
+	mes "是啊，已经一年了……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "怎么回事？";
+	mes "谁在那里？基德？";
+	mes "巴尔德斯？有人在吗？";
+	mes "刚才那是什么？";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk2";
+	end;
+}
+
+que_job02,16,97,1	script	#maogate1_talk3	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk3";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk3";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "这么说，你是说";
+	mes "你不知道这座城镇";
+	mes "名字的由来？嗯，那是";
+	mes "一个有点吓人的故事……";
+	next;
+	mes "[?????]";
+	mes "一个邪恶的恶魔入侵了";
+	mes "我们的世界，从黑暗中";
+	mes "召唤出成群的手下。";
+	mes "然而，他被一位";
+	mes "传奇英雄击败，";
+	mes "封印在了这座城堡下面。";
+	next;
+	mes "[???????]";
+	mes "但撒旦莫罗克的";
+	mes "仇恨并没有随时间";
+	mes "消退。如果你从这里看满月，";
+	mes "它会被撒旦莫罗克的";
+	mes "怒火染成红色……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "……我一直听到";
+	mes "一些声音！这些声音";
+	mes "到底是从哪里来的？！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk3";
+	end;
+}
+
+que_job02,44,33,1	script	#maogate1_talk4	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk4";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk4";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "哼。";
+	mes "开始了。";
+	next;
+	mes "[?????]";
+	mes "那股烟……？";
+	mes "每个满月的时候，";
+	mes "那边到底";
+	mes "在搞什么？";
+	next;
+	mes "[???????]";
+	mes "嗯……";
+	mes "谁知道呢？";
+	next;
+	mes "[????]";
+	mes "老、老板……！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	mapannounce "que_job02","……更多……给我……更多鲜血……",1,0xDDA0DD;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这些声音……";
+	mes "它们就像是";
+	mes "过去发生在这里";
+	mes "梦罗克城堡的";
+	mes "某种记忆……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk4";
+	end;
+}
+
+que_job02,93,21,1	script	#maogate1_talk5	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk5";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk5";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "大人，我们的调查";
+	mes "有发现。每";
+	mes "15天，就有一辆马车";
+	mes "秘密地把大约20到30个";
+	mes "孩子运进城堡。";
+	mes "然而，他们从来没有出来过……";
+	next;
+	mes "[?????]";
+	mes "你是认真的……？";
+	mes "他们到底";
+	mes "在里面干什么？！";
+	mes "走吧，我们去看看……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk5";
+	end;
+}
+
+que_job02,93,21,1	script	#maogate1_talk6	139,3,3,{
+
+OnStop:
+	disablenpc "#maogate1_talk6";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk6";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "怎、怎么";
+	mes "这么吵？";
+	next;
+	mes "[?????]";
+	mes "抱歉，大人。";
+	mes "没什么，但";
+	mes "我们会尽快";
+	mes "处理好的。";
+	mes "闭嘴，孩子们。安静！";
+	next;
+	mes "……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[???????]";
+	mes "这里好热……";
+	mes "我爸爸在哪里？我不……";
+	mes "我不想去塔纳托斯……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[??????]";
+	mes "确保没有任何东西";
+	mes "妨碍我们的计划。";
+	mes "任何东西……";
+	mapannounce "que_job02","……血液……是灵魂的货币……还差六个……",1,0x7B68EE;
+	next;
+	mes "[????]";
+	mes "我不想";
+	mes "戴这些锁链！";
+	mes "求、求求你，把它们拿掉！";
+	mes "对不起，对不起，对不——";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	mapannounce "que_job02","……撒旦莫罗克……需要……更新鲜的血……",1,0x7B68EE;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "我受不了了……";
+	mes "我再也听不";
+	mes "下去了。";
+	mes "瑞安·摩尔";
+	mes "到底在哪里？！";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk6";
+	end;
+}
+
+que_job02,180,144,1	script	#maogate1_talk7	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk7";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk7";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "天哪，怎么";
+	mes "回事？守卫";
+	mes "都去哪里了？";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[????]";
+	mes "什么？！怎么会有人";
+	mes "做这么愚蠢、";
+	mes "这么鲁莽的事，";
+	mes "比如复活撒旦莫罗克？！";
+	next;
+	mes "[????]";
+	mes "为什么……？";
+	mes "你不可能";
+	mes "理解的。现在去死吧……！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "那声音是从";
+	mes "哪里来的？等等……";
+	mes "那是……那正在";
+	mes "发生！求求你……";
+	mes "别让我来不及！";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate1_talk7";
+	end;
+}
+
+que_job02,77,179,1	script	#maogate1_talk8	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_talk8";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_talk8";
+	end;
+	
+OnStop2:
+	stopnpctimer;
+	end;
+	
+OnTouch:
+	initnpctimer;
+	disablenpc "#maogate1_talk8";
+	end;
+	
+OnTimer1000:
+	mapannounce "que_job02","……血液……是灵魂的……货币……",1,0x7B68EE;
+	end;
+
+OnTimer4000:
+	mapannounce "que_job02","……献上六个灵魂……换来七个……",1,0x7B68EE;
+	end;
+
+OnTimer8000:
+	mapannounce "que_job02","……血液……是灵魂的……货币……",1,0x7B68EE;
+	end;
+
+OnTimer12000:
+	mapannounce "que_job02","……作为回报，我献上……最诚挚……最圣洁的……奉献……",1,0x7B68EE;
+	end;
+
+OnTimer16000:
+	mapannounce "que_job02","……让血之旋风、尸骸之山……与山岳比高！",1,0x7B68EE;
+	end;
+
+OnTimer20000:
+	mapannounce "que_job02","……哈……哈……哈哈哈哈哈哈！",1,0x7B68EE;
+	end;
+
+OnTimer20100:
+	stopnpctimer;
+	end;
+}
+
+que_job02,73,82,1	script	#maogate1_battle	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_battle";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_battle";
+	end;
+
+OnStop2:
+	stopnpctimer;
+	killmonster "que_job02","#maogate1_battle::OnMyMobDead";
+	end;
+
+OnTouch:
+	initnpctimer;
+	emotion ET_KEK, playerattached();
+	disablenpc "#maogate1_battle";
+	end;
+
+OnTimer500:
+	monster "que_job02",71,85,"木乃伊",1041,1,"#maogate1_battle::OnMyMobDead";
+	monster "que_job02",79,85,"木乃伊",1041,1,"#maogate1_battle::OnMyMobDead";
+	monster "que_job02",71,80,"木乃伊",1041,1,"#maogate1_battle::OnMyMobDead";
+	monster "que_job02",79,80,"木乃伊",1041,1,"#maogate1_battle::OnMyMobDead";
+	end;
+
+OnTimer5000:
+	mapannounce "que_job02","小心！",1,0x90EE90;
+	donpcevent "蒲公英成员#1_bt::OnEnter";
+	end;
+
+OnTimer6000:
+	specialeffect EF_LORD;
+	end;
+
+OnTimer6500:
+	killmonster "que_job02","#maogate1_battle::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+que_job02,66,85,5	script	蒲公英成员#1_bt	880,{
+
+	if(mao_request == 26 || mao_request == 27)
+	{
+		mes "[蒲公英成员]";
+		mes "嘿……你";
+		mes "没事吧？";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "谢谢……";
+		mes "我想你刚";
+		mes "救了我一命。";
+		mes "怎么回事？就你一个人吗？";
+		next;
+		mes "[蒲公英成员]";
+		mes "花了一些时间，但我";
+		mes "召集了尽可能多的";
+		mes "蒲公英成员。看这情形，";
+		mes "就算撒旦莫罗克";
+		mes "差点被解开封印，";
+		mes "我也不会惊讶……";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "等等……";
+		mes "基德呢？";
+		mes "他去哪里了？";
+		next;
+		mes "[蒲公英成员]";
+		mes "基德？他在我们";
+		mes "任何人之前";
+		mes "就已经进去了。";
+		mes "听起来里面";
+		mes "相当危险……";
+		next;
+		mes "[基德的声音]";
+		mes "……我说了——！";
+		mes "……那是……";
+		mes "所以我应该——！";
+		emotion ET_SURPRISE;
+		next;
+		mes "[蒲公英成员]";
+		mes "对，又是他。";
+		mes "既然你醒了，";
+		mes "我最好做点什么。";
+		mes "你留在这里恢复体力，";
+		mes "我进去";
+		mes "帮他……";
+		close2;
+		emotion ET_SURPRISE, playerattached();
+		set mao_request,27;
+		disablenpc "蒲公英成员#1_bt";
+		end;
+	}
+
+OnInit:
+	disablenpc "蒲公英成员#1_bt";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英成员#1_bt";
+	end;
+}
+
+que_job02,87,83,1	script	#maogate1_setting	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate1_setting";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_setting";
+	end;
+
+OnTouch:
+	if (mao_request == 27)
+	{
+		donpcevent "#maogate1_end::OnEnter";
+		donpcevent "基德#maogate1_1::OnEnter";
+		donpcevent "琳#maogate1_1::OnEnter";
+		donpcevent "R#maogate1::OnEnter";
+		donpcevent "蒲公英#maogate1_1::OnEnter";
+		donpcevent "蒲公英#maogate1_2::OnEnter";
+		end;
+	}
+}
+
+que_job02,117,101,1	script	#maogate1_end	139,3,3,{
+
+OnInit:
+	disablenpc "#maogate1_end";
+	end;
+
+OnReset:
+	killmonster "que_job02","#maogate1_end::OnMyMobDead";
+	end;
+
+OnStop:
+	killmonster "que_job02","#maogate1_end::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_end";
+	end;
+
+OnTouch:
+	donpcevent "#maogate1_setting::OnStop";
+	mes "[" + strcharinfo(0) + "]";
+	mes "嘿，这里";
+	mes "怎么回事？基德！琳？";
+	mes "那、那个人是谁？";
+	mes "难道他可能是……";
+	emotion ET_SURPRISE, playerattached();
+	next;
+	cutin "mocseal_kid01.bmp",0;
+	mes "[基德]";
+	mes ""+ strcharinfo(0) +"……";
+	mes "退后，别靠近";
+	mes "我！琳，你为什么";
+	mes "要这样做！放弃你的";
+	mes "任务吧，你不知道";
+	mes "你的委托人到底是谁！";
+	next;
+	cutin "mocseal_rin01.bmp",2;
+	mes "[琳]";
+	mes "你在说什么啊，";
+	mes "基德？我刚发现";
+	mes "你为之效力的";
+	mes "蒲公英组织，";
+	mes "一直在追捕";
+	mes "摩尔先生……";
+	emotion ET_KEK, getnpcid(0, "琳#maogate1_1");
+	next;
+	cutin "mocseal_kid01.bmp",0;
+	mes "[基德]";
+	mes "是的，他们当然";
+	mes "在追捕他。你的委托人，";
+	mes "R.摩尔先生，正是";
+	mes "瑞安·摩尔——而他";
+	mes "计划复活撒旦莫罗克！";
+	next;
+	cutin "mocseal_rin01.bmp",2;
+	mes "[琳]";
+	mes "什么？！但这怎么";
+	mes "可能？我和摩尔";
+	mes "在一起好几天了！";
+	mes "如果他是绑架孩子的人，";
+	mes "那又是谁在扣押他们？";
+	next;
+	mes "[琳]";
+	mes "不，你应该把";
+	mes "你所知道的关于";
+	mes "你自己的委托人——";
+	mes "蒲公英组织的一切";
+	mes "都告诉我……";
+	emotion ET_SCRATCH, getnpcid(0, "R#maogate1");
+	next;
+	cutin "mocseal_rin01.bmp",255;
+	cutin "mocseal_kid01.bmp",255;
+	mes "[R.摩尔]";
+	mes "谢谢你的";
+	mes "关心，琳。但真的……";
+	mes "没有必要。嘿嘿……";
+	mes "我再也不用担心蒲公英组织了。";
+	next;
+	mes "[R.摩尔]";
+	mes "准备好你自己，";
+	mes "接受这场";
+	mes "献祭吧……琳……";
+	mes "你的血将被用来";
+	mes "复活撒旦莫罗克！";
+	donpcevent "R#maogate1::OnSpell";
+	emotion ET_SURPRISE, getnpcid(0, "基德#maogate1_1");
+	emotion ET_SURPRISE, playerattached();
+	next;
+	mes "[基德]";
+	mes "小心！";
+	donpcevent "基德#maogate1_1::OnInit";
+	donpcevent "琳#maogate1_1::OnInit";
+	donpcevent "基德#maogate1_2::OnEnter";
+	donpcevent "琳#maogate1_2::OnEnter";
+	donpcevent "#maogate1_end2::OnSpell";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "基德！琳！";
+	next;
+	mes "[琳]";
+	mes "为、为什么……？";
+	mes "摩尔先生，你说过";
+	mes "你在试图";
+	mes "阻止撒旦莫罗克的复活……";
+	next;
+	mes "[基德]";
+	mes "你看不出来吗……？";
+	mes "他在撒谎！他";
+	mes "骗了我们所有人！";
+	next;
+	mes "[R.摩尔]";
+	mes "这么说……";
+	mes "你们要反抗？";
+	mes "好吧，你们让我";
+	mes "别无选择。感受";
+	mes "撒旦莫罗克的力量吧！";
+	emotion ET_KIK, getnpcid(0, "R#maogate1");
+	next;
+	donpcevent "R#maogate1::OnInit";
+	initnpctimer;
+	monster "que_job02",121,118,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",121,115,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",121,112,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",107,106,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",111,106,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",115,106,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",135,105,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",132,105,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	monster "que_job02",128,105,"木乃伊",1041,1,"#maogate1_end::OnMyMobDead";
+	mes "[" + strcharinfo(0) + "]";
+	mes "混蛋，你在";
+	mes "干什么？";
+	mes "我的天，魔、魔物！";
+	next;
+	mes "[琳]";
+	mes "该死！";
+	mes "放开我！";
+	mes "我要亲自";
+	mes "去追摩尔！";
+	set mao_request,28;
+	close2;
+	donpcevent "琳#maogate1_2::OnInit";
+	disablenpc "#maogate1_end";
+	end;
+
+OnTimer500:
+	mapannounce "que_job02","我来支援你！",1,0x90EE90;
+	donpcevent "蒲公英#maogate1_3::OnEnter";
+	donpcevent "蒲公英#maogate1_4::OnEnter";
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate1_1");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate1_2");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate1_3");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate1_4");
+	end;
+
+OnTimer3000:
+	donpcevent "蒲公英#maogate1_3::OnSpell";
+	donpcevent "蒲公英#maogate1_2::OnSpell";
+	end;
+
+OnTimer4000:
+	donpcevent "蒲公英#maogate1_4::OnSpell";
+	donpcevent "蒲公英#maogate1_2::OnSpell2";
+	end;
+
+OnTimer5000:
+	killmonster "que_job02","#maogate1_end::OnMyMobDead";
+	end;
+
+OnTimer5500:
+	set $@maogate1mobs,3;
+	monster "que_job02",128,105,"木乃伊",1041,1,"基德#maogate1_2::OnMyMobDead";
+	monster "que_job02",115,106,"木乃伊",1041,1,"基德#maogate1_2::OnMyMobDead";
+	monster "que_job02",121,112,"木乃伊",1041,1,"基德#maogate1_2::OnMyMobDead";
+	end;
+
+OnTimer7000:
+	mapannounce "que_job02","蒲公英们，别让瑞安·摩尔跑了！",1,0x90EE90;
+	end;
+
+OnTimer10000:
+	mapannounce "que_job02","基德，剩下的就交给你了……！",1,0x90EE90;
+	donpcevent "蒲公英#maogate1_4::OnInit";
+	donpcevent "蒲公英#maogate1_3::OnInit";
+	donpcevent "蒲公英#maogate1_2::OnInit";
+	donpcevent "蒲公英#maogate1_1::OnInit";
+	stopnpctimer;
+	end;
+	
+OnMyMobDead:
+	end;
+}
+
+que_job02,116,108,5	script	基德#maogate1_1	884,{
+
+OnInit:
+	disablenpc "基德#maogate1_1";
+	end;
+
+OnEnter:
+	enablenpc "基德#maogate1_1";
+	end;
+}
+
+que_job02,126,103,5	script	基德#maogate1_2	884,{
+
+	end;
+
+OnInit:
+	disablenpc "基德#maogate1_2";
+	end;
+
+OnEnter:
+	enablenpc "基德#maogate1_2";
+	end;
+
+OnMyMobDead:
+	set $@maogate1mobs,$@maogate1mobs -1;
+	if($@maogate1mobs < 1) donpcevent "#maogate1_end2::OnEnter";
+	end;
+}
+
+que_job02,121,106,1	script	琳#maogate1_1	885,{
+
+OnInit:
+	disablenpc "琳#maogate1_1";
+	end;
+
+OnEnter:
+	enablenpc "琳#maogate1_1";
+	end;
+}
+
+que_job02,127,101,1	script	琳#maogate1_2	885,{
+
+OnInit:
+	disablenpc "琳#maogate1_2";
+	end;
+
+OnEnter:
+	enablenpc "琳#maogate1_2";
+	end;
+}
+
+que_job02,124,109,3	script	R#maogate1	880,{
+
+OnInit:
+	disablenpc "R#maogate1";
+	end;
+
+OnEnter:
+	enablenpc "R#maogate1";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+}
+
+que_job02,113,107,5	script	蒲公英#maogate1_1	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate1_1";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate1_1";
+	end;
+}
+
+que_job02,121,100,7	script	蒲公英#maogate1_2	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate1_2";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate1_2";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+
+OnSpell2:
+	specialeffect EF_LORD;
+	end;
+}
+
+que_job02,122,98,1	script	蒲公英#maogate1_3	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate1_3";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate1_3";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+}
+
+que_job02,122,111,5	script	蒲公英#maogate1_4	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate1_4";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate1_4";
+	end;
+
+OnSpell:
+	specialeffect EF_LORD;
+	end;
+}
+
+que_job02,122,106,1	script	#maogate1_end2	139,15,15,{
+
+OnInit:
+	disablenpc "#maogate1_end2";
+	end;
+
+OnEnter:
+	enablenpc "#maogate1_end2";
+	end;
+
+OnTouch:
+	if (mao_request == 28)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "" + strcharinfo(0) + "！";
+		mes "嘿，你没事吧？";
+		mes "来吧，我们";
+		mes "先回去，刺客公会的";
+		mes "其他成员";
+		mes "会处理这里的……";
+		set mao_request,29;
+		close2;
+		mapwarp "que_job02","que_job01",59,49;
+		donpcevent "#maogate1_talk1::OnInit";
+		donpcevent "#maogate1_talk2::OnEnter";
+		donpcevent "#maogate1_talk3::OnEnter";
+		donpcevent "#maogate1_talk4::OnEnter";
+		donpcevent "#maogate1_talk5::OnEnter";
+		donpcevent "#maogate1_talk6::OnEnter";
+		donpcevent "#maogate1_talk7::OnEnter";
+		donpcevent "基德#maogate1_1::OnInit";
+		donpcevent "基德#maogate1_2::OnInit";
+		donpcevent "琳#maogate1_1::OnInit";
+		donpcevent "琳#maogate1_2::OnInit";
+		donpcevent "R#maogate1::OnInit";
+		donpcevent "#maogate1_end::OnStop";
+		donpcevent "#maogate1_end::OnInit";
+		donpcevent "#maogate1_end2::OnInit";
+		donpcevent "蒲公英#maogate1_1::OnInit";
+		donpcevent "蒲公英#maogate1_2::OnInit";
+		donpcevent "蒲公英#maogate1_3::OnInit";
+		donpcevent "蒲公英#maogate1_4::OnInit";
+		donpcevent "#maogate1_setting::OnEnter";
+		donpcevent "蒲公英成员#1_bt::OnInit";
+		donpcevent "#maogate1_battle::OnStop";
+		donpcevent "#maogate1_battle::OnEnter";
+		enablenpc "#maogate1";
+		set $mao_gate1,0;
+		end;
+	}
+}
+
+que_job03,14,182,1	script	#maogate2	139,1,1,{
+
+OnEnter:
+	enablenpc "#maogate2";
+	end;
+	
+OnStop:
+	disablenpc "#maogate2";
+	end;
+	
+OnTouch:
+	if (mao_request == 124 || mao_request == 125)
+	{
+		initnpctimer;
+		disablenpc "#maogate2";
+		donpcevent "#maogate2_talk1::OnEnter";
+	}
+	else
+	{
+		mes "^3355FF你将被";
+		mes "传送到外面。^000000";
+		close2;
+		warp "morocc",100,100;
+		set $mao_gate2,0;
+	}
+	end;
+
+OnTimer580000:
+	mapannounce "que_job02","……需要……更多鲜血……在……门关闭之前……",1,0xDDA0DD;
+	end;
+
+OnTimer590000:
+	mapannounce "que_job02","……可恶……这次……不能再失败……必须复活……",1,0xDDA0DD;
+	end;
+
+OnTimer595000:
+	mapwarp "que_job02","morocc",160,129;
+	end;
+
+OnTimer596000:
+	donpcevent "#maogate2_talk1::OnInit";
+	donpcevent "#maogate2_talk2::OnEnter";
+	donpcevent "#maogate2_talk3::OnEnter";
+	donpcevent "#maogate2_talk4::OnEnter";
+	donpcevent "#maogate2_talk5::OnEnter";
+	donpcevent "#maogate2_talk6::OnEnter";
+	donpcevent "#maogate2_talk7::OnEnter";
+	donpcevent "基德#maogate2_1::OnInit";
+	donpcevent "基德#maogate2_2::OnInit";
+	donpcevent "琳#maogate2_1::OnInit";
+	donpcevent "琳#maogate2_2::OnInit";
+	donpcevent "R#maogate2::OnInit";
+	donpcevent "#maogate2_end::OnStop";
+	donpcevent "#maogate2_end::OnInit";
+	donpcevent "#maogate2_end2::OnInit";
+	donpcevent "蒲公英#maogate2_1::OnInit";
+	donpcevent "蒲公英#maogate2_2::OnInit";
+	donpcevent "蒲公英#maogate2_3::OnInit";
+	donpcevent "蒲公英#maogate2_4::OnInit";
+	donpcevent "#maogate2_setting::OnEnter";
+	donpcevent "蒲公英成员#2_bt::OnInit";
+	donpcevent "#maogate2_battle::OnStop2";
+	donpcevent "#maogate2_battle::OnEnter";
+	end;
+
+OnTimer597000:
+	enablenpc "#maogate2";
+	set $mao_gate2,0;
+	stopnpctimer;
+	end;
+}
+
+que_job03,14,181,1	script	#maogate2_talk1	139,2,2,{
+
+OnInit:
+	disablenpc "#maogate2_talk1";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk1";
+	end;
+	
+OnTouch:
+	mes "^333333神圣……的……血之……";
+	mes "仪式……我很自豪……";
+	mes "能成、成为……最后一个……";
+	mes "祭品……嘿嘿嘿……^000000";
+	next;
+	mes "^3355FF那个怪异声音的";
+	mes "疯狂笑声";
+	mes "在你脑海中回荡，";
+	mes "你在一个陌生的地方醒来。^000000";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "我在哪里……？";
+	mes "这是什么地方？";
+	mes "啊，我的头疼，";
+	mes "但我必须阻止";
+	mes "撒旦莫罗克的复活……";
+	mapannounce "que_job03","……血液……是灵魂的……货币……",1,0x7B68EE;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "又是那个声音！";
+	mes "基德？巴尔德斯？";
+	mes "你们有谁在吗？";
+	mes "该死，看来只有我一个人。";
+	mes "我想我得独自";
+	mes "阻止这个诡异的仪式了！";
+	close2;
+	disablenpc "#maogate2_talk1";
+	end;
+}
+
+que_job03,17,150,1	script	#maogate2_talk2	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk2";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk2";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "……今晚的月亮";
+	mes "是不是很美？";
+	next;
+	mes "[?????]";
+	mes "……但我想知道……";
+	mes "为什么满月的时候";
+	mes "守卫会多一倍？";
+	next;
+	mes "[???????]";
+	mes "月亮好红……";
+	mes "是啊，已经一年了……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "怎么回事？";
+	mes "谁在那里？基德？";
+	mes "巴尔德斯？有人在吗？";
+	mes "刚才那是什么？";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk2";
+	end;
+}
+
+que_job03,16,97,1	script	#maogate2_talk3	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk3";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk3";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "这么说，你是说";
+	mes "你不知道这座城镇";
+	mes "名字的由来？嗯，那是";
+	mes "一个有点吓人的故事……";
+	next;
+	mes "[?????]";
+	mes "一个邪恶的恶魔入侵了";
+	mes "我们的世界，从黑暗中";
+	mes "召唤出成群的手下。";
+	mes "然而，他被一位";
+	mes "传奇英雄击败，";
+	mes "封印在了这座城堡下面。";
+	next;
+	mes "[???????]";
+	mes "但撒旦莫罗克的";
+	mes "仇恨并没有随时间";
+	mes "消退。如果你从这里看满月，";
+	mes "它会被撒旦莫罗克的";
+	mes "怒火染成红色……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "……我一直听到";
+	mes "一些声音！这些声音";
+	mes "到底是从哪里来的？！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk3";
+	end;
+}
+
+que_job03,44,33,1	script	#maogate2_talk4	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk4";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk4";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "哼。";
+	mes "开始了。";
+	next;
+	mes "[?????]";
+	mes "那股烟……？";
+	mes "每个满月的时候，";
+	mes "那边到底";
+	mes "在搞什么？";
+	next;
+	mes "[???????]";
+	mes "嗯……";
+	mes "谁知道呢？";
+	next;
+	mes "[????]";
+	mes "老、老板……！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	mapannounce "que_job03","……更多……给我……更多鲜血……",1,0xDDA0DD;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这些声音……";
+	mes "它们就像是";
+	mes "过去发生在这里";
+	mes "梦罗克城堡的";
+	mes "某种记忆……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk4";
+	end;
+}
+
+que_job03,93,21,1	script	#maogate2_talk5	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk5";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk5";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "大人，我们的调查";
+	mes "有发现。每";
+	mes "15天，就有一辆马车";
+	mes "秘密地把大约20到30个";
+	mes "孩子运进城堡。";
+	mes "然而，他们从来没有出来过……";
+	next;
+	mes "[?????]";
+	mes "你是认真的……？";
+	mes "他们到底";
+	mes "在里面干什么？！";
+	mes "走吧，我们去看看……";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk5";
+	end;
+}
+
+que_job03,93,21,1	script	#maogate2_talk6	139,3,3,{
+
+OnStop:
+	disablenpc "#maogate2_talk6";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk6";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "怎、怎么";
+	mes "这么吵？";
+	next;
+	mes "[?????]";
+	mes "抱歉，大人。";
+	mes "没什么，但";
+	mes "我们会尽快";
+	mes "处理好的。";
+	mes "闭嘴，孩子们。安静！";
+	next;
+	mes "……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[???????]";
+	mes "这里好热……";
+	mes "我爸爸在哪里？我不……";
+	mes "我不想去塔纳托斯……";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[??????]";
+	mes "确保没有任何东西";
+	mes "妨碍我们的计划。";
+	mes "任何东西……";
+	mapannounce "que_job03","……血液……是灵魂的货币……还差六个……",1,0x7B68EE;
+	next;
+	mes "[????]";
+	mes "我不想";
+	mes "戴这些锁链！";
+	mes "求、求求你，把它们拿掉！";
+	mes "对不起，对不起，对不——";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	mapannounce "que_job03","……撒旦莫罗克……需要……更新鲜的血……",1,0x7B68EE;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "我受不了了……";
+	mes "我再也听不";
+	mes "下去了。";
+	mes "瑞安·摩尔";
+	mes "到底在哪里？！";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk6";
+	end;
+}
+
+que_job03,180,144,1	script	#maogate2_talk7	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk7";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk7";
+	end;
+	
+OnTouch:
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	soundeffect "wander_man_move.wav",0;
+	sc_start SC_Blind,60000,0;
+	mes "[?????]";
+	mes "天哪，怎么";
+	mes "回事？守卫";
+	mes "都去哪里了？";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "[????]";
+	mes "什么？！怎么会有人";
+	mes "做这么愚蠢、";
+	mes "这么鲁莽的事，";
+	mes "比如复活撒旦莫罗克？！";
+	next;
+	mes "[????]";
+	mes "为什么……？";
+	mes "你不可能";
+	mes "理解的。现在去死吧……！";
+	next;
+	mes "……";
+	mes "……";
+	mes "……";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "那声音是从";
+	mes "哪里来的？等等……";
+	mes "那是……那正在";
+	mes "发生！求求你……";
+	mes "别让我来不及！";
+	close2;
+	soundeffect "wander_man_move.wav",0;
+	sc_end SC_All;
+	disablenpc "#maogate2_talk7";
+	end;
+}
+
+que_job03,77,179,1	script	#maogate2_talk8	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_talk8";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_talk8";
+	end;
+	
+OnStop2:
+	stopnpctimer;
+	end;
+	
+OnTouch:
+	initnpctimer;
+	disablenpc "#maogate2_talk8";
+	end;
+	
+OnTimer1000:
+	mapannounce "que_job03","……血液……是灵魂的……货币……",1,0x7B68EE;
+	end;
+
+OnTimer4000:
+	mapannounce "que_job03","……献上六个灵魂……换来七个……",1,0x7B68EE;
+	end;
+
+OnTimer8000:
+	mapannounce "que_job03","……血液……是灵魂的……货币……",1,0x7B68EE;
+	end;
+
+OnTimer12000:
+	mapannounce "que_job03","……作为回报，我献上……最诚挚……最圣洁的……奉献……",1,0x7B68EE;
+	end;
+
+OnTimer16000:
+	mapannounce "que_job03","……让血之旋风、尸骸之山……与山岳比高！",1,0x7B68EE;
+	end;
+
+OnTimer20000:
+	mapannounce "que_job03","……哈……哈……哈哈哈哈哈哈！",1,0x7B68EE;
+	end;
+
+OnTimer20100:
+	stopnpctimer;
+	end;
+}
+
+que_job03,73,82,1	script	#maogate2_battle	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_battle";
+	end;
+
+OnEnter:
+	enablenpc "#maogate2_battle";
+	end;
+	
+OnStop2:
+	stopnpctimer;
+	killmonster "que_job03","#maogate2_battle::OnMyMobDead";
+	end;
+	
+OnTouch:
+	initnpctimer;
+	emotion ET_KEK, playerattached();
+	disablenpc "#maogate2_battle";
+	end;
+	
+OnTimer500:
+	monster "que_job03",71,85,"木乃伊",1041,1,"#maogate2_battle::OnMyMobDead";
+	monster "que_job03",79,85,"木乃伊",1041,1,"#maogate2_battle::OnMyMobDead";
+	monster "que_job03",71,80,"木乃伊",1041,1,"#maogate2_battle::OnMyMobDead";
+	monster "que_job03",79,80,"木乃伊",1041,1,"#maogate2_battle::OnMyMobDead";
+	end;
+	
+OnTimer5000:
+	mapannounce "que_job03","小心！",1,0x90EE90;
+	donpcevent "蒲公英成员#2_bt::OnEnter";
+	end;
+	
+OnTimer6000:
+	specialeffect EF_LORD;
+	end;
+	
+OnTimer6500:
+	killmonster "que_job03","#maogate2_battle::OnMyMobDead";
+	stopnpctimer;
+	end;
+	
+OnMyMobDead:
+	end;
+}
+
+que_job03,66,85,5	script	蒲公英成员#2_bt	880,{
+
+	if(mao_request == 124 || mao_request == 125)
+	{
+		mes "[蒲公英成员]";
+		mes "嘿，你没事吧？";
+		mes "刚才那场爆炸";
+		mes "可真够大的！";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "R.先生……？";
+		mes "哦。你不是他。";
+		mes "谢谢，我想你";
+		mes "刚救了我一命。嘿……";
+		mes "你在这附近见过";
+		mes "一位女刺客吗？";
+		next;
+		mes "[蒲公英成员]";
+		mes "不，我想没有，";
+		mes "不过另一位刺客，";
+		mes "基德，就在";
+		mes "这附近。等等，被瑞安·摩尔";
+		mes "欺骗的人";
+		mes "就是你吧？他是你的委托人，对吧？";
+		next;
+		mes "[蒲公英成员]";
+		mes "我是蒲公英组织的";
+		mes "成员，";
+		mes "我们一直在";
+		mes "寻找他。事实证明";
+		mes "我们对摩尔的判断没错：他真的打算复活撒旦莫罗克。";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "啊？你在";
+		mes "说什么？等等，";
+		mes "瑞安·摩尔？你是指";
+		mes "R.摩尔先生吗？";
+		mes "不！那这意味着……";
+		next;
+		mes "[蒲公英成员]";
+		mes "没错。他设法";
+		mes "骗了我们所有人。";
+		mes "那么，既然你醒了，";
+		mes "请原谅，我最好";
+		mes "去帮基德了。";
+		next;
+		mes "[琳的声音]";
+		mes "……住、住手……";
+		mes "……这是……";
+		mes "这一切都疯了！";
+		emotion ET_SURPRISE;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "那是……那是琳的";
+		mes "声音！我最好";
+		mes "穿过这片黑暗，";
+		mes "尽快";
+		mes "找到她！";
+		close2;
+		set mao_request,125;
+		disablenpc "蒲公英成员#2_bt";
+		end;
+	}
+
+OnInit:
+	disablenpc "蒲公英成员#2_bt";
+	end;
+	
+OnEnter:
+	enablenpc "蒲公英成员#2_bt";
+	end;
+}
+
+que_job03,87,83,1	script	#maogate2_setting	139,2,2,{
+
+OnStop:
+	disablenpc "#maogate2_setting";
+	end;
+	
+OnEnter:
+	enablenpc "#maogate2_setting";
+	end;
+	
+OnTouch:
+	if (mao_request == 125)
+	{
+		donpcevent "#maogate2_end::OnEnter";
+		donpcevent "基德#maogate2_1::OnEnter";
+		donpcevent "琳#maogate2_1::OnEnter";
+		donpcevent "R#maogate2::OnEnter";
+		donpcevent "蒲公英#maogate2_1::OnEnter";
+		donpcevent "蒲公英#maogate2_2::OnEnter";
+		end;
+	}
+}
+
+que_job03,117,101,1	script	#maogate2_end	139,3,3,{
+
+OnInit:
+	disablenpc "#maogate2_end";
+	end;
+	
+OnReset:
+	killmonster "que_job03","#maogate2_end::OnMyMobDead";
+	end;
+	
+OnStop:
+	killmonster "que_job03","#maogate2_end::OnMyMobDead";
+	stopnpctimer;
+	end;
+	
+OnEnter:
+	enablenpc "#maogate2_end";
+	end;
+	
+OnTouch:
+	donpcevent "#maogate2_setting::OnStop";
+	mes "[" + strcharinfo(0) + "]";
+	mes "嘿，这里";
+	mes "怎么回事？基德！琳？";
+	mes "那、那个人是谁？";
+	mes "难道他可能是……";
+	emotion ET_SURPRISE, playerattached();
+	next;
+	cutin "mocseal_kid01.bmp",0;
+	mes "[基德]";
+	mes ""+ strcharinfo(0) +"……";
+	mes "退后，别靠近";
+	mes "我！琳，你为什么";
+	mes "要这样做！放弃你的";
+	mes "任务吧，你不知道";
+	mes "你的委托人到底是谁！";
+	next;
+	cutin "mocseal_rin01.bmp",2;
+	mes "[琳]";
+	mes "你在说什么啊，";
+	mes "基德？我刚发现";
+	mes "你为之效力的";
+	mes "蒲公英组织，";
+	mes "一直在追捕";
+	mes "摩尔先生……";
+	emotion ET_KEK, getnpcid(0, "琳#maogate2_1");
+	next;
+	cutin "mocseal_kid01.bmp",0;
+	mes "[基德]";
+	mes "是的，他们当然";
+	mes "在追捕他。你的委托人，";
+	mes "R.摩尔先生，正是";
+	mes "瑞安·摩尔——而他";
+	mes "计划复活撒旦莫罗克！";
+	next;
+	cutin "mocseal_rin01.bmp",2;
+	mes "[琳]";
+	mes "什么？！但这怎么";
+	mes "可能？我和摩尔";
+	mes "在一起好几天了！";
+	mes "如果他是绑架孩子的人，";
+	mes "那又是谁在扣押他们？";
+	next;
+	mes "[琳]";
+	mes "不，你应该把";
+	mes "你所知道的关于";
+	mes "你自己的委托人——";
+	mes "蒲公英组织的一切";
+	mes "都告诉我……";
+	emotion ET_SCRATCH, getnpcid(0, "R#maogate2");
+	next;
+	cutin "mocseal_rin01.bmp",255;
+	cutin "mocseal_kid01.bmp",255;
+	mes "[R.摩尔]";
+	mes "谢谢你的";
+	mes "关心，琳。但真的……";
+	mes "没有必要。嘿嘿……";
+	mes "我再也不用担心蒲公英组织了。";
+	next;
+	mes "[R.摩尔]";
+	mes "准备好你自己，";
+	mes "接受这场";
+	mes "献祭吧……琳……";
+	mes "你的血将被用来";
+	mes "复活撒旦莫罗克！";
+	donpcevent "R#maogate2::OnSpell";
+	emotion ET_SURPRISE, getnpcid(0, "基德#maogate2_1");
+	emotion ET_SURPRISE, playerattached();
+	next;
+	mes "[基德]";
+	mes "小心！";
+	donpcevent "基德#maogate2_1::OnInit";
+	donpcevent "琳#maogate2_1::OnInit";
+	donpcevent "基德#maogate2_2::OnEnter";
+	donpcevent "琳#maogate2_2::OnEnter";
+	donpcevent "#maogate2_end2::OnSpell";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "基德！琳！";
+	next;
+	mes "[琳]";
+	mes "为、为什么……？";
+	mes "摩尔先生，你说过";
+	mes "你在试图";
+	mes "阻止撒旦莫罗克的复活……";
+	next;
+	mes "[基德]";
+	mes "你看不出来吗……？";
+	mes "他在撒谎！他";
+	mes "骗了我们所有人！";
+	next;
+	mes "[R.摩尔]";
+	mes "这么说……";
+	mes "你们要反抗？";
+	mes "好吧，你们让我";
+	mes "别无选择。感受";
+	mes "撒旦莫罗克的力量吧！";
+	emotion ET_KIK, getnpcid(0, "R#maogate2");
+	next;
+	donpcevent "R#maogate2::OnInit";
+	initnpctimer;
+	monster "que_job03",121,118,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",121,115,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",121,112,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",107,106,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",111,106,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",115,106,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",135,105,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",132,105,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	monster "que_job03",128,105,"木乃伊",1041,1,"#maogate2_end::OnMyMobDead";
+	mes "[" + strcharinfo(0) + "]";
+	mes "混蛋，你在";
+	mes "干什么？";
+	mes "我的天，魔、魔物！";
+	next;
+	mes "[琳]";
+	mes "该死！";
+	mes "放开我！";
+	mes "我要亲自";
+	mes "去追摩尔！";
+	set mao_request,126;
+	set $maoattack,$maoattack +1;
+	close2;
+	donpcevent "琳#maogate2_2::OnInit";
+	disablenpc "#maogate2_end";
+	end;
+
+OnTimer500:
+	mapannounce "que_job03","我来支援你！",1,0x90EE90;
+	donpcevent "蒲公英#maogate2_3::OnEnter";
+	donpcevent "蒲公英#maogate2_4::OnEnter";
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate2_1");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate2_2");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate2_3");
+	emotion ET_GO, getnpcid(0, "蒲公英#maogate2_4");
+	end;
+
+OnTimer3000:
+	donpcevent "蒲公英#maogate2_3::OnSpell";
+	donpcevent "蒲公英#maogate2_2::OnSpell";
+	end;
+
+OnTimer4000:
+	donpcevent "蒲公英#maogate2_4::OnSpell";
+	donpcevent "蒲公英#maogate2_2::OnSpell2";
+	end;
+
+OnTimer5000:
+	killmonster "que_job03","#maogate2_end::OnMyMobDead";
+	end;
+
+OnTimer5500:
+	set $@maogate2mobs,3;
+	monster "que_job03",128,105,"木乃伊",1041,1,"基德#maogate2_2::OnMyMobDead";
+	monster "que_job03",115,106,"木乃伊",1041,1,"基德#maogate2_2::OnMyMobDead";
+	monster "que_job03",121,112,"木乃伊",1041,1,"基德#maogate2_2::OnMyMobDead";
+	end;
+
+OnTimer7000:
+	mapannounce "que_job03","蒲公英们，别让瑞安·摩尔跑了！",1,0x90EE90;
+	end;
+
+OnTimer10000:
+	mapannounce "que_job03","基德，剩下的就交给你了……！",1,0x90EE90;
+	donpcevent "蒲公英#maogate2_4::OnInit";
+	donpcevent "蒲公英#maogate2_3::OnInit";
+	donpcevent "蒲公英#maogate2_2::OnInit";
+	donpcevent "蒲公英#maogate2_1::OnInit";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+que_job03,116,108,5	script	基德#maogate2_1	884,{
+
+OnInit:
+	disablenpc "基德#maogate2_1";
+	end;
+
+OnEnter:
+	enablenpc "基德#maogate2_1";
+	end;
+}
+
+que_job03,126,103,5	script	基德#maogate2_2	884,{
+
+	end;
+
+OnInit:
+	disablenpc "基德#maogate2_2";
+	end;
+
+OnEnter:
+	enablenpc "基德#maogate2_2";
+	end;
+
+OnMyMobDead:
+	set $@maogate2mobs,$@maogate2mobs -1;
+	if($@maogate2mobs < 1) donpcevent "#maogate2_end2::OnEnter";
+	end;
+}
+
+que_job03,121,106,1	script	琳#maogate2_1	885,{
+
+OnInit:
+	disablenpc "琳#maogate2_1";
+	end;
+
+OnEnter:
+	enablenpc "琳#maogate2_1";
+	end;
+}
+
+que_job03,127,101,1	script	琳#maogate2_2	885,{
+
+OnInit:
+	disablenpc "琳#maogate2_2";
+	end;
+
+OnEnter:
+	enablenpc "琳#maogate2_2";
+	end;
+}
+
+que_job03,124,109,3	script	R#maogate2	880,{
+
+OnInit:
+	disablenpc "R#maogate2";
+	end;
+
+OnEnter:
+	enablenpc "R#maogate2";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+}
+
+que_job03,113,107,5	script	蒲公英#maogate2_1	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate2_1";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate2_1";
+	end;
+}
+
+que_job03,121,100,7	script	蒲公英#maogate2_2	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate2_2";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate2_2";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+
+OnSpell2:
+	specialeffect EF_LORD;
+	end;
+}
+
+que_job03,122,98,1	script	蒲公英#maogate2_3	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate2_3";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate2_3";
+	end;
+
+OnSpell:
+	specialeffect EF_BEGINSPELL2;
+	end;
+}
+
+que_job03,122,111,5	script	蒲公英#maogate2_4	880,{
+
+OnInit:
+	disablenpc "蒲公英#maogate2_4";
+	end;
+
+OnEnter:
+	enablenpc "蒲公英#maogate2_4";
+	end;
+
+OnSpell:
+	specialeffect EF_LORD;
+	end;
+}
+
+que_job03,122,106,1	script	#maogate2_end2	139,15,15,{
+
+OnInit:
+	disablenpc "#maogate2_end2";
+	end;
+	
+OnEnter:
+	enablenpc "#maogate2_end2";
+	end;
+
+OnTouch:
+	if (mao_request == 126)
+	{
+		cutin "mocseal_kid01.bmp",2;
+		mes "[基德]";
+		mes "" + strcharinfo(0) + "……！";
+		mes "你能听到我说话吗？天哪……";
+		mes "你看起来不太好。来，";
+		mes "我们得先送你";
+		mes "回公会……";
+		set mao_request,127;
+		close2;
+		mapwarp "que_job03","que_job01",59,49;
+		donpcevent "#maogate2_talk1::OnInit";
+		donpcevent "#maogate2_talk2::OnEnter";
+		donpcevent "#maogate2_talk3::OnEnter";
+		donpcevent "#maogate2_talk4::OnEnter";
+		donpcevent "#maogate2_talk5::OnEnter";
+		donpcevent "#maogate2_talk6::OnEnter";
+		donpcevent "#maogate2_talk7::OnEnter";
+		donpcevent "基德#maogate2_1::OnInit";
+		donpcevent "基德#maogate2_2::OnInit";
+		donpcevent "琳#maogate2_1::OnInit";
+		donpcevent "琳#maogate2_2::OnInit";
+		donpcevent "R#maogate2::OnInit";
+		donpcevent "#maogate2_end::OnStop";
+		donpcevent "#maogate2_end::OnInit";
+		donpcevent "#maogate2_end2::OnInit";
+		donpcevent "蒲公英#maogate2_1::OnInit";
+		donpcevent "蒲公英#maogate2_2::OnInit";
+		donpcevent "蒲公英#maogate2_3::OnInit";
+		donpcevent "蒲公英#maogate2_4::OnInit";
+		donpcevent "#maogate2_setting::OnEnter";
+		donpcevent "蒲公英成员#2_bt::OnInit";
+		donpcevent "#maogate2_battle::OnStop";
+		donpcevent "#maogate2_battle::OnEnter";
+		enablenpc "#maogate2";
+		set $mao_gate2,0;
+		end;
+	}
+}
+
+morocc,30,29,5	script	成员#mao1	880,10,15,{
+
+	mes "[会长]";
+	mes "那就这么定了。";
+	mes "明天我们去清理";
+	mes "南门附近的";
+	mes "池塘。希望大家";
+	mes "都能来。";
+	next;
+	mes "[成员们]";
+	mes "好的，没问题。";
+	mes "我们打算什么时候";
+	mes "重建";
+	mes "托儿所的设施？";
+	next;
+	mes "[会长]";
+	mes "嗯……";
+	mes "我想这个问题";
+	mes "可以留到";
+	mes "明天的会议上";
+	mes "再讨论。到时候见。";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这是某种";
+	mes "志愿服务";
+	mes "团体吗？";
+	close;
+
+OnStop:
+	disablenpc "成员#mao1";
+	end;
+	
+OnEnter:
+	enablenpc "成员#mao1";
+	end;
+	
+OnTouch:
+	if (mao_request == 30 || mao_request == 128)
+	{
+		mes "[?????]";
+		mes "……事情就是……";
+		mes "这样……努力……";
+		mes "了……这次……";
+		next;
+		mes "[???]";
+		mes "只有一个";
+		mes "遗憾……那个……";
+		mes "……晒黑……更好……";
+		next;
+		mes "[????????]";
+		mes "我知道，我知道！";
+		mes "但我们毕竟完成了";
+		mes "我们该做的事，对吧？";
+		next;
+		mes "[??????]";
+		mes "安静！";
+		mes "你太大声了。";
+		next;
+		mes "[?????]";
+		mes "我很确定……";
+		mes "……不会……对此";
+		mes "保持沉默的。";
+		mes "也许……会发生。";
+		next;
+		mes "[???]";
+		mes "嘘。表现得自然点！";
+		mes "有人在";
+		mes "偷听我们！快走开！";
+		close2;
+		donpcevent "成员#mao1::OnStop";
+		donpcevent "成员#mao2::OnStop";
+		donpcevent "成员#mao3::OnStop";
+		donpcevent "成员#mao4::OnStop";
+		if($maoattack > 49)
+		{
+			donpcevent "#mao_manager::OnStart";
+			set $maoattack,0;
+		}
+		else donpcevent "#mao_timer::OnStart";
+		end;
+	}
+}
+
+morocc,29,26,0	script	成员#mao2	880,{
+
+	mes "[会长]";
+	mes "那就这么定了。";
+	mes "明天我们去清理";
+	mes "南门附近的";
+	mes "池塘。希望大家";
+	mes "都能来。";
+	next;
+	mes "[成员们]";
+	mes "好的，没问题。";
+	mes "我们打算什么时候";
+	mes "重建";
+	mes "托儿所的设施？";
+	next;
+	mes "[会长]";
+	mes "嗯……";
+	mes "我想这个问题";
+	mes "可以留到";
+	mes "明天的会议上";
+	mes "再讨论。到时候见。";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这是某种";
+	mes "志愿服务";
+	mes "团体吗？";
+	close;
+
+OnStop:
+	disablenpc "成员#mao2";
+	end;
+	
+OnEnter:
+	enablenpc "成员#mao2";
+	end;
+}
+
+morocc,33,27,1	script	成员#mao3	880,{
+
+	mes "[会长]";
+	mes "那就这么定了。";
+	mes "明天我们去清理";
+	mes "南门附近的";
+	mes "池塘。希望大家";
+	mes "都能来。";
+	next;
+	mes "[成员们]";
+	mes "好的，没问题。";
+	mes "我们打算什么时候";
+	mes "重建";
+	mes "托儿所的设施？";
+	next;
+	mes "[会长]";
+	mes "嗯……";
+	mes "我想这个问题";
+	mes "可以留到";
+	mes "明天的会议上";
+	mes "再讨论。到时候见。";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这是某种";
+	mes "志愿服务";
+	mes "团体吗？";
+	close;
+
+OnStop:
+	disablenpc "成员#mao3";
+	end;
+	
+OnEnter:
+	enablenpc "成员#mao3";
+	end;
+}
+
+morocc,34,30,3	script	成员#mao4	880,{
+
+	mes "[会长]";
+	mes "那就这么定了。";
+	mes "明天我们去清理";
+	mes "南门附近的";
+	mes "池塘。希望大家";
+	mes "都能来。";
+	next;
+	mes "[成员们]";
+	mes "好的，没问题。";
+	mes "我们打算什么时候";
+	mes "重建";
+	mes "托儿所的设施？";
+	next;
+	mes "[会长]";
+	mes "嗯……";
+	mes "我想这个问题";
+	mes "可以留到";
+	mes "明天的会议上";
+	mes "再讨论。到时候见。";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "这是某种";
+	mes "志愿服务";
+	mes "团体吗？";
+	close;
+
+OnStop:
+	disablenpc "成员#mao4";
+	end;
+	
+OnEnter:
+	enablenpc "成员#mao4";
+	end;
+}
+
+morocc,1,1,1	script	#mao_timer	-1,{
+
+OnStart:
+	initnpctimer;
+	end;
+	
+OnTimer300000:
+OnStop:
+	donpcevent "成员#mao1::OnEnter";
+	donpcevent "成员#mao2::OnEnter";
+	donpcevent "成员#mao3::OnEnter";
+	donpcevent "成员#mao4::OnEnter";
+	stopnpctimer;
+	end;
+}
+
+morocc,1,2,1	script	#mao_manager	-1,{
+
+OnStart:
+	initnpctimer;
+	end;
+	
+OnStop:
+	killmonster "morocc","#mao_manager::OnMyMobDead";
+	donpcevent "成员#mao1::OnEnter";
+	donpcevent "成员#mao2::OnEnter";
+	donpcevent "成员#mao3::OnEnter";
+	donpcevent "成员#mao4::OnEnter";
+	stopnpctimer;
+	end;
+	
+OnTimer300000:
+	mapannounce "morocc","竟敢……打扰……神圣的……仪式……",1,0x7B68EE;
+	end;
+	
+OnTimer305000:
+	mapannounce "morocc","……封印……不……不会……这不是……",1,0x7B68EE;
+	end;
+	
+OnTimer310000:
+	mapannounce "morocc","……可恶的人类……竟敢妨碍……我的复活……",1,0x7B68EE;
+	end;
+	
+OnTimer315000:
+	mapannounce "morocc","……接下这……血之……祝福……接受……死亡吧……",1,0x7B68EE;
+	end;
+	
+OnTimer320000:
+	mapannounce "morocc","……在来世……乞求……我的宽恕吧……！",1,0x7B68EE;
+	end;
+	
+OnTimer325000:
+	mapannounce "morocc","？？？：撒旦莫罗克发怒了！哦，芙蕾雅啊，请保护我们免受邪恶侵害……",1,0x7B68EE;
+	monster "morocc",163,185,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,185,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,185,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,185,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,185,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,191,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,191,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,191,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,191,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,191,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer327000:
+	monster "morocc",163,194,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,194,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,194,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,194,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,194,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,197,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,197,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,197,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,197,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,197,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,200,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,200,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,200,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,200,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,200,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer329000:
+	announce "卡普拉 帕维安：这里是梦罗克卡普拉分部！魔、魔物……啊啊啊啊！",bc_all,0x70DBDB;
+	monster "morocc",163,203,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,203,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,203,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,203,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,203,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,206,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,206,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,206,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,206,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,206,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,209,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,209,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,209,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,209,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,209,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer331000:
+	monster "morocc",163,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",163,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",161,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",159,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",157,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",155,212,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer333000:
+	monster "morocc",138,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",140,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",142,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",146,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",148,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",150,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",152,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",154,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",156,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",158,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",160,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",162,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",164,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",166,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",168,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",170,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",172,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",174,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",176,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",178,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",180,162,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",138,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",140,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",142,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",146,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",148,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",150,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",152,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",154,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",156,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",158,160,"撒旦的绝望",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",160,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",162,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",162,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",164,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",166,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",168,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",170,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",172,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",174,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",176,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",178,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",180,160,"撒旦的愤怒",1154,1,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer335000:
+	monster "morocc",138,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",140,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",142,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",146,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",148,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",150,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",152,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",154,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",156,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",158,158,"撒旦的绝望",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",160,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",162,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",164,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",166,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",168,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",170,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",172,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",174,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",176,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",178,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",180,158,"撒旦的愤怒",1041,1,"#mao_manager::OnMyMobDead";
+	monster "morocc",0,0,"撒旦的绝望",1041,20,"#mao_manager::OnMyMobDead";
+	monster "morocc",0,0,"撒旦的愤怒",1041,20,"#mao_manager::OnMyMobDead";
+	end;
+	
+OnTimer1800000:
+	killmonster "morocc","#mao_manager::OnMyMobDead";
+	donpcevent "成员#mao1::OnEnter";
+	donpcevent "成员#mao2::OnEnter";
+	donpcevent "成员#mao3::OnEnter";
+	donpcevent "成员#mao4::OnEnter";
+	stopnpctimer;
+	end;
+	
+OnMyMobDead:
+	end;
+}
+
+que_job01,68,88,5	script	西蒙#mao	881,{
+	mes "[西蒙]";
+	mes "……不。我要说";
+	mes "多少遍？";
+	mes "我不会回去的。";
+	emotion ET_SWEAT, getnpcid(0, "西蒙#mao");
+	next;
+	mes "[基米]";
+	mes "求你了……";
+	mes "我们真的";
+	mes "需要你回家……";
+	emotion ET_CRY, getnpcid(0, "基米");
+	next;
+	mes "[西蒙]";
+	mes "对不起，基米。";
+	mes "我必须走";
+	mes "自己的路。你们";
+	mes "没有我也得过得去。";
+	mes "再说，你很坚强，";
+	mes "并不真的需要我……";
+	next;
+	mes "[基米]";
+	mes "你、你不能这样！";
+	mes "你为什么要离开我们？";
+	mes "我本不、不想告诉你";
+	mes "这个，但吉米一直";
+	mes "在惹法律上的麻烦，还有……";
+	emotion ET_KEK, getnpcid(0, "基米");
+	next;
+	mes "[西蒙]";
+	mes "那是他自己";
+	mes "的错。我不在乎，";
+	mes "我还是不会回家……";
+	mes "在我有能力照顾别人之前，";
+	mes "我得先对自己";
+	mes "负起责任来。";
+	next;
+	mes "[基米]";
+	mes "闭嘴！闭嘴！";
+	mes "回到我们身边来！";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "我不知道";
+	mes "发生了什么事，但看起来";
+	mes "相当糟糕。有时候，";
+	mes "不掺和别人的";
+	mes "问题反而是好事。";
+	close;
+}
+
+que_job01,70,84,1	duplicate(西蒙#mao)	基米	882
+
+sec_in02,38,162,0	script	梦罗克入侵管理者	882,{
+	callfunc "F_GM_NPC";
+	mes "共有 " + $maoattack + " 名玩家完成了";
+	mes "撒旦莫罗克：琳任务。";
+	mes "召唤撒旦莫罗克的军队";
+	mes "需要满足2个条件。";
+	mes "1) 必须有50名玩家完成";
+	mes "这个撒旦莫罗克：琳任务。";
+	next;
+	mes "2) 这些完成琳任务的";
+	mes "玩家中，必须有一人";
+	mes "接近梦罗克城外的";
+	mes "蒲公英组织NPC，才能触发怪物入侵。";
+	mes "要修改全局变量来影响撒旦莫罗克入侵的状态吗？";
+	next;
+	switch( select( "设置GlobalVar","取消" ) )
+	{
+		case 1:
+			mes "请选择琳任务";
+			mes "在服务器上";
+			mes "被记录为完成的次数。";
+			mes "0实质上是重置；";
+			mes "50则会立即";
+			mes "使入侵可以触发。";
+			next;
+			switch( select( "49","50","0" ) )
+			{
+				case 1:
+					mes "全局变量已";
+					mes "设为49。琳任务";
+					mes "还需要再完成";
+					mes "1次，才能触发";
+					mes "撒旦莫罗克";
+					mes "入侵。";
+					set $maoattack,49;
+					close;
+
+				case 2:
+					mes "全局变量已";
+					mes "设为50。现在可以";
+					mes "触发撒旦莫罗克";
+					mes "入侵了。";
+					set $maoattack,50;
+					close;
+				
+				case 3:
+					mes "全局变量已";
+					mes "设为0。琳任务";
+					mes "还需要再完成";
+					mes "1次，才能触发";
+					mes "撒旦莫罗克";
+					mes "入侵。";
+					set $maoattack,0;
+					close;
+			}
+
+		case 2:
+			mes "你取消了。";
+			close;
+	}
+}

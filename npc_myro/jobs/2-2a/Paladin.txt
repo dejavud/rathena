@@ -1,0 +1,78 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,53,39,3	script	圣骑士#Valkyrie	752,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[圣骑士]";
+			mes "恭喜你。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		mes "[圣骑士]";
+		mes "不要忘记，";
+		mes "圣战即将来临！";
+		mes "我们必须做好准备！";
+		mes "愿正义之光";
+		mes "永远照亮我们的道路！";
+		close;
+	}
+	else if (ADVJOB == Job_Paladin && Class == Job_Swordman_High && JobLevel > 39) {
+		mes "[圣骑士]";
+		mes "不知不觉间，";
+		mes "圣战就要降临了。";
+		mes "我们比以往任何时候";
+		mes "都更需要强大的战士";
+		mes "为正义与善良而战。";
+		next;
+		mes "[圣骑士]";
+		mes "你愿意站在正义的一方，";
+		mes "以圣骑士的身份战斗吗？";
+		next;
+		if (select("不。:是。") == 1) {
+			mes "[圣骑士]";
+			mes "等你准备好了，";
+			mes "随时回来找我。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[圣骑士]";
+			mes "你还有技能可以学习。";
+			mes "请先用完所有剩余的技能点，再来找我。";
+			close;
+		}
+		jobchange Job_Paladin;
+		set ADVJOB,0;
+		mes "[圣骑士]";
+		mes "恭喜你。";
+		mes "作为圣骑士，我希望你";
+		mes "保护比你弱小的人，";
+		mes "在即将到来的善恶之战中";
+		mes "为我们带来胜利。";
+		close;
+	}
+	mes "[圣骑士]";
+	mes "欢迎来到瓦尔哈拉，";
+	mes "这里是荣誉殿堂。";
+	next;
+	mes "[圣骑士]";
+	mes "待在这里的期间，";
+	mes "请随意一些。荣耀归于战士们！";
+	close;
+}

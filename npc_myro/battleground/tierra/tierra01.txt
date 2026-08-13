@@ -1,0 +1,857 @@
+//===== rAthena Script =======================================
+//= BattleGround System - Tierra Gorge
+//===== Description: =========================================
+//= [Official Conversion]
+//= Tierra Gorge Battleground.
+//= - Winning Team: 3 badges (5 if VIP)
+//= - Losing Team: 1 badge (3 if VIP)
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Corrected setwalls for barricades. [L0ne_W0lf]
+//= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.3 Removed MaxLvl check in waitingrooms.
+//= 1.4 Label standardization. [Euphy]
+//= 1.5 Added GM management function. [Euphy]
+//= 1.6 Added VIP features and created a reward function. [Euphy]
+//= 1.7 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
+
+// Waiting Room NPCs
+//============================================================
+bat_room,57,227,5	script	卡洛斯中尉	418,{
+	end;
+
+OnInit:
+	waitingroom "战斗岗位",11,"start#bat_a01::OnReadyCheck",1,0,80;
+	end;
+
+OnEnterBG:
+	set $@TierraBG1_id1, waitingroom2bg("bat_a01",50,374,"start#bat_a01::OnGuillaumeQuit","");
+	end;
+}
+
+bat_room,58,204,1	script	艾奥尔中尉	414,{
+	end;
+
+OnInit:
+	waitingroom "战斗岗位",11,"start#bat_a01::OnReadyCheck",1,0,80;
+	end;
+
+OnEnterBG:
+	set $@TierraBG1_id2, waitingroom2bg("bat_a01",42,16,"start#bat_a01::OnCroixQuit","");
+	end;
+}
+
+bat_room,1,151,3	script	#bat_a01_timer	844,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	stopnpctimer;
+	if (bg_get_data($@TierraBG1_id1, 0) == 0 && bg_get_data($@TierraBG1_id2, 0) == 0) {
+		donpcevent "countdown#bat_a01::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
+		$@TierraBG1 = 0; $@TierraBG1_Victory = 0;
+		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; $@TierraBG1_id1 = 0; }
+		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; $@TierraBG1_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
+			bg_unbook "bat_a01";
+		end;
+	}
+	initnpctimer;
+	end;
+}
+
+bat_a01,352,342,0	script	#bat_a01_quest_a	-1,5,5,{
+	end;
+
+OnTouch:
+	if (checkquest(2069) < 0)
+		setquest 2069;
+	end;
+}
+
+bat_a01,353,52,0	script	#bat_a01_quest_b	-1,5,5,{
+	end;
+
+OnTouch:
+	if (checkquest(2069) < 0)
+		setquest 2069;
+	end;
+}
+
+bat_room,57,220,0	warp	back_bgrooma01a	1,1,bat_room,154,150
+bat_room,57,211,0	warp	back_bgrooma01b	1,1,bat_room,154,150
+
+// Tierra Gorge Battleground Engine
+//============================================================
+bat_a01,15,15,3	script	start#bat_a01	844,{
+OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_a01";
+	mapwarp "bat_a01","bat_room",154,150;
+	end;
+
+OnEnable:
+	donpcevent "OBJ#bat_a01_a::OnKill";
+	donpcevent "OBJ#bat_a01_a::OnEnable";
+	donpcevent "OBJ#bat_a01_b::OnKill";
+	donpcevent "OBJ#bat_a01_b::OnEnable";
+	donpcevent "barricade#bat_a01_a::OnKill";
+	donpcevent "barricade#bat_a01_a::OnEnable";
+	donpcevent "barricade#bat_a01_b::OnKill";
+	donpcevent "barricade#bat_a01_b::OnEnable";
+	donpcevent "OBJ#bat_a01_n::OnKill";
+	donpcevent "OBJ#bat_a01_n::OnEnable";
+	donpcevent "NOBJ_mob#bat_a01_a::OnKill";
+	donpcevent "NOBJ_mob#bat_a01_b::OnKill";
+	donpcevent "战场治疗师#a01_a::OnEnable";
+	donpcevent "战场治疗师#a01_b::OnEnable";
+	donpcevent "countdown#bat_a01::OnEnable";
+	disablenpc "纪尧姆铁匠#a01";
+	disablenpc "克罗伊铁匠#bat_a01";
+	disablenpc "纪尧姆十夫长#a01_a";
+	disablenpc "克罗伊十夫长#a01_b";
+	end;
+
+OnGuillaumeActive:
+	warp "bat_a01",352,342;
+	end;
+
+OnCroixActive:
+	warp "bat_a01",353,52;
+	end;
+
+OnGuillaumeQuit:
+OnCroixQuit:
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
+	end;
+
+OnReadyCheck:
+	if( $@TierraBG1 )
+		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"卡洛斯中尉");
+		set .@Croix, getwaitingroomstate(0,"艾奥尔中尉");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_a01_timer::OnStop";
+			end;
+		}
+		else if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
+	}
+	set $@TierraBG1,1;
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "卡洛斯中尉::OnEnterBG";
+		donpcevent "艾奥尔中尉::OnEnterBG";
+	}
+	donpcevent "start#bat_a01::OnEnable";
+	bg_warp $@TierraBG1_id1,"bat_a01",352,342;
+	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	donpcevent "#bat_a01_timer::OnEnable";
+	end;
+}
+
+bat_a01,15,16,3	script	OBJ#bat_a01_a	844,{
+OnEnable:
+	bg_monster $@TierraBG1_id1,"bat_a01",177,345,"粮仓",1909,"OBJ#bat_a01_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a01","OBJ#bat_a01_a::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a01","OBJ#bat_a01_a::OnMyMobDead") < 1) {
+		donpcevent "战场治疗师#a01_a::OnStop";
+		donpcevent "战场治疗师#a01_b::OnStop";
+		set $@TierraBG1_Victory, 2;
+		enablenpc "纪尧姆十夫长#a01_a";
+		enablenpc "克罗伊十夫长#a01_b";
+		mapannounce "bat_a01", "克罗伊十夫长斯万德里：我们摧毁了纪尧姆的粮仓！这一仗我们赢了，哇哦！",bc_map,"0xFFCE00";
+		bg_warp $@TierraBG1_id1,"bat_a01",50,374;
+		bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
+	}
+	end;
+}
+
+bat_a01,15,17,3	script	OBJ#bat_a01_b	844,{
+OnEnable:
+	bg_monster $@TierraBG1_id2,"bat_a01",167,50,"粮仓",1910,"OBJ#bat_a01_b::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a01","OBJ#bat_a01_b::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a01","OBJ#bat_a01_b::OnMyMobDead") < 1) {
+		donpcevent "战场治疗师#a01_a::OnStop";
+		donpcevent "战场治疗师#a01_b::OnStop";
+		set $@TierraBG1_Victory, 1;
+		enablenpc "纪尧姆十夫长#a01_a";
+		enablenpc "克罗伊十夫长#a01_b";
+		mapannounce "bat_a01", "纪尧姆十夫长阿塞尔：我们摧毁了克罗伊的粮仓！这一仗我们赢了，哇哦！",bc_map,"0xFFCE00";
+		bg_warp $@TierraBG1_id1,"bat_a01",50,374;
+		bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
+	}
+	end;
+}
+
+bat_a01,15,18,3	script	barricade#bat_a01_a	844,{
+OnEnable:
+	for( set .@i,185; .@i < 202; set .@i,.@i+1 )
+		bg_monster $@TierraBG1_id1,"bat_a01",.@i,266,"路障",1906,"barricade#bat_a01_a::OnMyMobDead";
+	setwall "bat_a01",186,266,16,6,1,"bat_a01_c1";
+	end;
+
+OnKill:
+	killmonster "bat_a01","barricade#bat_a01_a::OnMyMobDead";
+	if (checkwall("bat_a01_c1") == true)
+		delwall "bat_a01_c1";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a01","barricade#bat_a01_a::OnMyMobDead") < 17) {
+		killmonster "bat_a01","barricade#bat_a01_a::OnMyMobDead";
+		delwall "bat_a01_c1";
+		enablenpc "纪尧姆铁匠#a01";
+		mapannounce "bat_a01", "纪尧姆十夫长阿塞尔：峡谷里的路障被摧毁了！铁匠在哪里？我们得重建路障！",bc_map,"0xFFCE00";
+	}
+	end;
+}
+
+bat_a01,15,19,3	script	barricade#bat_a01_b	844,{
+OnEnable:
+	for( set .@i,169; .@i < 186; set .@i,.@i+1 )
+		bg_monster $@TierraBG1_id2,"bat_a01",.@i,129,"路障",1906,"barricade#bat_a01_b::OnMyMobDead";
+	setwall "bat_a01",170,129,16,6,1,"bat_a01_g1";
+	end;
+
+OnKill:
+	killmonster "bat_a01","barricade#bat_a01_b::OnMyMobDead";
+	if (checkwall("bat_a01_g1") == true)
+		delwall "bat_a01_g1";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a01","barricade#bat_a01_b::OnMyMobDead") < 17) {
+		killmonster "bat_a01","barricade#bat_a01_b::OnMyMobDead";
+		delwall "bat_a01_g1";
+		enablenpc "克罗伊铁匠#bat_a01";
+		mapannounce "bat_a01", "克罗伊十夫长斯万德里：峡谷里的路障被摧毁了！铁匠在哪里？我们得重建路障！",bc_map,"0xFFCE00";
+	}
+	end;
+}
+
+bat_a01,15,20,3	script	OBJ#bat_a01_n	844,{
+OnEnable:
+	monster "bat_a01",273,203,"中立旗帜",1911,1,"OBJ#bat_a01_n::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a01","OBJ#bat_a01_n::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a01","OBJ#bat_a01_n::OnMyMobDead") < 17) {
+		bg_team_setxy getcharid(4),56,212;
+		if (getcharid(4) == $@TierraBG1_id1) {
+			donpcevent "NOBJ_mob#bat_a01_a::OnEnable";
+			mapannounce "bat_a01", "纪尧姆军占领了中立旗帜，取得优势。",bc_map,"0xFFCE00";
+		}
+		else {
+			donpcevent "NOBJ_mob#bat_a01_b::OnEnable";
+			mapannounce "bat_a01", "克罗伊军占领了中立旗帜，取得优势。",bc_map,"0xFFCE00";
+		}
+	}
+	end;
+}
+
+bat_a01,15,21,3	script	NOBJ_mob#bat_a01_a	844,{
+OnEnable:
+	donpcevent "NOBJ_mob#bat_a01_b::OnKill";
+	bg_monster $@TierraBG1_id1,"bat_a01",272,204,"纪尧姆营地守卫",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	bg_monster $@TierraBG1_id1,"bat_a01",272,213,"纪尧姆营地守卫",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	bg_monster $@TierraBG1_id1,"bat_a01",273,197,"纪尧姆营地守卫",1950,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a01","NOBJ_mob#bat_a01_a::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+bat_a01,15,22,3	script	NOBJ_mob#bat_a01_b	844,{
+OnEnable:
+	donpcevent "NOBJ_mob#bat_a01_a::OnKill";
+	bg_monster $@TierraBG1_id2,"bat_a01",272,204,"克罗伊营地守卫",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	bg_monster $@TierraBG1_id2,"bat_a01",272,213,"克罗伊营地守卫",1949,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	bg_monster $@TierraBG1_id2,"bat_a01",273,197,"克罗伊营地守卫",1950,"NOBJ_mob#bat_a01_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a01","NOBJ_mob#bat_a01_b::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+bat_a01,185,270,1	script	纪尧姆铁匠#a01	851,{
+	if (getcharid(4) == $@TierraBG1_id1) {
+		mes "[纪尧姆铁匠]";
+		mes "情况紧急！路障被摧毁了！";
+		mes "修复路障需要^3131FF50个石头、3个熊筋、500个金属碎片、30个粗糙铝矿石和100个黄金^000000。";
+		mes "除了50个石头，其他我们都有！";
+		next;
+		switch(select("修复。:算了。")) {
+		case 1:
+			if (countitem(7049) > 49) {
+				mes "[纪尧姆铁匠]";
+				mes "你带够了石头！开始修复吧。";
+				next;
+				mes "..";
+				next;
+				mes "....";
+				next;
+				mes "......";
+				next;
+				mes "........";
+				next;
+				mes "..........";
+				next;
+				mes "............";
+				next;
+				mes "..............";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "把石头和黄金按适当比例混合。";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "把石头和黄金按适当比例混合，塑成路障的形状。";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "混合塑形之后，再加入粗糙铝矿石，让它更加坚固。";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "加入粗糙铝矿石让它更坚固。现在用金属碎片装饰一下。";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "加固、装饰之后，再用熊筋把石头编牢！";
+				next;
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				mes "[纪尧姆铁匠]";
+				mes "哇！修好了。";
+				mes "我们总算松了口气。";
+				if (mobcount("bat_a01","barricade#bat_a01_a::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_a::OnEnable";
+				}
+				close2;
+				disablenpc "纪尧姆铁匠#a01";
+				end;
+			}
+			else {
+				mes "[纪尧姆铁匠]";
+				mes "你的石头不够！";
+				next;
+				mes "[纪尧姆铁匠]";
+				mes "^3131FF我们需要50个石头。^000000";
+				mes "我们很忙，请快点。";
+				close;
+			}
+		case 2:
+			mes "[纪尧姆铁匠]";
+			mes "敌人打过来了！快撤离这里！";
+			close;
+		}
+	}
+	else {
+		mes "[纪尧姆铁匠]";
+		mes "敌人打过来了！";
+		close;
+	}
+
+OnInit:
+	disablenpc "纪尧姆铁匠#a01";
+	end;
+}
+
+bat_a01,170,121,5	script	克罗伊铁匠#bat_a01	851,{
+	if (getcharid(4) == $@TierraBG1_id2) {
+		mes "[克罗伊铁匠]";
+		mes "情况紧急！路障被摧毁了！";
+		mes "修复路障需要^3131FF50个石头、3个熊筋、500个金属碎片、30个粗糙铝矿石和100个黄金^000000。";
+		mes "除了50个石头，其他我们都有！";
+		next;
+		switch(select("修复。:算了。")) {
+		case 1:
+			if (countitem(7049) > 49) {
+				mes "[克罗伊铁匠]";
+				mes "你带够了石头！开始修复吧。";
+				next;
+				mes "..";
+				next;
+				mes "....";
+				next;
+				mes "......";
+				next;
+				mes "........";
+				next;
+				mes "..........";
+				next;
+				mes "............";
+				next;
+				mes "..............";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "把石头和黄金按适当比例混合。";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "把石头和黄金按适当比例混合，塑成路障的形状。";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "混合塑形之后，再加入粗糙铝矿石，让它更加坚固。";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "加入粗糙铝矿石让它更坚固。现在用金属碎片装饰一下。";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "加固、装饰之后，再用熊筋把石头编牢！";
+				next;
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				mes "[克罗伊铁匠]";
+				mes "哇！修好了。";
+				mes "我们总算松了口气。";
+				if (mobcount("bat_a01","barricade#bat_a01_b::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_b::OnEnable";
+				}
+				close2;
+				disablenpc "克罗伊铁匠#bat_a01";
+				end;
+			}
+			else {
+				mes "[克罗伊铁匠]";
+				mes "你的石头不够！";
+				next;
+				mes "[克罗伊铁匠]";
+				mes "^3131FF我们需要50个石头。^000000";
+				mes "我们很忙，请快点。";
+				close;
+			}
+		case 2:
+			mes "[克罗伊铁匠]";
+			mes "敌人打过来了！快撤离这里！";
+			close;
+		}
+	}
+	else {
+		mes "[克罗伊铁匠]";
+		mes "看，敌人打过来了！";
+		close;
+	}
+
+OnInit:
+	disablenpc "克罗伊铁匠#bat_a01";
+	end;
+}
+
+bat_a01,53,377,3	script	战场治疗师#a01_a	95,{
+	specialeffect2 EF_HEAL;
+	mes "[战场治疗师]";
+	mes "请闭上双眼，";
+	mes "深吸一口气。";
+	mes "痛苦就会离你而去。";
+	close;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	enablenpc "战场治疗师#a01_a";
+	end;
+
+OnStop:
+	// disablenpc "bat_a01_rp1_a_warp";
+	disablenpc "战场治疗师#a01_a";
+	stopnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	// enablenpc "bat_a01_rp1_a_warp";
+	areapercentheal "bat_a01",41,365,61,385,100,100;
+	areawarp "bat_a01",41,365,61,385,"bat_a01",352,342;
+	end;
+
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_a_warp";
+	// end;
+
+OnTimer26500:
+	donpcevent "战场治疗师#a01_a::OnEnable";
+	end;
+}
+
+/*
+bat_a01,51,375,0	script	bat_a01_rp1_a_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a01_rp1_a_warp";
+	end;
+
+OnTouch:
+	percentheal 100,100;
+	warp "bat_a01",352,342;
+	end;
+}
+*/
+
+bat_a01,45,19,3	script	战场治疗师#a01_b	95,{
+	specialeffect2 EF_HEAL;
+	mes "[战场治疗师]";
+	mes "请闭上双眼，";
+	mes "深吸一口气。";
+	mes "痛苦就会离你而去。";
+	close;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	enablenpc "战场治疗师#a01_b";
+	end;
+
+OnStop:
+	// disablenpc "bat_a01_rp1_b_warp";
+	disablenpc "战场治疗师#a01_b";
+	stopnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	areapercentheal "bat_a01",33,7,53,27,100,100;
+	areawarp "bat_a01",33,7,53,27,"bat_a01",353,52;
+	// enablenpc "bat_a01_rp1_b_warp";
+	end;
+
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_b_warp";
+	// end;
+
+OnTimer26500:
+	donpcevent "战场治疗师#a01_b::OnEnable";
+	end;
+}
+
+/*
+bat_a01,43,17,0	script	bat_a01_rp1_b_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a01_rp1_b_warp";
+	end;
+
+OnTouch:
+	percentheal 100,100;
+	warp "bat_a01",353,52;
+	end;
+}
+*/
+
+bat_a01,60,216,3	script	特拉峡谷幽灵#bat_a01_n	950,{
+	specialeffect2 EF_HEAL;
+	mes "[特拉峡谷幽灵]";
+	mes "呜……呜……";
+	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	areapercentheal "bat_a01",45,203,65,223,100,100;
+	areawarp "bat_a01",45,203,65,223,"bat_a01",301,209;
+	// enablenpc "bat_a01_rp1_n_warp";
+	end;
+
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_n_warp";
+	// end;
+
+OnTimer26500:
+	donpcevent "特拉峡谷幽灵#bat_a01_n::OnEnable";
+	end;
+}
+
+/*
+bat_a01,55,213,0	script	bat_a01_rp1_n_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a01_rp1_n_warp";
+	end;
+
+OnTouch:
+	percentheal 100,100;
+	warp "bat_a01",301,209;
+	end;
+}
+*/
+
+bat_a01,194,267,0	script	barri_warp_up#bat_a01_a	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG1_id1)
+		warp "bat_a01",194,261;
+	end;
+}
+
+bat_a01,194,265,0	script	barri_warp_down#bat_a01a	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG1_id1) 
+		warp "bat_a01",194,270;
+	end;
+}
+
+bat_a01,177,130,0	script	barri_warp_up#bat_a01_b	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG1_id2)
+		warp "bat_a01",178,125;
+	end;
+}
+
+bat_a01,177,128,0	script	barri_warp_down#bat_a01b	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG1_id2)
+		warp "bat_a01",178,134;
+	end;
+}
+
+bat_a01,352,342,0	script	A_CODE#bat_a01	-1,5,5,{
+OnTouch:
+	set .@chk_bfquest,checkquest(2069);
+	if ((.@chk_bfquest == 0) || (.@chk_bfquest == 1))
+		setquest 2069;
+	end;
+}
+
+bat_a01,353,52,0	script	B_CODE#bat_a01	-1,5,5,{
+OnTouch:
+	set .@chk_bfquest,checkquest(2069);
+	if ((.@chk_bfquest == 0) || (.@chk_bfquest == 1))
+		setquest 2069;
+	end;
+}
+
+bat_a01,169,227,0	warp	underladd#bat_a01_1	1,1,bat_a01,178,228
+bat_a01,208,164,0	warp	underladd#bat_a01_2	1,1,bat_a01,200,171
+
+bat_a01,171,309,3	script	纪尧姆旗帜#flag1	973,{ end; }
+bat_a01,149,310,3	script	纪尧姆旗帜#flag2	973,{ end; }
+bat_a01,119,336,3	script	纪尧姆旗帜#flag3	973,{ end; }
+bat_a01,118,357,3	script	纪尧姆旗帜#flag4	973,{ end; }
+bat_a01,150,380,3	script	纪尧姆旗帜#flag5	973,{ end; }
+bat_a01,173,380,3	script	纪尧姆旗帜#flag6	973,{ end; }
+bat_a01,210,344,3	script	纪尧姆旗帜#flag7	973,{ end; }
+bat_a01,350,325,3	script	纪尧姆旗帜#flag8	973,{ end; }
+bat_a01,358,325,3	script	纪尧姆旗帜#flag9	973,{ end; }
+
+bat_a01,138,12,3	script	克罗伊旗帜#flag1	974,{ end; }
+bat_a01,108,36,3	script	克罗伊旗帜#flag2	974,{ end; }
+bat_a01,108,63,3	script	克罗伊旗帜#flag3	974,{ end; }
+bat_a01,136,87,3	script	克罗伊旗帜#flag4	974,{ end; }
+bat_a01,167,86,3	script	克罗伊旗帜#flag5	974,{ end; }
+bat_a01,199,49,3	script	克罗伊旗帜#flag6	974,{ end; }
+bat_a01,168,16,3	script	克罗伊旗帜#flag7	974,{ end; }
+bat_a01,357,74,3	script	克罗伊旗帜#flag8	974,{ end; }
+bat_a01,348,74,3	script	克罗伊旗帜#flag9	974,{ end; }
+
+bat_a01,53,377,3	script	纪尧姆十夫长#a01_a	419,{
+	if (getcharid(4) == $@TierraBG1_id1) {
+		if ($@TierraBG1_Victory == 1)
+			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
+		else
+			callfunc "F_BG_Badge",0,"Guillaume","Tierra";
+	}
+	else {
+		if ($@TierraBG1_Victory == 2)
+			callfunc "F_BG_Badge",0,"Guillaume","Tierra";
+		else
+			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
+	}
+	bg_leave;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
+	end;
+
+OnInit:
+	disablenpc "纪尧姆十夫长#a01_a";
+	end;
+}
+
+bat_a01,45,19,3	script	克罗伊十夫长#a01_b	415,{
+	if (getcharid(4) == $@TierraBG1_id2) {
+		if ($@TierraBG1_Victory == 2)
+			callfunc "F_BG_Badge",1,"Croix","Tierra";
+		else
+			callfunc "F_BG_Badge",0,"Croix","Tierra";
+	}
+	else {
+		if ($@TierraBG1_Victory == 1)
+			callfunc "F_BG_Badge",0,"Croix","Tierra";
+		else
+			callfunc "F_BG_Badge",1,"Croix","Tierra";
+	}
+	bg_leave;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
+	end;
+
+OnInit:
+	disablenpc "克罗伊十夫长#a01_b";
+	end;
+}
+
+bat_a01,1,5,3	script	countdown#bat_a01	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnTimer7000:
+	mapannounce "bat_a01", "纪尧姆十夫长阿塞尔：进攻！烧掉克罗伊的粮仓！",bc_map,"0xFF9900";
+	end;
+
+OnTimer8000:
+	mapannounce "bat_a01", "克罗伊十夫长斯万德里：瓦哈拉的众神啊！赐予我们坚定的信念与勇气吧！",bc_map,"0xFF99CC";
+	end;
+
+OnTimer1800000:
+	mapannounce "bat_a01", "马罗尔七世：纪尧姆·马罗尔、克罗伊·马罗尔！还有马罗尔的臣民们！",bc_map,"0x99CC00";
+	end;
+
+OnTimer1803000:
+	mapannounce "bat_a01", "马罗尔七世：双方势均力敌，谁也不会轻易落败。这说明马罗尔王国是不可战胜的！",bc_map,"0x99CC00";
+	end;
+
+OnTimer1808000:
+	mapannounce "bat_a01", "马罗尔七世：我看还是到此为止，这一战算平局吧。",bc_map,"0x99CC00";
+	end;
+
+OnTimer1822000:
+	mapannounce "bat_a01", "马罗尔七世：暂且放下你们的忠诚与信念，特拉峡谷之战就此结束。",bc_map,"0x99CC00";
+	end;
+
+OnTimer1825000:
+	mapannounce "bat_a01", "阿塞尔、斯万德里：遵命。",bc_map,"0x99CC00";
+	end;
+
+OnTimer1830000:
+	mapwarp "bat_a01","bat_room",154,150;
+	donpcevent "countdown#bat_a01::OnStop";
+	end;
+}
+
+/*
+bat_a01,351,75,3	script	Croix Camp Soldier#bat_a01_guide	934,{
+	mes "Loading...";
+	close;
+}
+
+bat_a01,356,326,3	script	Guillaume Camp Soldier#bat_a01_guide	934,{
+	mes "Loading...";
+	close;
+}
+*/
+
+bat_a01,1,1,3	script	Release all#a01	81,{
+	set .@i, callfunc("F_GM_NPC",1854,0);
+	if (.@i == -1) {
+		mes "已取消。";
+		close;
+	} else if (.@i == 0) {
+		end;
+	} else {
+		mes "有什么可以帮您？";
+		next;
+		switch(select("全部清场。:取消。")) {
+		case 1:
+			mes "再见。";
+			close2;
+			mapwarp "bat_a01","bat_room",154,150;
+			end;
+		case 2:
+			mes "已取消。";
+			close;
+		}
+	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#tierra01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "卡洛斯中尉";
+		unloadnpc "艾奥尔中尉";
+		unloadnpc "#bat_a01_quest_a";
+		unloadnpc "#bat_a01_quest_b";
+		unloadnpc "back_bgrooma01a";
+		unloadnpc "back_bgrooma01b";
+		unloadnpc "A_CODE#bat_a01";
+		unloadnpc "B_CODE#bat_a01";
+	}
+	end;
+}

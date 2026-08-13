@@ -1,0 +1,1593 @@
+//===== rAthena Script =======================================
+//= 爪哇咿（恋人乐园）城
+//===== By: ==================================================
+//= jAthena (1.0)
+//= DNett123 (1.1 - 1.5)
+//= L0ne_w0lf
+//===== Current Version: =====================================
+//= 3.7
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 爪哇咿城市 NPC
+//===== Additional Comments: =================================
+//= 1.0 Done By jAthena
+//= 1.1 Rough Translation [DNett123]
+//= 1.2 Started Grammer Corrections [DNett123]
+//= 1.3 Some Edits Thanks To Vidar & Fusion [DNett123]
+//= 1.4 Edited Dancer, Thanks ceskil [DNett123]
+//= 1.5 Fixed Script, and spelling errors, some thanks to Sparkles [DNett123]
+//= 1.6 Final corrections (not complete), thanks to the public, and DNett123!
+//= 1.6c added missing monsters. Still 1 type is missing [Lupus]
+//= 1.7 Fixed a lot of typos [Nexon]
+//= 1.8 Removed monster spawns, added aegis ep 8.5 spawns to npc/mobs/fields/jawaii.txt [MasterOfMuppets]
+//= 2.0 Updated the npcs according to iRO [MasterOfMuppets]
+//= 2.01 fixed missing @ at randomdrink, thanks to theultramage [Lupus]
+//= 2.02 Fixed Classic Suite NPC warping directly above a warp [Evera]
+//= 3.0 Rescripted to Aegis 10.3 standard. Contains all Jawaii-related NPCs. [L0ne_W0lf]
+//= 3.1 Fixed bugs with getpartnerid() (it never returns 1), fixed some conditons,
+//=     replaced getpartnerid() with ispartneron() at some tri-forks [Lupus]
+//= 3.2 Reverted ispartneron() BACK to getpartnerid(). [L0ne_W0lf]
+//=     None of the NPCs need the player's partner to be online.
+//= 3.3 Just a small fix up on the Bartender. [L0ne_W0lf]
+//= 3.3a Just a little typo error. [Samuray22]
+//= 3.4 Added missing checkweights. [L0ne_W0lf]
+//= 3.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 3.6 Fixed bartender so he no longer hangs. [L0ne_W0lf]
+//= 3.7 Added Izlude RE coordinates. [Euphy]
+//============================================================
+
+// 爪哇咿交通
+//============================================================
+jawaii,239,112,7	script	船员#toizu	100,{
+	mes "[船员]";
+	mes "这条船";
+	mes "正开往";
+	mes "^666699依斯鲁得岛^000000。";
+	mes "在爪哇咿玩得开心吗？";
+	mes "出发前最好检查一下，";
+	mes "看看有没有落下什么东西。";
+	next;
+	mes "[船员]";
+	mes "那么，";
+	mes "要回";
+	mes "依斯鲁得岛吗？";
+	next;
+	if (select("回去。:取消。") == 1) {
+		mes "[船员]";
+		mes "那么，让我";
+		mes "送你前往";
+		mes "依斯鲁得岛。";
+		close2;
+		if(checkre(0))
+			warp "izlude",195,212;
+		else
+			warp "izlude",176,182;
+		end;
+	}
+	mes "[船员]";
+	mes "慢慢来，";
+	mes "想逛多久";
+	mes "就逛多久。";
+	mes "毕竟，这里";
+	mes "可不是能常来的";
+	mes "地方，你说呢？";
+	close;
+}
+
+jawaii,122,263,5	script	船员#toalbe	100,{
+	mes "[船员]";
+	mes "这条船";
+	mes "正开回";
+	mes "^003399艾尔贝塔^000000。";
+	mes "在爪哇咿玩得开心吗？";
+	mes "出发前最好检查一下，";
+	mes "看看有没有落下什么东西。";
+	next;
+	mes "[船员]";
+	mes "那么，";
+	mes "准备好回";
+	mes "艾尔贝塔了吗？";
+	next;
+	if (select("回去。:取消。") == 1) {
+		mes "[船员]";
+		mes "那么，让我";
+		mes "送你回";
+		mes "艾尔贝塔。";
+		close2;
+		warp "alberta",192,157;
+		end;
+	}
+	mes "[船员]";
+	mes "好啊……";
+	mes "尽量享受";
+	mes "你的假期吧。";
+	mes "你什么时候准备好，";
+	mes "我们随时";
+	mes "可以出发。";
+	close;
+}
+
+// 爪哇咿普通 NPC
+//============================================================
+jawaii,188,218,7	script	秘密酒店小姐#Jawaii	80,{
+	mes "[秘密酒店小姐]";
+	mes "哎呀！";
+	mes "你不是要去";
+	mes "酒馆吧？";
+	next;
+	if (select("不，我不去。:当然要去~") == 1) {
+		mes "[秘密酒店小姐]";
+		mes "呼~！";
+		mes "谢天谢地！";
+		mes "只是……";
+		mes "酒馆恐怕";
+		mes "不是你消遣的";
+		mes "好去处。";
+		next;
+	}
+	mes "[秘密酒店小姐]";
+	mes "虽然我在那里上班，";
+	mes "但我还是不敢相信有那种地方存在！";
+	mes "我是说，卢恩·米德加兹王国";
+	mes "不是禁酒了吗！";
+	next;
+	mes "[秘密酒店小姐]";
+	mes "我不知道单身的人";
+	mes "是怎么找到这个地方的。";
+	mes "但我听说各种各样的人";
+	mes "怀着各种各样的理由来这里。";
+	next;
+	mes "[秘密酒店小姐]";
+	mes "我甚至见过未婚的单身人士";
+	mes "专程来买醉的！噢！";
+	mes "而且不知为什么，";
+	mes "酒馆里一直有人失踪！";
+	next;
+	mes "[秘密酒店小姐]";
+	mes "不知道发生了什么事？";
+	mes "^666666*唉*^000000 我虽然在那里当服务员，";
+	mes "但还是想劝你别进去……";
+	close;
+}
+
+jawaii,220,235,3	script	爪哇咿住民#heart	724,{
+	mes "[爪哇咿住民]";
+	mes "你知道爪哇咿";
+	mes "最美的地方";
+	mes "是哪里吗？";
+	next;
+	mes "[爪哇咿住民]";
+	mes "就是'心形岛'，";
+	mes "就在北边不远处。";
+	mes "心形岛周围的水不深，";
+	mes "小心的话直接走过去就行。";
+	next;
+	mes "[爪哇咿住民]";
+	mes "那里是和心爱的人";
+	mes "共度亲密时光的最佳去处。";
+	mes "清幽僻静，风景如画。";
+	next;
+	mes "[爪哇咿住民]";
+	mes "当然，单身的话";
+	mes "最好不要一个人去那里。";
+	mes "不然看起来";
+	mes "实在太可怜了！";
+	close;
+}
+
+jawaii,240,146,5	script	爪哇咿住民#desc1	724,{
+	mes "[爪哇咿住民]";
+	mes "欢迎来到爪哇咿！";
+	next;
+	mes "[爪哇咿住民]";
+	mes "在这里，你可以不受打扰地";
+	mes "享受蜜月。";
+	mes "连那个臭名昭著的单身军团";
+	mes "都烦不到你！";
+	next;
+	mes "[爪哇咿住民]";
+	mes "嗯，岛上虽然有一些怪物，";
+	mes "但只要你不先攻击它们就没事。";
+	mes "就把它们当作这座岛的原住民，";
+	mes "另一道风景线吧。";
+	close;
+}
+
+jawaii,168,247,5	script	爪哇咿住民#desc2	724,{
+	mes "[爪哇咿住民]";
+	mes "啊，你一定是游客吧。";
+	mes "迷路的话就往西走。";
+	mes "新婚夫妇的住处";
+	mes "在爪哇咿的西边。";
+	mes "这里的住宿";
+	mes "相当不错。";
+	next;
+	mes "[爪哇咿住民]";
+	mes "有四种不同主题的房间，";
+	mes "可以按喜好挑选。";
+	mes "想了解更多信息的话，";
+	mes "附近有导游可以问。";
+	next;
+	mes "[爪哇咿住民]";
+	mes "想回去的话，请到西北方";
+	mes "搭乘去艾尔贝塔的船。";
+	mes "想去依斯鲁得岛的话，";
+	mes "东南方有船在等你。";
+	close;
+}
+
+jawaii,165,121,1	script	爪哇咿住民#desc3	724,{
+	mes "[爪哇咿住民]";
+	mes "爪哇咿~";
+	mes "爪~哇咿~";
+	mes "在这里能找到";
+	mes "幸福~";
+	next;
+	mes "[爪哇咿住民]";
+	mes "噢，是不是很美？";
+	mes "你什么都不用做，";
+	mes "只要放松身心，呼吸宁静的气息。";
+	mes "这就是爪哇咿";
+	mes "最棒的地方之一。";
+	next;
+	mes "[爪哇咿住民]";
+	mes "噢！这个舞台有时会举办演唱会。";
+	mes "如果你擅长唱歌，";
+	mes "何不上台";
+	mes "为我们唱一首？";
+	next;
+	mes "[爪哇咿住民]";
+	mes "爪哇咿~";
+	mes "爪~哇咿~";
+	mes "在这里能找到";
+	mes "幸福~";
+	close;
+}
+
+jawaii,141,200,3	script	服务生#sroom	798,{
+	mes "[服务生]";
+	mes "欢、欢迎……？";
+	mes "这、这、这是我们";
+	mes "温、温馨的甜蜜房。";
+	mes "我、我们刚为你";
+	mes "打、打扫过这、这间房，";
+	mes "当、当然啦。";
+	next;
+	mes "[服务生]";
+	mes "费、费用是";
+	mes "每人 1000 Zeny？";
+	mes "请、请付我钱，";
+	mes "我、我就让你进去。我发、发誓……！";
+	next;
+	mes "[服务生]";
+	mes "我、我还可以帮你提、提行李。";
+	mes "但、但要先付钱。不然我老、老板";
+	mes "会不高兴，然后……^666666*咽口水*^000000";
+	next;
+	mes "[服务生]";
+	mes "^333333把我打死……^000000";
+	next;
+	if (select("使用。:取消。") == 1) {
+		mes "[服务生]";
+		if (Zeny > 999) {
+			mes "非、非常感谢！";
+			mes "让、让我为你打、打开房门。";
+			mes "谢、谢谢惠顾。";
+			mes "祝、祝你愉快。";
+			close2;
+			set Zeny, Zeny-1000;
+			warp "jawaii_in",116,64;
+			end;
+		}
+		mes "糟了！糟了糟了糟了。";
+		mes "钱、钱不够？";
+		mes "对、对不起，但不付钱";
+		mes "就让你进去的话，";
+		mes "老板会打、打我的……";
+		close;
+	}
+	mes "[服务生]";
+	mes "^666666*吸鼻子*^000000";
+	mes "但、但我保证这间房是最干净、";
+	mes "最、最漂亮的房间！请、请！";
+	mes "一、一定要再来！";
+	emotion ET_CRY;
+	close;
+}
+
+jawaii,108,199,5	script	服务生#antroom	74,{
+	mes "[服务生]";
+	mes "欢迎光临";
+	mes "古董房。";
+	next;
+	mes "[服务生]";
+	mes "这间房为恋人们";
+	mes "提供奢华优雅的氛围。";
+	mes "年轻情侣所需的一切舒适，";
+	mes "这里一应俱全。";
+	next;
+	mes "[服务生]";
+	mes "所有房间的基本结构都一样，";
+	mes "但每间都有独特的装潢，";
+	mes "迎合不同人的品味。";
+	next;
+	mes "[服务生]";
+	mes "如果想住在这里，";
+	mes "每人需先支付 1,000 Zeny 的费用。";
+	mes "既然是来留下蜜月美好回忆的，";
+	mes "就该住最好的房间。";
+	next;
+	mes "[服务生]";
+	mes "决定选古董房的话请尽管告诉我。";
+	mes "一旦选好，";
+	mes "我就带你过去。";
+	next;
+	if (select("使用。:取消。") == 1) {
+		mes "[服务生]";
+		if (Zeny > 999) {
+			mes "感谢";
+			mes "惠顾";
+			mes "我们的服务。";
+			mes "请……";
+			mes "好好";
+			mes "享受。";
+			close2;
+			set Zeny, Zeny-1000;
+			warp "jawaii_in",129,110;
+			end;
+		}
+		mes "抱歉，您的钱似乎不够。";
+		mes "如果可以的话，何不先看看";
+		mes "手头有多少钱，";
+		mes "再想想办法？";
+		close;
+	}
+	mes "[服务生]";
+	mes "请……";
+	mes "慢慢考虑。";
+	mes "休闲的时候";
+	mes "不必着急。";
+	close;
+}
+
+jawaii,107,189,5	script	服务生#horoom	93,{
+	mes "[服务生]";
+	mes "我带你去";
+	mes "蜜月房。";
+	mes "费用 1,000 Zeny。";
+	next;
+	mes "[服务生]";
+	mes "要去吗？";
+	next;
+	if (select("使用。:取消。") == 1) {
+		mes "[服务生]";
+		if (Zeny > 999) {
+			mes "呃，好吧。";
+			mes "走吧。";
+			close2;
+			set Zeny, Zeny-1000;
+			warp "jawaii_in",86,117;
+			end;
+		}
+		mes "你……";
+		mes "钱";
+		mes "不够。";
+		mes "拜托，浪漫";
+		mes "是要花钱的，懂吗？";
+		close;
+	}
+	mes "[服务生]";
+	mes "没问题。";
+	close;
+}
+
+jawaii,112,173,7	script	服务生#villroom	93,{
+	mes "[服务生]";
+	mes "您好，";
+	mes "过得好吗？";
+	mes "在找";
+	mes "住的地方吗？";
+	next;
+	mes "[服务生]";
+	mes "这叫别墅房。";
+	mes "我向喜欢居家般";
+	mes "舒适氛围的客人";
+	mes "推荐这间房。";
+	next;
+	mes "[服务生]";
+	mes "和其他房间一样，";
+	mes "住宿费是 1,000 Zeny。";
+	mes "如果您愿意，我现在就可以";
+	mes "带您去别墅房。";
+	mes "要住吗？";
+	next;
+	if (select("使用。:取消。") == 1) {
+		mes "[服务生]";
+		if (Zeny > 999) {
+			mes "谢谢~";
+			mes "祝您住得愉快。";
+			close2;
+			set Zeny, Zeny-1000;
+			warp "jawaii_in",87,75;
+			end;
+		}
+		mes "噢，真可惜！";
+		mes "您的钱";
+		mes "好像不够……？";
+		mes "何不请您的伴侣";
+		mes "帮您分担";
+		mes "费用呢？";
+		close;
+	}
+	mes "[服务生]";
+	mes "没问题~";
+	mes "有兴趣的话，可以看看蜜月房。";
+	mes "虽然看房的服务生莎奇很害羞，";
+	mes "但房间真的很漂亮。";
+	close;
+}
+
+jawaii,214,168,5	script	蜜月向导#Jawaii	71,{
+	mes "[蜜月向导]";
+	mes "没有比爪哇咿";
+	mes "更适合度蜜月的";
+	mes "地方了。";
+	next;
+	mes "[蜜月向导]";
+	mes "何不充分利用在这里的时光，";
+	mes "留下多年后仍会珍藏的甜蜜回忆呢？";
+	next;
+	mes "[蜜月向导]";
+	mes "能唤起幸福时光的纪念品，";
+	mes "可以成为你最珍贵的财产。";
+	mes "比如你们的结婚戒指，";
+	mes "或者婚礼上穿的礼服和婚纱……";
+	next;
+	mes "[蜜月向导]";
+	mes "即使婚礼已经结束，";
+	mes "回望婚礼的幸福回忆不也很美好吗？";
+	mes "现在有了便宜的魔法相册，";
+	mes "你就能做到了！";
+	next;
+	mes "[蜜月向导]";
+	mes "它的名字是……";
+	mes "'蜜月的回忆'！！";
+	next;
+	mes "[蜜月向导]";
+	mes "它会用魔法瞬间把你们带到婚礼殿堂！";
+	mes "只要 50,000 Zeny……";
+	next;
+	if (select("我要买。:不用了，谢谢。") == 1) {
+		mes "[蜜月向导]";
+		if (Zeny > 49999) {
+			set Zeny, Zeny-50000;
+			getitem 681,1;// Memory_Of_Wedding
+			mes "非常感谢~！";
+			mes "请记住，";
+			mes "要在对你们两人";
+			mes "都有特别意义的地方，";
+			mes "和伴侣一起使用。";
+			close;
+		}
+		mes "'蜜月的回忆'售价 50,000 Zeny。";
+		mes "但您现在似乎没带够钱。";
+		mes "也许您可以和伴侣凑钱，";
+		mes "一起买下蜜月的回忆？";
+		close;
+	}
+	mes "[蜜月向导]";
+	mes "即使你们的关系走到尽头，";
+	mes "两人共有的回忆也会永远留存……";
+	close;
+}
+
+// 爪哇咿内部
+//============================================================
+jawaii_in,25,94,0	script	服务生#jaw1	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		mes "总之，真高兴看到你们两位结婚了。";
+		mes "祝你们永远幸福~";
+		next;
+		mes "[服务生]";
+		mes "如果碰到没礼貌的客人，请多加小心。";
+		mes "他们可能喝醉了干出蠢事。";
+		mes "你知道的，";
+		mes "就是那样……";
+		close;
+	}
+	else if (!getpartnerid()) {
+		mes "希望您在这里";
+		mes "过得愉快。";
+		mes "但请别";
+		mes "喝太多~";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,25,96,0	script	服务生#jaw2	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "希望您与心爱的人在这里度过愉快时光。";
+		mes "这里是不是又温馨又舒适，";
+		mes "浪漫气氛十足？";
+		next;
+		mes "[服务生]";
+		mes "要是没有那些'无敌单身军团'的怪人，";
+		mes "这里就完美了。";
+		mes "不知怎么，几个呆瓜摸到这里来了。";
+		mes "让他们见鬼去吧！";
+		close;
+	}
+	else if (!getpartnerid()) {
+		mes "祝您愉快！但请千万";
+		mes "别打扰这里幸福的新婚夫妇！";
+		close;
+	}
+	mes "希望您度过美好的时光~";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,25,98,0	script	服务生#jaw3	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "噢~";
+		mes "看看你们……";
+		if (Sex == SEX_MALE)
+			mes "你和妻子真是天造地设~";
+		else
+			mes "你和丈夫真是天造地设~";
+		mes "啊啊啊，我也想";
+		mes "快点结婚~！";
+		close;
+	}
+	else if (!getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "嗯……？";
+		mes "你看起来不像";
+		mes "已婚的人，是吧？";
+		if (Sex == SEX_MALE) {
+			next;
+			mes "[服务生]";
+			mes "我做饭打扫都很在行";
+			mes "^666666*咳咳*^000000 而且我^FF0000身材很好^000000。";
+			mes "你觉得怎么样……？";
+		}
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,25,100,0	script	服务生#jaw4	724,{
+	mes "[服务生]";
+	mes "欢迎光临";
+	mes "爪哇咿酒馆~";
+	if (getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "噢~";
+		mes "和伴侣一起来，";
+		mes "你看起来好幸福！";
+		mes "真让人羡慕~";
+		close;
+	}
+	else if (!getpartnerid()) {
+		mes "希望你玩得愉--";
+		mes "等一下……！";
+		next;
+		mes "[服务生]";
+		mes "你……";
+		mes "你该不会是";
+		mes "无敌单身军团的人吧！";
+		next;
+		mes "[服务生]";
+		mes "好吧，不管你做什么，";
+		mes "别灰心丧气、借酒浇愁，";
+		mes "然后去骚扰新婚夫妇！";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,30,94,4	script	服务生#jaw5	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "恭喜你们两位！";
+		next;
+		mes "[服务生]";
+		mes "^666666*唉……*^000000";
+		mes "^333333希望那些单身军团的笨蛋";
+		mes "别再喝醉了干蠢事……";
+		close;
+	}
+	else if (!getpartnerid()) {
+		mes "等一下。你是……！";
+		next;
+		mes "[服务生]";
+		mes "喂--！";
+		mes "这里不欢迎你！";
+		mes "停、停下！别再喝了！马上！";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,30,96,4	script	服务生#jaw6	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "天哪……！";
+		mes "最近我在这里应付了太多醉汉！";
+		mes "照看这一切真的好辛苦……";
+		close;
+	}
+	else if (!getpartnerid()) {
+		mes "我理解你想放松休息一下，";
+		mes "但请注意别喝太多。";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,30,98,4	script	服务生#jaw7	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		mes "噢！你和伴侣看起来真是绝配。";
+		mes "就像，嗯，";
+		mes "枪和子弹！不对……？";
+		next;
+		mes "[服务生]";
+		mes "要不……";
+		mes "牛奶和饼干？";
+		mes "金酒和汤力水？";
+		mes "成龙";
+		mes "和洪金宝……？";
+		mes "嗯嗯……";
+		close;
+	}
+	else if (!getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "嗯，我觉得这里不适合你。";
+		mes "不过，只要你不闹事，";
+		mes "喝喝酒、乐一乐";
+		mes "也无妨。";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,30,100,4	script	服务生#jaw8	724,{
+	mes "[服务生]";
+	mes "欢迎光临爪哇咿酒馆~";
+	if (getpartnerid()) {
+		mes "就像月亮和星星，";
+		mes "你和伴侣看起来完美登对。";
+		mes "我真心为你们高兴！";
+		close;
+	}
+	else if (!getpartnerid()) {
+		next;
+		mes "[服务生]";
+		mes "你看起来不像属于这里的人，";
+		mes "但希望你早日找到完美的一半。";
+		mes "玩得开心！";
+		close;
+	}
+	mes "希望您度过美好的时光。";
+	close;
+
+OnWelcome:
+	emotion ET_CHUP;
+	end;
+OnSolo:
+	emotion ET_HUK;
+	end;
+}
+
+jawaii_in,28,96,0	script	jaw_em_order#Jawaii	-1,3,3,{
+OnTouch_:
+	if (getpartnerid()) {
+		donpcevent "服务生#jaw8::OnWelcome";
+		donpcevent "服务生#jaw7::OnWelcome";
+		donpcevent "服务生#jaw6::OnWelcome";
+		donpcevent "服务生#jaw5::OnWelcome";
+		donpcevent "服务生#jaw4::OnWelcome";
+		donpcevent "服务生#jaw3::OnWelcome";
+		donpcevent "服务生#jaw2::OnWelcome";
+		donpcevent "服务生#jaw1::OnWelcome";
+		end;
+	}
+	donpcevent "服务生#jaw8::OnSolo";
+	donpcevent "服务生#jaw7::OnSolo";
+	donpcevent "服务生#jaw6::OnSolo";
+	donpcevent "服务生#jaw5::OnSolo";
+	donpcevent "服务生#jaw4::OnSolo";
+	donpcevent "服务生#jaw3::OnSolo";
+	donpcevent "服务生#jaw2::OnSolo";
+	donpcevent "服务生#jaw1::OnSolo";
+	end;
+}
+
+jawaii_in,15,104,0	script	外场服务生#jawaii	80,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FF * 等一下！ *";
+		mes "你现在身上带的物品太多了。";
+		mes "请把一些东西存进卡普拉仓库再试一次。^000000";
+		close;
+	}
+	if (getpartnerid()) {
+		mes "[外场服务生]";
+		mes "您好，";
+		mes "需要什么？";
+		emotion ET_CHUP;
+		next;
+		switch(select("给我食物。:给我饮料。:酒吧在哪？")) {
+		case 1:
+			mes "[外场服务生]";
+			mes "1 份肉";
+			mes "1,000 Zeny。";
+			mes "要来一份吗？";
+			next;
+			if (select("要。:哇--！太贵了！") == 1) {
+				mes "[外场服务生]";
+				if (Zeny > 999) {
+					set Zeny, Zeny-1000;
+					getitem 517,1; //Meat
+					mes "给您~";
+					mes "请慢用~！";
+					close;
+				}
+				mes "抱歉，但是……";
+				mes "钱不够……";
+				close;
+			}
+			mes "[外场服务生]";
+			mes "如果";
+			mes "需要什么，";
+			mes "请尽管吩咐。";
+			close;
+
+		case 2:
+			mes "[外场服务生]";
+			mes "1 瓶黄色药水";
+			mes "1,000 Zeny。";
+			mes "要来一瓶吗？";
+			next;
+			if (select("要。:哇--！太贵了！") == 1) {
+				mes "[外场服务生]";
+				if (Zeny > 999) {
+					set Zeny, Zeny-1000;
+					getitem 503,1;// Yellow_Potion
+					mes "给您~";
+					mes "请慢用~！";
+					close;
+				}
+				mes "抱歉，但是您的钱不够？！";
+				close;
+			}
+			mes "[外场服务生]";
+			mes "如果";
+			mes "需要什么，";
+			mes "请尽管吩咐。";
+			close;
+
+		case 3:
+			mes "[外场服务生]";
+			mes "噢，往酒馆中间走就是了。";
+			mes "祝您玩得开心，";
+			mes "但请注意别喝太多！";
+			mes "玩得愉快！";
+			close;
+		}
+	}
+	emotion ET_HUK;
+	mes "[外场服务生]";
+	mes "喂，喂……！";
+	mes "我不知道";
+	mes "你为什么来这里……";
+	next;
+	mes "[外场服务生]";
+	mes "但我们绝不容忍单身的人";
+	mes "在这里打扰幸福的新婚夫妇。";
+	mes "喝完你的酒";
+	mes "就离开吧！";
+	next;
+	if (Select("我是单身军团的成员！！:……我只是想来恭喜他们……") == 1) {
+		mes "[服务生]";
+		mes "是啊，是啊。";
+		mes "省省吧。";
+		mes "你就不能为别人";
+		mes "感到高兴吗？！";
+		next;
+		mes "[服务生]";
+		mes "^666666*唉*^000000";
+		mes "等你和伴侣一起来的时候，";
+		mes "这里随时欢迎你，";
+		mes "好吗？";
+		close;
+	}
+	mes "[服务生]";
+	mes "啊？你刚才是说";
+	mes "想来";
+	mes "恭喜他们？";
+	mes "噢，你一定和";
+	mes "其中一对新人";
+	mes "是好朋友……";
+	next;
+	mes "[服务生]";
+	mes "对不起！";
+	mes "请原谅";
+	mes "我的无礼。";
+	mes "希望您";
+	mes "玩得愉快。";
+	close;
+}
+
+jawaii_in,28,124,0	script	调酒师#jaw	46,{
+	mes "[调酒师]";
+	mes "欢迎光临";
+	mes "爪哇咿酒馆吧台。";
+	mes "想喝";
+	mes "点什么？";
+	next;
+	if (Zeny < 99) {
+		mes "[调酒师]";
+		if (rand(1,100) > 29) {
+			mes "嗯，抱歉，";
+			mes "但你的钱";
+			mes "不够";
+			mes "买一杯酒。";
+			close;
+		}
+		mes "....嗯...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "喂……！";
+		mes "调酒师……";
+		mes "再给我来一杯。";
+		next;
+		mes "[调酒师]";
+		mes "好吧……";
+		mes "这杯我请。";
+		mes "喝吧。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "谢谢。";
+		close2;
+		percentheal -100,0;
+		end;
+	}
+	while(1) {
+		switch(select("听调酒师推荐。:我要一杯'神枪手'。:我要一杯'科博'。:我要一杯'炸弹'。:我要一杯'夜魔'。")) {
+		case 1:
+			set .@roof_jaw,.@roof_jaw+3;
+			if (.@roof_jaw > 9) {
+				mes "[调酒师]";
+				mes "嗯……";
+				mes "你好像已经";
+				mes "喝得够多了。";
+				mes "确定你没事吗？";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "调酒师，";
+				mes "我好沮丧，";
+				mes "因为……";
+				input .@inputstr$;
+				mes .@inputstr$+"...";
+				next;
+				mes "[调酒师]";
+				mes "给你……";
+				mes "让我为你调一杯";
+				mes "^0000FF'特调 J&Z'^000000。";
+				mes "这杯我请。";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "谢谢……";
+				mes "太感谢了……";
+				close2;
+				percentheal -100,0;
+				end;
+			}
+			if (Zeny > 99) set Zeny, Zeny-100;
+			switch(rand(4)) {
+			case 1:
+				mes "[调酒师]";
+				mes "嗯……";
+				mes "这杯鸡尾酒怎么样？";
+				next;
+				mes "[调酒师]";
+				mes "我推荐";
+				mes "'^0000FF巴卡迪 151^000000'。";
+				mes "这是海盗喝的酒！";
+				next;
+				mes "^3355FF你端详着";
+				mes "装着光泽棕色液体的";
+				mes "小酒杯";
+				mes "……^000000";
+				next;
+				mes "^3355FF杯子虽小，分量不多，";
+				mes "但里面的液体闻起来";
+				mes "依然相当危险……^000000";
+				next;
+				mes "[调酒师]";
+				mes "它烈性又易燃，";
+				mes "你可能会觉得";
+				mes "喉咙在燃烧。";
+				next;
+				mes "^3355FF你一口灌了下去。^000000";
+				specialeffect2 EF_VENOMDUST;
+				percentheal -20,0;
+				next;
+				break;
+			case 2:
+				mes "[调酒师]";
+				mes "嗯……";
+				mes "这杯鸡尾酒怎么样？";
+				next;
+				mes "[调酒师]";
+				mes "我推荐'^0000FF双倍黑俄罗斯^000000'。";
+				mes "它会让你梦见躺在辽阔的俄罗斯原野上……";
+				next;
+				mes "^3355FF你端详着加了冰块、";
+				mes "盛着深棕色液体的大酒杯。";
+				mes "香气中有一丝甜味，";
+				mes "还有一种让你想起";
+				mes "留八字胡老男人的麝香味。^000000";
+				next;
+				mes "[调酒师]";
+				mes "这酒很烈，建议你慢慢喝。";
+				mes "据说双倍黑俄罗斯";
+				mes "是俄罗斯黑手党的最爱。";
+				next;
+				mes "^3355FF你小口小口地品着，";
+				mes "享受它浓郁";
+				mes "醇厚的风味。^000000";
+				specialeffect2 EF_FIREIVY;
+				percentheal -20,0;
+				next;
+				break;
+			case 3:
+				mes "[调酒师]";
+				mes "那么……";
+				mes "这杯如何……？";
+				next;
+				mes "[调酒师]";
+				mes "何不试试";
+				mes "'^0000FF火之吻";
+				mes "旋鸟踢^000000'？";
+				next;
+				mes "[调酒师]";
+				mes "别被它香甜的气味";
+				mes "和美丽的红色骗了。";
+				mes "这是最烈的酒之一。";
+				next;
+				mes "^3355FF你接过一只水晶鸡尾酒杯，";
+				mes "杯口撒着一圈糖。";
+				mes "香甜的气息让人垂涎。";
+				mes "但你也能感觉到，";
+				mes "这是一杯危险烈性的鸡尾酒。";
+				next;
+				mes "[调酒师]";
+				mes "先舔一口糖再喝。";
+				mes "那样会更甜一点，口感也更柔和。";
+				next;
+				mes "^3355FF你小心翼翼地抿了一口。^000000";
+				specialeffect2 EF_DECAGILITY;
+				percentheal -20,0;
+				next;
+				break;
+			Default:
+				mes "[调酒师]";
+				mes "我明白了……";
+				mes "让我想想";
+				mes "你可能";
+				mes "喜欢什么。";
+				next;
+				mes "[调酒师]";
+				mes "好，来一杯";
+				mes "'^0000FF白色玛格丽特^000000'";
+				mes "怎么样？";
+				next;
+				mes "[调酒师]";
+				mes "你会闻到令人垂涎的微酸柠檬香。";
+				mes "入口时，一股宜人暖流";
+				mes "会舒舒服服地传遍全身。";
+				next;
+				mes "^3355FF你接过一只精致的鸡尾酒杯，";
+				mes "杯口撒着盐和柠檬汁。";
+				mes "酸香确实让人垂涎。";
+				mes "这么诱人的东西怎么会有危险？";
+				next;
+				mes "[调酒师]";
+				mes "它酸酸甜甜，";
+				mes "也很受女性顾客欢迎。";
+				mes "我保证你会喜欢它的风味。";
+				next;
+				mes "^3355FF你一口饮尽";
+				mes "美味的玛格丽特。^000000";
+				specialeffect2 EF_MAGNUMBREAK;
+				percentheal -20,0;
+				next;
+			}
+			break;
+		case 2:
+			callsub S_KillChar,2,.@roof_jaw;
+			mes "想耍帅的时候，这杯是最佳选择。";
+			mes "它烈性又带着独特香气，";
+			mes "喝'神枪手'的人通常被视为品味不凡。";
+			next;
+			mes "^3355FF你接过一只朴素的酒杯，";
+			mes "里面是灰色的液体。";
+			mes "虽然闻起来微甜，";
+			mes "却像工业级烈酒。";
+			mes "是时候鼓起勇气抿一口了~";
+			next;
+			mes "[调酒师]";
+			mes "这酒又苦又甜，就像人生。";
+			mes "用舌头慢慢品，别一口闷。";
+			next;
+			mes "^3355FF你慢慢喝着";
+			mes "你的'神枪手'。^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "耶呼~！";
+			mes "我是牛仔英雄！";
+			mes "砰砰砰！";
+			next;
+			specialeffect2 EF_STEAL;
+			percentheal -10,0;
+			next;
+			break;
+
+		case 3:
+			callsub S_KillChar,2,.@roof_jaw;
+			mes "人们说，'科博'越喝越有味。";
+			mes "它会慢慢对上你的胃口，";
+			mes "就像老朋友的陪伴。";
+			mes "这是任何时候和任何人共饮的佳酿。";
+			next;
+			mes "^3355FF调酒师端来一只雕花精美的酒杯，";
+			mes "盛着钴蓝色的液体，放在你面前。";
+			mes "闻起来酸甜宜人。";
+			next;
+			mes "[调酒师]";
+			mes "这酒一旦尝过一口，就几乎停不下来。";
+			mes "口感顺滑，";
+			mes "入喉更加顺滑。";
+			next;
+			mes "^3355FF你三口喝光了酒。";
+			mes "嘴里满是";
+			mes "奢华的酸甜";
+			mes "滋味。^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "啊~~~~~！";
+			mes "这酒真好喝！";
+			specialeffect2 EF_SANCTUARY;
+			percentheal -10,0;
+			next;
+			break;
+
+		case 4:
+			callsub S_KillChar,2,.@roof_jaw;
+			mes "这杯献给想重温狂野青春岁月的人，";
+			mes "献给想纪念为正义与自由而战的人，";
+			mes "或者只是想喝到吐胃酸的人。";
+			mes "献给想缅怀为自由而战的人们……";
+			next;
+			mes "^3355FF你接过一只装满棕色液体的平底杯。";
+			mes "它有一股浓重的机油味，";
+			mes "让你想起火药。^000000";
+			next;
+			mes "[调酒师]";
+			mes "看起来分量多得一次喝不完，";
+			mes "但我建议你一口闷。";
+			mes "慢慢喝的话，你会醉倒的。";
+			next;
+			mes "^3355FF你握紧平底杯，";
+			mes "一饮而尽。^000000";
+			next;
+			mes "^3355FF你感觉醉得厉害。^000000";
+			specialeffect2 EF_BLASTMINEBOMB;
+			percentheal -10,0;
+			next;
+			break;
+
+		case 5:
+			callsub S_KillChar,1,.@roof_jaw;
+			mes "喜欢这杯酒的人不多。";
+			mes "但喜欢的人，爱得深沉。";
+			next;
+			mes "[调酒师]";
+			mes "虽然颜色漂亮诱人，";
+			mes "但外表会骗人。";
+			mes "大多数人喝过之后";
+			mes "会感到冰冷和空虚。";
+			next;
+			mes "^3355FF你接过一只歪斜的酒杯，";
+			mes "盛满紫色的液体。";
+			mes "虽然气味宜人，";
+			mes "但凑近时你涌起一阵奇怪的厌恶感。";
+			next;
+			mes "[调酒师]";
+			mes "不想喝的话现在就告诉我。";
+			mes "不过尝一次也好，就当是个体验。";
+			next;
+			mes "^3355FF你抿了一口，叹了口气。^000000";
+			next;
+			mes "^3355FF并向自己保证，这辈子再也不喝了。^000000";
+			specialeffect2 EF_HIT6;
+			percentheal -10,0;
+			next;
+			break;
+		}
+
+		mes "["+strcharinfo(0)+"]";
+		mes "老板……";
+		mes "再来一杯……";
+		next;
+	}
+	end;
+
+S_KillChar:
+	.@roof_jaw = getarg(1);
+	if (.@roof_jaw > 8) {
+		mes "[调酒师]";
+		mes "这杯我请。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "谢谢……";
+		mes "调酒师先生……";
+		close2;
+		percentheal -100,0;
+		end;
+	}
+	if (Zeny > 99) set Zeny, Zeny-100;
+	set .@roof_jaw,.@roof_jaw+getarg(0);
+	mes "[调酒师]";
+	mes "给您。";
+	next;
+	mes "[调酒师]";
+	return;
+}
+
+jawaii_in,43,115,0	script	客人#jaw_1	97,{
+	mes "[客人]";
+	if (!getpartnerid()) {
+		if (Zeny > 99) {
+			mes "咕噜噜……";
+			mes "可恶！我讨厌";
+			mes "这个地方！";
+			mes "我受够了！";
+			next;
+			mes "[客人]";
+			mes "我简直不敢相信自己的眼睛！";
+			mes "其他人看起来都幸福得恶心！";
+			mes "让我这么难受！";
+			mes "你也这么觉得，对吧？！";
+			next;
+			mes "[客人]";
+			mes "咕噜噜……";
+			mes "调酒师！";
+			mes "再给我来一杯！";
+			close;
+		}
+		mes "喂，你怎么不喝？";
+		mes "看来你是没钱了。";
+		mes "但我懂你的感受。";
+		mes "这地方到处卿卿我我，恶心透了吧？";
+		next;
+		mes "[客人]";
+		mes "嘿。";
+		mes "让我请你";
+		mes "喝一杯！";
+		next;
+		mes "[客人]";
+		mes "一口干了，忘掉你那悲惨的人生！";
+		mes "振作点，你还有大好未来，";
+		mes "眼前还有美酒！来，干~！";
+		next;
+		mes "^3355FF他为我点了一杯 JJ 特调。^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "可恶……！";
+		mes "可恶！笑到最后的";
+		mes "一定会是我！";
+		next;
+		mes "^3355FF你喝了个痛快。^000000";
+		close2;
+		percentheal -100,0;
+		end;
+	}
+	mes "你看起来好幸福……";
+	mes "希望你能";
+	mes "永远";
+	mes "这么幸福……";
+	mes " ";
+	mes "^666666*嗝……！*^000000";
+	close;
+}
+
+jawaii_in,41,106,3	script	客人#Cage	98,{
+	mes "[客人]";
+	if (getpartnerid()) {
+		mes "....呸！";
+		mes "你高兴什么？";
+		mes "毕竟谁都知道，婚姻不过是";
+		mes "绝望孤独的人玩的把戏！";
+		next;
+		mes "[客人]";
+		if (Sex == SEX_MALE) {
+			mes "我谁都不信！";
+			mes "把自己一辈子拴在";
+			mes "某个漂亮女人身上，";
+			mes "你就是个傻瓜！";
+			mes "听见没有？！";
+			mes "傻瓜！";
+		}
+		else {
+			mes "看看你！";
+			mes "把自己一辈子";
+			mes "拴在某个小白脸身上，";
+			mes "你就是个傻瓜！";
+			mes "听见没有？！傻瓜！";
+		}
+		next;
+		mes "[客人]";
+		mes "单身生活";
+		mes "才是真谛！";
+		mes "女人可以摧残我的";
+		mes "精神，但她们永远夺不走……";
+		mes "我的自由！";
+		close;
+	}
+	mes "喝吧，喝吧……！！";
+	mes "吃吧，吃吧……！！";
+	mes "来吧，";
+	mes "我单身的";
+	mes "兄弟！";
+	next;
+	mes "[客人]";
+	mes "我们是自由的……！";
+	mes "我们摆脱了";
+	mes "婚姻的地狱……！";
+	mes "我们是真诚又能干的";
+	mes "单身汉……！";
+	close;
+}
+
+// 普隆德拉内部
+//============================================================
+prt_in,173,13,4	script	客人#SoloHan	86,{
+	mes "[客人]";
+	if (!getpartnerid()) {
+		mes "天哪……";
+		mes "我想我醉了~";
+		mes "^666666*嗝……！*^000000";
+		next;
+		mes "[客人]";
+		mes "喂，你……！";
+		mes "你懂的，对吧？！";
+		mes "看着这些幸福的新婚夫妇，";
+		mes "你不来气吗？！";
+		mes "是吧~？我也是！";
+		next;
+		mes "[客人]";
+		mes "他们凭什么在我们这种人面前炫耀幸福--！！";
+		mes "^666666*吸鼻子*^000000 就因为他们找到了永恒的爱，";
+		mes "就觉得自己高人一等？！";
+		next;
+		mes "[客人]";
+		mes "我记得从前情侣都很含蓄，";
+		mes "卿卿我我都在关起门后。";
+		mes "现在倒好，当众牵手，当众搂抱。";
+		mes "拜托！开房去啊！";
+		next;
+		mes "[客人]";
+		mes "我是说，^666666*吸鼻子*^000000，";
+		mes "我又不是孤独什么的。";
+		mes "我才不不不不需要女人~！";
+		mes "对吧，巴丘卡！";
+		next;
+		mes "[巴丘卡]";
+		mes "...!";
+		emotion ET_BEST, getnpcid(0, "客人#Bachewcca");
+		next;
+		mes "[客人]";
+		mes "结不结婚其实无所谓，";
+		mes "对吧老兄？对吧？！";
+		mes "来！陪我喝！！";
+		next;
+		mes "^3355FF他突然把我当成了知己。";
+		mes "有点尴尬，但接受一杯";
+		mes "免费酒也不坏……^000000";
+		next;
+		mes "^3355FF* 咕噜咕噜咕噜 *^000000";
+		percentheal -10,0;
+		next;
+		mes "[客人]";
+		mes "那么，你说怎么样？";
+		mes "我们去个";
+		mes "有真正好酒的地方吧。";
+		while(1) {
+			next;
+			if (select("……再来一杯。:……那是个什么地方？") == 1) {
+				mes "[客人]";
+				mes "好~！";
+				mes "这才像话！";
+				mes "嘿，巴丘卡……";
+				mes "喝酒！";
+				next;
+				mes "[巴丘卡]";
+				mes "^666666*哼！*^000000";
+				specialeffect EF_TALK_SCREAM,AREA,"客人#Bachewcca";
+				next;
+				mes "[客人]";
+				mes "敬……";
+				mes "敬单身！";
+				mes "永、永远！！！";
+				next;
+				mes "^3355FF* 咕噜咕噜咕噜 *^000000";
+				percentheal -10,0;
+				next;
+				set .@jaw_roof,.@jaw_roof+2;
+				mes "[客人]";
+				if (.@jaw_roof > 8) {
+					mes "哇……";
+					mes "你没事吧？";
+					mes "你好像有点醉了……";
+					next;
+					mes "[客人]";
+					mes "现在正是让你签这个的完美时机！";
+					mes "放心，我会直接送你去天堂的！";
+					next;
+					if (select("签名:拒绝签名") == 1) {
+						mes "[客人]";
+						mes "好！";
+						mes "保重！";
+						mes "哈哈哈！";
+						close2;
+						percentheal 100,0;
+						break;
+					}
+					mes "[客人]";
+					mes "噢……";
+					mes "天哪。";
+					mes "这么说，你总是";
+					mes "这样扫兴咯？";
+					close;
+				}
+			}
+			if (.@jaw_roof > 6) {
+				mes "[客人]";
+				mes "^666666*嗝！*^000000";
+				mes "这么说你想找点";
+				mes "真正的乐子？好，那就在这里签个字。";
+				mes "包在我身上，我送你去天堂。";
+				next;
+				if (select("签名:拒绝签名") == 1) {
+					mes "[客人]";
+					mes "好~！";
+					mes "保重，玩得开心！";
+					mes "替我去骚扰那边几对情侣，好吗？";
+					close2;
+					percentheal 100,0;
+					break;
+				}
+				mes "[客人]";
+				mes "噢……";
+				mes "天哪。";
+				mes "难怪你单身。";
+				mes "乐子就在眼前你都认不出来。";
+				close;
+			}
+			set .@jaw_roof,.@jaw_roof+3;
+			mes "[客人]";
+			mes "喝，喝！";
+			mes "这点算什么！";
+			mes "多喝点，兄弟！";
+			next;
+			mes "[客人]";
+			mes "敬……";
+			mes "敬单身！";
+			mes "到永远。";
+			next;
+			mes "^3355FF*咕噜咕噜咕噜*^000000";
+			percentheal -10,0;
+			next;
+		}
+		warp "jawaii_in",44,124;
+		end;
+	}
+	else if (getpartnerid()) {
+		mes "天哪……";
+		mes "我想我醉了~";
+		mes "*嗝！*";
+		next;
+		mes "[客人]";
+		mes "……什么？！";
+		mes "天哪！";
+		mes "别在我眼前晃！";
+		if (Sex == SEX_MALE) {
+			mes "你闻起来就像";
+			mes "被老婆驯服的";
+			mes "男朋友什么的！";
+		}
+		else {
+			next;
+			mes "[客人]";
+			mes "我一眼就认出";
+			mes "爱唠叨的老婆！";
+			mes "去管你老公吧！";
+		}
+		next;
+		mes "[客人]";
+		mes "别来烦我！";
+		mes "我可不想沾上你的婚姻幸福。";
+		mes "来，巴丘卡！告诉他们，";
+		mes "他们这种人在这儿不受欢迎！";
+		next;
+		mes "[巴丘卡]";
+		mes "^666666*咕噜……！*^000000";
+		specialeffect EF_THROWITEM,AREA,"客人#Bachewcca";
+		close;
+	}
+	mes "天哪……";
+	mes "我想我醉了~";
+	mes "^666666*嗝！*^000000";
+	next;
+	mes "[客人]";
+	mes "怎么回事……？";
+	mes "这是我这周第三次烂醉了吗？";
+	mes "巴丘卡，帮我数数！";
+	close;
+}
+
+prt_in,170,14,0	script	客人#Bachewcca	89,{
+	mes "[巴丘卡]";
+	mes "..............";
+	mes "^666666*咕噜....咕噜...*^000000";
+	mes "咕噜噜！！真痛快！";
+	emotion ET_CRY;
+	close;
+}
+
+// 依斯鲁得岛
+//============================================================
+-	script	::Honeymoon_Helper_Izlude	-1,{
+	mes "[蜜月向导]";
+	mes "新婚夫妇和";
+	mes "老夫老妻们……";
+	mes "我们诚邀您前往";
+	mes "蜜月胜地爪哇咿！";
+	next;
+	switch(select("爪哇咿？:我们去爪哇咿吧~！:取消。")) {
+	case 1:
+		mes "[蜜月向导]";
+		mes "在远离米德加兹大陆的远方，";
+		mes "有一座小岛。";
+		mes "那是一座非常宁静美丽的度假岛，";
+		mes "只对情侣开放。";
+		next;
+		mes "[蜜月向导]";
+		mes "这是专为米德加兹居民提供的";
+		mes "特别蜜月度假套餐。";
+		mes "100,000 Zeny 的价格也许昂贵，";
+		mes "但绝对物有所值。";
+		next;
+		mes "[蜜月向导]";
+		mes "我向您保证，";
+		mes "婚姻中最幸福的时刻，";
+		mes "有一些就会发生在这座岛上。";
+		mes "这样的体验，能用金钱衡量吗？";
+		close;
+
+	case 2:
+		mes "[蜜月向导]";
+		if (!getpartnerid()) {
+			mes "呃……";
+			mes "很遗憾，单身人士不能上岛。";
+			mes "您何不去普隆德拉的酒馆，";
+			mes "忘掉孤独呢？";
+			close;
+		}
+		else if (Zeny > 99999) {
+			set Zeny, Zeny-100000;
+			mes "一路顺风……！！";
+			mes "让我送你们";
+			mes "前往'爪哇咿！'";
+			close2;
+			warp "jawaii",245,125;
+			end;
+		}
+		mes "如我所说，前往爪哇咿需要 100,000 Zeny。";
+		mes "何不请伴侣帮忙，";
+		mes "一起凑齐这趟旅行的费用呢？";
+		close;
+
+	case 3:
+		mes "[蜜月向导]";
+		mes "想与心爱的人共度私密时光，";
+		mes "没有比秘密前往";
+		mes "遥远的异域更好的方式了。";
+		next;
+		mes "[蜜月向导]";
+		mes "爪哇咿度假，";
+		mes "很可能就是你送给挚爱";
+		mes "最好的礼物~";
+		close;
+	}
+}

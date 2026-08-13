@@ -1,0 +1,563 @@
+//===== rAthena Script =======================================
+//= 马努克村
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 马努克特有的城镇 NPC。
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Added more town NPCs
+//= 1.2 Added more town NPCs
+//= 1.3 Enabled an NPC
+//============================================================
+
+// cat_enhance
+manuk,304,195,5	script	大兵#ep13pa829	454,{
+	if (isequipped(2782) == 1) {
+		mes "[大兵]";
+		mes "马努克一族主要以精炼灰色空洞为生，那些东西很久以前就被埋在深深的地下了。";
+		close;
+	}
+	else {
+		mes "[大兵]";
+		mes "Gdiios duuie Dssoas pogggd fdrul fdddoweet";
+		close;
+	}
+}
+
+manuk,274,239,5	script	大兵#ep13_2	455,{
+	if (isequipped(2782) == 1) {
+		mes "[大兵]";
+		mes "因为受了重伤，我再也不能吸收布拉迪恩精华了。";
+		mes "那些可恶的精灵袭击了我，把我弄成这样。";
+		close;
+		mes "[大兵]";
+		mes "真想把那些精灵全杀光……";
+		close;
+	}
+	else {
+		mes "[大兵]";
+		mes "Bhiio aaas dgwer fdds rrrrrpppp Ee";
+		close;
+		mes "[大兵]";
+		mes "Foi dsddff gggeeeerr pqowe";
+		close;
+	}
+}
+
+manuk,107,233,5	script	大兵#ep13_3	454,{
+	if (isequipped(2782) == 1) {
+		mes "[大兵]";
+		mes "快，我遇到大麻烦了。我把马努克金币全弄丢了。我想是掉在雪原上的什么地方了。天哪，我睡着之前明明还看见它们的！";
+		close;
+	}
+	else {
+		mes "[大兵]";
+		mes "Qosi dhhui rffd poaner ouh.";
+		close;
+	}
+}
+
+// ep13_2_hiki
+manuk,100,100,3	script	皮温	454,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[皮温]";
+		mes "你是……小不点。但你不像是精灵。";
+		mes "只要你不是该死的精灵，";
+		mes "你就不是我们的敌人！";
+		mes "在这个世界上，只有朋友和敌人！";
+		close;
+	}
+	else {
+		mes "[皮温]";
+		mes "As our wi nueo woud bus";
+		mes "Gw pii rooop pishe";
+		mes "Fw iusbn podim bn usow ";
+		mes "Psbh io whe pasn jd";
+		close;
+	}
+}
+
+manuk,188,216,3	script	扁可尼#ep13_2_1	449,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[扁可尼]";
+		mes "你来这里干什么？";
+		mes "你是人类吗？";
+		mes "如果你是人类，就不该来这里。";
+		next;
+		mes "[扁可尼]";
+		mes "约顿海姆是受祝福的圣地。";
+		mes "我们萨法族要用自己的双脚站起来。";
+		mes "反抗压迫！";
+		close;
+	}
+	else {
+		mes "[扁可尼]";
+		mes "Bdf sdio hs ioq";
+		mes "Wfn is ao ps od jd";
+		mes "No pip dd dow hso le";
+		next;
+		mes "[扁可尼]";
+		mes "Wsd oup nc xkh d";
+		mes "Rww o jsd sp";
+		mes "Yd aihd oa sd s dd";
+		close;
+	}
+}
+
+manuk,169,260,3	script	皮温#ep13_2_1	455,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[皮温]";
+		mes "我们萨法族永远在一起！";
+		mes "无论在哪里。我们永远彼此相连。";
+		mes "我不知道你从哪里来，但你应该学学我们的精神。";
+		close;
+	}
+	else {
+		mes "[皮温]";
+		mes "Ng go oois yus dd";
+		mes "You ii iaao nfb ud";
+		mes "Wqq ifn isp did";
+		mes "Uy ydf sd fs wee";
+		mes "Mgg gf fs d ff";
+		close;
+	}
+}
+
+manuk,218,163,3	script	高尔顿#ep13_2_1	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[高尔顿]";
+		mes "最近有些小不点在到处飞。";
+		mes "我不确定它们是不是苍蝇。";
+		mes "但真的很烦人。";
+		next;
+		mes "[高尔顿]";
+		mes "它们只能在很远的地方用小把戏。";
+		mes "但我能很快把它们踢飞。";
+		mes "它们太烦人了。但我最好别在它们身上浪费时间。";
+		close;
+	}
+	else {
+		mes "[高尔顿]";
+		mes "Ya sda sdou sh dbi";
+		mes "Av bu dgs ldo gp gf ";
+		mes "Jg gfs dsd fw eerr ";
+		next;
+		mes "[高尔顿]";
+		mes "Mb ih ids oj fd";
+		mes "Pg sdf dd sd fff";
+		mes "Bq wer jfsd fsd ut yy";
+		mes "Nx cxd fsd fs df ";
+		close;
+	}
+}
+
+manuk,266,199,5	script	高尔顿#ep13_2_2	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[高尔顿]";
+		mes "有了那些布拉迪恩，我现在可以放松了。";
+		mes "但我也担心我们很快就会把它们花光。";
+		close;
+	}
+	else {
+		mes "[高尔顿]";
+		mes "Bu iu bus sfi a sd";
+		mes "Zsd dwo uf sh osad ";
+		mes "Qdf aih fas io d hoas";
+		mes "Nas d iy as di";
+		close;
+	}
+}
+
+manuk,225,129,5	script	扁可尼#ep13_2_2	449,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[扁可尼]";
+		mes "嗯？谁？？你是谁？？";
+		mes "噢，你不是精灵。";
+		mes "我还以为你是精灵什么的。";
+		mes "总之，你是谁？你会说话吗？";
+		close;
+	}
+	else {
+		mes "[扁可尼]";
+		mes "Bao j pj a sd";
+		mes "Gi oh as d";
+		mes "Ya sd Yrt sd ad";
+		mes "Bq we ojj jd";
+		close;
+	}
+}
+
+manuk,286,147,3	script	皮温#ep13_2_2	454,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[皮温]";
+		mes "我永远不会忘记对那些叛徒的深仇大恨。";
+		mes "我记得我们的祖先是怎么死的。";
+		mes "我发誓要为他们报仇。";
+		next;
+		mes "[皮温]";
+		mes "首先，我要踢飞那些混蛋。";
+		mes "那些飞来飞去的小东西太烦我了。";
+		close;
+	}
+	else {
+		mes "[皮温]";
+		mes "Vio hs pf I aps";
+		mes "Vs ou oas de ee";
+		mes "Bzi sh da opd";
+		mes "Mc oju asop dj a ps";
+		next;
+		mes "[皮温]";
+		mes "Be juas da sd";
+		mes "Eoj ssr owq w e ";
+		mes "Wps dj i ao sj daasd asd";
+		close;
+	}
+}
+
+manuk,183,185,5	script	皮温#ep13_2_3	454,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[皮温]";
+		mes "我们的生命为萨法而存在。";
+		mes "反过来说，";
+		mes "萨法的生命也为我而存在。";
+		mes "哼哈哈哈！";
+		next;
+		mes "[皮温]";
+		mes "我们萨法族永远在一起！";
+		mes "无论在哪里！";
+		mes "为萨法欢呼！";
+		close;
+	}
+	else {
+		mes "[皮温]";
+		mes "Esd fas hdi as sp ad osd";
+		mes "Ns id pie sj idf";
+		mes "Rto osd ps ad ";
+		mes "Mi sho oo pesd";
+		next;
+		mes "[皮温]";
+		mes "N sd sou as d ";
+		mes "Ma asd psh ds ii ";
+		mes "Qso uf lj dhis id";
+		close;
+	}
+}
+
+manuk,256,143,3	script	高尔顿#ep13_2_3	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[高尔顿]";
+		mes "我要献身于";
+		mes "保护我的家人和萨法。";
+		mes "这就是我唯一的愿望……";
+		close;
+	}
+	else {
+		mes "[高尔顿]";
+		mes "Mr ishh qw e ee";
+		mes "Baa eou sh ua sd";
+		mes "Up idhs ish dk I jsd";
+		close;
+	}
+}
+
+manuk,245,124,3	script	皮温#ep13_2_4	455,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[皮温]";
+		mes "人类，你觉得我们的战斗很愚蠢，对吧？";
+		mes "是在浪费时间？";
+		mes "但我们能否生存，真的取决于这场战争。";
+		close;
+	}
+	else {
+		mes "[皮温]";
+		mes "Nsa dhi pao sdi a jp das";
+		mes "Uaa as iijds kn sdg f";
+		mes "Bzi hd sia pasd ";
+		mes "Es do ja pda sj d";
+		mes "Bs oju lujdi ni sdgf g ";
+		next;
+		mes "[皮温]";
+		mes "Us id jd nai dh";
+		close;
+	}
+}
+
+// ep13_2_npc
+man_in01,346,135,0	script	 工人#ep13bsg1	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "如果阀门每天不检查好，是很危险的。";
+		mes "事实上，出过一次事故。";
+		mes "光是想想就让我毛骨悚然。";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "Gs df o aj ud pa";
+		mes "N sd asw ewt jj ";
+		mes "Ud aso pda s ";
+		close;
+	}
+}
+
+man_in01,393,134,3	script	工人#ep13bsg2	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "什么！！什……噢……我……我没睡着！！";
+		mes "回去干活吧……对，干活……";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "Ns ad jai osd";
+		mes "Rt odj as jo dp as";
+		close;
+	}
+}
+
+man_in01,377,143,5	script	工人#ep13bsg3	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "嗯……运转正常……一点问题都没有……";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "Mou ii ros oa d d ";
+		close;
+	}
+}
+
+man_in01,333,128,5	script	工人#ep13bsg4	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "最近我的视力越来越差了。";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "Yw I eus ia d ap s";
+		close;
+	}
+}
+
+man_in01,336,128,5	script	工人#ep13bsg5	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "这不是很棒吗？";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "R tt osj dj d";
+		close;
+	}
+}
+
+man_in01,283,288,3	script	工人#ep13bsg6	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "今天有很多优质布拉迪恩，真是幸运。";
+		next;
+		mes "[工人]";
+		mes "这就是我们仅剩的一切了。";
+		close;
+	}
+	else {
+		mes "[工人]";
+		mes "Qw eI hs pado as d p ";
+		next;
+		mes "[工人]";
+		mes "Too fn ish d fd";
+		close;
+	}
+}
+
+// ep13_2_tre
+manuk,103,354,5	script	魔怒克高尔顿#door1	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克高尔顿]";
+		mes "这里是马努克，赫瓦格密尔的后裔萨法族居住的地方。";
+		close;
+	}
+	else {
+		mes "[魔怒克高尔顿]";
+		mes "Zd sng pps fsr";
+		close;
+	}
+}
+
+manuk,122,354,3	script	魔怒克高尔顿#door2	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克高尔顿]";
+		mes "这里是马努克，赫瓦格密尔的后裔萨法族居住的地方。";
+		close;
+	}
+	else {
+		mes "[魔怒克高尔顿]";
+		mes "To osn dia fg gh gh";
+		close;
+	}
+}
+
+manuk,99,334,5	script	魔怒克皮温#tre1	460,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克皮温]";
+		mes "高尔顿是勇敢的萨法战士。";
+		mes "我是皮温阶层，从事一般劳动。";
+		next;
+		mes "[魔怒克皮温]";
+		mes "多亏高尔顿的英勇，我们才能在守护精灵的骚扰下坚持这么久。";
+		mes "我们一直感激他们的付出。";
+		close;
+	}
+	else {
+		mes "[魔怒克皮温]";
+		mes "H dn i sid p sd ";
+		mes "Nd isjd sapd j s id";
+		mes "Bsi o ps dkm jgf";
+		mes "Eo oo ptr n sid";
+		close;
+	}
+}
+
+manuk,103,311,3	script	魔怒克皮温#tre2	455,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克皮温]";
+		mes "我的腿……";
+		mes "已经到时间了。";
+		close;
+	}
+	else {
+		mes "[魔怒克皮温]";
+		mes "Fn is d id ";
+		mes "Yon sdi dh so dps";
+		close;
+	}
+}
+
+manuk,194,189,3	script	魔怒克高尔顿#tre3	450,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克高尔顿]";
+		mes "欢迎来到马努克。";
+		mes "有什么可以帮您？";
+		close;
+	}
+	end;
+}
+
+manuk,293,203,3	script	魔怒克皮温#tre4	454,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克皮温]";
+		mes "嘿，小心点！";
+		mes "这种矿物是布拉迪恩，是我们一族的命脉。";
+		mes "如果不小心轻放，你就有麻烦了！";
+		close;
+	}
+	else {
+		mes "[魔怒克皮温]";
+		mes "Bmm ish di sd";
+		mes "Fii sd ani s a d s k ds ";
+		mes "Ti h is so so pd";
+		close;
+	}
+}
+
+manuk,253,173,3	script	魔怒克扁可尼#tre5	449,{
+	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
+		mes "[魔怒克扁可尼]";
+		mes "你看到那座雕像了吗？";
+		mes "他就是赫瓦格密尔，对我们萨法族来说如同传说一般的存在。";
+		mes "他是一位真正威严而勇敢的人。";
+		close;
+	}
+	else {
+		mes "[魔怒克皮温]";
+		mes "Ys oadj oa s d";
+		mes "Bni ii osd jo as das";
+		mes "Qa oj df isd oo o";
+		close;
+	}
+}
+
+// ep12_2_dailybs
+manuk,251,180,5	script	村落青年#ep13bs	454,{
+	if (isequipped(2782) == 1) {
+		mes "[村落青年]";
+		mes "已经过了我们约好的时间了，她怎么还没来！！？";
+		close;
+	}
+	else {
+		mes "[Asd]";
+		mes "Ywo di pi butfs oui Afbsu ";
+		close;
+	}
+}
+
+man_in01,360,137,5	script	修缮工人#ep13bs	454,{
+	if (isequipped(2782) == 1) {
+		mes "[修缮工人]";
+		mes "异族不允许进入。";
+		mes "这里很危险，请不要再靠近了。";
+		close;
+	}
+	else {
+		mes "[Asoui]";
+		mes "Fs iua sdjosow ww ";
+		mes "Adds wwpq iusnd ";
+		close;
+	}
+}
+
+man_in01,68,187,0	script	工人#ep13bs1	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "嗯，闻起来真香。";
+		mes "现在应该该翻面了。";
+		next;
+		mes "[工人]";
+		mes "硬岩猛犸牛排要稍微生一点才好吃！";
+		close;
+	}
+	else {
+		mes "[Tee]";
+		mes "As woue dpi sha we";
+		mes "Two psie bu le";
+		next;
+		mes "[Tee]";
+		mes "Tr sdou powee wwee ";
+		close;
+	}
+}
+
+man_in01,74,181,3	script	工人#ep13bs2	454,{
+	if (isequipped(2782) == 1) {
+		mes "[工人]";
+		mes "厨师大人，我该摆几个盘子？";
+		close;
+	}
+	else {
+		mes "[Tee]";
+		mes "We pishd bugs ouwwe iro ";
+		close;
+	}
+}
+
+man_in01,227,280,5	script	科学家#ep13bs	449,{
+	if (isequipped(2782) == 1) {
+		mes "[科学家]";
+		mes "我们活下去的方法真的只有一种吗……？";
+		close;
+	}
+	else {
+		mes "[Apti]";
+		mes "Dso piey pioit ioep ";
+		close;
+	}
+}

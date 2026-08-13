@@ -1,0 +1,370 @@
+//===== rAthena Script ======================================= 
+//= 现金商城函数
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= 用于现金商城道具：
+//= - 卡普拉卡片
+//= - 巨大苍蝇翅膀
+//= - 神经中和器
+//= - 地下城传送卷轴
+//= 还包含 VIP 系统相关函数。
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//=     F_CashPartyCall Optimized by Trancid.
+//= 1.1 Updated Dungeon Teleport Scroll. [L0ne_W0lf]
+//=     Added Town Teleport Scroll Function
+//=     Added Seige Teleport Scroll Function
+//= 1.2 Updated the dungeon teleport scroll menu. [L0ne_w0lf]
+//= 1.3 Implemented Aozi Giant Flywing Fix. (bugreport:4242) [L0ne_w0lf]
+//= 1.4 Simplified Giant Flywing function using warpparty. [L0ne_w0lf]
+//= 1.5 Neuralizer is no longer consumed upon failure. [Euphy]
+//= 1.6 Updated Teleport functions and added Curious_Snowball. [Euphy]
+//= 1.7 Added Dungeon Teleport Scroll II maps. [Euphy]
+//= 1.8 Added VIP function. [Euphy]
+//= 1.9 Added checkdragon() in F_CashReset. [Capuche]
+//= 2.0 Moved VIP_Third_Class function into other/re/CashShop_Functions. [Capuche]
+//============================================================ 
+
+// 卡普拉卡片
+//============================================================ 
+// - 打开玩家仓库。
+// - 无参数。
+function	script	F_CashStore	{
+	cutin "kafra_01",2;
+	mes "[卡普拉职员]";
+	mes "欢迎光临卡普拉公司。来，我帮您打开仓库。";
+	close2;
+	openstorage;
+	cutin "",255;
+	return;
+}
+
+// 巨大苍蝇翅膀
+//============================================================ 
+// - 将队长传送到地图上的随机位置。
+// - 将队长所在地图的队员召唤到队长周围 3x3 范围内。
+// - 无参数。
+function	script	F_CashPartyCall	{
+	if (is_party_leader())
+		warpparty "RandomAll", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
+	else
+		itemskill "AL_TELEPORT",1;
+	return;
+}
+
+// 神经中和器
+//============================================================ 
+// - 重置玩家技能。负重必须为 0，且必须取消所有骑乘状态。
+// - 无参数。
+function	script	F_CashReset	{
+	if (Class != Job_Novice && Weight == 0 && !checkriding() && !checkfalcon() && !checkcart() && !ismounting() && !checkdragon()) {
+		resetskill;
+		sc_end SC_ALL;
+		if (countitem(12213)) delitem 12213,1;
+	}
+	return;
+}
+
+// 地下城传送卷轴
+//============================================================ 
+// - 将玩家传送到所选地下城。
+// - Arg(0) = 卷轴类型。
+function	script	F_CashDungeon	{
+	switch(getarg(0)) {
+	case 1:
+		switch(select("熔岩洞:妙勒尼死亡矿坑:"+((checkre(0))?"":"汶巴拉地下城")+":艾音布罗克矿山地下城:斐扬洞穴:玩具工厂仓库:克雷斯特汉姆地下监狱:洛阳王陵:昆仑西王母神殿:依斯鲁得海底洞穴:乌龟岛:钟塔 地下3层:钟塔 地上3层:克雷斯特汉姆下水道 2层:斯芬克斯迷宫 4层:金字塔内部 4层:普隆德拉下水道 3层:天津 榻榻米迷宫:生体研究所 1层:哎哟泰雅古代神殿 2层")) {
+		case 1: warp "mag_dun01",125,71; end;	// 熔岩洞
+		case 2: warp "mjo_dun02",80,297; end;	// 妙勒尼死亡矿坑
+		case 3: warp "um_dun02",125,122; end;	// 汶巴拉地下城（仅 Pre-Renewal）
+		case 4: warp "ein_dun01",261,262; end;	// 艾音布罗克地下城
+		case 5: warp "pay_dun03",155,150; end;	// 斐扬洞穴
+		case 6: warp "xmas_dun01",133,130; end;	// 玩具工厂
+		case 7: warp "gl_prison",140,15; end;	// 克雷斯特汉姆监狱
+		case 8: warp "lou_dun03",165,38; end;	// 洛阳地下城
+		case 9: warp "gon_dun02",251,263; end;	// 昆仑地下城
+		case 10: warp "iz_dun02",350,335; end;	// 依斯鲁得海底隧道
+		case 11: warp "tur_dun02",165,30; end;	// 乌龟岛
+		case 12: warp "alde_dun03",275,180; end;	// 钟塔 地下3层
+		case 13: warp "c_tower3",34,42; end;	// 钟塔 地上3层
+		case 14: warp "gl_sew02",292,295; end;	// 克雷斯特汉姆下水道 2层
+		case 15: warp "in_sphinx4",120,120; end;	// 斯芬克斯迷宫 4层
+		case 16: warp "moc_pryd04",195,4; end;	// 金字塔地下城 4层
+		case 17: warp "prt_sewb3",20,175; end;	// 普隆德拉下水道 3层
+		case 18: warp "ama_dun01",222,144; end;	// 天津地下城 1层
+		case 19: warp "lhz_dun01",19,153; end;	// 生体研究所 1层
+		case 20: warp "ayo_dun02",70,240; end;	// 哎哟泰雅地下城 2层
+		}
+	case 2: // 菜单名并非官方名称。
+		switch(select("托尔火山密穴 2层:冰洞入口:无名岛入口:尼芙菲姆:迷宫森林 2层:朱诺废墟入口:蚂蚁地狱 2层:基尔·海尔学院入口:达纳托斯塔入口:深渊之湖入口:拉赫神殿入口:奥丁神殿 2层")) {
+		case 1: warp "thor_v02",77,208; end;	// 托尔火山密穴 2层
+		case 2: warp "ra_fild01",237,333; end;	// 冰洞
+		case 3: warp "ve_fild07",127,131; end;	// 无名岛
+		case 4: warp "niflheim",206,179; end;	// 尼芙菲姆
+		case 5: warp "prt_maze02",100,174; end;	// 迷宫森林 2层
+		case 6: warp "jupe_cave",36,54; end;	// 朱诺废墟
+		case 7: warp "anthell02",36,265; end;	// 蚂蚁地狱 2层
+		case 8: warp "yuno_fild08",70,171; end;	// 基尔·海尔学院
+		case 9: warp "hu_fild01",140,160; end;	// 达纳托斯塔
+		case 10: warp "hu_fild05",168,302; end;	// 深渊之湖
+		case 11: warp "ra_temple",117,173; end;	// 拉赫神殿
+		case 12: warp "odin_tem02",257,374; end;	// 奥丁神殿 2层
+		}
+	case 3:
+		switch(select("生体研究所（2层）:冰洞（3层）:奥丁神殿（3层）:托尔火山密穴（3层）:深渊之湖（3层）:朱诺废墟（2层）")) {
+		case 1: warp "lhz_dun02",145,149; end;	// 生体研究所 2层
+		case 2: warp "ice_dun03",150,176; end;	// 冰洞 3层
+		case 3: warp "odin_tem03",278,235; end;	// 奥丁神殿 3层
+		case 4: warp "thor_v03",144,170; end;	// 托尔火山密穴 3层
+		case 5: warp "abyss_03",97,104; end;	// 深渊之湖 3层
+		case 6: warp "juperos_02",130,159; end;	// 朱诺废墟地下城 2层
+		}
+	}
+	return;
+}
+
+// 彩色蝴蝶翅膀
+//============================================================ 
+// - 根据卷轴将玩家传送到不同城市。
+// - Arg(0) = 卷轴类型。
+function	script	F_CashCity	{
+	switch(getarg(0)) {
+	case 1: // 黄色 - 卢恩·米德加兹
+		switch(select("普隆德拉:依斯鲁得岛:吉芬:斐扬:梦罗克:艾尔贝塔:艾尔帕兰")) {
+			case 1: warp "prontera",122,87; end;
+			case 2: if (checkre(0)) warp "izlude",130,90; else warp "izlude",91,105; end;
+			case 3: warp "geffen",128,48; end;
+			case 4: warp "payon",164,123; end;
+			case 5: warp "morocc",160,100; end;
+			case 6: warp "alberta",117,50; end;
+			case 7: warp "aldebaran",140,110; end;
+		}
+	case 2: // 绿色 - 修发兹
+		switch(select("朱诺:里希塔乐镇:艾音布罗克:艾音贝赫:毁葛")) {
+			case 1: warp "yuno",160,170; end;
+			case 2: warp "lighthalzen",190,310; end;
+			case 3: warp "einbroch",230,190; end;
+			case 4: warp "einbech",187,120; end;
+			case 5: warp "hugel",92,165; end;
+		}
+	case 3: // 红色 - 阿卢纳贝兹
+		switch(select("拉赫:伯仁斯")) {
+			case 1: warp "rachel",120,125; end;
+			case 2: warp "veins",215,105; end;
+		}
+	case 4: // 蓝色 - 岛屿
+		switch(select("天津:昆仑:哎哟泰雅:洛阳")) {
+			case 1: warp "amatsu",110,140; end;
+			case 2: warp "gonryun",160,115; end;
+			case 3: warp "ayothaya",220,170; end;
+			case 4: warp "louyang",217,95; end;
+		}
+	case 5: // 蓝色 - 岛屿（Renewal）
+		switch(select("天津:昆仑:哎哟泰雅:洛阳:莫斯科比亚:德瓦塔:巴西利斯")) {
+			case 1: warp "amatsu",110,140; end;
+			case 2: warp "gonryun",160,115; end;
+			case 3: warp "ayothaya",220,170; end;
+			case 4: warp "louyang",217,95; end;
+			case 5: warp "moscovia",224,195; end;
+			case 6: warp "dewata",200,107; end;
+			case 7: warp "brasilis",196,181; end;
+		}
+	}
+	return;
+}
+
+// 传送卷轴
+//============================================================ 
+// - 根据卷轴将玩家传送到保存点或城市。
+// - Arg(0) = 卷轴类型。
+function	script	F_CashTele	{
+	switch(getarg(0)) {
+	case 1:
+		switch(select("普隆德拉:吉芬:艾尔帕兰:依斯鲁得岛:保存点")) {
+		case 1: warp "prontera",119,77; end;
+		case 2: warp "geffen",119,39; end;
+		case 3: warp "aldebaran",165,107; end;
+		case 4: if (checkre(0)) warp "izlude",128,105; else warp "izlude",91,105; end;
+		case 5: warp "SavePoint",0,0; end;
+		}
+	case 2:
+		switch(select("斐扬:艾尔贝塔:梦罗克:克魔岛:保存点")) {
+		case 1: warp "payon",158,55; end;
+		case 2: warp "alberta",115,57; end;
+		case 3: warp "morocc",158,48; end;
+		case 4: warp "comodo",217,148; end;
+		case 5: warp "SavePoint",0,0; end;
+		}
+	case 3:
+		switch(select("洛阳:天津:昆仑原野:哎哟泰雅:保存点")) {
+		case 1: warp "louyang",214,101; end;
+		case 2: warp "amatsu",112,145; end;
+		case 3: warp "gonryun",160,118; end;
+		case 4: warp "ayothaya",216,175; end;
+		case 5: warp "SavePoint",0,0; end;
+		}
+	case 4:
+		switch(select("圣诞镇原野:汶巴拉:尼芙菲姆:保存点")) {
+		case 1: warp "xmas",148,131; end;
+		case 2: warp "umbala",93,154; end;
+		case 3: warp "niflheim",187,189; end;
+		case 4: warp "SavePoint",0,0; end;
+		}
+	case 5:
+		switch(select("朱诺:艾音布罗克:里希塔乐镇:毁葛:保存点")) {
+		case 1: warp "yuno",157,124; end;
+		case 2: warp "einbroch",230,192; end;
+		case 3: warp "lighthalzen",158,94; end;
+		case 4: warp "hugel",93,159; end;
+		case 5: warp "SavePoint",0,0; end;
+		}
+	case 6:
+		switch(select("拉赫:伯仁斯:保存点")) {
+		case 1: warp "rachel",118,132; end;
+		case 2: warp "veins",214,125; end;
+		case 3: warp "SavePoint",0,0; end;
+		}
+	}
+	return;
+}
+
+// 攻城战传送卷轴
+//============================================================ 
+// - 将玩家传送到所选公会城堡。
+// - 无参数。
+function	script	F_CashSiegeTele	{
+	switch(select("Neuschwanstein (aldeg_cas01):Hohenschwangau (aldeg_cas02):Nuernberg (aldeg_cas03):Wuerzburg (aldeg_cas04):Rothenburg (aldeg_cas05):Repherion (gefg_cas01):Eeyorbriggar (gefg_cas02):Yesnelph (gefg_cas03):Bergel (gefg_cas04):Mersetzdeitz (gefg_cas05):Bright Arbor (payg_cas01):Sacred Altar (payg_cas02):Holy Shadow (payg_cas03):Scarlet Palace (payg_cas04):Bamboo Grove Hill (payg_cas05):Kriemhild (prtg_cas01):Swanhild (prtg_cas02):Fadhgridh (prtg_cas03):Skoegul (prtg_cas04):Gondul (prtg_cas05)")) {
+	case 1: warp "alde_gld",48,91; end;
+	case 2: warp "alde_gld",103,245; end;
+	case 3: warp "alde_gld",142,87; end;
+	case 4: warp "alde_gld",236,243; end;
+	case 5: warp "alde_gld",269,90; end;
+	case 6: warp "gef_fild13",217,75; end;
+	case 7: warp "gef_fild13",307,237; end;
+	case 8: warp "gef_fild13",77,297; end;
+	case 9: warp "gef_fild13",190,276; end;
+	case 10: warp "gef_fild13",312,91; end;
+	case 11: warp "pay_gld",121,232; end;
+	case 12: warp "pay_gld",297,116; end;
+	case 13: warp "pay_gld",318,293; end;
+	case 14: warp "pay_gld",140,164; end;
+	case 15: warp "pay_gld",202,264; end;
+	case 16: warp "prt_gld",141,64; end;
+	case 17: warp "prt_gld",240,131; end;
+	case 18: warp "prt_gld",153,133; end;
+	case 19: warp "prt_gld",126,240; end;
+	case 20: warp "prt_gld",195,240; end;
+	}
+	return;
+}
+
+// 攻城战传送卷轴 2（WoE 1.5）
+//============================================================ 
+// - 将玩家传送到所选公会城堡。
+// - 无参数。
+function	script	F_CashSiegeTele2	{
+	switch(select("Mardoll (arug_cas01):Cyr (arug_cas02):Horn (arug_cas03):Gefn (arug_cas04):Badanis (arug_cas05):Himinn (schg_cas01):Andlangr (schg_cas02):Vidblainn (schg_cas03):Hljod (schg_cas04):Schatirnil (schg_cas05)")) {
+	case 1: warp "aru_gld",159,272; end;
+	case 2: warp "aru_gld",86,50; end;
+	case 3: warp "aru_gld",63,157; end;
+	case 4: warp "aru_gld",307,354; end;
+	case 5: warp "aru_gld",298,110; end;
+	case 6: warp "sch_gld",300,100; end;
+	case 7: warp "sch_gld",284,249; end;
+	case 8: warp "sch_gld",102,196; end;
+	case 9: warp "sch_gld",140,83; end;
+	case 10: warp "sch_gld",70,320; end;
+	}
+	return;
+}
+
+// 奇妙的雪球
+//============================================================ 
+// - 可以获得恢复、霸体或蝴蝶翅膀的效果。
+// - 无参数。
+function	script	F_Snowball	{
+	cutin "rutie_snownow03",2;
+	mes "[雪人]";
+	mes "圣诞快乐！";
+	switch(select("恢复一些 HP/SP:强化我的身体！:完全恢复 SP。:回到保存点")) {
+	case 1:
+		mes "啊哈！宁静的夜晚~";
+		percentheal 70,70;
+		close2;
+		cutin "",255;
+		break;
+	case 2:
+		mes "祝福。神圣的夜晚~";
+		unitskilluseid getcharid(3),"SM_ENDURE",10;
+		close2;
+		cutin "",255;
+		break;
+	case 3:
+		mes "嘿！白色圣诞~";
+		percentheal 0,100;
+		close2;
+		cutin "",255;
+		break;
+	case 4:
+		mes "铃儿响叮当~铃儿响叮当~ 铃儿响叮当！";
+		close2;
+		cutin "",255;
+		warp "SavePoint",0,0;
+		break;
+	}
+	end;
+}
+
+// 属性降低药水
+//============================================================
+// - 永久降低基础属性 <type> 点 <val>。
+// - 返还等同于将该属性提升回原值
+//   所需点数的状态点数。
+// - 如果降低后基础属性 <type> 低于 1，则不生效。
+// * callfunc("F_CashReduceStat",<type>{,<val>,<itemid>});
+function	script	F_CashReduceStat	{
+	.@type = getarg(0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
+	
+	if((readparam(.@type) + .@amount) < 1) return;
+	
+	if(.@itemid) {
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	}
+	StatusPoint += needed_status_point(.@type, .@amount);
+	statusup2 .@type,.@amount;
+	return;
+}
+
+// 特性属性降低药水
+//============================================================
+// - 永久降低基础特性属性 <type> 点 <val>。
+// - 返还等同于将该特性属性提升回原值
+//   所需点数的特性状态点数。
+// - 如果降低后基础特性属性 <type> 低于 0，则不生效。
+// * callfunc("F_CashReduceTraitStat",<type>{,<val>,<itemid>});
+function	script	F_CashReduceTraitStat	{
+	.@type = getarg(0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
+	
+	if((readparam(.@type) + .@amount) < 0) return;
+	
+	if(.@itemid) {
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	}
+	TraitPoint += needed_trait_point(.@type, .@amount);
+	traitstatusup2 .@type,.@amount;
+	return;
+}

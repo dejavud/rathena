@@ -1,0 +1,88 @@
+//===== rAthena Script =======================================
+//= Kunai Merchant Kashin
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.3a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Trades a few shurikens + ninja stones for elemental kunai.
+//===== Additional Comments: =================================
+//= 1.0 Added the npc. It uses a function that sends the item 
+//=     id of the 2 required items plus the amount. Can trade
+//=     up to 500 units (5,000 kunais) at once. [erKURITA]
+//= 1.1 Officialized script [Playtester]
+//= 1.2a Optimized/cleaned up a bit [ultramage]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.3a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
+//============================================================
+
+que_ng,72,29,3	script	飞刀商人 卡信	83,{
+	if(BaseClass == Job_Ninja) {
+		mes "[卡信]";
+		mes "我是卡信，专门向忍者供应飞刀。";
+		mes "随便看看吧，有中意的货色，随时跟我说。";
+		next;
+		switch(select("10 把剧毒飞刀:10 把垂冰飞刀:10 把强风飞刀:10 把黑土飞刀:10 把火焰飞刀:取消")) {
+		case 1: callfunc "Kunai_Trade",13250,20,7524,1,13259; break;
+		case 2: callfunc "Kunai_Trade",13251,8,7522,2,13255; break;
+		case 3: callfunc "Kunai_Trade",13252,4,7523,2,13257; break;
+		case 4: callfunc "Kunai_Trade",13253,2,7524,1,13256; break;
+		case 5: callfunc "Kunai_Trade",13254,1,7521,2,13258; break;
+		case 6:
+			mes "[卡信]";
+			mes "那么，谢谢你光顾我的店。";
+			mes "需要买飞刀的时候，尽管来找我。先走啦~";
+			close;
+		}
+	}
+	mes "[卡信]";
+	mes "我是卡信，专门向忍者供应飞刀。";
+	mes "如果你身边有忍者朋友的话，";
+	mes "麻烦帮我宣传一下，让他们知道我这儿。";
+	close;
+}
+
+function	script	Kunai_Trade	{
+	setarray .@item_req[0], getarg(0), getarg(2);
+	setarray .@req_amount[0], getarg(1), getarg(3);
+	.@item_id = getarg(4);
+
+	mes "[卡信]";
+	mes "每 10 把 "+ getitemname(.@item_id) +"，";
+	mes "需要 "+ .@req_amount[0] +" 个 "+ getitemname(.@item_req[0]) +" 和 "+ .@req_amount[1] +" 个 "+ getitemname(.@item_req[1]) +"。";
+	next;
+	mes "[卡信]";
+	mes "一次最多只能换 500 组飞刀。";
+	mes "想取消交易的话请输入 ''0''。";
+	mes "你要换几组？";
+	next;
+	input .@amount;
+	if(.@amount < 1 || .@amount > 500) {
+		mes "[卡信]";
+		mes "咦？抱歉，一次没办法换给你那么多组飞刀。";
+		mes "请输入 500 以内的数字。";
+		close;
+	}
+	if (countitem(.@item_req[0]) < .@amount*.@req_amount[0] || countitem(.@item_req[1]) < .@amount*.@req_amount[1]) {
+		mes "[卡信]";
+		mes "嗯，你带来的材料不够换这些飞刀。";
+		mes "请再确认一下你身上的物品。";
+		close;
+ 	}
+	if (checkweight(.@item_id, .@amount*10) == 0) {
+		mes "[卡信]";
+		mes "嗯，看来你的物品栏";
+		mes "已经没有足够的空间放更多物品了。";
+		mes "最好先腾出一些空间。";
+		close;
+	}
+	mes "[卡信]";
+	mes "好，一切都齐了，这就完成交易。";
+	mes "相信这些飞刀一定不会让你失望的。";
+	delitem .@item_req[0],.@req_amount[0]*.@amount;
+	delitem .@item_req[1],.@req_amount[1]*.@amount;
+	getitem .@item_id,10*.@amount;
+	close;
+}

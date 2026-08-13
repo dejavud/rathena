@@ -1,0 +1,1370 @@
+//===== rAthena Script ======================================= 
+//= Rogue Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.8
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: CLose Confine
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 1.6 Bug fixes as pointed out by Brainstorm in bugreport:351 [L0ne_W0lf]
+//= 1.6a Fixed(?) antoher problem (NPCs not disabling) hopefully. [L0ne_W0lf]
+//= 1.6b Corrected a Typo error with "rouge". (bugreport:909) [Samuray22]
+//= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
+//= 1.8 Some cleaning. [Euphy]
+//============================================================
+
+in_rogue,359,177,0	script	#killershow01	-1,{
+OnInit:
+	disablenpc "#killershow01";
+	end;
+
+OnEnable:
+	enablenpc "#killershow01";
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "#killershow01";
+	end;
+
+OnTimer1000:
+	enablenpc "杀手#Rogueguild";
+	end;
+
+OnTimer120000:
+	disablenpc "杀手#Rogueguild";
+	end;
+
+OnTimer150000:
+	disablenpc "杀手#Rogueguild";
+	disablenpc "#killershow01";
+	end;
+}
+
+in_rogue,357,174,2	script	杀手#Rogueguild	705,1,1,{
+OnInit:
+	disablenpc "杀手#Rogueguild";
+	end;
+
+OnTouch_:
+	if (ROG_SK == 10) {
+		specialeffect2 EF_CHANGECOLD;
+		specialeffect EF_CHANGEWIND;
+		specialeffect2 EF_LIGHTSPHERE;
+		set ROG_SK,11;
+		mes "[杀手]";
+		mes "你……你对我";
+		mes "做了什么？！";
+		mes "动……动不了了！";
+		next;
+		mes "[海加拉·格雷]";
+		mes "哦？我没想到";
+		mes "你这么快就能";
+		mes "施展擒拿了！";
+		mes "了不起，真是了不起！";
+		mes "现在，这正是你";
+		mes "精通这个技能的好机会……";
+		next;
+		mes "[海加拉·格雷]";
+		mes "现在注意了。";
+		mes "我要你在这个杀手身上";
+		mes "练习预判对手的";
+		mes "移动意图。";
+		mes "你应该能通过他的气息看出他想往哪边移动。";
+		next;
+		mes "[海加拉·格雷]";
+		mes "如果他打算向左移动，";
+		mes "他的气息会是白色的。如果";
+		mes "向右移动，气息会是";
+		mes "黄色的。如果他打算";
+		mes "后退，气息会是淡红色的。";
+		next;
+		setarray .@Effects[1],EF_CHANGECOLD,EF_CHANGEWIND,EF_CHANGEEARTH;
+		for(set .@lim_1,0; .@lim_1<10; set .@lim_1,.@lim_1+1) {
+			set .@move_1,rand(1,3);
+			specialeffect .@Effects[.@move_1];
+			if (select("向左拦截他:向右拦截他:拦截他后退") == .@move_1) {
+				mes "^3355FF杀手依然动弹不得，";
+				mes "看起来";
+				mes "无比困惑！此刻，";
+				mes "你正在完美地运用";
+				mes "擒拿技能！^000000";
+				specialeffect EF_POTION1;
+				specialeffect2 EF_POTION7;
+			}
+			else {
+				mes "^3355FF等等——！";
+				mes "不知为何，";
+				mes "你感觉到杀手此刻";
+				mes "并不是要往";
+				mes "那个方向移动。";
+				mes "你自然地纠正了自己。^000000";
+			}
+			next;
+		}
+		mes "^3355FF你成功夺回了";
+		mes "传奇人物蔡卓裴";
+		mes "所写的无价";
+		mes "技能书。^000000";
+		close2;
+		disablenpc "杀手#Rogueguild";
+		donpcevent "#killershow01::OnDisable";
+		end;
+	}
+	else if (ROG_SK == 11) {
+		mes "[杀手]";
+		mes "咕噜噜……";
+		mes "还……还是……";
+		mes "动……动不了！";
+		close2;
+		disablenpc "杀手#Rogueguild";
+		donpcevent "#killershow01::OnDisable";
+		end;
+	}
+	end;
+}
+
+in_rogue,355,179,0	script	海加拉·格雷#rogueguild	46,{
+	if (BaseJob == Job_Rogue) {
+		if (ROG_SK == 12 && Upper == 1) {
+			mes "[海加拉·格雷]";
+			mes "嗯？啊，转生";
+			mes "导致的失忆，";
+			mes "是吗？那我就再教你";
+			mes "一次擒拿技能。";
+			specialeffect2 EF_LIGHTSPHERE;
+			skill "RG_CLOSECONFINE",1,SKILL_PERM;
+			set ROG_SK,13;
+			close;
+		}
+		else if (ROG_SK == 13 && Upper == 1) {
+			mes "[海加拉·格雷]";
+			mes "神行太保，是吗？";
+			mes "请务必";
+			mes "用你的能力去";
+			mes "折磨那些罪有应得的";
+			mes "敌人。祝你好运，";
+			mes "冒险者。";
+			close;
+		}
+		else {
+			if (ROG_SK < 1) {
+				mes "[海加拉·格雷]";
+				mes "你……你是怎么找到";
+				mes "这里的？我以为这间";
+				mes "密室应该是";
+				mes "连流氓都渗透不进来的！";
+				next;
+				mes "[海加拉·格雷]";
+				mes "这下不妙了！";
+				mes "他们找到我只是";
+				mes "时间问题了……";
+				close;
+			}
+			else if (ROG_SK == 1) {
+				mes "[海加拉·格雷]";
+				mes "你……你是谁，";
+				mes "你是怎么";
+				mes "进来的？报上名来！";
+				next;
+				if (select("我对你没有恶意!:把我们要的东西交出来!") == 1) {
+					mes "[海加拉·格雷]";
+					mes "没有……？";
+					mes "那么……那么";
+					mes "你为何而来？";
+					mes "你能找到我，";
+					mes "绝非偶然。";
+					next;
+					if (select("我是来帮你的。:哦，其实我不是来找你的。") == 1) {
+						mes "[海加拉·格雷]";
+						mes "嗯……好吧，我想";
+						if (Upper == 1)
+							mes "我可以信任同为神行太保的你，";
+						else
+							mes "我可以信任同为流氓的你，";
+						mes "把我的困境告诉你。";
+						mes "毕竟盗亦有道嘛。";
+						mes "好吧。你有没有听过";
+						mes "蔡卓裴的传说？";
+						next;
+						if (select("没有:听过") == 1) {
+							mes "[海加拉·格雷]";
+							mes "100年前，蔡卓裴";
+							mes "是第一个突破";
+							mes "自身极限的人。他也";
+							mes "是第一个选择走上";
+							mes "与原先职业不同道路的人。";
+							next;
+							mes "[海加拉·格雷]";
+							mes "他原本是个武僧，";
+							mes "但转生之后，他";
+							mes "不知怎地成了神行太保。";
+							mes "他保留了武僧";
+							mes "浸透劲的知识，将其改造成适合流氓使用。";
+							next;
+							mes "[海加拉·格雷]";
+							mes "蔡卓裴把这个";
+							mes "新流氓技能的基本原理";
+							mes "记录在一本书里，";
+							mes "我有幸得到了";
+							mes "它。可我刚拿到手，";
+							mes "勒索就开始了……";
+							next;
+							mes "[海加拉·格雷]";
+							mes "有些不择手段的";
+							mes "家伙，会用任何";
+							mes "手段把书从我这里";
+							mes "抢走。我能理解，毕竟";
+							mes "我和我的儿子们从蔡卓裴的书中";
+							mes "学到了新的技能。";
+							next;
+							mes "[海加拉·格雷]";
+							mes "然而，我的时间";
+							mes "不多了，那些人";
+							mes "迟早会找到我。";
+							mes "你愿意帮我拯救";
+							mes "我和我的儿子们吗？";
+							next;
+							if (select("当然!:抱歉，我很忙。") == 1) {
+								mes "[海加拉·格雷]";
+								mes "哦，太感谢你了！";
+								mes "听着，我不能冒";
+								mes "被发现的危险，所以你愿意";
+								mes "把这封信带给我的小儿子";
+								mes "^FF0000路易斯·格雷^000000吗？快点，";
+								mes "剩下的时间不多了！";
+								set ROG_SK,2;
+								close;
+							}
+							mes "[海加拉·格雷]";
+							mes "我……我明白了。";
+							mes "但请你想一想，";
+							mes "除了你，我还能";
+							mes "信任谁来帮我呢？";
+							close;
+						}
+						mes "[海加拉·格雷]";
+						mes "那你就该知道";
+						mes "我所拥有的这本";
+						mes "技能书的价值了。";
+						mes "然而，我被一群";
+						mes "为得到它不择手段的人追捕。";
+						mes "你愿意帮帮我吗？";
+						next;
+						if (select("当然!:抱歉，我很忙。") == 1) {
+							mes "[海加拉·格雷]";
+							mes "哦，太感谢你了！";
+							mes "听着，我不能冒";
+							mes "被发现的危险，所以你愿意";
+							mes "把这封信带给我的小儿子";
+							mes "^FF0000路易斯·格雷^000000吗？快点，";
+							mes "剩下的时间不多了！";
+							set ROG_SK,2;
+							close;
+						}
+						mes "[海加拉·格雷]";
+						mes "我……我明白了。";
+						mes "但请你想一想，";
+						mes "除了你，我还能";
+						mes "信任谁来帮我呢？";
+						close;
+					}
+					mes "[海加拉·格雷]";
+					mes "嗯……？";
+					mes "似乎不太像，但";
+					mes "我想我还是";
+					mes "宁可信其无吧。";
+					mes "那么，希望你能";
+					mes "自己找到出去的路。";
+					close;
+				}
+				mes "[海加拉·格雷]";
+				mes "我明白了。那就这样吧。";
+				mes "我就让你见识一下";
+				mes "你如此垂涎的技能吧……";
+				mes "^FF0000擒拿^000000！";
+				specialeffect EF_CHANGECOLD;
+				specialeffect2 EF_CHANGEWIND;
+				next;
+				mes "[海加拉·格雷]";
+				mes "哼。现在你";
+				mes "动弹不得，只能";
+				mes "任我施为：^FF0000背刺^000000！";
+				specialeffect2 EF_COMBOATTACK5;
+				percentheal -95,0;
+				next;
+				mes "[海加拉·格雷]";
+				mes "现在给我滚出去。";
+				mes "别让我再看到你";
+				mes "这张贪婪的脸。";
+				mes "你应该庆幸";
+				mes "我没杀了你！";
+				set ROG_SK,1;
+				close;
+			}
+			else if (ROG_SK == 2) {
+				mes "[海加拉·格雷]";
+				mes "我们的时间";
+				mes "不多了……请尽快";
+				mes "把这封信带给我的小儿子";
+				mes "^FF0000路易斯^000000！";
+				mes "你可以在流氓公会里";
+				mes "^FF0000小霍格^000000附近找到他。";
+				close;
+			}
+			else if (ROG_SK == 3) {
+				mes "[海加拉·格雷]";
+				mes "路易斯让你去找";
+				mes "^FF0000托尔^000000？他应该在";
+				mes "流氓公会里^FF0000小赫尔曼^000000";
+				mes "附近，对吧？很抱歉让你";
+				mes "一个个去拜访";
+				mes "我的儿子们……我知道这不太现实。";
+				close;
+			}
+			else if (ROG_SK == 4) {
+				mes "[海加拉·格雷]";
+				mes "啊，你在找^FF0000杰伊^000000吗？";
+				mes "他就在流氓公会里";
+				mes "^FF0000小安东尼奥^000000附近。至少，";
+				mes "他通常都在那里。";
+				close;
+			}
+			else if (ROG_SK == 5) {
+				mes "[海加拉·格雷]";
+				mes "哦，你回来了！";
+				mes "还带来了";
+				mes "杰伊的信。";
+				mes "好，好，让我";
+				mes "看看他写了什么……";
+				set ROG_SK,6;
+				next;
+				mes "[海加拉·格雷]";
+				mes "啊，好消息！他";
+				mes "已经联系了流氓公会，";
+				mes "请求额外的保护";
+				mes "并加强戒备。我终于";
+				mes "可以稍微松口气了。没人敢惹流氓。";
+				next;
+				mes "[海加拉·格雷]";
+				mes "非常感谢";
+				mes "你的帮助。没有你，";
+				mes "我恐怕要永远躲藏下去了。";
+				mes "作为回报，让我";
+				mes "给你一个学习";
+				mes "蔡卓裴秘传技能的机会。";
+				next;
+				mes "[海加拉·格雷]";
+				mes "请去找^FF0000托尔^000000，";
+				mes "告诉他我已经";
+				mes "允许你学习";
+				mes "我教给所有儿子的";
+				mes "那个技能。他会";
+				mes "照办的，我确信。";
+				close;
+			}
+			else if (ROG_SK == 6) {
+				mes "[海加拉·格雷]";
+				mes "请让托尔教你";
+				mes "蔡卓裴秘传的";
+				mes "流氓技能。你要明白，";
+				mes "在这间简陋密室里的";
+				mes "设备，没法让我";
+				mes "亲自教你这个技能。";
+				close;
+			}
+			else if (ROG_SK == 7) {
+				mes "[海加拉·格雷]";
+				mes "嗯……？你不是";
+				mes "应该正在为学习";
+				mes "那个技能而";
+				mes "接受训练吗？请去找";
+				mes "托尔，完成你的训练。";
+				close;
+			}
+			else if (ROG_SK == 8) {
+				mes "[海加拉·格雷]";
+				mes "你完成";
+				mes "训练了？啊，真是";
+				mes "出色。不过，你";
+				mes "应该先去找托尔谈谈……";
+				close;
+			}
+			else if (ROG_SK == 9) {
+				mes "[海加拉·格雷]";
+				mes "哦，你回来了！";
+				mes "我听说你已经完成了";
+				mes "训练，准备好";
+				mes "聆听擒拿技能的";
+				mes "运用之道了。";
+				next;
+				mes "[海加拉·格雷]";
+				mes "哇！什么——？！";
+				mes "住手！请……请拦住";
+				mes "那个人！我们不能让他";
+				mes "偷走那本书！";
+				specialeffect EF_COMBOATTACK5;
+				donpcevent "杀手#Rogueguild::OnEnable";
+				set ROG_SK,10;
+				close;
+			}
+			else if (ROG_SK == 10) {
+				mes "[海加拉·格雷]";
+				mes "那个人刚偷走了";
+				mes "擒拿技能书！";
+				mes "求你了！别让他";
+				mes "跑了！那本书是无价之宝！";
+				donpcevent "#killershow01::OnEnable";
+				close;
+			}
+			else if (ROG_SK == 11) {
+				donpcevent "杀手#Rogueguild::OnDisable";
+				donpcevent "#killershow01::OnDisable";
+				mes "^3355FF你把蔡卓裴所写的";
+				mes "技能书";
+				mes "还给了海加拉。^000000";
+				next;
+				mes "[海加拉·格雷]";
+				mes "非常感谢";
+				mes "你的协助。现在，如果你";
+				mes "想了解一些关于";
+				mes "擒拿的详细信息，";
+				mes "我可以为你进一步";
+				mes "讲解这个技能。";
+				next;
+				if (select("好的，麻烦了。:不用了，谢谢。") == 1) {
+					mes "[海加拉·格雷]";
+					mes "如你所知，";
+					mes "擒拿能定住";
+					mes "离你非常近的";
+					mes "敌人。不过，";
+					mes "在用于玩家或怪物时，";
+					mes "有一些细微的差别。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "擒拿";
+					mes "类似于武僧的技能";
+					mes "浸透劲，但它只限制";
+					mes "敌人的移动，";
+					mes "不限制其攻击能力。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "除了背刺——";
+					mes "在擒拿持续期间";
+					mes "只能使用一次——之外，";
+					mes "我们在擒拿";
+					mes "状态下可以";
+					mes "使用任何技能。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "被擒拿";
+					mes "影响的敌人，可以";
+					mes "使用苍蝇翅膀、蝴蝶翅膀，";
+					mes "或者瞬间移动、";
+					mes "隐匿技能来逃脱。不过，";
+					mes "在公会战期间只有隐匿有效。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "因此，只要目标不用";
+					mes "隐匿技能逃脱，";
+					mes "擒拿在公会战";
+					mes "攻城时，可以成为";
+					mes "非常有用的技能。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "除了Boss";
+					mes "怪物之外，擒拿";
+					mes "能将怪物定住";
+					mes "10秒，这为流氓";
+					mes "组队狩猎时";
+					mes "提供了新的可能。";
+					next;
+					mes "[海加拉·格雷]";
+					mes "好了，关于擒拿，";
+					mes "我能告诉你的就这些了。";
+					mes "希望你能通过练习";
+					mes "更深入地掌握这个技能，";
+					mes "并成为像蔡卓裴一样伟大的传奇。";
+					set ROG_SK,12;
+					skill "RG_CLOSECONFINE",1,SKILL_PERM;
+					specialeffect2 EF_LIGHTSPHERE;
+					close;
+				}
+				mes "[海加拉·格雷]";
+				mes "那好吧……";
+				mes "希望你能通过";
+				mes "勤奋的练习，";
+				mes "更深入地掌握擒拿。";
+				mes "祝你好运，";
+				mes "再次感谢你的帮助。";
+				set ROG_SK,12;
+				skill "RG_CLOSECONFINE",1,SKILL_PERM;
+				specialeffect2 EF_LIGHTSPHERE;
+				close;
+			}
+			mes "[海加拉·格雷]";
+			mes "谢谢你帮我";
+			mes "保护了这本无价的";
+			mes "技能书。希望";
+			mes "下次见面时，我们已是";
+			mes "战场上的战友……";
+			close;
+		}
+	}
+	else {
+		mes "[海加拉·格雷]";
+		mes "你……你是怎么找到";
+		mes "这里的？我以为这间";
+		mes "密室应该是";
+		mes "连流氓都渗透不进来的！";
+		next;
+		mes "[海加拉·格雷]";
+		mes "这下不妙了！";
+		mes "他们找到我只是";
+		mes "时间问题了……";
+		next;
+		mes "[海加拉·格雷]";
+		mes "求求你……";
+		mes "帮我找一个可以信任的";
+		mes "神行太保";
+		mes "或者流氓，让他来";
+		mes "帮我！我剩下的";
+		mes "时间不多了……";
+		close;
+	}
+}
+
+in_rogue,152,29,0	script	路易斯·格雷#rogueguild	84,{
+	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+		if (ROG_SK < 1) {
+			mes "[路易斯·格雷]";
+			mes "我父亲他……";
+			mes "他突然就消失了！";
+			mes "他本来正在教我和";
+			mes "兄弟们一个新技能，";
+			mes "但最近不知为什么，";
+			mes "他开始变得疑神疑鬼……";
+			next;
+			mes "[路易斯·格雷]";
+			mes "也许他躲起来了？";
+			mes "我知道流氓公会里有一间";
+			mes "隐藏的密室，但";
+			mes "连我也不知道去哪里";
+			mes "找它。希望一切平安……";
+			set ROG_SK,1;
+			close;
+		}
+		else if (ROG_SK == 1) {
+			mes "[路易斯·格雷]";
+			mes "父亲确实警告过，";
+			mes "如果有人得知我们正在学";
+			mes "新技能，";
+			mes "可能就会有人来找麻烦。";
+			mes "也许他躲进了";
+			mes "流氓公会的密室……";
+			close;
+		}
+		else if (ROG_SK == 2) {
+			mes "[路易斯·格雷]";
+			mes "这是什么……？";
+			mes "我父亲的";
+			mes "信？哦，那他一定";
+			mes "没事！快，让我";
+			mes "马上读一读！";
+			set ROG_SK,3;
+			next;
+			mes "[路易斯·格雷]";
+			mes "哦不，他现在也许安全，";
+			mes "但父亲正被一些";
+			mes "危险的人物追捕？我的";
+			mes "哥哥托尔一定会想知道";
+			mes "这件事的。让我赶紧";
+			mes "给他写封信……";
+			next;
+			mes "[路易斯·格雷]";
+			mes "我知道我没有";
+			mes "立场请求你帮忙，";
+			mes "但我父亲一定";
+			mes "很信任你。拜托了，你愿意";
+			mes "带着我的信，把它交给";
+			mes "我的哥哥托尔吗？";
+			next;
+			mes "[路易斯·格雷]";
+			mes "你可以在流氓公会里";
+			mes "小赫尔曼旁边";
+			mes "找到托尔。";
+			mes "如果你能帮助我的家人，";
+			mes "我将感激不尽。";
+			close;
+		}
+		else if (ROG_SK == 3) {
+			mes "[路易斯·格雷]";
+			mes "我的哥哥^FF0000托尔^000000";
+			mes "必须马上知道";
+			mes "这件事！请替我";
+			mes "把这封信带给他。他应该";
+			mes "就在流氓公会里";
+			mes "^FF0000小赫尔曼^000000附近。";
+			close;
+		}
+		else if (ROG_SK == 4) {
+			mes "[路易斯·格雷]";
+			mes "你在找我的";
+			mes "哥哥杰伊吗？他通常";
+			mes "都在流氓公会里";
+			mes "和小安东尼奥混在一起。";
+			close;
+		}
+		else if (ROG_SK == 5) {
+			mes "[路易斯·格雷]";
+			mes "如果你要找我";
+			mes "父亲，他大概还";
+			mes "躲在流氓公会里";
+			mes "那间隐藏的密室里。";
+			mes "我依然不知道那地方";
+			mes "究竟在哪里……";
+			close;
+		}
+		else if (ROG_SK == 6) {
+			mes "[路易斯·格雷]";
+			mes "你想学那个";
+			mes "秘传流氓技能？哦，";
+			mes "这件事你大概应该";
+			mes "去问^FF0000托尔^000000。我……";
+			mes "我真的很不擅长";
+			mes "给别人讲解事情。真的很差。";
+			close;
+		}
+		else if (ROG_SK == 7) {
+			mes "[路易斯·格雷]";
+			mes "嗯？你正在";
+			mes "学习秘传流氓技能，";
+			mes "对吧？哦，那你";
+			mes "现在还不该来这里。";
+			mes "请回去再和";
+			mes "^FF0000托尔^000000谈谈，好吗？";
+			close;
+		}
+		else if (ROG_SK == 8) {
+			mes "[路易斯·格雷]";
+			mes "哦，哦！";
+			mes "你完成";
+			mes "训练了？啊，";
+			mes "那你需要";
+			mes "再去找托尔谈谈！";
+			close;
+		}
+		else if (ROG_SK == 9) {
+			mes "[路易斯·格雷]";
+			mes "你想更深入地";
+			mes "了解擒拿？呃，那你最好";
+			mes "去问我父亲。我自己";
+			mes "也才刚学会这个技能";
+			mes "而已。";
+			close;
+		}
+		else if (ROG_SK == 11) {
+			mes "[路易斯·格雷]";
+			mes "我刚听兄弟们说，";
+			mes "蔡卓裴开发擒拿，";
+			mes "是为了狠狠地";
+			mes "揍他的敌人，";
+			mes "让他们跑不掉。";
+			mes "是真的吗？";
+			close;
+		}
+		mes "[路易斯·格雷]";
+		mes "哇，你真的";
+		mes "好厉害！我真希望";
+		mes "自己能像你一样强。";
+		mes "我讨厌当小孩！";
+		close;
+	}
+	mes "[路易斯·格雷]";
+	mes "我为什么当流氓？";
+	mes "我想我就是喜欢";
+	mes "偷偷摸摸的感觉。再说，";
+	mes "循规蹈矩地做人";
+	mes "实在太累了，你懂吧？";
+	close;
+}
+
+in_rogue,268,125,2	script	托尔·格雷#rogueguild	86,{
+	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+		if (ROG_SK < 1) {
+			mes "[托尔·格雷]";
+			mes "父亲去哪里了？";
+			mes "希望那些怪人";
+			mes "没找到他。运气好的话，";
+			mes "他应该躲在";
+			mes "密室里，不过……";
+			set ROG_SK,1;
+			close;
+		}
+		else if (ROG_SK == 1) {
+			mes "[托尔·格雷]";
+			mes "嗯……我父亲可能";
+			mes "躲在密室";
+			mes "里。我一直没能";
+			mes "找到它，但玛琪说";
+			mes "入口就巧妙地";
+			mes "隐藏在她左边。嗯……";
+			close;
+		}
+		else if (ROG_SK == 2) {
+			mes "[托尔·格雷]";
+			mes "你在找";
+			mes "我的弟弟^FF0000路易斯^000000吗？";
+			mes "哦，他总是泡在";
+			mes "流氓公会里的";
+			mes "^FF0000小霍格^000000那里。";
+			mes "你找他有什么事？";
+			close;
+		}
+		else if (ROG_SK == 3) {
+			mes "[托尔·格雷]";
+			mes "你给我的";
+			mes "这是什么？路易斯的";
+			mes "信？让我看看……";
+			set ROG_SK,4;
+			next;
+			mes "[托尔·格雷]";
+			mes "天哪，父亲";
+			mes "遇到大麻烦了！我得";
+			mes "马上告诉我的哥哥";
+			mes "杰伊！快，去公会里";
+			mes "^FF0000小安东尼奥^000000旁边找^FF0000杰伊^000000！";
+			mes "请……请快点！";
+			close;
+		}
+		else if (ROG_SK == 4) {
+			mes "[托尔·格雷]";
+			mes "你可以在流氓公会里";
+			mes "找到和小安东尼奥";
+			mes "混在一起的杰伊。";
+			mes "请尽快把我写的这封信";
+			mes "带给他！";
+			close;
+		}
+		else if (ROG_SK == 5) {
+			mes "[托尔·格雷]";
+			mes "希望父亲没有";
+			mes "离开流氓公会的";
+			mes "密室。那里";
+			mes "可能是唯一";
+			mes "安全的地方了……";
+			close;
+		}
+		else if (ROG_SK == 6) {
+			mes "[托尔·格雷]";
+			mes "什么？父亲";
+			mes "想让我教你";
+			mes "秘传流氓技能？";
+			mes "好吧，我会用父亲";
+			mes "教我的方式来训练你。你要";
+			mes "先听一下讲解吗？";
+			next;
+			mes "[托尔·格雷]";
+			mes "如果你不想听";
+			mes "讲解，那我就直接";
+			mes "送你去训练场，";
+			mes "让你学习";
+			mes "^FF0000擒拿^000000。";
+			next;
+			if (select("听讲解:去训练场") == 1) {
+				mes "[托尔·格雷]";
+				mes "好吧，学习^FF0000擒拿^000000";
+				mes "的第一步，";
+				mes "就是掌握如何封锁";
+				mes "敌人的移动。我会送";
+				mes "你去一个特殊的训练场，";
+				mes "让你练习。";
+				next;
+				mes "[托尔·格雷]";
+				mes "在那里，你会遇到我们的";
+				mes "训练搭档。靠近她，";
+				mes "确保你能预判并封锁";
+				mes "她向左、向右或后退的移动。";
+				mes "准备好了，我现在就送你过去……";
+				close2;
+				warp "in_rogue",89,114;
+				end;
+			}
+			warp "in_rogue",89,114;
+			end;
+		}
+		else if (ROG_SK == 7) {
+			mes "[托尔·格雷]";
+			mes "好吧，我就打破";
+			mes "第四面墙，假定你是";
+			mes "从游戏中";
+			mes "掉线了。你想回到";
+			mes "训练场，继续学习";
+			mes "^FF0000擒拿^000000吗？";
+			next;
+			if (select("好的，麻烦了。:不用了，谢谢。") == 1) {
+				mes "[托尔·格雷]";
+				mes "好吧，学习^FF0000擒拿^000000";
+				mes "的第一步，";
+				mes "就是掌握如何封锁";
+				mes "敌人的移动。我会送";
+				mes "你去一个特殊的训练场，";
+				mes "让你练习。";
+				next;
+				mes "[托尔·格雷]";
+				mes "在那里，你会遇到我们的";
+				mes "训练搭档。靠近她，";
+				mes "确保你能预判并封锁";
+				mes "她向左、向右或后退的移动。";
+				mes "准备好了，我现在就送你过去……";
+				set ROG_SK,6;
+				close2;
+				warp "in_rogue",89,114;
+				end;
+			}
+			mes "[托尔·格雷]";
+			mes "好吧，好吧。";
+			mes "当你觉得准备好";
+			mes "继续训练时，";
+			mes "告诉我就行。";
+			close;
+
+		}
+		else if (ROG_SK == 8) {
+			mes "[托尔·格雷]";
+			mes "啊，我听基恩娜说，";
+			mes "你已经完成了";
+			mes "训练。恭喜！";
+			mes "现在，请去找我父亲，";
+			mes "让他为你详细讲解擒拿技能。";
+			set ROG_SK,9;
+			close;
+		}
+		else if (ROG_SK == 9) {
+			mes "[托尔·格雷]";
+			mes "请去和我父亲谈谈，";
+			mes "让他为你讲解";
+			mes "擒拿技能的";
+			mes "细节。他应该还躲在流氓公会的密室里。";
+			close;
+		}
+		else if (ROG_SK == 11) {
+			mes "[托尔·格雷]";
+			mes "你知道吗，蔡卓裴";
+			mes "会对对手说：''我是";
+			mes "蔡卓裴。你是……？''";
+			mes "然后不等";
+			mes "对方回答，";
+			mes "就把他们揍得屁滚尿流。";
+			next;
+			mes "[托尔·格雷]";
+			mes "他真的是";
+			mes "流氓中的";
+			mes "传奇英雄……！";
+			close;
+		}
+		mes "[托尔·格雷]";
+		mes "嗯……？";
+		mes "看起来";
+		mes "你甚至比我还强。";
+		mes "大概没有多少人";
+		mes "敢惹";
+		mes "你了……";
+		close;
+	}
+	mes "[托尔·格雷]";
+	mes "唉，抢这个，抢";
+	mes "那个。*叹气* 我最";
+	mes "丢人的毛病就是：我花zeny";
+	mes "的速度几乎和";
+	mes "偷的速度一样快。太不像话了……";
+	close;
+}
+
+in_rogue,181,114,3	script	杰伊·格雷#rogueguild	85,{
+	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+		if (ROG_SK < 1) {
+			mes "[杰伊·格雷]";
+			mes "我父亲一定躲在";
+			mes "流氓公会的";
+			mes "密室里。奇怪的是，我和";
+			mes "兄弟们怎么也找不到它，";
+			mes "也没法确认他是否安全……";
+			set ROG_SK,1;
+			next;
+			mes "[杰伊·格雷]";
+			mes "最近，他一直遭到";
+			mes "一些怪人的追捕，";
+			mes "这些人还威胁我们全家。";
+			mes "不过，他刚教了我们";
+			mes "一个新技能，他可以用它";
+			mes "来保护自己……";
+			close;
+		}
+		else if (ROG_SK == 1) {
+			mes "[杰伊·格雷]";
+			mes "我猜我父亲";
+			mes "把自己藏在了";
+			mes "流氓公会的密室里。我们";
+			mes "怎么也找不到，不过据说";
+			mes "入口就隐藏在";
+			mes "玛琪附近的某个地方。";
+			close;
+		}
+		else if (ROG_SK == 2) {
+			mes "[杰伊·格雷]";
+			mes "你在找";
+			mes "我的弟弟路易斯吗？";
+			mes "他就在流氓公会里，";
+			mes "所以要找到他";
+			mes "应该不难。他大概";
+			mes "就站在小霍格附近。";
+			close;
+		}
+		else if (ROG_SK == 3) {
+			mes "[杰伊·格雷]";
+			mes "托尔？他应该在";
+			mes "流氓公会里的";
+			mes "某个地方。你去";
+			mes "小赫尔曼附近找过了吗？";
+			close;
+		}
+		else if (ROG_SK == 4) {
+			mes "[杰伊·格雷]";
+			mes "给我的信……？";
+			mes "啊，是托尔写的，那我";
+			mes "最好马上";
+			mes "读一读。嗯……";
+			set ROG_SK,5;
+			next;
+			mes "[杰伊·格雷]";
+			mes "我明白了……我必须";
+			mes "马上把这件事";
+			mes "报告给流氓公会，";
+			mes "并给父亲回信。嗯。让我";
+			mes "现在就给他写封信。";
+			mes "请稍等一下……";
+			next;
+			mes "[杰伊·格雷]";
+			mes "好了，写完了。请";
+			mes "尽快把这封信";
+			mes "交给我父亲。";
+			mes "我知道这是强人所难，但";
+			mes "我自己实在找不到";
+			mes "去那间隐藏密室的路……";
+			close;
+		}
+		else if (ROG_SK == 5) {
+			mes "[杰伊·格雷]";
+			mes "请尽快把我的回信";
+			mes "交给父亲。";
+			mes "他还躲在";
+			mes "流氓公会的";
+			mes "当然，前提是敌人";
+			mes "还没有找到他。";
+			close;
+		}
+		else if (ROG_SK == 6) {
+			mes "[杰伊·格雷]";
+			mes "你需要为";
+			mes "擒拿技能进行训练？";
+			mes "我想托尔是唯一";
+			mes "能进入训练场的";
+			mes "人，所以";
+			mes "先去找他谈谈吧。";
+			close;
+		}
+		else if (ROG_SK == 7) {
+			mes "[杰伊·格雷]";
+			mes "你需要为";
+			mes "擒拿技能进行训练？";
+			mes "我想托尔是唯一";
+			mes "能进入训练场的";
+			mes "人，所以";
+			mes "先去找他谈谈吧。";
+			close;
+		}
+		else if (ROG_SK == 8) {
+			mes "[杰伊·格雷]";
+			mes "啊，你完成了";
+			mes "擒拿的训练，";
+			mes "是吗？太好了，现在去";
+			mes "告诉我的哥哥托尔吧。";
+			close;
+		}
+		else if (ROG_SK == 9) {
+			mes "[杰伊·格雷]";
+			mes "嗯。你大概应该";
+			mes "去和我父亲谈谈，了解更多";
+			mes "关于擒拿技能的";
+			mes "细节。";
+			mes "你在流氓公会的密室里";
+			mes "见过他了吗？";
+			close;
+		}
+		else if (ROG_SK == 12) {
+			mes "[杰伊·格雷]";
+			mes "蔡卓裴确实";
+			mes "像个固执的";
+			mes "恶棍。但他能";
+			mes "自创出一些技能，";
+			mes "想必相当聪明。";
+			close;
+		}
+		mes "[杰伊·格雷]";
+		mes "我有种感觉，";
+		mes "你迟早会成为";
+		mes "最出色的流氓之一，";
+		mes "如果你现在还不是的话。";
+		close;
+	}
+	mes "[杰伊·格雷]";
+	mes "自从我学会了";
+	mes "胁持，我就变得";
+	mes "非常好斗，甚至有点";
+	mes "受虐倾向了。我是说，如果别人";
+	mes "用技能打你，你可以";
+	mes "用同样的技能打回去！";
+	close;
+}
+
+prt_are01,150,150,0	script	#1strecog	-1,10,10,{
+OnTouch_:
+	donpcevent "#1st5min::OnEnable";
+	donpcevent "#1stmove::OnEnable";
+	disablenpc "#1strecog";
+	end;
+}
+
+prt_are01,135,135,0	script	#1st5min	-1,{
+OnInit:
+	disablenpc "#1st5min";
+	end;
+
+OnEnable:
+	enablenpc "#1st5min";
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "#1st5min";
+	end;
+
+OnTimer1000:
+	mapannounce "prt_are01","欢迎来到擒拿训练场。5分钟后你将自动被传送出去。",bc_map,"0x00ff00";
+	end;
+
+OnTimer290000:
+	mapannounce "prt_are01","20秒后你将被传送出去。",bc_map,"0x00ff00";
+	end;
+
+OnTimer310000:
+	mapannounce "prt_are01","5秒后你将被传送出去。",bc_map,"0x00ff00";
+	end;
+
+OnTimer315000:
+	mapannounce "prt_are01","正在将你传送出去。",bc_map,"0x00ff00";
+	disablenpc "基恩娜#1st";
+	disablenpc "基恩娜#2nd";
+	disablenpc "基恩娜#3rd";
+	disablenpc "基恩娜#4th";
+	disablenpc "基恩娜#5th";
+	disablenpc "基恩娜#6th";
+	disablenpc "基恩娜#7th";
+	disablenpc "基恩娜#8th";
+	donpcevent "#1stmove::OnDisable";
+	enablenpc "#1strecog";
+	donpcevent "等候室#rogue10::OnEnable";
+	stopnpctimer;
+	mapwarp "prt_are01","in_rogue",264,124;
+	end;
+}
+
+prt_are01,135,135,0	script	#1stmove	-1,{
+OnInit:
+	disablenpc "#1stmove";
+	end;
+
+OnEnable:
+	enablenpc "#1stmove";
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	mapannounce "prt_are01","基恩娜将在1秒后出现。请尽可能靠近她。",bc_map,"0x00ff00";
+	end;
+
+OnTimer5000:
+	switch(rand(1,8)) {
+	case 1:
+		enablenpc "基恩娜#1st";
+		break;
+	case  2:
+		enablenpc "基恩娜#2nd";
+		break;
+	case  3:
+		enablenpc "基恩娜#3rd";
+		break;
+	case  4:
+		enablenpc "基恩娜#4th";
+		break;
+	case  5:
+		enablenpc "基恩娜#5th";
+		break;
+	case  6:
+		enablenpc "基恩娜#6th";
+		break;
+	case  7:
+		enablenpc "基恩娜#7th";
+		break;
+	case 8:
+		enablenpc "基恩娜#8th";
+	}
+	end;
+
+OnTimer8000:
+	disablenpc "基恩娜#1st";
+	disablenpc "基恩娜#2nd";
+	disablenpc "基恩娜#3rd";
+	disablenpc "基恩娜#4th";
+	disablenpc "基恩娜#5th";
+	disablenpc "基恩娜#6th";
+	disablenpc "基恩娜#7th";
+	disablenpc "基恩娜#8th";
+	end;
+
+OnTimer9000:
+	stopnpctimer;
+	donpcevent "#1stmove::OnEnable";
+	mapwarp "prt_are01","prt_are01",150,150;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "#1stmove";
+	end;
+}
+
+prt_are01,149,162,0	script	基恩娜#1st	700,1,1,{
+	end;
+OnTouch_:
+	callfunc "F_Kienna",strnpcinfo(2);
+	end;
+}
+prt_are01,136,150,0	duplicate(基恩娜#1st)	基恩娜#2nd	700,1,1
+prt_are01,150,138,0	duplicate(基恩娜#1st)	基恩娜#3rd	700,1,1
+prt_are01,163,147,0	duplicate(基恩娜#1st)	基恩娜#4th	700,1,1
+prt_are01,134,140,0	duplicate(基恩娜#1st)	基恩娜#5th	700,1,1
+prt_are01,161,140,0	duplicate(基恩娜#1st)	基恩娜#6th	700,1,1
+prt_are01,161,160,0	duplicate(基恩娜#1st)	基恩娜#7th	700,1,1
+prt_are01,138,159,0	duplicate(基恩娜#1st)	基恩娜#8th	700,1,1
+
+function	script	F_Kienna	{
+	if (ROG_SK == 6) {
+		donpcevent "#1stmove::OnDisable";
+		mes "[基恩娜]";
+		mes "好了，在这个";
+		mes "练习中，你需要";
+		mes "预判我要往";
+		mes "哪个方向移动，并封锁";
+		mes "我的行动，说白了";
+		mes "就是定住我。准备好了~";
+		set ROG_SK,7;
+		next;
+		for(set .@lim_1,0; .@lim_1<10; set .@lim_1,.@lim_1+1) {
+			set .@move_1,rand(1,3);
+			if (select("向左拦截她:向右拦截她:拦截她后退") == .@move_1) {
+				mes "[基恩娜]";
+				mes "咦……？";
+				mes "你拦住我了！";
+				mes "干得漂亮~";
+				specialeffect EF_POTION1;
+				specialeffect2 EF_POTION7;
+				set .@suc_1,.@suc_1 + 1;
+			}
+			else {
+				mes "[基恩娜]";
+				mes "抱歉，我并不是";
+				mes "要往那个方向移动。";
+				mes "你的拦截失败了……";
+			}
+			next;
+		}
+		mes "[基恩娜]";
+		mes "好了，到此";
+		mes "结束。你获得的";
+		switch(.@suc_1) { 
+		case 10:
+			mes "训练评级是''^0000FFS^000000''。";
+			mes "这是满分！";
+			break;
+		case 9:
+			mes "训练评级是''^0000FFA^000000''。";
+			mes "你真的很擅长这个！";
+			break;
+		case 8:
+			mes "训练评级是''^0000FFB +^000000''。";
+			mes "非常值得称赞！";
+			break;
+		case 7:
+			mes "训练评级是''^0000FFB^000000''。";
+			mes "干得很不错~";
+			break;
+		case 6:
+			mes "训练评级是''^0000FFC +^000000''。";
+			mes "还不算太差，但你";
+			mes "只是勉强及格！";
+			break;
+		case 5:
+			mes "训练评级是''^FF0000C^000000''。";
+			break;
+		case 4:
+			mes "训练评级是''^FF0000D+^000000''。";
+			break;
+		case 3:
+			mes "训练评级是''^FF0000D^000000''。";
+			break;
+		case 2:
+			mes "训练评级是''^FF0000F^000000''。";
+			break;
+		case 1:
+			mes "训练评级是''^FF0000F -^000000''。";
+			break;
+		case 0:
+			mes "训练评级嘛……";
+			mes "实际上，我没法";
+			mes "计算出来。到底";
+			mes "发生了什么？！";
+		}
+		next;
+		if (.@suc_1 > 5) {
+			mes "[基恩娜]";
+			mes "我很高兴地说，";
+			mes "你已经完成了";
+			mes "训练！现在让我";
+			mes "送你回托尔·格雷那里，";
+			mes "好让你完成";
+			mes "^FF0000擒拿^000000的学习。";
+			set ROG_SK,8;
+			disablenpc "基恩娜#"+getarg(0);
+			donpcevent "#1st5min::OnDisable";
+			enablenpc "#1strecog";
+			close2;
+			donpcevent "等候室#rogue10::OnEnable";
+			warp "in_rogue",264,124;
+			end;
+		}
+		else {
+			mes "[基恩娜]";
+			mes "嗯。以这个评级，";
+			mes "我觉得你";
+			mes "还没准备好完成";
+			mes "擒拿的学习。";
+			mes "你想再试一次";
+			mes "训练练习吗？";
+			next;
+			if (select("想!:不用了，谢谢。") == 1) {
+				disablenpc "基恩娜#"+getarg(0);
+				donpcevent "#1stmove::OnEnable";
+				set ROG_SK,6;
+				warp "prt_are01",150,150;
+				end;
+			}
+			disablenpc "基恩娜#"+getarg(0);
+			donpcevent "#1st5min::OnDisable";
+			enablenpc "#1strecog";
+			set ROG_SK,6;
+			donpcevent "等候室#rogue10::OnEnable";
+			warp "in_rogue",264,124;
+			end;
+		}
+	}
+	else if (ROG_SK == 7) {
+		mes "[基恩娜]";
+		mes "你一定是在练习";
+		mes "中途取消了";
+		mes "训练。很抱歉，";
+		mes "但你必须";
+		mes "从训练的";
+		mes "最开始重新开始。";
+		set ROG_SK,6;
+		close2;
+		disablenpc "基恩娜#"+getarg(0);
+		donpcevent "#1stmove::OnEnable";
+		warp "prt_are01",150,150;
+		end;
+	}
+	else if (ROG_SK == 8) {
+		mes "[基恩娜]";
+		mes "你已经完成了";
+		mes "擒拿技能的";
+		mes "细节。";
+		mes "你不再需要";
+		mes "我的协助了。";
+		close2;
+		donpcevent "等候室#rogue10::OnEnable";
+		warp "in_rogue",264,124;
+		end;
+	}
+	else {
+		mes "[基恩娜]";
+		mes "抱歉，我觉得";
+		mes "你不属于这里。";
+		mes "如果你迷路了，让我";
+		mes "送你回流氓公会吧……";
+		close2;
+		donpcevent "等候室#rogue10::OnEnable";
+		warp "in_rogue",264,124;
+		end;
+	}
+
+OnInit:
+	disablenpc "基恩娜#1st";
+	disablenpc "基恩娜#2nd";
+	disablenpc "基恩娜#3rd";
+	disablenpc "基恩娜#4th";
+	disablenpc "基恩娜#5th";
+	disablenpc "基恩娜#6th";
+	disablenpc "基恩娜#7th";
+	disablenpc "基恩娜#8th";
+	end;
+}
+
+in_rogue,88,119,3	script	等候室#rogue10	828,{
+OnEnable:
+	enablenpc "等候室#rogue10";
+	enablewaitingroomevent "等候室#rogue10";
+	end;
+
+OnInit:
+	waitingroom "训练场",10,"等候室#rogue10::OnStartArena",1;
+	enablewaitingroomevent "等候室#rogue10";
+	end;
+
+OnStartArena:
+	warpwaitingpc "prt_are01",150,150;
+	disablewaitingroomevent "等候室#rogue10";
+	end;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

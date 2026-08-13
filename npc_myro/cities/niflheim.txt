@@ -1,0 +1,355 @@
+//===== rAthena Script =======================================
+//= 尼芙菲姆脚本
+//===== By: ==================================================
+//= Fyrien, Dizzy, PKGINGO
+//= Official NPCs translated and re-edited by Celest
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 尼芙菲姆官方 NPC
+//= 1.01 Splitted file(guides, shops). Fixed rand() bugs,
+//=      missing labels bugs, optimization [Lupus]
+//= 1.03 fixed end; -> close;
+//= 1.04-1.05 fixed several bugs with missing CLOSE button, wrong var name
+//=     in Piano Keys quest
+//=     fixed zeny/item, exploit in Sairin, some optimizations [Lupus]
+//= 1.06 some typos in some variables fixed (thx 2 Dr.Evil) [Lupus]
+//= 1.07 Fixed typos [Nexon]
+//= 1.08 Commented "Traveler" out as it is not official & we have correct Bungee quest in.
+//=     Also removed TODO, as they are already done. [Vicious_Pucca]
+//= 1.1 Replaced nif_q_done with MISC_QUEST & 32. nif_t -> @nif_t [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Moved Book of Devil and Piano quest to quests/quests_niflheim.txt [Evera]
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Removed Cursed Spirits as they were custom.
+//= 1.5 Added dummy "OnMyMobDead" event to Cursed Spirit. [L0ne_W0lf]
+//============================================================
+
+niflheim,52,147,3	script	柯资#nif	796,{
+	mes "[柯资]";
+	mes "我不允许任何活人";
+	mes "进入这个地方！";
+	close;
+}
+
+niflheim,195,211,6	script	其甘提阿#nif	796,3,3,{
+	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "怎么了？";
+		next;
+		mes "[其甘提阿]";
+		mes "只是……";
+		mes "过来这里。";
+		mes "我有件事";
+		mes "必须为你做。";
+		next;
+		mes "[其甘提阿]";
+		mes "你的角歪了。";
+		mes "一定要确保你的角";
+		mes "戴得端正整齐。";
+		mes "死亡之主";
+		mes "一直在看着你。";
+		close;
+	}
+	mes "[其甘提阿]";
+	mes "死亡之主";
+	mes "无所不知，无所不见。";
+	mes "躲藏和逃离";
+	mes "死亡的甜蜜拥抱都是徒劳的。";
+	close;
+
+OnTouch_:
+	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
+		mes "[其甘提阿]";
+		mes "嘿，等等！";
+		close;
+	}
+	end;
+}
+
+nif_in,16,27,1	script	死鸡#nif	800,{
+	percentheal -5,0;
+	mes "[死鸡]";
+	mes "我本来作为一只普通的鸡过着平静的生活。但后来有一天，我被人类残忍地杀死吃掉了。嗯……嘿嘿~！现在轮到我了！*咯咯叫*";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "哎哟……！";
+	mes "一只鸡……";
+	mes "咬了我！";
+	next;
+	mes "[死鸡]";
+	mes "呵呵~！";
+	mes "我既能说话，又能";
+	mes "享用活人！";
+	mes "当僵尸太棒了！";
+	mes "*咯咯叫*";
+	close;
+}
+
+nif_in,16,30,4	script	死的 吸血蝙蝠#nif	799,{
+	percentheal -5,0;
+	mes "[瓦托曼]";
+	mes "噢，真方便，一个活";
+	mes "人~！新鲜的血液";
+	mes "总是美味……！我想我就";
+	mes "小小地吸一口。";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "噢！我的血管！";
+	mes "你刚才";
+	mes "吸了我的血？！";
+	next;
+	mes "[瓦托曼]";
+	mes "哇哈哈哈~";
+	mes "愚蠢的凡人！";
+	mes "小心我的力量！";
+	close;
+}
+
+nif_in,156,93,5	script	小孩#niflheim	793,{
+	mes "[阿拉基娜·安]";
+	mes "我……我在哪里……？";
+	mes "我记得我在睡觉，";
+	mes "醒来时，我就在这里了……";
+	mes "妈妈，你看到我妈妈了吗？";
+	mes "我想回家……*呜呜*";
+	next;
+	switch(select("关于女巫:关于诅咒:取消。")) {
+	case 1:
+		mes "[阿拉基娜·安]";
+		mes "女巫……？我从没见过女巫，但我在书里读到过她们。我不确定她们是否存在，但如果真的存在，那太可怕了……";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "这里为什么这么冷……？";
+		mes "你、你不冷吗，甚至不害怕吗？我想回家……那里很暖和。你能帮我回去吗……求你了……？帮、帮我……";
+		close;
+	case 2:
+		mes "[阿拉基娜·安]";
+		mes "诅、诅咒……？";
+		mes "我奶奶说世界上有很多诅咒。有些，你能看出那是诅咒。但还有些诅咒会跟随你一生……";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "奶奶说诅咒可以以其他形式出现……比如如果有人总是生你的气，不肯原谅你，你也可以把这看作一种诅咒。";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "我奶奶告诉我，只有一个咒语能解除用祝福无法解除的强大诅咒……";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "克拉图……";
+		mes "维拉塔……";
+		mes "尼……尼……嗯……？";
+		mes "最后一部分是什么？";
+		mes "我、我记不得";
+		mes "咒语的最后一部分了！";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "如果你按那个顺序重复咒语，它会把你从某人的愤怒和仇恨中解救出来。如果你在恶灵附近这么做，它们可能会代替你承受诅咒。";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "你为什么问我这些可怕的事……？我只想回家……";
+		close;
+	case 3:
+		mes "[阿拉基娜·安]";
+		mes "这里好冷……";
+		mes "我快冻僵了……";
+		mes "我想回家，";
+		mes "离开这个可怕的地方……";
+		next;
+		mes "[阿拉基娜·安]";
+		mes "求你……帮帮我。";
+		mes "你能带我一起走吗……？";
+		close;
+	}
+}
+
+niflheim,350,258,1	script	被诅咒的 灵魂#nif	802,{
+	killmonster "niflheim","Cursed Spirit#nif::OnMyMobDead";
+	mes "[阿什·布鲁斯]";
+	mes "我感觉到你被";
+	mes "一个强大的咒语诅咒了……";
+	mes "嗯……很明显";
+	mes "你想干什么……";
+	next;
+	mes "[阿什·布鲁斯]";
+	mes "你想摆脱";
+	mes "你的诅咒……";
+	mes "把它给我！！";
+	next;
+	mes "[阿什·布鲁斯]";
+	mes "就因为我是一个被诅咒的灵魂，你们这些冒险者就以为可以把诅咒丢给我？！";
+	emotion ET_FRET;
+	next;
+	mes "[阿什·布鲁斯]";
+	mes "我拒绝让你";
+	mes "留在这里……";
+	mes "立刻离开，否则我会";
+	mes "用武力赶走你……";
+	next;
+	mes "[阿什·布鲁斯]";
+	mes "……还有……";
+	mes "……无论你做什么……";
+	mes "……不要碰我的书……";
+	next;
+	switch(select("碰第一本书。:碰第二本书。:碰第三本书。:好吧，我走。")) {
+	case 1:
+		monster "niflheim",349,259,"飞行魔书",1478,1,"Cursed Spirit#nif::OnMyMobDead";
+		mes "[阿什·布鲁斯]";
+		mes "……！……";
+		mes "你竟敢碰我的书，";
+		mes "我明明说过";
+		mes "'不要碰我的书！'";
+		next;
+		mes "[阿什·布鲁斯]";
+		mes "……！……咕噜噜！";
+		mes "我要把你撕碎……！";
+		mes "被永恒的诅咒束缚吧……！";
+		close;
+	case 2:
+		mes "[阿什·布鲁斯]";
+		mes "……！……";
+		mes "你竟敢碰我的书？！";
+		mes "就在我说过";
+		mes "不要碰它们之后……？！";
+		mes "愚蠢的凡人！";
+		mes "……滚！";
+		close2;
+		warp "niflheim",34,162;
+		end;
+	case 3:
+		mes "[阿什·布鲁斯]";
+		mes "哇哈哈哈……";
+		mes "顽固的凡人~！";
+		mes "好吧！我会给你";
+		mes "一个公平的机会，让你";
+		mes "施一个咒语。";
+		next;
+		mes "[阿什·布鲁斯]";
+		mes "但祝福对";
+		mes "你身上的诅咒";
+		mes "不起作用……";
+		mes "而解除你诅咒的咒语";
+		mes "已经";
+		mes "失传多年了~！";
+		emotion ET_KIK;
+		next;
+		if (select("Clover:Klaatu:Klaytos") == 2)
+			set .@spell,.@spell+1;
+		if (select("Verit:Veritas:Verata") == 3)
+			set .@spell,.@spell+1;
+		if (select("Necktie:Necklace:Nero:^FFFFFFNictu!!!^000000") == 4)
+			set .@spell,.@spell+1;
+		if (.@spell == 3) {
+			switch(rand(1,5)) {
+			case 1:
+				if (morison_meat < 15) {
+					set morrison_meat,15;
+					mes "[阿什·布鲁斯]";
+					mes "你……你解除了诅咒！";
+					mes "你怎么知道那个咒语的？！";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "我想你期待我现在";
+					mes "在痛苦中融化，是";
+					mes "吧？嗯……很抱歉让你失望，";
+					mes "凡人，但我永远不会死！";
+					close;
+				}
+				mes "[阿什·布鲁斯]";
+				mes "……！你念对了咒语？！";
+				mes "……！……";
+				mes "但……你仍然被诅咒着……";
+				mes "呜啊啊啊啊啊啊……！";
+				close;
+			case 2:
+				if (thai_head == 1) {
+					set thai_head,2;
+					mes "[阿什·布鲁斯]";
+					mes "这是……";
+					mes "什么感觉？";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "不……！";
+					mes "不不不不不不不不！";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "为什么你的咒语会生效？！";
+					close;
+				}
+				mes "[阿什·布鲁斯]";
+				mes "你……";
+				mes "念对了咒语？！";
+				next;
+				mes "[阿什·布鲁斯]";
+				mes "呵呵~";
+				mes "但你仍然被诅咒着……";
+				close;
+			case 3:
+				if (thai_head == 8) {
+					set thai_head,7;
+					mes "[阿什·布鲁斯]";
+					mes "你……你解除了诅咒！";
+					mes "谁教你那个咒语的？！";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "我想你期待我现在";
+					mes "在痛苦中融化，是";
+					mes "吧？嗯……很抱歉让你失望，";
+					mes "凡人，但我永远不会死！";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "只要我还……";
+					mes "仍然……";
+					mes "被诅咒着。";
+					next;
+					mes "[阿什·布鲁斯]";
+					mes "不不不不不不！";
+					close;
+				}
+				mes "[阿什·布鲁斯]";
+				mes "……！你念对了咒语？！";
+				mes "……！……";
+				mes "但……你仍然被诅咒着……";
+				mes "呜啊啊啊啊啊啊……！";
+				close;
+			case 4:
+				mes "[阿什·布鲁斯]";
+				mes "……！你念对了咒语？！";
+				mes "……！……";
+				mes "但……你仍然被诅咒着……";
+				mes "哇哈哈哈……！";
+				close;
+			}
+		}
+		monster "niflheim",345,259,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",347,261,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",344,253,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",346,251,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",349,249,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",350,260,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		monster "niflheim",353,256,"人鱼士兵",1462,1,"Cursed Spirit#nif::OnMyMobDead";
+		mes "[阿什·布鲁斯]";
+		mes "哇哈哈哈哈哈哈！";
+		mes "那不是正确的咒语！";
+		mes "现在，死亡在等着你！";
+		mes "你被永恒地";
+		mes "束缚在诅咒中……！";
+		close;
+	case 4:
+		mes "[阿什·布鲁斯]";
+		mes "...";
+		mes ".....";
+		next;
+		mes "[阿什·布鲁斯]";
+		mes "那么。";
+		mes "急着离开时";
+		mes "小心别被";
+		mes "自己的脚绊倒。";
+		close;
+	}
+
+OnMyMobDead:
+	end;
+}

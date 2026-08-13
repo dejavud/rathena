@@ -1,0 +1,2253 @@
+//===== rAthena Script =======================================
+//= 刺客职业任务
+//===== Description: =========================================
+//= [Official Conversion]
+//= 刺客职业的转职任务。
+//===== Changelog: ===========================================
+//= 1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
+//=     Also converted the booby traps from the aegis script.[kobra_k88]
+//= 1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
+//=     Fixed some duplicate npc names.  Added missing waitingroom triggers.
+//=     Fixed warp in "TimerSin", was supposed to be an areawarp.
+//=     For some reason sometimes the "Nameless One" would have message windows
+//=     without controls.  Changed the doevent that triggers him to an
+//=     addtimer and that seemed make the prob. go away[kobra_k88]
+//= 1.2 Fixed WRONG skillpoint check! [Lupus]
+//= 1.2b Fixed missing commands and typos [Lupus]
+//= 1.3 Baby class Support added [Lupus]
+//= 1.5 Fixed possible EXP abuse [Lupus]
+//= 1.6 Added a func which prevent advanced classes passing
+//=     2nd Job Quests again. It also guides adv classes where
+//=     to go. [Lupus]
+//= 2.0 Changed numbers to constants. [Vicious]
+//= 2.1 Removed Duplicates [Silent]
+//= 2.2 Merged back JFunc. Fixed missing dialogue [Lupus]
+//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I
+//=     was still able to bypass it) [Toms]
+//= 2.4 Fixed skipping of Nameless NPC [Lupus]
+//= 2.5 Fixed a Rogue exploit [Lupus]
+//= 2.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.7 Several bugfixes with the help of Samuray22 and Barron-Monster. [L0ne_W0lf]
+//= 2.8 Removed duplicate warps. [L0ne_W0lf]
+//= 2.8a Deleted unused variables. [Samuray22]
+//= 2.8b Fixed error caused in last updated, removed useless variable 'joblvl'. [L0ne_W0lf]
+//= 2.9 Fixed an indent and added a 'break;' in hopes of 'fixing' an error [L0ne_W0lf]
+//= 2.9a Corrected a Typo error ";;". [Samuray22]
+//= 2.9b Moved a wrong 'break'. [Zephyrus_cr]
+//= 3.0 Now uses enable and disable waitingroomevent. [L0ne_W0lf]
+//= 3.1 Fixed problem with waiting room. (bugreport:1099) [L0ne_W0lf]
+//= 3.1a Follow up fix. Forgot to replace a label. [L0ne_W0lf]
+//= 3.1b Fixed waiting room not enabled in some situations [Zephyrus]
+//= 3.2 Fixed a question having all correct answers. [brianluau]
+//= 3.3 Added Quest Log commands. [Kisuka]
+//= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
+//= 3.6 Fixed broken event calls. [Euphy]
+//= 3.7 Fixed issue that the player can't progress in the quest if timed out at weapon reward step. This issue is fixed on iRO but not on kRO. [https://forums.warpportal.com/index.php?/topic/130060-didnt-receive-necklace-of-oblivion-when-changing-assassin/#entry1496042] [MrAntares]
+//= 3.8 Another 'unofficial fix'. Player can't change job if time out after the necklace is deleted. [Atemo]
+//============================================================
+
+in_moc_16,19,33,1	script	长相凶恶的家伙#asn	55,{
+	if (Upper == 1) {
+		mes "[长相凶恶的家伙]";
+		mes "嗯？你……？";
+		mes "我能感觉到，你和一般人不一样……";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "从没见过像你这么有压迫感的人！不知为何我不喜欢你。走吧！";
+		close;
+	}
+	if (SkillPoint) {
+		mes "[长相凶恶的家伙]";
+		mes "一转的技能点没用完，是不能转职的。先去把技能点用完吧。";
+		close;
+	}
+	if (ASSIN_Q == 4) {
+		mes "[长相凶恶的家伙]";
+		mes "噢，别摆出那副表情了。真有那么痛苦吗？";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "哇哇哇，你很痛苦，我看得出来。看，我帮你恢复HP和SP。满意了吧？";
+		percentheal 100,100;
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "活着就那么难吗？";
+		mes "下次再加把劲吧。想成为刺客，可不能太勉强自己……";
+		next;
+		if (select("无论如何我都要成为刺客！:天啊，我得休息一下。") == 1) {
+			mes "[长相凶恶的家伙]";
+			mes "哦……";
+			mes "那么，加油吧！";
+			close2;
+			ASSIN_Q = 0;
+			warp "in_moc_16",19,76;
+			end;
+		}
+		mes "[长相凶恶的家伙]";
+		mes "休息？噢好吧，随你。等你觉得准备好成为刺客了，再回来吧。";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "想回城得自己走回去。噢，别忘了设置重生点，知道吗？";
+		close2;
+		ASSIN_Q = 0;
+		ASSIN_Q2 = 0;
+		if (ASSIN_Q3 < 3)
+			ASSIN_Q3 = 0;
+		savepoint "in_moc_16",18,14,1,1;
+		warp "in_moc_16",18,14;
+		end;
+	}
+	if (BaseJob == Job_Thief && countitem(1008) == 0 && ASSIN_Q > 7) {
+		mes "[刺客专家'休伊']";
+		mes "喂，怎么回事……？你怎么没把^006699遗忘项链^000000带来？应该随身携带的，放哪了？";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "趁会长发现之前，再去拿一条^006699遗忘项链^000000回来！快点，尽力拿到手！";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "等你终于拿到手了，就带回来给我！^666666*唉……*^000000";
+		close;
+	}
+	if (BaseJob == Job_Thief && countitem(1008) > 0 && ASSIN_Q > 7) {
+		mes "[刺客专家'休伊']";
+		mes "哎呀呀，拿到了，恭喜！但划痕这么明显我不能收。你成不了刺客了！";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "哈哈哈～！我开玩笑的，别当真。不过我得先把项链拿给会长验看。";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "...";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "...";
+		mes "......";
+		next;
+		mes "[刺客专家'休伊']";
+		mes "好了！";
+		mes "你通过审核了！";
+		next;
+		delitem 1008,1; //Frozen_Heart
+		changequest 8007,8008;
+		completequest 8008;
+		callfunc "Job_Change",Job_Assassin;
+		callfunc "F_ClearJobVar";		// clears all job variables for the current player
+		mes "[刺客专家'休伊']";
+		mes "努力成为出色的刺客吧！怀着信念旅行，带着尊严杀戮。再次恭喜你。";
+		close;
+	}
+	else if (countitem(1008) > 0 && BaseJob == Job_Thief && ASSIN_Q < 7) {
+		mes "[长相凶恶的家伙]";
+		mes "啊？";
+		mes "你想干什么？";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "我看你带着一条^006699遗忘项链^000000……你想成为刺客，对吧？让我检查一下……";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "...";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "...";
+		mes "......";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "等一下……";
+		mes "你这个不成器的混蛋！这是假货！";
+		next;
+		mes "[长相凶恶的家伙]";
+		mes "你竟敢拿假货来骗我！你是傻的还是怎么着！？我宰了你……";
+		close2;
+		warp "moc_fild16",206,229;
+		end;
+	}
+	else {
+		mes "[长相凶恶的家伙]";
+		mes "你来这里干什么？";
+		mes "我不喜欢你盯着我看的眼神……小鬼。";
+		next;
+		if (BaseClass == Job_Novice) {
+			mes "[长相凶恶的家伙]";
+			mes "喂，新手。你最好尽快离开这里。我可没法保证你的安全。";
+			close;
+		}
+		else if (BaseClass == Job_Swordman) {
+			mes "[长相凶恶的家伙]";
+			mes "一个拿剑的来这种地方干什么？要砸东西到别处去砸，笨蛋。";
+			close;
+		}
+		else if (BaseClass == Job_Mage) {
+			mes "[长相凶恶的家伙]";
+			mes "一个魔法师来这里做什么？";
+			next;
+			mes "[长相凶恶的家伙]";
+			mes "普隆德拉和朱诺的图书馆才欢迎你，何不耍个戏法消失呢？";
+			close;
+		}
+		else if (BaseClass == Job_Archer) {
+			mes "[长相凶恶的家伙]";
+			mes "哎呀呀。";
+			mes "看看那把漂亮的弓。";
+			next;
+			mes "[长相凶恶的家伙]";
+			mes "没几个弓箭手有胆子靠近这种地方。喂，你想在这里干什么？！";
+			close;
+		}
+		else if (BaseClass == Job_Acolyte) {
+			mes "[长相凶恶的家伙]";
+			mes "好像闻到怪味了。神的仆人来这里干什么？这里不适合你。";
+			close;
+		}
+		else if (BaseClass == Job_Merchant) {
+			mes "[长相凶恶的家伙]";
+			mes "我们这里不欢迎贪财的人。到别处去卖你的东西吧，财主。";
+			close;
+		}
+		else if (BaseJob == Job_Rogue) {
+			mes "[长相凶恶的家伙]";
+			mes "看起来你无忧无虑。好好休息吧。流氓和刺客公会一向处得不错。";
+			next;
+			mes "[长相凶恶的家伙]";
+			mes "对了……";
+			mes "你见过一个叫玛琪的女孩吗？";
+			next;
+			mes "[长相凶恶的家伙]";
+			mes "玛琪……";
+			mes "我们曾约定永远在一起。^666666*唉……*^000000我想她早忘了那约定。不过那时我们还小……";
+			close;
+		}
+		else if (BaseJob == Job_Assassin) {
+			mes "[刺客专家'休伊']";
+			mes "嘿，我记得你～";
+			mes "你叫什么来着，嗯，我记得，因为听起来很有趣……";
+			next;
+			mes "[刺客专家'休伊']";
+			mes ":+:" + strcharinfo(0) + ":+:，对吧？不对，就是"+ strcharinfo(0) +"。嗯，最近怎么样？";
+			next;
+			mes "[刺客专家'休伊']";
+			mes "可惜，公会现在没有委托要交给你。专心修炼吧。到时候再见了。";
+			close;
+		}
+		else if (BaseJob == Job_Thief && JobLevel > 39) {
+			if (SkillPoint) {
+				mes "[长相凶恶的家伙]";
+				mes "一转的技能点没用完，是不能转职的。最好先把技能点用完。";
+				close;
+			}
+			else {
+				mes "[长相凶恶的家伙]";
+				mes "嗯……";
+				mes "盗贼……？";
+				next;
+				mes "[长相凶恶的家伙]";
+				mes "而且是个老练的盗贼，我钱包都找不到了。正需要你这样的人。";
+				next;
+				mes "[长相凶恶的家伙]";
+				mes "怎么样，要不要更进一步，成为一名刺客？";
+				next;
+				switch(select("是的。这是我最后一次扒窃了。:有什么条件？:以后再说吧，我得先去偷点东西。")) {
+				case 1:
+					mes "[长相凶恶的家伙]";
+					mes "好久没有客人来了。我这就送你去办事处。";
+					close2;
+					ASSIN_Q = 0;
+					if (checkquest(8000) != -1) {
+						changequest 8000,8001;
+					} else {
+						setquest 8001;
+					}
+					warp "in_moc_16",19,76;
+					end;
+				case 2:
+					mes "[长相凶恶的家伙]";
+					mes "条件？嗯，首先你得是个盗贼。其次，盗贼的职业等级至少要到40。";
+					next;
+					mes "[长相凶恶的家伙]";
+					mes "第三，你得通过成为刺客的考试。";
+					mes "都记住了吗？对自己作为盗贼的实力有信心的话，就不必担心。";
+					close;
+				case 3:
+					mes "[长相凶恶的家伙]";
+					mes "嗯……";
+					mes "那好吧。";
+					mes "等你觉得准备好了";
+					mes "再来吧。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[长相凶恶的家伙]";
+			mes "哼。你还没有资格成为刺客。你得先满足一些条件才行。";
+			next;
+			mes "[长相凶恶的家伙]";
+			mes "继续修炼吧。职业等级至少要40级，懂了吗？超过40级更好。";
+			close;
+		}
+	}
+}
+
+in_moc_16,25,90,1	script	刺客凯伊#ASN2	730,2,2,{
+	mes "[刺客'凯伊']";
+	mes "嗯？！";
+	emotion ET_SURPRISE;
+	next;
+	mes "[刺客'凯伊']";
+	mes "靠近点。我喜欢面对面说话。要我提高嗓子，我会很烦躁。";
+	mes "有人在我背后说话，我也会觉得烦。";
+	close;
+
+OnTouch_:
+	if (ASSIN_Q2 == 4) {
+		mes "[刺客'凯伊']";
+		mes "啊？";
+		mes "你刚才不是";
+		mes "才从我面前过去吗？";
+		next;
+		mes "[刺客'凯伊']";
+		mes "啊……？！";
+		mes "你失败了？";
+		mes "连笔试";
+		mes "都没过？";
+		mes "哈哈哈哈哈哈！";
+		next;
+		mes "[刺客'凯伊']";
+		mes "这个嘛……";
+		mes "好久没见到";
+		mes "失败得这么惨的人了。";
+		next;
+		mes "[刺客'凯伊']";
+		mes "哈！";
+		mes "哈哈哈～！";
+		mes "噢，你笑死我了……";
+		next;
+		mes "[刺客'凯伊']";
+		mes "抱歉我笑了，但这实在太好笑了！哈哈哈～想让我给你点提示吗？";
+		next;
+		switch(select("求求你，给我点提示吧。:别笑我！快，给我提示！:……闭嘴，我不需要你的帮助！")) {
+		case 1:
+			mes "[刺客'凯伊']";
+			mes "哈哈哈哈！！";
+			mes "哎呀，还真是坦率。你还不是刺客，却已经笑死我了，笑死我了！";
+			next;
+			mes "[无名者]";
+			mes "呵呵呵……";
+			next;
+			mes "[刺客'凯伊']";
+			mes "无名者，你听到了吗？！'求求你，给我点提示吧。'哈哈哈！";
+			next;
+			mes "[无名者]";
+			mes "是的。";
+			mes "这家伙真是可怜";
+			mes "得可笑。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "哈哈哈哈哈哈哈！";
+			mes "那——么说，你想要";
+			mes "提示，对吧？";
+			next;
+			mes "[刺客'凯伊']";
+			mes "...";
+			next;
+			mes "[刺客'凯伊']";
+			mes "...";
+			mes "......";
+			next;
+			mes "[刺客'凯伊']";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[刺客'凯伊']";
+			mes "...";
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[刺客'凯伊']";
+			mes "...";
+			mes "......";
+			mes ".........";
+			mes "............";
+			mes "...............";
+			next;
+			mes "[刺客'凯伊']";
+			mes "不。";
+			mes "我改主意了！";
+			mes "我还是不打算给你任何提示。嘿嘿嘿～";
+			close;
+		case 2:
+			mes "[刺客'凯伊']";
+			if (Sex == SEX_MALE) {
+				mes "哼。如今敢当盗贼的人，自信心一定很足吧。";
+				next;
+				mes "[刺客'凯伊']";
+				mes "是是是，我明白了。谁都有失手的时候。抱歉嘲笑你的失误。";
+			}
+			else
+				mes "嗯，我喜欢你的态度。保持盗贼的骄傲吧，下次会更好。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "虽然不能给你提示，但我可以告诉你更多关于刺客的事……";
+			next;
+			mes "[刺客'凯伊']";
+			mes "我们最看重尊严。毕竟我们是刺客，人们需要我们。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "亲近你的人，或许无法理解我说的话。我们天生就是孤独的。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "如果爱人或朋友看到你手上的血，他们也许会离开你。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "有时孤独，但没那么糟。至少我能按自己的方式做想做的事。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "目前我能告诉你的就这些。你觉得当刺客";
+			mes "令人沮丧吗？";
+			close;
+		case 3:
+			mes "[刺客'凯伊']";
+			mes "……嗯。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "对，就是这股志气。";
+			mes "永远别让人看扁。我们是刺客……";
+			next;
+			mes "[刺客'凯伊']";
+			mes "抱歉刚才笑你。记住，刺客要保持这份骄傲与尊严。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "在保持骄傲的同时，";
+			mes "我希望你尊重可能染红拳刃或短剑的鲜血。";
+			next;
+			if (select("……明白了。:……我糊涂了。") == 1) {
+				mes "[刺客'凯伊']";
+				mes "嗯，现在我可以信任你了。让我给你一些重要的提示。";
+				next;
+				switch(rand(1,3)) {
+				case 1:
+					mes "[刺客'凯伊']";
+					mes "首先，毒牙是拳刃专用技能，不需要任何短剑类技能。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "二刀连击……没试过吗？它能让你一次攻击敌人两次。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "红色血液是一种属性石，蓝色宝石和刺客职业毫无关系！";
+					next;
+					mes "[刺客'凯伊']";
+					mes "见过魔法师的冰箭术打老树精吗？水克火，风又克水。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "只要贴着阴影，隐匿就能完美藏住你！除非有人用探测技能。";
+					next;
+					break;
+				case 2:
+					mes "[刺客'凯伊']";
+					mes "'绿腐尸锐利腿骨'拥有不死属性。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "你用过什么武器？大马士革刀？短剑？刺剑？左手剑？";
+					next;
+					mes "[刺客'凯伊']";
+					mes "沙漠之狼会掉带槽的卡塔。记住，总有一天用得上。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "地下阴暗潮湿处的家伙会掉带槽的朱尔。也许他拿它来挖洞？";
+					next;
+					mes "[刺客'凯伊']";
+					mes "还有……";
+					mes "我一直想养一只青蛙当宠物。但不可能！";
+					next;
+					mes "[刺客'凯伊']";
+					mes "据我所知，拿锤子的哥布灵是地属性。记住，火克地。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "你知道属性武器吗？上面通常刻着铁匠的名字……";
+					next;
+					break;
+				case 3:
+					mes "[刺客'凯伊']";
+					mes "老树精卡片快卖给魔法师，他们为它疯狂。它加INT，嗯……";
+					next;
+					mes "[刺客'凯伊']";
+					mes "对我们，回避和攻击比防御重要。别戴头盔，又重又挡视线。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "'回避率增加'每级技能提升3%回避率。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "记住：拳刃类武器（贾马德哈尔/朱尔/卡塔）都是双手的！";
+					next;
+					mes "[刺客'凯伊']";
+					mes "沙漠之城……想念家乡梦罗克。当盗贼仿佛还是前几天的事……";
+					next;
+					mes "[刺客'凯伊']";
+					mes "嘿，记得我的盗贼任务。闯进农场采蘑菇时紧张得要命……";
+					next;
+					mes "[刺客'凯伊']";
+					mes "昆虫能发现隐身/隐匿。它们的触角总能找到目标。";
+					next;
+					mes "[刺客'凯伊']";
+					mes "听说小巴风特卡片能加3点敏捷和1点暴击……";
+					next;
+					mes "[刺客'凯伊']";
+					mes "刺客专修敏捷，满级前就能加10点敏捷，之后就不再涨了。";
+					next;
+				}
+				mes "[刺客'凯伊']";
+				mes "^666666*呼*^000000我能说的就这些，几乎把一切都告诉你了。";
+				next;
+				mes "[刺客'凯伊']";
+				mes "那么，去找'无名者'请求再考一次吧。";
+				close2;
+				warp "in_moc_16",19,144;
+				end;
+			}
+			mes "[刺客'凯伊']";
+			mes "^666666*唉……*^000000";
+			mes "你怎么就不懂尊严的概念？你刚才还向我展示过呢！";
+			next;
+			mes "[刺客'凯伊']";
+			mes "哦，我明白了。你展示的不是骄傲，你只是个混蛋！";
+			next;
+			mes "[刺客'凯伊']";
+			mes "咕噜噜……";
+			mes "传送门！";
+			close2;
+			warp "c_tower4",64,76;
+			end;
+		}
+	}
+	else {
+		mes "[刺客'凯伊']";
+		mes "哦，你一定是刺客见习生。";
+		mes "你是来成为刺客的，对吧？";
+		next;
+		if (select("是的，我是。:……不，我不是。") == 1) {
+			mes "[刺客'凯伊']";
+			mes "好，很好。来填申请表吧。请签上你的名字和职业等级。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "让我看看。";
+			mes "你的名字是";
+			mes "" + strcharinfo(0) + "……";
+			mes "职业等级 " + JobLevel + "……";
+			next;
+			if (JobLevel > 48) {
+				mes "[刺客'凯伊']";
+				mes "等等，职业等级" + JobLevel + "？！看得出你修炼得很刻苦！老板们会喜欢的～";
+				next;
+				mes "[刺客'凯伊']";
+				mes "填完了吗？好，交给我吧。稍等一下，我送你去考场。";
+				next;
+				mes "[刺客'凯伊']";
+				mes "那么，";
+				mes "祝你好运！";
+				close2;
+				if (ASSIN_Q3 < 3)
+					ASSIN_Q3 = 1;
+				ASSIN_Q = 1;
+				changequest 8001,8002;
+				warp "in_moc_16",19,144;
+				end;
+			}
+			else if (JobLevel < 49) {
+				mes "[刺客'凯伊']";
+				mes "嗯，你达到了";
+				mes "条件要求。";
+				mes "相当不错。";
+				next;
+				mes "[刺客'凯伊']";
+				mes "填完之后，";
+				mes "把表格交给我吧。";
+				mes "好的，谢谢。";
+				next;
+				mes "[刺客'凯伊']";
+				mes "我送你去考场。";
+				mes "祝你好运～";
+				close2;
+				if (ASSIN_Q3 < 3)
+					ASSIN_Q3 = 2;
+				ASSIN_Q = 1;
+				changequest 8001,8002;
+				warp "in_moc_16",19,144;
+				end;
+			}
+			else {
+				mes "[刺客'凯伊']";
+				mes "你到底";
+				mes "是谁？";
+				mes "……来人！";
+				close2;
+				warp "moc_fild16",206,229;
+				end;
+			}
+		}
+		else {
+			mes "[刺客'凯伊']";
+			mes "啊……？";
+			mes "怎么，你想耍我吗？你不想当刺客了？";
+			next;
+			if (select("不。:是的，我想成为刺客。") == 1) {
+				mes "[刺客'凯伊']";
+				mes "唉，滚吧。";
+				mes "别浪费我的时间……";
+				close2;
+				ASSIN_Q = 0;
+				ASSIN_Q2 = 0;
+				erasequest 8001;
+				warp "moc_fild16",206,229;
+				end;
+			}
+			mes "[刺客'凯伊']";
+			mes "...";
+			mes "搞什么鬼？";
+			mes "那好吧。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "在申请表上填上你的名字和职业等级。";
+			next;
+			mes "[刺客'凯伊']";
+			mes "" + strcharinfo(0) + "？";
+			mes "这是你的名字？";
+			mes "听起来真有趣。";
+			mes "让我看看……职业等级 " + JobLevel + "……";
+			next;
+			if (JobLevel > 48) {
+				mes "[刺客'凯伊']";
+				mes "哦？职业等级" + JobLevel + "？！你一定修炼得很刻苦。老板们肯定会喜欢……";
+				next;
+				mes "[刺客'凯伊']";
+				mes "表格填完了吗？好，交给我吧，我送你去考场。祝你好运～";
+				next;
+				if (ASSIN_Q3 < 3)
+					ASSIN_Q3 = 1;
+				ASSIN_Q = 1;
+				changequest 8001,8002;
+				warp "in_moc_16",19,144;
+				end;
+			}
+			else if (JobLevel < 49) {
+				mes "[刺客'凯伊']";
+				mes "不错。你达到了我们的条件。相当不错。表格填完了吗？";
+				next;
+				mes "[刺客'凯伊']";
+				mes "那就把表格给我，我送你去考场，好吗？";
+				mes "祝你好运……";
+				next;
+				if (ASSIN_Q3 < 3)
+					ASSIN_Q3 = 2;
+				ASSIN_Q = 1;
+				changequest 8001,8002;
+				warp "in_moc_16",19,144;
+				end;
+			}
+			else {
+				mes "[刺客'凯伊']";
+				mes "你到底是怎么";
+				mes "混进来的？";
+				mes "滚出去！";
+				close2;
+				warp "moc_fild16",206,229;
+				end;
+			}
+		}
+	}
+}
+
+in_moc_16,19,154,0	script	无名者#asn	-1,8,2,{
+OnTouch_:
+	if (ASSIN_Q2 < 5) {
+		if (ASSIN_Q2 < 3) {
+			mes "[无名者]";
+			mes "欢迎，客人。";
+			mes "哈哈哈，想找到我、看到我，";
+			mes "是徒劳的……";
+			next;
+			mes "[无名者]";
+			mes "我藏得天衣无缝！";
+			mes "能做到完全不被发现，只有最伟大的刺客！";
+			next;
+			mes "[无名者]";
+			mes "看不见我，你不害怕吗？我随时能轻而易举地杀了你……";
+			next;
+			if (select("我好像吓尿了！:你只会说大话。我向你挑战！") == 1) {
+				mes "[无名者]";
+				mes "现在我明白了，";
+				mes "你不过是个胆小鬼。";
+				next;
+				mes "[无名者]";
+				mes "哈哈哈哈哈哈！";
+				mes "别吓得发抖了！";
+				mes "真让我发笑！";
+				close;
+			}
+			mes "[无名者]";
+			mes "那么……";
+			mes "你想要";
+			mes "挑战？";
+			mes "向我？！";
+			next;
+			mes "[无名者]";
+			mes "我足迹所至血流成河。我无名，人们只需知道我刀刃的刺痛。";
+			next;
+			mes "[无名者]";
+			mes "我来考验你的知识和冷酷程度。想成为刺客，两样都不能少。";
+			next;
+			mes "[无名者]";
+			mes "作为挑战，你必须";
+			mes "正确回答我的问题。那是只有刺客才能回答的难题。";
+			next;
+			mes "[无名者]";
+			mes "虽然我冷酷，";
+			mes "但未必残忍。在开始之前，你有什么想知道的吗？";
+			next;
+			ASSIN_Q2 = 0;
+			while(ASSIN_Q2 < 3) {
+				switch(select("……技能？:……属性？:哼，我全都知道。")) {
+				case 1:
+					mes "[无名者]";
+					mes "技能……？";
+					mes "技能虽然要看情况运用，但我先告诉你基本概念。";
+					next;
+					mes "[无名者]";
+					mes "首先是^3355FF拳刃修炼^000000，提升拳刃伤害，等级越高提升越多。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF左手精通^000000和^3355FF右手精通^000000。刺客双持短剑时可各持不同武器。";
+					next;
+					mes "[无名者]";
+					mes "双持武器比单持更难。左右手精通能提升双持短剑的伤害。";
+					next;
+					mes "[无名者]";
+					mes "不双持就不需要它。右手精通2级后，左手精通才会起作用。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF音速投掷^000000可一次攻击敌人8次。因速度要求高，只能配合拳刃使用。";
+					next;
+					mes "[无名者]";
+					mes "伤害受STR和武器攻击力影响。拳刃修炼到4级你就明白了。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF毒牙^000000可藏身地下攻击敌人。修炼越深，攻击距离越远。";
+					next;
+					mes "[无名者]";
+					mes "因为是远程攻击，被敌人包围时非常有用。";
+					next;
+					mes "[无名者]";
+					mes "这技能要求完美隐身，所以要先学2级隐匿才能学毒牙。";
+					next;
+					mes "[无名者]";
+					mes "学^3355FF隐匿^000000要先学2级隐身。之后贴着墙就能隐身移动。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF毒性附魔^000000能给手中的武器附毒，使其暂时带有毒属性。";
+					next;
+					mes "[无名者]";
+					mes "攻击时也有几率使敌人中毒。也能给队友的武器附毒……";
+					next;
+					mes "[无名者]";
+					mes "^3355FF毒性反应^000000可抵御毒属性攻击，也可对他人使用。需先学3级毒性附魔。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF毒雾^000000消耗红宝石使区域染毒。持续时间随等级提升。";
+					next;
+					mes "[无名者]";
+					mes "毒性附魔达到5级后，就能学习毒雾。";
+					next;
+					mes "[无名者]";
+					mes "^3355FF毒爆^000000对目标使用后，三秒内若其HP低于一定值，就会引发爆炸。";
+					next;
+					mes "[无名者]";
+					mes "爆炸会波及周围敌人。刺客必备技能。需5级毒性反应和5级毒雾。";
+					next;
+					mes "[无名者]";
+					mes "好了……";
+					mes "关于刺客技能，";
+					mes "我要说的就这些。";
+					ASSIN_Q2 = 1;
+					next;
+					break;
+				case 2:
+					mes "[无名者]";
+					mes "嗯，属性……";
+					mes "对刺客来说，敏捷（AGI）是最重要的属性。";
+					next;
+					mes "[无名者]";
+					mes "为了暗杀，STR大概是第二重要的属性。这只是我的建议。";
+					next;
+					mes "[无名者]";
+					mes "属性方面我没有更好的建议。自己研究，决定当什么样的刺客。";
+					ASSIN_Q2 = 2;
+					next;
+					break;
+				case 3:
+					if (ASSIN_Q2 == 0) {
+						mes "[无名者]";
+						mes "你什么都知道？！";
+						mes "让我来考考你！";
+						next;
+					}
+					ASSIN_Q2 = 3;
+					break;
+				}
+			}
+			mes "[无名者]";
+			mes "哼。现在该考验你的知识了。你最多只能答错一题。";
+			next;
+			mes "[无名者]";
+			mes "想通过考试，10题必须答对9题。我不会告诉你哪题错了……";
+			next;
+			mes "[无名者]";
+			mes "准备好了吗？";
+			mes "做好准备！";
+		}
+		else if (ASSIN_Q2 < 5) {
+			mes "[无名者]";
+			mes "简单的考试";
+			mes "都过不了吗？";
+			mes "你本该";
+			mes "更清楚的。";
+			next;
+			if (select("帮帮我，怎么才能通过？:我再向你挑战！") == 1) {
+				mes "[无名者]";
+				mes "这问题问得好。不过你已被刺客公会除名，与我无关……";
+				close2;
+				warp "moc_fild16",206,151;
+				end;
+			}
+			mes "[无名者]";
+			mes "我明白了……";
+			mes "去吧，别怕。你承受选择的后果时，我会陪在你身边……";
+			next;
+			mes "[无名者]";
+			mes "再考你一次！记住，10题要答对9题。我可是看在人情份上……";
+			next;
+			mes "[无名者]";
+			mes "10题必须答对9题。如果错超过一题，你就永远当不了刺客。";
+			next;
+			mes "[无名者]";
+			mes "好了，";
+			mes "准备好了吗？";
+			mes "祝你好运。";
+		}
+		next;
+		switch(rand(1,3)) {
+		case 1:
+			mes "[无名者]";
+			mes "1. 选出不属于学习毒牙所需的技能。";
+			next;
+			if (select("隐匿2级:音速投掷5级:拳刃修炼4级:右手精通2级") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "2. 毒性附魔拥有什么属性？";
+			next;
+			if (select("毒:地:火:风") == 1)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "3. 右手精通4级的效果是什么？";
+			next;
+			if (select("恢复80%的伤害衰减:恢复90%的伤害衰减:增加90%的伤害:增加108%的伤害") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "4. 使用毒雾需要什么物品？";
+			next;
+			if (select("红色血液:蓝色宝石:黄色宝石:红色宝石") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "5. 毒性附魔达到5级时能学哪个技能？";
+			next;
+			if (select("毒攻:音速投掷:毒爆:毒雾") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "6. 下列技能中，哪个能让你隐身行走？";
+			next;
+			if (select("隐身:后退回避:隐匿:扬沙") == 3)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "7. 选出与毒爆无关的条件。";
+			next;
+			if (select("中毒的目标。:红宝石。:目标的剩余HP。") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "8. 哪种怪物弱于镶了螃蟹卡的武器（对火属性怪物伤害+20%）？";
+			next;
+			if (select("钢铁螳螂:小恶魔:老树精:巴风特") == 3)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "9. 二刀连击";
+			mes "需要多少SP？";
+			next;
+			if (select("15:这是被动技能，SP消耗为0。:这是被动技能，SP消耗为10。:54") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "10. 在伊兹鲁德洞窟狩猎，最好的属性左手剑是哪种？";
+			next;
+			if (select("风属性左手剑:冰属性左手剑:地属性左手剑:火属性左手剑") == 1)
+				.@assassin_t += 10;
+			break;
+		case 2:
+			mes "[无名者]";
+			mes "1. 哪种怪物";
+			mes "会掉带槽的卡塔？";
+			next;
+			if (select("盗虫:大嘴鸟:沙漠之狼:锤哥布灵") == 3)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "2. 哪种怪物";
+			mes "会掉带槽的朱尔？";
+			next;
+			if (select("鼹鼠:沙漠之狼:木偶:鬼灵") == 1)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "3. 哪个职业可以制作属性武器？";
+			next;
+			if (select("商人:铁匠:盗贼:牧师") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "4. 选出不属于拳刃类的武器。";
+			next;
+			if (select("贾马德哈尔:朱尔:卡塔:短剑") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "5. 伊兹鲁德洞窟的怪物是什么属性？";
+			next;
+			if (select("水:火:风:地") == 1)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "6. 哪种怪物";
+			mes "不能当宠物？";
+			next;
+			if (select("绿波利:罗达蛙:狸猫:毒孢子") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "7. 火属性短剑对哪种怪物最有效？";
+			next;
+			if (select("短刀哥布灵:钉锤哥布灵:流星锤哥布灵:锤子哥布灵") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "8. 从下列选项中选出无属性的卡塔：";
+			next;
+			if (select("烈焰卡塔:荆棘卡塔:绿腐尸锐利腿骨:潜入者") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "9. 哪个是稀有怪物？";
+			next;
+			if (select("波利:波利王:幽灵波利:孢子") == 3)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "10. 选出不是";
+			mes "不死属性的怪物。";
+			next;
+			if (select("德雷克:邪骸食人鱼:孢子:卡利斯") == 3)
+				.@assassin_t += 10;
+			break;
+		case 3:
+			mes "[无名者]";
+			mes "1. '回避率增加'技能10级时，最多能增加多少回避率？";
+			next;
+			if (select("30:40:160:20") == 1)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "2. 选出能发现隐身/隐匿的盗贼和刺客的怪物。";
+			next;
+			if (select("虫尾:安德烈:木乃伊:骷髅士兵") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "3. 选出刺客无法同时使用的一组武器。";
+			next;
+			if (select("左手剑 + 短剑:刺剑 + 左手剑:卡塔 + 左手剑:锤子 + 刺剑") == 3)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "4. 选出盗贼可以转职的城镇。";
+			next;
+			if (select("普隆德拉:圣诞村:艾尔贝塔:梦罗克") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "5. 选出不影响AGI属性的卡片。";
+			next;
+			if (select("小巴风特卡片:幽灵卡片:女盗虫卡片:男盗虫卡片") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "6. 选出刺客职业的正确特长。";
+			next;
+			if (select("出色的歌唱才能:出色的阅读才能:出色的舞蹈才能:出色的回避能力") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "7. 刺客在职业等级50时最多能获得多少AGI加成？";
+			next;
+			if (select("7:8:9:10") == 4)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "8. 选出刺客无法装备的物品。";
+			next;
+			if (select("短剑:头盔:长靴:胸针") == 2)
+				.@assassin_t += 10;
+			mes "[无名者]";
+			mes "9. 选出盗贼的转职物品。";
+			next;
+			switch(select("橙色粘粘蘑菇:红色粘粘蘑菇:橙色网状蘑菇:橙色毛发蘑菇")) {
+			case 1:
+			case 3:
+				.@assassin_t += 10;
+				break;
+			default:
+				break;
+			}
+			mes "[无名者]";
+			mes "10. 选出通常对刺客收益最小的卡片。";
+			next;
+			if (select("幽灵卡片:老树精卡片:骷髅士兵卡片:哥布灵卡片") == 2)
+				.@assassin_t += 10;
+			break;
+		}
+		if (ASSIN_Q2 == 3) {
+			next;
+			mes "[无名者]";
+			mes "哼。";
+			mes "不管怎样，";
+			mes "你确实";
+			mes "很努力。";
+			next;
+			mes "[无名者]";
+			mes "让我看看……";
+			mes "你得了";
+			mes "" + .@assassin_t + "分……";
+			if (.@assassin_t > 80) {
+				ASSIN_Q2 = 5;
+				changequest 8002,8003;
+				mes "干得好。";
+				mes "你通过了。";
+				next;
+				mes "[无名者]";
+				mes "不过还有一场考试。进入下一个区域后，你会得到指示……";
+				close;
+			}
+			else {
+				ASSIN_Q2 = 4;
+				mes "也就是说你失败了！";
+				next;
+				mes "[无名者]";
+				mes "这种分数还想当刺客？继续修炼，准备好了再来。";
+				next;
+				mes "[无名者]";
+				mes "你可以去请教受理你申请的'凯伊'。";
+				next;
+				mes "[无名者]";
+				mes "你也可以使用这个密语：^880000iro.ragnarokonline.com^000000。不知为何，它与某个异世界的庞大知识相连……";
+				close2;
+				warp "in_moc_16",19,76;
+				end;
+			}
+		}
+		else if (ASSIN_Q2 == 4) {
+			next;
+			mes "[无名者]";
+			mes "你确实";
+			mes "很努力……";
+			next;
+			mes "[无名者]";
+			mes "让我看看……";
+			mes "你得了";
+			mes "" + .@assassin_t + "分……";
+			if (.@assassin_t > 80) {
+				ASSIN_Q2 = 5;
+				changequest 8002,8003;
+				next;
+				mes "[无名者]";
+				mes "这次通过了！但还没结束，前面还有一场考试。继续前进吧。";
+				close;
+			}
+			else {
+				ASSIN_Q2 = 4;
+				mes "你失败了！";
+				next;
+				mes "[无名者]";
+				mes "你太不够格了。怎么还敢想着成为刺客？！";
+				next;
+				mes "[无名者]";
+				mes "你居然能当上盗贼，真让我惊讶。走吧，搞清状况再来。";
+				next;
+				mes "[无名者]";
+				mes "哼，如果你真的一头雾水，我就给你一点指点。";
+				next;
+				mes "[无名者]";
+				mes "去问问负责考试申请的'凯伊'吧，也许他能帮你。";
+				next;
+				mes "[无名者]";
+				mes "你也可以利用这个古老的密语，^3355FFiro.ragnarokonline.com^000000。据说它与某个异世界的庞大知识相连……";
+				close2;
+				warp "in_moc_16",19,76;
+				end;
+			}
+		}
+	}
+	else {
+		mes "[无名者]";
+		mes "……我会继续看着你的。";
+		close;
+	}
+}
+
+in_moc_16,21,165,2	script	候考室#ASNTEST	725,{
+	end;
+
+OnInit:
+	//disablenpc "Standby Room#ASNTEST";
+	hideonnpc "候考室#ASNTEST";
+	waitingroom "候考室",10,"候考室#ASNTEST::OnStartArena",1;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "in_moc_16", 66, 151;
+	attachrid($@warpwaitingpc[0]);
+	if (ASSIN_Q2 < 5) {
+		warpchar "in_moc_16",20,145,getcharid(0);
+		end;
+	}
+	donpcevent "Beholder#ASNTEST::OnEnable";
+	donpcevent "Keeper of the Door#ASN::OnDisable";
+	set getvariableofnpc(.DisableTraps,"Beholder#ASNTEST"),0;
+	disablewaitingroomevent;
+	end;
+
+OnStart:
+	enablewaitingroomevent;
+	end;
+}
+
+in_moc_16,21,165,2	script	巴卡迪#ASN	725,4,4,{
+	end;
+
+OnTouch_:
+	if (ASSIN_Q2 < 5) {
+		mes "[巴卡迪]";
+		mes "不先通过笔试，就不能参加下一场考验。去找无名者吧……";
+		close2;
+		warp "in_moc_16",19,76;
+		end;
+	}
+	if (ASSIN_Q == 1 && ASSIN_Q2 == 5) {
+		mes "[巴卡迪]";
+		mes "" + strcharinfo(0) + "……";
+		mes "你通过考试了……？";
+		next;
+		mes "[巴卡迪]";
+		mes "说实话我想直接让你转职。太多人连刺客的基本常识都没有……";
+		next;
+		mes "[巴卡迪]";
+		mes "我们必须保持刺客的尊严，真正强大起来！可惜蠢货太多。";
+		next;
+		mes "[巴卡迪]";
+		mes "刺客必须尊重所杀的敌人、所流的血，最重要的是保持尊严！";
+		next;
+		mes "[巴卡迪]";
+		mes "好了。下一场考验将测试你快速找到目标的能力。";
+		next;
+		mes "[巴卡迪]";
+		mes "想成为刺客，我们必须确认你能否在一瞬间分清敌友。";
+		next;
+		mes "[巴卡迪]";
+		mes "目标是尽可能多地杀死名为^008800转职目标^000000的怪物。";
+		next;
+		mes "[巴卡迪]";
+		mes "你至少要杀死";
+		mes "6只^008800转职目标^000000。它们混在长相相似的怪物中，你要小心……";
+		next;
+		mes "[巴卡迪]";
+		mes "如果失败，就得重新考试。到我上方的房间去，";
+		mes "就能被传送到考场。";
+		next;
+		mes "[巴卡迪]";
+		mes "一次只允许一个人考试，如果有人正在考，你得等他考完。";
+		close;
+	}
+	else {
+		mes "[巴卡迪]";
+		mes "嘿，别太为难自己。";
+		mes "振作起来！";
+		next;
+		mes "[巴卡迪]";
+		mes "累了的话我可以送你回去。不过离开就得重考。想怎么做？";
+		next;
+		if (select("继续！:暂时退出转职考试。") == 1) {
+			mes "[巴卡迪]";
+			mes "好选择！";
+			mes "记住，你必须";
+			mes "杀死6只^008800转职目标^000000！";
+			mes "祝你好运！";
+			close;
+		}
+		mes "[巴卡迪]";
+		mes "好吧……";
+		mes "我想你确实";
+		mes "需要休息一下……";
+		close2;
+		ASSIN_Q = 0;
+		ASSIN_Q2 = 0;
+		changequest 8003,8000;
+		warp "in_moc_16",19,13;
+		end;
+	}
+}
+
+in_moc_16,1,1,0	script	Beholder#ASNTEST	-1,{
+	end;
+
+OnEnable:
+	.MyMobs = 6;
+	// Target mobs
+	monster "in_moc_16",62,161,"转职目标",1002,1,"Beholder#ASNTEST::OnMyMobDead";
+	monster "in_moc_16",85,169,"转职目标",1063,1,"Beholder#ASNTEST::OnMyMobDead";
+	monster "in_moc_16",88,152,"转职目标",1002,1,"Beholder#ASNTEST::OnMyMobDead";
+	monster "in_moc_16",90,143,"转职目标",1113,1,"Beholder#ASNTEST::OnMyMobDead";
+	monster "in_moc_16",74,167,"转职目标",1031,1,"Beholder#ASNTEST::OnMyMobDead";
+	monster "in_moc_16",77,173,"转职目标",1002,1,"Beholder#ASNTEST::OnMyMobDead";
+	// Decoy mobs
+	monster "in_moc_16",62,161,"转职生物",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",85,169,"转职生物",1031,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",79,174,"转职生物",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",85,156,"转职生物",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",74,171,"转职怪物",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",68,173,"转职假目标",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",65,158,"实战测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",60,158,"战士测试目标",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",64,169,"转职目标们",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",71,173,"职业变更目标",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",77,172,"别打我",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",76,172,"转职样品",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",75,172,"不是我",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",67,167,"我才是真的",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",86,170,"转职的目标",1031,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",86,171,"转职任务目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",85,170,"目标转职中",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,171,"打我啊",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",85,170,"战斗怪物",1031,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,156,"门卫",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,156,"蒙加姆",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,156,"实战测试目标",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,156,"战场露珠",1113,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",89,156,"考试之泪",1031,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",83,169,"暗神官",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",63,158,"多普勒",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",63,157,"转职假目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",64,159,"转职就绪假目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",63,159,"转职就绪",1063,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",63,159,"弓箭手测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",63,159,"剑士测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",83,148,"盗贼测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",82,148,"服事测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	monster "in_moc_16",84,148,"商人测试目标",1002,1,"Beholder#ASNTEST::OnMyMobDead2";
+	initnpctimer;
+	end;
+
+OnReset:
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead";
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead2";
+	stopnpctimer;
+	donpcevent "候考室#ASNTEST::OnStart";
+	end;
+
+OnResetmob:
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead";
+	killmonster "in_moc_16","Beholder#ASNTEST::OnMyMobDead2";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	.MyMobs--;
+	if (.MyMobs < 1) {
+		mapannounce "in_moc_16","看起来你做得不错。继续保持！",bc_map;
+		ASSIN_Q = 3;
+		changequest 8003,8004;
+		donpcevent "timestopper#1::OnEnable";
+		donpcevent "Keeper of the Door#ASN::OnEnable";
+		donpcevent "Beholder#ASNTEST::OnResetmob";
+		.DisableTraps = 1;
+		stopnpctimer;
+	}
+	else {
+		mapannounce "in_moc_16","好，做得不错！坚持住，就快完成了！",bc_map;
+	}
+	end;
+
+OnMyMobDead2:
+	mapannounce "in_moc_16",strcharinfo(0) + "！你犯了错！我这就把你带回来！",bc_map;
+	ASSIN_Q = 2;
+	warp "in_moc_16",19,161;
+	donpcevent "Beholder#ASNTEST::OnReset";
+	end;
+
+OnTimer1000:
+	mapannounce "in_moc_16","好了，考试开始！",bc_map;
+	end;
+
+OnTimer2000:
+	mapannounce "in_moc_16","如之前所说，找出并只杀死名为'转职目标'的怪物！",bc_map;
+	end;
+
+OnTimer3000:
+	mapannounce "in_moc_16","这场考试的目的是检验你快速分辨敌我的能力！",bc_map;
+	end;
+
+OnTimer4000:
+	mapannounce "in_moc_16","考试限时3分钟！每过一分钟我们都会提醒你。",bc_map;
+	end;
+
+OnTimer5000:
+	mapannounce "in_moc_16","好了，现在你只有3分钟。行动！行动！",bc_map;
+	end;
+
+OnTimer65000:
+	mapannounce "in_moc_16","还剩2分钟。如我所说，干掉'转职目标'！",bc_map;
+	end;
+
+OnTimer125000:
+	mapannounce "in_moc_16","还剩1分钟。",bc_map;
+	end;
+
+OnTimer180000:
+	mapannounce "in_moc_16","还剩5秒……",bc_map;
+	end;
+
+OnTimer181000:
+	mapannounce "in_moc_16","还剩4秒……",bc_map;
+	end;
+
+OnTimer182000:
+	mapannounce "in_moc_16","还剩3秒……",bc_map;
+	end;
+
+OnTimer183000:
+	mapannounce "in_moc_16","还剩2秒……",bc_map;
+	end;
+
+OnTimer184000:
+	mapannounce "in_moc_16","还剩1秒。",bc_map;
+	end;
+
+OnTimer185000:
+	mapannounce "in_moc_16","时间到！",bc_map;
+	mapannounce "in_moc_16","嗯，干得好……如果你想浪费时间的话。你得再试一次了！",bc_map;
+	//ASSIN_Q = 2;
+	end;
+
+OnTimer186000:
+	areawarp "in_moc_16",60,136,93,177,"in_moc_16",19,161;
+	end;
+
+OnTimer187000:
+	donpcevent "Beholder#ASNTEST::OnReset";
+	end;
+}
+
+in_moc_16,68,158,0	script	01_1::SinTrap	-1,0,0,{
+OnTouch_:
+	if (getvariableofnpc(.DisableTraps,"Beholder#ASNTEST")  < 1) {
+		mapannounce "in_moc_16",strcharinfo(0) + "，你中陷阱了。这就把你送回去。",bc_map;
+		ASSIN_Q = 2;
+		warp "in_moc_16",19,161;
+		donpcevent "Beholder#ASNTEST::OnResetmob";
+		donpcevent "候考室#ASNTEST::OnStart";
+	}
+	end;
+}
+
+in_moc_16,69,158,0	duplicate(SinTrap)	01_2	-1,0,0
+in_moc_16,68,159,0	duplicate(SinTrap)	01_3	-1,0,0
+in_moc_16,69,159,0	duplicate(SinTrap)	01_4	-1,0,0
+in_moc_16,64,162,0	duplicate(SinTrap)	02_1	-1,0,0
+in_moc_16,65,162,0	duplicate(SinTrap)	02_2	-1,0,0
+in_moc_16,64,163,0	duplicate(SinTrap)	02_3	-1,0,0
+in_moc_16,65,163,0	duplicate(SinTrap)	02_4	-1,0,0
+in_moc_16,62,168,0	duplicate(SinTrap)	03_1	-1,0,0
+in_moc_16,63,168,0	duplicate(SinTrap)	03_2	-1,0,0
+in_moc_16,62,169,0	duplicate(SinTrap)	03_3	-1,0,0
+in_moc_16,63,169,0	duplicate(SinTrap)	03_4	-1,0,0
+in_moc_16,66,170,0	duplicate(SinTrap)	04_1	-1,0,0
+in_moc_16,67,170,0	duplicate(SinTrap)	04_2	-1,0,0
+in_moc_16,66,171,0	duplicate(SinTrap)	04_3	-1,0,0
+in_moc_16,67,171,0	duplicate(SinTrap)	04_4	-1,0,0
+in_moc_16,64,174,0	duplicate(SinTrap)	05_1	-1,0,0
+in_moc_16,64,175,0	duplicate(SinTrap)	05_2	-1,0,0
+in_moc_16,65,174,0	duplicate(SinTrap)	05_3	-1,0,0
+in_moc_16,65,175,0	duplicate(SinTrap)	05_4	-1,0,0
+in_moc_16,72,174,0	duplicate(SinTrap)	06_1	-1,0,0
+in_moc_16,72,175,0	duplicate(SinTrap)	06_2	-1,0,0
+in_moc_16,73,174,0	duplicate(SinTrap)	06_3	-1,0,0
+in_moc_16,73,175,0	duplicate(SinTrap)	06_4	-1,0,0
+in_moc_16,72,166,0	duplicate(SinTrap)	07_1	-1,0,0
+in_moc_16,72,167,0	duplicate(SinTrap)	07_2	-1,0,0
+in_moc_16,73,166,0	duplicate(SinTrap)	07_3	-1,0,0
+in_moc_16,73,167,0	duplicate(SinTrap)	07_4	-1,0,0
+in_moc_16,72,168,0	duplicate(SinTrap)	08_1	-1,0,0
+in_moc_16,72,169,0	duplicate(SinTrap)	08_2	-1,0,0
+in_moc_16,73,168,0	duplicate(SinTrap)	08_3	-1,0,0
+in_moc_16,73,169,0	duplicate(SinTrap)	08_4	-1,0,0
+in_moc_16,78,168,0	duplicate(SinTrap)	09_1	-1,0,0
+in_moc_16,78,169,0	duplicate(SinTrap)	09_2	-1,0,0
+in_moc_16,79,168,0	duplicate(SinTrap)	09_3	-1,0,0
+in_moc_16,79,169,0	duplicate(SinTrap)	09_4	-1,0,0
+in_moc_16,80,172,0	duplicate(SinTrap)	10_1	-1,0,0
+in_moc_16,81,172,0	duplicate(SinTrap)	10_2	-1,0,0
+in_moc_16,82,172,0	duplicate(SinTrap)	10_3	-1,0,0
+in_moc_16,83,172,0	duplicate(SinTrap)	10_4	-1,0,0
+in_moc_16,80,173,0	duplicate(SinTrap)	10_5	-1,0,0
+in_moc_16,81,173,0	duplicate(SinTrap)	10_6	-1,0,0
+in_moc_16,82,173,0	duplicate(SinTrap)	10_7	-1,0,0
+in_moc_16,83,173,0	duplicate(SinTrap)	10_8	-1,0,0
+in_moc_16,88,174,0	duplicate(SinTrap)	11_1	-1,0,0
+in_moc_16,88,175,0	duplicate(SinTrap)	11_2	-1,0,0
+in_moc_16,89,174,0	duplicate(SinTrap)	11_3	-1,0,0
+in_moc_16,89,175,0	duplicate(SinTrap)	11_4	-1,0,0
+in_moc_16,86,166,0	duplicate(SinTrap)	12_1	-1,0,0
+in_moc_16,86,167,0	duplicate(SinTrap)	12_2	-1,0,0
+in_moc_16,87,166,0	duplicate(SinTrap)	12_3	-1,0,0
+in_moc_16,87,167,0	duplicate(SinTrap)	12_4	-1,0,0
+in_moc_16,90,164,0	duplicate(SinTrap)	13_1	-1,0,0
+in_moc_16,90,165,0	duplicate(SinTrap)	13_2	-1,0,0
+in_moc_16,91,164,0	duplicate(SinTrap)	13_3	-1,0,0
+in_moc_16,91,165,0	duplicate(SinTrap)	13_4	-1,0,0
+in_moc_16,84,160,0	duplicate(SinTrap)	14_1	-1,0,0
+in_moc_16,85,160,0	duplicate(SinTrap)	14_2	-1,0,0
+in_moc_16,86,160,0	duplicate(SinTrap)	14_3	-1,0,0
+in_moc_16,87,160,0	duplicate(SinTrap)	14_4	-1,0,0
+in_moc_16,88,160,0	duplicate(SinTrap)	14_5	-1,0,0
+in_moc_16,89,160,0	duplicate(SinTrap)	14_6	-1,0,0
+in_moc_16,84,161,0	duplicate(SinTrap)	14_7	-1,0,0
+in_moc_16,85,161,0	duplicate(SinTrap)	14_8	-1,0,0
+in_moc_16,86,161,0	duplicate(SinTrap)	14_9	-1,0,0
+in_moc_16,87,161,0	duplicate(SinTrap)	14_10	-1,0,0
+in_moc_16,88,161,0	duplicate(SinTrap)	14_11	-1,0,0
+in_moc_16,89,161,0	duplicate(SinTrap)	14_12	-1,0,0
+in_moc_16,86,154,0	duplicate(SinTrap)	15_1	-1,0,0
+in_moc_16,86,155,0	duplicate(SinTrap)	15_2	-1,0,0
+in_moc_16,87,154,0	duplicate(SinTrap)	15_3	-1,0,0
+in_moc_16,87,155,0	duplicate(SinTrap)	15_4	-1,0,0
+in_moc_16,84,150,0	duplicate(SinTrap)	16_1	-1,0,0
+in_moc_16,84,151,0	duplicate(SinTrap)	16_2	-1,0,0
+in_moc_16,85,150,0	duplicate(SinTrap)	16_3	-1,0,0
+in_moc_16,85,151,0	duplicate(SinTrap)	16_4	-1,0,0
+in_moc_16,90,150,0	duplicate(SinTrap)	17_1	-1,0,0
+in_moc_16,90,151,0	duplicate(SinTrap)	17_2	-1,0,0
+in_moc_16,91,150,0	duplicate(SinTrap)	17_3	-1,0,0
+in_moc_16,91,151,0	duplicate(SinTrap)	17_4	-1,0,0
+in_moc_16,86,146,0	duplicate(SinTrap)	18_1	-1,0,0
+in_moc_16,86,147,0	duplicate(SinTrap)	18_2	-1,0,0
+in_moc_16,87,146,0	duplicate(SinTrap)	18_3	-1,0,0
+in_moc_16,87,147,0	duplicate(SinTrap)	18_4	-1,0,0
+
+in_moc_16,87,137,0	script	Keeper of the Door#ASN	45,2,1,{
+OnInit:
+	disablenpc "Keeper of the Door#ASN";
+	end;
+
+OnTouch_:
+	donpcevent "托马斯#ASNTEST::OnDisable";
+	if (ASSIN_Q == 3)
+		ASSIN_Q = 3;
+	else
+		ASSIN_Q = 4;
+	warp "in_moc_16",87,102;
+	savepoint "in_moc_16",16,13,1,1;
+	end;
+
+OnEnable:
+	mapannounce "in_moc_16","通往下一个房间的门，坐标87 137，已经打开了。",bc_map;
+	enablenpc "Keeper of the Door#ASN";
+	end;
+
+OnDisable:
+	disablenpc "Keeper of the Door#ASN";
+	end;
+}
+
+in_moc_16,3,3,0	script	timestopper#1	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer187000:
+	donpcevent "托马斯#ASNTEST::OnDisable";
+	stopnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	mapannounce "in_moc_16","喂，搞什么鬼？！我说过：不许杀怪！",bc_map;
+	mapannounce "in_moc_16","我这就把你带回来……*唉……*",bc_map;
+	ASSIN_Q = 3;
+	warp "in_moc_16",87,102;
+	killmonster "in_moc_16","timestopper#1::OnMyMobDead";
+	end;
+}
+
+in_moc_16,89,98,1	script	托马斯#ASNTEST	118,5,1,{
+	end;
+
+OnTouch_:
+	if (ASSIN_Q == 4) {
+		mes "[托马斯]";
+		mes "该死……！你看起来很痛苦。^666666*唉*^000000稍等，让我恢复你的HP和SP……";
+		percentheal 100,100;
+		next;
+		mes "[托马斯]";
+		mes "看起来你很吃力。你要么太拼命，";
+		mes "要么不够拼命，小子。";
+		next;
+		switch(select("我要再试一次！:我……我放弃！")) {
+		case 1:
+			mes "[托马斯]";
+			mes "嗯。嗯，好吧。";
+			mes "祝你好运。";
+			close;
+		case 2:
+			mes "[托马斯]";
+			mes "啊……";
+			mes "退出考试？嗯，我想你也不想再浪费我们的时间了。";
+			next;
+			mes "[托马斯]";
+			mes "噢对了，别忘了在城里设置重生点。";
+			close2;
+			mapannounce "in_moc_16",strcharinfo(0) + "吓得退出了考试……下一个是谁？！",bc_map;
+			ASSIN_Q = 0;
+			ASSIN_Q2 = 0;
+			changequest 8004,8000;
+			savepoint "in_moc_16",18,14,1,1;
+			warp "in_moc_16",18,14;
+			donpcevent "候考室#ASNTEST::OnStart";
+			end;
+		}
+	}
+
+	mes "[托马斯]";
+	mes "嘿，我是托马斯。负责测试你的隐身技能。觉得自己行吗？";
+	next;
+	mes "[托马斯]";
+	mes "听着。考试不能杀怪。目标是到房间另一头找'巴卡迪'。";
+	next;
+	mes "[托马斯]";
+	mes "总之，一只怪都不杀，到房间另一头见'巴卡迪'。明白吗？";
+	next;
+	mes "[托马斯]";
+	mes "逃跑或晕倒就判你不及格。废话少说，让我看看你的本事。";
+	close2;
+	ASSIN_Q = 4;
+
+	monster "in_moc_16",81,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",82,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",83,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",84,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",85,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",86,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",88,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",89,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",90,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",77,77,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",78,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",80,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",81,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",91,55,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",92,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",93,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",94,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",95,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",97,56,"木乃伊",1041,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",76,62,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,62,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",79,65,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",76,65,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,62,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",96,65,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",99,62,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	monster "in_moc_16",99,65,"海葵",1068,1,"timestopper#1::OnMyMobDead";
+	end;
+
+OnDisable:
+	donpcevent "候考室#ASNTEST::OnStart";
+	killmonster "in_moc_16","timestopper#1::OnMyMobDead";
+	end;
+}
+
+in_moc_16,87,48,2	script	巴卡迪#ASN2	725,2,2,{
+	end;
+OnTouch_:
+	donpcevent "timestopper#1::OnDisable";
+	donpcevent "托马斯#ASNTEST::OnDisable";
+	mes "[巴卡迪]";
+	mes "哦！恭喜你！";
+	mes "你现在可以前往我们会长的房间了。祝你好运！！";
+	close2;
+	ASSIN_Q = 5;
+	changequest 8004,8005;
+	warp "in_moc_16",181,183;
+	end;
+}
+
+in_moc_16,182,169,0	script	Maze Assistant	45,1,1,{
+OnTouch_:
+	if (ASSIN_Q == 5 || ASSIN_Q == 6) {
+		warp "in_moc_16",181,183;
+		ASSIN_Q++;
+		if (!isbegin_quest(8006))
+			changequest 8005,8006;
+	}
+	else {
+		mapannounce "in_moc_16",strcharinfo(0)+"进入了'会长房间'。",bc_map;
+		savepoint "in_moc_16",181,183,1,1;
+		donpcevent "公会会长#ASN1::OnCast";
+		warp "in_moc_16",167,113;
+		end;
+	}
+}
+
+in_moc_16,167,110,0	script	公会会长#ASN1	-1,3,1,{
+OnTouch_:
+	savepoint "in_moc_16",167,110,1,1;
+	mes "[公会会长]";
+	mes "欢迎。";
+	mes "这里叫'会长房间'，是刺客公会的最深处。";
+	next;
+	mes "[公会会长]";
+	mes "简单的考验：穿过迷宫来找我。迷宫保护公会不受入侵者。";
+	next;
+	mes "[公会会长]";
+	mes "期待在迷宫的尽头";
+	mes "与你相见。";
+	close;
+
+OnCast:
+	mapannounce "in_moc_16","……下一位应试者，请进来。",bc_map;
+	end;
+}
+
+in_moc_16,149,80,4	script	公会会长#ASN2	106,1,1,{
+	end;
+OnTouch_:
+	if (checkre(0))
+		savepoint "morocc",100,100,1,1;
+	else
+		savepoint "moc_ruins",79,99,1,1;
+	if (ASSIN_Q == 7 && BaseJob == Job_Thief) {
+		ASSIN_Q = 8;
+		mes "[公会会长]";
+		mes "欢迎。";
+		mes "抱歉让你";
+		mes "穿越了迷宫。";
+		next;
+		mes "[公会会长]";
+		mes "我看过你的简历。你作为盗贼胆识过人。难得有你这样的人选。";
+		next;
+		mes "[公会会长]";
+		mes "介意我问几个问题吗？别紧张。记住：说谎的话，我会杀了你。";
+		next;
+		mes "[公会会长]";
+		mes "首先，你认为刺客最优先的是什么？";
+		next;
+		switch(select("更强的力量。:刺客的骄傲。:无尽的练习。")) {
+		case 1:
+			mes "[公会会长]";
+			mes "更强的力量……";
+			mes "是的，你也许觉得";
+			mes "刺客比盗贼";
+			mes "强得多。";
+			next;
+			mes "[公会会长]";
+			mes "但你为什么想要力量？炫耀？复仇？这力量要拿来做什么？";
+			next;
+			mes "[公会会长]";
+			mes "为什么你想";
+			mes "变得比现在";
+			mes "更强？";
+			next;
+			switch(select("复仇……！:金钱～:我想去旅行。")) {
+			case 1:
+				mes "[公会会长]";
+				mes "复仇……？";
+				mes "是的，我理解。我们每个人终究都会对某人心怀怨恨。";
+				next;
+				mes "[公会会长]";
+				mes "记住，我们不能被感情牵绊。无条件执行任务。这就是我们的道。";
+				next;
+				mes "[公会会长]";
+				mes "成为刺客意味着";
+				mes "抛弃自我。";
+				next;
+				break;
+			case 2:
+				ASSIN_Q = 9;
+				mes "[公会会长]";
+				mes "为了钱……？我不否认人要赚钱谋生。但刺客为更高的目标而活。";
+				next;
+				mes "[公会会长]";
+				mes "成为刺客意味着";
+				mes "抛弃这些世俗的";
+				mes "牵绊……";
+				next;
+				break;
+			case 3:
+				ASSIN_Q = 10;
+				mes "[公会会长]";
+				mes "好想法。周游世界能让你增长见识。";
+				next;
+				mes "[公会会长]";
+				mes "不过我们大多数人避免结群。想必你已经注意到了，是吧？";
+				next;
+				mes "[公会会长]";
+				mes "从某种意义上说，成为刺客就是与孤独为伴……";
+				next;
+				break;
+			}
+			break;
+		case 2:
+			mes "[公会会长]";
+			mes "刺客的骄傲……";
+			mes "是其他刺客告诉你的吗……？";
+			next;
+			mes "[公会会长]";
+			mes "骄傲固然重要，但没有实力的话，骄傲一文不值。";
+			next;
+			mes "[公会会长]";
+			mes "你在我之前遇到的刺客，都是共度过许多艰难时光的同胞。";
+			next;
+			mes "[公会会长]";
+			mes "我理解他们的骄傲和尊严为何重要。那么，你为何想成为刺客？";
+			next;
+			switch(select("我喜欢孤独。:当刺客赚钱。:看起来很酷。")) {
+			case 1:
+				ASSIN_Q = 11;
+				mes "[公会会长]";
+				mes "你说到点子上了……";
+				mes "我们是孤独的。即使身在同伴之中，也永远独自一人……";
+				next;
+				mes "[公会会长]";
+				mes "从某种意义上说，";
+				mes "刺客就等于";
+				mes "虚无。";
+				next;
+				mes "[公会会长]";
+				mes "但如我所说，我们有同胞。任务时最好有个同伴在背后支持你。";
+				next;
+				break;
+			case 2:
+				ASSIN_Q = 12;
+				mes "[公会会长]";
+				mes "我无法否认，人需要钱谋生。但不该追求比钱更重要的东西吗？";
+				next;
+				break;
+			case 3:
+				ASSIN_Q = 13;
+				mes "[公会会长]";
+				mes "派头和外表只是表面的东西。很多人这么想，真是悲哀……";
+				next;
+				mes "[公会会长]";
+				mes "这种迷失本心、丢人现眼的刺客，我们会用自己的方式处理……";
+				next;
+				mes "[公会会长]";
+				mes "别忘了……";
+				mes "刺客不嬉戏。我们不追逐风格或潮流，永远不会。";
+				next;
+				break;
+			}
+			break;
+		case 3:
+			mes "[公会会长]";
+			mes "无尽的练习……";
+			mes "我认为你有这个资质。你想成为刺客有什么原因吗？";
+			next;
+			mes "[公会会长]";
+			mes "与盗贼不同，刺客不允许自我放纵。告诉我";
+			mes "你无尽修炼的原因。";
+			next;
+			switch(select("为了磨练技能。:这是我的目标。:为了精神上的提升。")) {
+			case 1:
+				ASSIN_Q = 14;
+				mes "[公会会长]";
+				mes "刺客学技能是水到渠成的事。但别把技能当作修炼的最大价值。";
+				next;
+				mes "[公会会长]";
+				mes "如果你这么想，成为刺客也不会满足的……";
+				next;
+				break;
+			case 2:
+				ASSIN_Q = 15;
+				mes "[公会会长]";
+				mes "这是你的目标？嗯，我想人总得有目标……";
+				next;
+				mes "[公会会长]";
+				mes "我认识过一个有目标的人。他想在成为54级骑士前保住性命。";
+				next;
+				mes "[公会会长]";
+				mes "可惜我在52级之前就把他杀了……^666666*唉*^000000算了。";
+				next;
+				mes "我有点担心你。希望你明白，成为刺客就没有回头路了……";
+				next;
+				break;
+			case 3:
+				ASSIN_Q = 16;
+				mes "[公会会长]";
+				mes "好想法……";
+				mes "那是提升自己的好方法。我见过太多人强身却不强心。";
+				next;
+				mes "[公会会长]";
+				mes "希望你不是伪君子。精神修炼是你生存的最好方式。";
+				next;
+				break;
+			}
+			break;
+		}
+		mes "[公会会长]";
+		mes "可悲的是，有些蠢货什么都不懂，却急着当刺客……";
+		next;
+		mes "[公会会长]";
+		mes "他们惹是生非，给我们抹黑。其行径常酿成可怕的后果。";
+		next;
+		mes "[公会会长]";
+		mes "成为刺客后小心别变成他们。责任全在你自己肩上……";
+		next;
+		mes "[公会会长]";
+		mes "那么如果你现在就能成为刺客，第一件事想做什么？";
+		next;
+		switch(select("马上去狩猎。:有人在等我。:看看作为刺客能帮上什么忙。")) {
+		case 1:
+			mes "[公会会长]";
+			mes "狩猎……";
+			mes "就这些吗……？";
+			next;
+			switch(select("快速升级。:我想探索刺客的技能。:去当盗贼时去不了的地方。")) {
+			case 1:
+				.@assassin_sangdam += 10;
+				mes "[公会会长]";
+				mes "别轻举妄动……";
+				mes "成为刺客不会让你变成另一个人。也不要依赖运气。";
+				next;
+				break;
+			case 2:
+				.@assassin_sangdam += 5;
+				mes "[公会会长]";
+				mes "人应该审视自己。我能理解，能力的巨大变化会让你兴奋。";
+				next;
+				mes "[公会会长]";
+				mes "在此期间，希望你别忘了刺客的心态。";
+				next;
+				break;
+			case 3:
+				mes "[公会会长]";
+				mes "很好……";
+				mes "去探索没见过的地方吧。但记住，刺客不会让你变成另一个人。";
+				next;
+				mes "[公会会长]";
+				mes "别太勉强自己。";
+				mes "慢慢来，明智地旅行。";
+				next;
+				break;
+			}
+			break;
+		case 2:
+			mes "[公会会长]";
+			mes "冒昧问一句，";
+			mes "谁在等你？";
+			next;
+			switch(select("我的朋友。:我的公会同伴。:我的爱人。")) {
+			case 1:
+				.@assassin_sangdam += 5;
+				mes "[公会会长]";
+				mes "我明白了……";
+				mes "即使独自一人，也要感激他们对你的关心。";
+				next;
+				break;
+			case 2:
+				.@assassin_sangdam += 5;
+				mes "[公会会长]";
+				mes "很好……";
+				mes "值得为之赴死的同伴……";
+				next;
+				mes "[公会会长]";
+				mes "作为刺客，找一件能在暗中为他们做的事吧……";
+				next;
+				break;
+			case 3:
+				mes "[公会会长]";
+				mes "哈哈，身体的需求有时难以忽视。最好坦然接受这部分人性。";
+				next;
+				mes "[公会会长]";
+				if (Sex == SEX_MALE)
+					mes "但你绝不能让她看到你刺客的那一面。无论付出什么代价。";
+				else
+					mes "但你绝不能让他看到你刺客的那一面，无论付出什么代价。";
+				next;
+				mes "[公会会长]";
+				mes "永远爱你的爱人，即使不能公开。一生有时只能遇到一次真爱。";
+				next;
+				break;
+			}
+			break;
+		case 3:
+			mes "[公会会长]";
+			mes "这最难得。有什么想问我的吗？";
+			next;
+			switch(select("刺客适合升级的地方……:作为刺客的主要目标。:理财咨询。")) {
+			case 1:
+				.@assassin_sangdam += 5;
+				mes "[公会会长]";
+				mes "一切取决于你的心境。任何地方都可能是最好的升级场所。";
+				next;
+				mes "[公会会长]";
+				mes "你必须懂得";
+				mes "在任何情况下生存。";
+				next;
+				break;
+			case 2:
+				mes "[公会会长]";
+				mes "外面有很多刺客。把他们当作你的导师，征求他们的意见。";
+				next;
+				mes "[公会会长]";
+				mes "希望你成为出色的刺客。有所成就后，要像导师那样引导新人。";
+				next;
+				break;
+			case 3:
+				.@assassin_sangdam += 10;
+				mes "[公会会长]";
+				mes "我的天……";
+				mes "你打算为了赚钱而当刺客吗？";
+				next;
+				mes "[公会会长]";
+				mes "这种心态的人不受欢迎。如果这是你的目标，最好重新考虑……";
+				next;
+				break;
+			}
+			break;
+		}
+		mes "[公会会长]";
+		mes "很高兴认识你。你让我想起了过去的美好时光。";
+		next;
+		mes "[公会会长]";
+		mes "请稍等一下……";
+		next;
+		mapannounce "in_moc_16","参与" + strcharinfo(0) + "考试的各位，请到我面前集合。",bc_map;
+		mes "[公会会长]";
+		mes "参与" + strcharinfo(0) + "考试的各位，请到我面前集合。";
+		next;
+		mes "[公会会长]";
+		mes "他们很快就到。";
+		next;
+		enablenpc "[休伊]";
+		enablenpc "[凯伊]";
+		enablenpc "[无名者]";
+		enablenpc "[巴卡迪]";
+		enablenpc "[监视者]";
+		enablenpc "[托马斯]";
+		enablenpc "[盖尔·马鲁比茨]";
+		mes "[无名者]";
+		mes "我来了。";
+		next;
+		mes "[公会会长]";
+		mes "我想听听你们对" + strcharinfo(0) + "转职考试的看法。";
+		next;
+		mes "[无名者]";
+		mes "啊，嗯……";
+		mes "我觉得";
+		mes ""+ strcharinfo(0) +"";
+		mes "还不错。";
+		next;
+		mes "[公会会长]";
+		mes "这个嘛……";
+		mes "无名者";
+		mes "支持你。你呢，";
+		mes "休伊？";
+		next;
+		if (ASSIN_Q3 == 1) { // player Job Level was above 48
+			mes "[休伊]";
+			mes "难得。";
+			mes "从职业等级";
+			mes "就看得出来。";
+			next;
+			mes "[休伊]";
+			mes "我同意无名者的看法。";
+		}
+		else { // player Job Level was below 48
+			mes "[休伊]";
+			mes "虽然"+ strcharinfo(0) +"看起来太温和，像只小猫，但"+ strcharinfo(0) +"是有真本事的。";
+			next;
+			mes "[休伊]";
+			mes "如果没别的事，我想回去工作了。";
+			next;
+			mes "[公会会长]";
+			mes "嗯……";
+			mes "就这些，休伊。";
+		}
+		next;
+		mes "[公会会长]";
+		mes "那么……";
+		mes "'监视者'，";
+		mes "你的意见呢？";
+		next;
+		disablenpc "[休伊]";
+		mes "[监视者]";
+		mes "过程成绩我不喜欢。但总之通过了全部考试。这人我没意见。";
+		next;
+		mes "[公会会长]";
+		mes "嗯……";
+		mes "看来我们意见一致。很好。我对"+ strcharinfo(0) +"也没有异议……";
+		next;
+		switch(ASSIN_Q) {
+		case 8:
+			mes "[公会会长]";
+			mes "即使你被个人复仇驱动，希望它会在修炼中消散……";
+			next;
+			break;
+		case 9:
+			mes "[公会会长]";
+			mes "即使你现在一心想发财，我相信你会追求更伟大的东西……";
+			next;
+			break;
+		case 10:
+			mes "[公会会长]";
+			mes "你渴望周游世界，希望你在旅途中找到自己的真我……";
+			next;
+			break;
+		case 11:
+			mes "[公会会长]";
+			mes "你对刺客了解很多。我想孤独的挫折对你来说不算什么……";
+			next;
+			break;
+		case 12:
+			mes "[公会会长]";
+			mes "你对金钱有些愚念，但我相信你能克服它。";
+			next;
+			mes "[公会会长]";
+			mes "虽然目前我还不信任你，但我会给你一次机会……";
+			next;
+			break;
+		case 13:
+			mes "[公会会长]";
+			mes "即使你只是表面迷恋刺客，我相信你迟早会领悟它的真正价值。";
+			next;
+			break;
+		case 14:
+			mes "[公会会长]";
+			mes "难得你追求技能精进，希望你迟早领悟精神修炼的重要。";
+			next;
+			break;
+		case 15:
+			mes "[公会会长]";
+			mes "你迟早会找到可以全身心投入的新目标……";
+			next;
+			break;
+		case 16:
+			mes "[公会会长]";
+			mes "我知道有些人只关心身体修炼，";
+			mes "但我相信你比他们出色……";
+			next;
+		}
+		switch(ASSIN_Q3) {
+		case 1: // player Job Level was above 48
+			mes "[公会会长]";
+			mes "好了，我说得太多了。请挑一件武器作为礼物。";
+			next;
+			mes "[公会会长]";
+			mes "你可以选朱尔、卡塔、左手剑或短剑。作为会长，我都喜欢。";
+			next;
+			switch(select("朱尔:卡塔:左手剑:短剑")) {
+			case 1:
+				mes "[公会会长]";
+				mes "朱尔……";
+				mes "好选择。给你。希望它能好好为你效力。";
+				getitem 1251,1; //Jur_
+				break;
+			case 2:
+				mes "[公会会长]";
+				mes "卡塔……";
+				mes "给你。";
+				mes "虽然是二手的，";
+				mes "但我知道它";
+				mes "会很好用。";
+				getitem 1253,1; //Katar_
+				break;
+			case 3:
+				mes "[公会会长]";
+				mes "我明白了。你想双手并用。来，拿好你的左手剑。";
+				getitem 1208,1; //Main_Gauche_
+				break;
+			case 4:
+				mes "[公会会长]";
+				mes "短剑……";
+				mes "它曾统治刺客的武器市场。请好好待它。";
+				getitem 1220,1; //Gladius_
+			}
+			ASSIN_Q3 = 3;
+			next;
+			break;
+		case 2: // player Job Level was below 48
+			mes "[公会会长]";
+			mes "好了，我说太多了。";
+			mes "请先收下这个。";
+			next;
+			switch(rand(1,5)) {
+			case 1:
+				getitem 1207,1; //Main_Gauche
+				break;
+			case 2:
+				getitem 1250,1; //Jur
+				break;
+			case 3:
+				getitem 1216,1; //Stiletto
+				break;
+			case 4:
+				getitem 1201,1; //Knife
+				break;
+			case 5:
+				getitem 1252,1; //Katar
+			}
+			ASSIN_Q3 = 3;
+		}
+		mes "[公会会长]";
+		mes "我交给你一个信物。回入口去找刺客专家——长相凶恶的休伊。";
+		next;
+		mes "[公会会长]";
+		mes "休伊收到这个信物后，就会提拔你为刺客。";
+		next;
+		mes "[公会会长]";
+		mes "你，" + strcharinfo(0) + "，选择了刺客之路。愿你学会我们的道，成为他人的榜样。";
+		if (checkre(0))
+			savepoint "morocc",100,100,1,1;
+		else
+			savepoint "moc_ruins",79,99,1,1;
+		getitem 1008,1; //Frozen_Heart
+		ASSIN_Q = 17;
+		changequest 8006,8007;
+		next;
+		mes "[公会会长]";
+		mes "好了，各位回到自己的位置吧。我也送你到入口。出发……";
+		disablenpc "[休伊]";
+		disablenpc "[凯伊]";
+		disablenpc "[无名者]";
+		disablenpc "[巴卡迪]";
+		disablenpc "[监视者]";
+		disablenpc "[托马斯]";
+		disablenpc "[盖尔·马鲁比茨]";
+		close2;
+		warp "in_moc_16",17,19;
+		end;
+	}
+	else if (ASSIN_Q == 17) {
+		mes "[公会会长]";
+		mes "嗯……？";
+		mes "你怎么会在这里……？";
+		next;
+		mes "[公会会长]";
+		mes "你已完成考试。去拿^006699遗忘项链^000000转职吧？";
+		close2;
+		warp "in_moc_16",17,19;
+		end;
+	}
+	else if (ASSIN_Q > 7 && ASSIN_Q < 17) {
+		ASSIN_Q = 7;
+		mes "[公会会长]";
+		mes "搞什么鬼？你在过程中按了'取消'。你到底想不想转职？";
+		next;
+		mes "[公会会长]";
+		mes "^666666*唉……*^000000";
+		mes "好，重新开始。再不听话，就别想活着离开这房间。明白吗？";
+		close;
+	}
+	else {
+		mes "[公会会长]";
+		mes "嗯？你怎么在这里？";
+		next;
+		mes "[公会会长]";
+		mes "你已完成考试，把^006699遗忘项链^000000交给门口的凶恶家伙就能转职！";
+		close2;
+		warp "in_moc_16",17,19;
+		end;
+	}
+}
+
+in_moc_16,186,81,1	script	助手盖尔	55,1,1,{
+	mes "[助手盖尔·马鲁比茨]";
+	mes "抱歉，我不负责转职。如会长所说，去找他吧。";
+	close;
+}
+
+in_moc_16,170,90,0	script	info 1	-1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "呼。";
+	mes "那条路堵住了。你最好看看另一边。";
+	close;
+}
+
+in_moc_16,153,85,0	script	info 2	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "越来越近了。就快到了。只要稍微转个身。";
+	close;
+}
+
+in_moc_16,160,85,0	script	info 3	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "嗯。";
+	mes "那条路";
+	mes "堵住了。";
+	close;
+}
+
+in_moc_16,175,89,0	script	info 4	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "嗯……";
+	mes "你正走向我的助手。还需要和他谈谈吗？";
+	close;
+}
+
+in_moc_16,164,88,0	script	info 5	-1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "干得好……";
+	mes "我能感觉到你的脚步就在我附近。";
+	close;
+}
+
+in_moc_16,149,95,0	script	info 6	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "嗯？不错。你快到了。";
+	close;
+}
+
+in_moc_16,180,101,0	script	info 7	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "我觉得你走的方向不对。";
+	close;
+}
+
+in_moc_16,186,107,0	script	info 8	-1,1,1,{
+OnTouch_:
+	mes "[公会会长]";
+	mes "没有方向感，是吧？";
+	close;
+}
+
+-	script	#moc_assin_dup	-1,{
+	end;
+
+OnInit:
+	disablenpc();
+	end;
+}
+in_moc_16,156,87,1	duplicate(#moc_assin_dup)	[休伊]	55
+in_moc_16,156,85,1	duplicate(#moc_assin_dup)	[凯伊]	730
+in_moc_16,156,83,1	duplicate(#moc_assin_dup)	[无名者]	106
+in_moc_16,156,81,2	duplicate(#moc_assin_dup)	[巴卡迪]	725
+in_moc_16,156,79,1	duplicate(#moc_assin_dup)	[监视者]	118
+in_moc_16,156,77,1	duplicate(#moc_assin_dup)	[托马斯]	118
+in_moc_16,156,75,1	duplicate(#moc_assin_dup)	[盖尔·马鲁比茨]	55

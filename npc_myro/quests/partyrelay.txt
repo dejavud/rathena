@@ -1,0 +1,3085 @@
+//===== rAthena Script ======================================= 
+//= Party Relay Quest
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Party Relay Quest.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed a couple typos, npcs check area for PCs. [L0ne_W0lf]
+//= 1.2 Updated RE/Pre-RE EXP. [Euphy]
+//============================================================
+
+payon,103,113,3	script	莱德里昂#payon::RelayLedrion	109,{
+	getpartymember(getcharid(1));
+	set .@partymembercount,$@partymembercount;
+	set .@partyleader, is_party_leader();
+	if (checkweight(907,300) == 0) {
+		mes "^3355FF等一下!你现在";
+		mes "携带的物品太多了。";
+		mes "请把多余的物品";
+		mes "存进卡普拉仓库,";
+		mes "然后再回来吧。^000000";
+		close;
+	}
+	if ((countitem(7731) > 0) || (countitem(7732) > 0) || (countitem(7735) > 0) || (countitem(7736) > 0) || (countitem(7739) > 0) || (countitem(7740) > 0)) {
+		mes "[莱德里昂]";
+		mes "嗯?我想你之前";
+		mes "误会我的意思了...";
+		mes "在你带来足够多的";
+		mes "队友之前,还不是";
+		mes "来见我的时候。";
+		close;
+	}
+	if ((countitem(7741) > 0) && .@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[莱德里昂]";
+		mes "啊,你把洛斯比的";
+		mes "最后一张证明票带回来了。";
+		mes "现在我确信,你和你的队伍";
+		mes "配合得相当默契。";
+		mes "顺利通过考验,干得漂亮!";
+		next;
+		mes "[莱德里昂]";
+		mes "你的队伍一定真正";
+		mes "懂得了团队合作的价值。";
+		mes "多亏了你,我打赢了赌注!";
+		mes "呃,不过更重要的是,";
+		mes "你证明了我对你们的信任。";
+		next;
+		mes "[莱德里昂]";
+		mes "我真为你们感到骄傲,";
+		mes "你们完成了了不起的成就。";
+		mes "给...这是你们应得的";
+		mes "真正的奖励!";
+		next;
+		set .@present,rand(1,7);
+		delitem 7741,1; //Mission_Certificate12
+		set party_relay,0;
+		getitem 644,6; //Gift_Box
+		getitem 603,3; //Old_Blue_Box
+		if (.@present == 2) {
+			getitem 1365,1; //Sabbath
+		}
+		else if (.@present == 4) {
+			getitem 1367,1; //Slaughter
+		}
+		else if (.@present == 6) {
+			getitem 1527,1; //Quadrille
+		}
+		else {
+			getitem 617,3; //Old_Violet_Box
+		}
+		callfunc "F_PartyRelay_Exp";
+		mes "[莱德里昂]";
+		mes "好了,希望你喜欢!";
+		mes "如果用不上,何不";
+		mes "和公会里的伙伴分享呢?";
+		mes "如果想再挑战我的考验,";
+		mes "随时欢迎回来,好吗?";
+		next;
+		mes "[莱德里昂]";
+		mes "最后,让我再次";
+		mes "向你道谢。我不知道";
+		mes "我们是否还会再见,";
+		mes "但我会为你的冒险";
+		mes "献上祝福。";
+		close;
+	}
+	if (countitem(7741) > 0) {
+		mes "[莱德里昂]";
+		mes "嗯?你的同伴们";
+		mes "怎么没跟你在一起?";
+		mes "你必须把队友";
+		mes "带到这里来,";
+		mes "才能继续这些考验。";
+		close;
+	}
+	if (party_relay == 23) {
+		mes "[莱德里昂]";
+		mes "你现在不是应该";
+		mes "让队伍里的一名剑士系";
+		mes "或法师系成员,";
+		mes "把证明票送给卡坦吗?";
+		close;
+	}
+	if ((countitem(7737) > 0) && .@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[莱德里昂]";
+		mes "太好了,你把洛斯比的";
+		mes "第八张证明票带来了。";
+		mes "你的队伍配合得真不错,";
+		mes "是吧?要召集这么多人";
+		mes "通常可不容易...";
+		next;
+		mes "[莱德里昂]";
+		mes "请继续保持,直到完成";
+		mes "所有的考验,好吗?";
+		mes "这是给你们的一点奖励,";
+		mes "还有给你们公会的";
+		mes "第九张证明票。";
+		delitem 7737,1; //Mission_Certificate8
+		set party_relay,23;
+		getitem 603,3; //Old_Blue_Box
+		getitem 617,1; //Old_Violet_Box
+		getitem 7738,1; //Mission_Certificate9
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[莱德里昂]";
+		mes "请把那张证明票";
+		mes "交给你公会里的";
+		mes "剑士系或法师系成员,";
+		mes "让他送去给卡坦。";
+		mes "好吗?后会有期。";
+		close;
+	}
+	if (countitem(7737) > 0) {
+		mes "[莱德里昂]";
+		mes "嗯?你的同伴们";
+		mes "怎么没跟你在一起?";
+		mes "你必须把队友";
+		mes "带到这里来,";
+		mes "才能继续这些考验。";
+		close;
+	}
+	if (party_relay == 12) {
+		mes "[莱德里昂]";
+		mes "嗯?你不是应该";
+		mes "让队伍里的法师系成员";
+		mes "把证明票送去给卡坦吗?";
+		close;
+	}
+	if ((countitem(7733) > 0) && .@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[莱德里昂]";
+		mes "看来你把洛斯比的";
+		mes "第四张证明票带来了。";
+		mes "很好,很好。请坚持下去,";
+		mes "完成我们为你们准备的";
+		mes "所有考验,好吗?";
+		next;
+		mes "[莱德里昂]";
+		mes "这是给你们的";
+		mes "一点奖励。现在,";
+		mes "请把这张证明票";
+		mes "交给一名法师系成员,";
+		mes "让他送去给卡坦。";
+		delitem 7733,1; //Mission_Certificate4
+		set party_relay,12;
+		getitem 644,3; //Gift_Box
+		getitem 603,1; //Old_Blue_Box
+		getitem 7734,1; //Mission_Certificate5
+		callfunc "F_PartyRelay_Exp";
+		close;
+	}
+	if (countitem(7733) > 0) {
+		mes "[莱德里昂]";
+		mes "嗯?你的同伴们";
+		mes "怎么没跟你在一起?";
+		mes "你必须把队友";
+		mes "带到这里来,";
+		mes "才能继续这些考验。";
+		close;
+	}
+	if (party_relay == 2) {
+		mes "[莱德里昂]";
+		mes "我交代的事情,";
+		mes "你还没办完吧?";
+		mes "现在还不是";
+		mes "来找我的时候。";
+		close;
+	}
+	if ((BaseLevel > 39) && .@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5) && (party_relay == 1)) {
+		mes "[莱德里昂]";
+		mes "就像我之前提到的,";
+		mes "我正在用需要队员";
+		mes "互相协作的任务,";
+		mes "来挑战公会里的队伍。";
+		next;
+		mes "[莱德里昂]";
+		mes "这些挑战有点像";
+		mes "接力赛,我们会要求";
+		mes "把一件物品传递给";
+		mes "特定职业的成员,";
+		mes "由他代为送达。";
+		next;
+		mes "[莱德里昂]";
+		mes "当然,作为考验的";
+		mes "主办方,我们也会";
+		mes "穿插一些小挑战,";
+		mes "看看你们的队伍";
+		mes "究竟有多大能耐。";
+		next;
+		mes "[莱德里昂]";
+		mes "何不试试看呢?";
+		mes "参加我们的考验";
+		mes "你不会有任何损失。";
+		mes "我保证,这场小小的";
+		mes "锻炼会让你们受益匪浅。";
+		next;
+		mes "[莱德里昂]";
+		mes "嘿!就从你开始吧!";
+		mes "拿着这张证明票,";
+		mes "交给公会里的剑士系成员,";
+		mes "让他送去给卡坦。";
+		mes "接力已经开始了~";
+		next;
+		set party_relay,2;
+		getitem 7730,1; //Mission_Certificate1
+		mes "[莱德里昂]";
+		mes "既然接力是由你";
+		mes "发起的,之后你";
+		mes "还得回来找我。";
+		mes "别担心,时机到了";
+		mes "我们自会通知你。";
+		close;
+	}
+	if (.@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5) && (party_relay > 0)) {
+		mes "[莱德里昂]";
+		mes "作为队伍的队长,";
+		mes "你应该时刻为";
+		mes "所有伙伴着想,";
+		mes "考虑什么对大家都好。";
+		close;
+	}
+	if (.@partyleader == false && (getcharid(2) > 0)) {
+		mes "[莱德里昂]";
+		mes "抱歉,我实在没什么";
+		mes "能为你做的...";
+		mes "除非你组建一支队伍";
+		mes "并成为队长,";
+		mes "否则我帮不上任何忙...";
+		close;
+	}
+	mes "[莱德里昂]";
+	mes "啊,很高兴认识你,";
+	mes "冒险者。我是莱德里昂,";
+	mes "一个智慧过人、神秘莫测,";
+	mes "而且最重要的是——非常富有的人。";
+	mes "没错,我是个慈善家。";
+	next;
+	mes "[莱德里昂]";
+	mes "我一直致力于为";
+	mes "整个米德加兹王国";
+	mes "做点有意义的贡献,";
+	mes "这就是我来到这里的原因。";
+	mes "像你这样的冒险者很多,但我们遇到了一个问题。";
+	next;
+	mes "[莱德里昂]";
+	mes "太多冒险者选择了";
+	mes "贪婪之道,忘记了";
+	mes "如何与同伴";
+	mes "好好合作。这种自私自利";
+	mes "实在令我作呕!呸!";
+	next;
+	mes "[莱德里昂]";
+	mes "我虽然不是冒险者,";
+	mes "但我有钱,可以做";
+	mes "点什么。我正在举办";
+	mes "一场小小的挑战,";
+	mes "鼓励冒险者们培养";
+	mes "友谊和团队精神。";
+	next;
+	mes "[莱德里昂]";
+	mes "来吧,我邀请你";
+	mes "试一试!请允许我";
+	mes "说明几个条件。";
+	mes "第一,你必须属于";
+	mes "一支6人以上的队伍,";
+	mes "比如组队或加入公会。";
+	next;
+	mes "[莱德里昂]";
+	mes "第二,只有队长";
+	mes "才能开启我的挑战";
+	mes "的第一部分。";
+	mes "如果你不是队长,";
+	mes "请告诉他来找我";
+	mes "接受挑战。";
+	next;
+	mes "[莱德里昂]";
+	mes "第三,你们必须有";
+	mes "剑士系、法师系、";
+	mes "服事系、弓箭手系、";
+	mes "盗贼系和商人系的角色,";
+	mes "才能完成这些考验。";
+	next;
+	mes "[莱德里昂]";
+	mes "转生角色也可以。";
+	mes "第四,所有队员的";
+	mes "基础等级必须达到40级。";
+	mes "其他的事情嘛,";
+	mes "到时候你们自然会知道。";
+	next;
+	mes "[莱德里昂]";
+	mes "别担心,我不会让你们";
+	mes "无缘无故地瞎折腾。";
+	mes "我会提供丰厚的奖励";
+	mes "作为你们队伍的动力。";
+	mes "你们愿意参加吗?";
+	next;
+	switch(select("当然!:不了。")) {
+	case 1:
+		if ((BaseLevel > 39) && .@partyleader == true && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+			mes "[莱德里昂]";
+			mes "太好了!让我看看...";
+			mes "嗯,你符合所有条件。";
+			mes "看来我要赢下这个赌注了!";
+			mes "呃,让我先给你";
+			mes "第一份指示。";
+			next;
+			set party_relay,1;
+			mes "[莱德里昂]";
+			mes "就在——^666666*咳嗽!*^000000";
+			mes "让我先清一清";
+			mes "嗓子...";
+			close;
+		}
+		else {
+			mes "[莱德里昂]";
+			mes "那太好了!不过,";
+			mes "在满足我的所有条件之前,";
+			mes "你还不能接受";
+			mes "我的小挑战。";
+			mes "等你办到了再来,";
+			mes "好吗?";
+			close;
+		}
+	case 2:
+		mes "[莱德里昂]";
+		mes "真的吗?相信我,";
+		mes "这场小小的挑战";
+		mes "对你绝对值得,";
+		mes "它能为米德加兹王国";
+		mes "带来更强的凝聚力";
+		mes "和团队精神。这是双赢!";
+		close;
+	}
+}
+
+payon,83,327,3	script	卡坦#payon::RelayGatan	86,{
+	if (checkweight(907,300) == 0) {
+		mes "^3355FF等一下!你现在";
+		mes "携带的物品太多了。";
+		mes "请把多余的物品";
+		mes "存进卡普拉仓库,";
+		mes "然后再回来吧。^000000";
+		close;
+	}
+	if ((countitem(7732) > 0) || (countitem(7733) > 0) || (countitem(7736) > 0) || (countitem(7737) > 0) || (countitem(7740) > 0) || (countitem(7741) > 0)) {
+		mes "[卡坦]";
+		mes "喂,你是不是忘了";
+		mes "什么事?好好想想...";
+		mes "你之前收到了一些";
+		mes "指示,不是吗?";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	if (party_relay == 28) {
+		mes "[卡坦]";
+		mes "喂,现在还不到";
+		mes "来找我的时候。";
+		mes "我想你应该让队伍里的";
+		mes "盗贼系或服事系成员,";
+		mes "把第十张证明票";
+		mes "送给巴菲尔。";
+		close;
+	}
+	if (party_relay == 27) {
+		mes "[卡坦]";
+		mes "啊,非常好!请把";
+		mes "这张证明票交给队伍里的";
+		mes "盗贼系或服事系成员,";
+		mes "让他送去给巴菲尔。";
+		mes "啊,这是给你的一点奖励~";
+		set party_relay,28;
+		getitem 7739,1; //Mission_Certificate10
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[卡坦]";
+		mes "好了,去办吧。";
+		mes "后会有期。";
+		close;
+	}
+	if ((party_relay == 26) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 26) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 26) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升3个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我没法告诉你";
+		mes "确切的上班时间,";
+		mes "总之是在下午...";
+		mes "按太平洋标准时间算。";
+		mes "要是你来太晚,";
+		mes "我可能就不在了,好吗?";
+		close;
+	}
+	if ((party_relay == 25) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 25) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 25) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升2个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我没法告诉你";
+		mes "确切的上班时间,";
+		mes "总之是在下午...";
+		mes "按太平洋标准时间算。";
+		mes "要是你来太晚,";
+		mes "我可能就不在了,好吗?";
+		close;
+	}
+	if ((party_relay == 24) && (BaseLevel > party_relay_lv) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升了一级。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 24) && (BaseLevel > party_relay_lv) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升了一级。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 24) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升1个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我没法告诉你";
+		mes "确切的上班时间,";
+		mes "总之是在下午...";
+		mes "按太平洋标准时间算。";
+		mes "要是你来太晚,";
+		mes "我可能就不在了,好吗?";
+		close;
+	}
+	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "好了,我有个小小的";
+		mes "考验给你。准备好了吗?";
+		mes "你的目标是";
+		mes "提升等级!让我想想...";
+		mes "怎样才算公平呢?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,27;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+	}
+	else if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "好了,我有个小小的";
+		mes "考验给你。准备好了吗?";
+		mes "你的目标是";
+		mes "提升等级!让我想想...";
+		mes "怎样才算公平呢?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,27;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+	}
+	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的";
+		mes "证明票吧?很高兴";
+		mes "认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "不过我现在没上班:";
+		mes "连我也需要休息,";
+		mes "免得被工作压垮。";
+		mes "在我工作的时间";
+		mes "再来找我,好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我没法告诉你确切的";
+		mes "上班时间";
+		mes "(^666666说实话,我根本想完全不去干活^000000),";
+		mes "总之下午再来吧,";
+		mes "按太平洋标准时间算。";
+		close;
+	}
+	if (party_relay == 17) {
+		mes "[卡坦]";
+		mes "喂,现在还不到";
+		mes "来找我的时候。";
+		mes "我想你应该让队伍里的";
+		mes "服事系成员,";
+		mes "把第六张证明票";
+		mes "送给巴菲尔。";
+		close;
+	}
+	if (party_relay == 16) {
+		mes "[卡坦]";
+		mes "啊,非常好!请把";
+		mes "这张证明票交给队伍里的";
+		mes "服事系成员,";
+		mes "让他送去给巴菲尔。";
+		mes "啊,这是给你的一点奖励~";
+		set party_relay,17;
+		getitem 7735,1; //Mission_Certificate6
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[卡坦]";
+		mes "好了,去办吧。";
+		mes "后会有期。";
+		close;
+	}
+	if ((party_relay == 15) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 8) && (.@relaytime < 11)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 15) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 21) && (.@relaytime < 1)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 15) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升3个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我在午饭前工作3小时,";
+		mes "午夜前后再工作3小时。";
+		mes "你就在这些时候";
+		mes "来找我吧。";
+		mes "我知道有点绕~";
+		close;
+	}
+	if ((party_relay == 14) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 8)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 14) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 21)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 14) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升2个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我在午饭前工作3小时,";
+		mes "午夜前后再工作3小时。";
+		mes "你就在这些时候";
+		mes "来找我吧。";
+		mes "我知道有点绕~";
+		close;
+	}
+	if ((party_relay == 13) && (BaseLevel > party_relay_lv) && (.@relaytime >= 8) && (.@relaytime < 11)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 13) && (BaseLevel > party_relay_lv) && (.@relaytime >= 21)) {
+		mes "[卡坦]";
+		mes "很好,你像我要求的那样";
+		mes "升级了。让我找找你的";
+		mes "下一份——我发誓我把它";
+		mes "放在这附近了——";
+		mes "然后给你下一份指示。";
+		mes "稍等...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 13) {
+		mes "[卡坦]";
+		mes "你的任务是";
+		mes "再提升1个基础等级。";
+		mes "完成之后,在我";
+		mes "工作的时间来见我,";
+		mes "好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我在午饭前工作3小时,";
+		mes "午夜前后再工作3小时。";
+		mes "你就在这些时候";
+		mes "来找我吧。";
+		mes "我知道有点绕~";
+		close;
+	}
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && (BaseClass == Job_Mage)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "好了,我有个小小的";
+		mes "考验给你。准备好了吗?";
+		mes "你的目标是";
+		mes "提升等级!让我想想...";
+		mes "怎样才算公平呢?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,16;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 21) && (BaseClass == Job_Mage)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "好了,我有个小小的";
+		mes "考验给你。准备好了吗?";
+		mes "你的目标是";
+		mes "提升等级!让我想想...";
+		mes "怎样才算公平呢?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,16;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+	}
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (BaseClass == Job_Mage)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的";
+		mes "证明票吧?很高兴";
+		mes "认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "不过我现在没上班:";
+		mes "连我也需要休息,";
+		mes "免得被工作压垮。";
+		mes "在我工作的时间";
+		mes "再来找我,好吗?";
+		next;
+		mes "[卡坦]";
+		mes "我在午饭前工作3小时,";
+		mes "午夜前后再工作3小时。";
+		mes "你就在这些时候";
+		mes "来找我吧。";
+		mes "我知道有点绕~";
+		close;
+	}
+	if (party_relay == 6) {
+		mes "[卡坦]";
+		mes "你把那张证明票";
+		mes "交给队伍里的盗贼系成员了吗?";
+		mes "^666666*哈欠*^000000想完成所有这些挑战,";
+		mes "就得照我说的做~";
+		close;
+	}
+	if (party_relay == 5) {
+		mes "[卡坦]";
+		mes "啊,非常好!";
+		mes "现在请把这张证明票";
+		mes "交给队伍里的盗贼系成员,";
+		mes "让他送去给巴菲尔。";
+		mes "很简单,对吧?";
+		next;
+		mes "[卡坦]";
+		mes "拿好...";
+		mes "这是给你的";
+		mes "一点小意思~";
+		set party_relay,6;
+		getitem 7731,1; //Mission_Certificate2
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[卡坦]";
+		mes "别忘了,一定要让";
+		mes "巴菲尔收到由你们队伍";
+		mes "盗贼系角色";
+		mes "送去的证明票。";
+		mes "后会有期。";
+		close;
+	}
+	if ((party_relay == 4) && (BaseLevel > (party_relay_lv + 2)) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 4) && (BaseLevel > (party_relay_lv + 2)) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 4) {
+		mes "[卡坦]";
+		mes "你没忘记还要";
+		mes "再提升3个基础等级吧?";
+		mes "哦,还有,要在";
+		mes "我正常上班的时间来。";
+		mes "我休息的时候";
+		mes "别来烦我~";
+		next;
+		mes "[卡坦]";
+		mes "我再跟你说一遍";
+		mes "我的上班时间:太平洋标准时间";
+		mes "上午11点到下午2点,";
+		mes "或者半夜12点到凌晨3点。";
+		mes "祝你好运,好吗?";
+		close;
+	}
+	if ((party_relay == 3) && (BaseLevel > (party_relay_lv + 1)) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 3) && (BaseLevel > (party_relay_lv + 1)) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 3) {
+		mes "[卡坦]";
+		mes "你没忘记还要";
+		mes "再提升2个基础等级吧?";
+		mes "哦,还有,要在";
+		mes "我正常上班的时间来。";
+		mes "我休息的时候";
+		mes "别来烦我~";
+		next;
+		mes "[卡坦]";
+		mes "我再跟你说一遍";
+		mes "我的上班时间:太平洋标准时间";
+		mes "上午11点到下午2点,";
+		mes "或者半夜12点到凌晨3点。";
+		mes "祝你好运,好吗?";
+		close;
+	}
+	if ((party_relay == 99) && (BaseLevel > party_relay_lv) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 99) && (BaseLevel > party_relay_lv) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[卡坦]";
+		mes "干得好。看来莱德里昂";
+		mes "真的很会看人,";
+		mes "一眼就能认出优秀的冒险者。";
+		mes "现在,能稍等一下吗?";
+		mes "嗯,有样东西";
+		mes "要给你...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 99) {
+		mes "[卡坦]";
+		mes "你没忘记还要";
+		mes "再提升1个基础等级吧?";
+		mes "哦,还有,要在";
+		mes "我正常上班的时间来。";
+		mes "我休息的时候";
+		mes "别来烦我~";
+		next;
+		mes "[卡坦]";
+		mes "我再跟你说一遍";
+		mes "我的上班时间:太平洋标准时间";
+		mes "上午11点到下午2点,";
+		mes "或者半夜12点到凌晨3点。";
+		mes "祝你好运,好吗?";
+		close;
+	}
+	if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Swordman)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "莱德里昂让我给那些";
+		mes "带着证明票来、又有队伍";
+		mes "同行的剑士系家伙";
+		mes "一点小考验。";
+		mes "准备好了吗?提升基础等级";
+		mes "就是我给你的考验。";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,5;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Swordman)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "莱德里昂让我给那些";
+		mes "带着证明票来、又有队伍";
+		mes "同行的剑士系家伙";
+		mes "一点小考验。";
+		mes "准备好了吗?提升基础等级";
+		mes "就是我给你的考验。";
+		next;
+		if (BaseLevel > 94) {
+			mes "[卡坦]";
+			mes "其实你已经";
+			mes "相当强了。我也懒得";
+			mes "干太多活,";
+			mes "所以就算你通过了";
+			mes "我的考验,好吗?";
+			mes "千万别告诉别人!";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,5;
+			mes "[卡坦]";
+			mes "等一下...";
+			mes "我好像还要";
+			mes "告诉你什么...";
+			mes "给我点时间,好吗?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "1个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[卡坦]";
+			mes "你挺强的,";
+			mes "不过再提升";
+			mes "2个基础等级";
+			mes "也无妨。";
+			mes "去练级吧,好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下";
+			mes "你的证明票了。";
+			mes "完成我交代的事";
+			mes "之后再回来,";
+			mes "我们就可以进入";
+			mes "下一环节了。";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[卡坦]";
+			mes "要知道,再强一点";
+			mes "对你只有好处。";
+			mes "现在去给我";
+			mes "提升3个基础等级,";
+			mes "好吗?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[卡坦]";
+			mes "我先收下你的证明票。";
+			mes "完成之后,请再回来。";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (BaseClass == Job_Swordman)) {
+		mes "[卡坦]";
+		mes "哦,嗯...那是...?";
+		mes "那是莱德里昂的证明票吧?";
+		mes "(^666666糟了!现在就得干活了?^000000)";
+		mes "很高兴认识你。我是卡坦。";
+		next;
+		mes "[卡坦]";
+		mes "不想扫你的兴,";
+		mes "但我现在没在值班。";
+		mes "你最好在我工作的时间";
+		mes "再来找我,好吗?";
+		mes "我也需要休息,";
+		mes "你懂吧?";
+		next;
+		mes "[卡坦]";
+		mes "我会告诉你我的上班时间,";
+		mes "千万别忘了:太平洋标准时间";
+		mes "上午11点到下午2点,";
+		mes "或者半夜12点到凌晨3点。";
+		mes "祝你好运,好吗?";
+		close;
+	}
+	mes "[卡坦]";
+	mes "嘿,很高兴认识你。";
+	mes "我是卡坦。我没什么大本事,";
+	mes "只是在帮朋友的忙。";
+	mes "他是个大富翁,";
+	mes "也是个真正的好人。";
+	mes "不过可真把我累坏了。";
+	close;
+}
+
+payon,204,221,3	script	巴菲尔#payon::RelayBafhail	731,{
+	if (checkweight(907,300) == 0) {
+		mes "^3355FF等一下!你现在";
+		mes "携带的物品太多了。";
+		mes "请把多余的物品";
+		mes "存进卡普拉仓库,";
+		mes "然后再回来吧。^000000";
+		close;
+	}
+	if (countitem(7730) > 0) || (countitem(7733) > 0) || (countitem(7734) > 0) || (countitem(7737) > 0) || (countitem(7738) > 0) || (countitem(7741) > 0) {
+		mes "[巴菲尔]";
+		mes "你一定搞糊涂了...";
+		mes "现在还不是";
+		mes "来见我的时候。";
+		mes "你去找过";
+		mes "其他几个人了吗?";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	if (party_relay == 30) {
+		mes "[巴菲尔]";
+		mes "你把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系或商人系成员了吗?";
+		mes "怕你忘了,";
+		mes "提醒你一下。";
+		close;
+	}
+	if ((party_relay == 29) && (.@relaytime >= 0) && (.@relaytime < 3) && (countitem(1012) > 19) && (countitem(1048) > 19) && (countitem(7003) > 19)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1012,20; //Lizard_Scruff
+		delitem 1048,20; //Slender_Snake
+		delitem 7003,20; //Anolian_Skin
+		set party_relay,30;
+		getitem 7740,1; //Mission_Certificate11
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "一定要把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系或商人系成员,";
+		mes "让他送给一个叫洛斯比的男孩。";
+		mes "再见,祝你好运~";
+		close;
+	}
+	else if ((party_relay == 29) && (.@relaytime >= 11) && (.@relaytime < 14) && (countitem(1012) > 19) && (countitem(1048) > 19) && (countitem(7003) > 19)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1012,20; //Lizard_Scruff
+		delitem 1048,20; //Slender_Snake
+		delitem 7003,20; //Anolian_Skin
+		set party_relay,30;
+		getitem 7740,1; //Mission_Certificate11
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "一定要把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系或商人系成员,";
+		mes "让他送给一个叫洛斯比的男孩。";
+		mes "再见,祝你好运~";
+		close;
+	}
+	if (party_relay == 29) {
+		mes "[巴菲尔]";
+		mes "我给你的任务,";
+		mes "是在合适的时间";
+		mes "带一些物品给我。";
+		mes "我只在一天之初收3小时,";
+		mes "以及在正午前后收3小时。";
+		next;
+		mes "[巴菲尔]";
+		mes "我需要";
+		mes "^4D4DFF20 个伞蜥颈^000000,";
+		mes "^4D4DFF20 张虎蜥皮^000000,还有";
+		mes "^4D4DFF20 根蛇发^000000。";
+		mes "可别忘了,好吗?";
+		close;
+	}
+	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		mes "好了,言归正传。";
+		next;
+		mes "[巴菲尔]";
+		mes "我的任务是";
+		mes "让你收集";
+		mes "^4D4DFF20 个伞蜥颈^000000,";
+		mes "^4D4DFF20 张虎蜥皮^000000,还有";
+		mes "^4D4DFF20 根蛇发^000000。";
+		next;
+		delitem 7739,1; //Mission_Certificate10
+		set party_relay,29;
+		mes "[巴菲尔]";
+		mes "明白了吗?";
+		mes "那好,把你的";
+		mes "证明票交给我,";
+		mes "你就可以开始";
+		mes "收集我列出的那些物品了。";
+		mes "后会有期~";
+		close;
+	}
+	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		mes "好了,言归正传。";
+		next;
+		mes "[巴菲尔]";
+		mes "我的任务是";
+		mes "让你收集";
+		mes "^4D4DFF20 个伞蜥颈^000000,";
+		mes "^4D4DFF20 张虎蜥皮^000000,还有";
+		mes "^4D4DFF20 根蛇发^000000。";
+		next;
+		delitem 7739,1; //Mission_Certificate10
+		set party_relay,29;
+		mes "[巴菲尔]";
+		mes "明白了吗?";
+		mes "明白了吗?";
+		mes "那好,把你的";
+		mes "证明票交给我,";
+		mes "你就可以开始";
+		mes "收集我列出的那些物品了。";
+		mes "后会有期~";
+		close;
+	}
+	if ((countitem(7739) > 0) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "能请你晚点再来吗?";
+		mes "现在不是跟我";
+		mes "谈话的时候。";
+		mes "我在一天之初有3小时,";
+		mes "以及正午前后3小时有空。";
+		close;
+	}
+	if (party_relay == 20) {
+		mes "[巴菲尔]";
+		mes "你把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系或商人系成员了吗?";
+		mes "怕你忘了,";
+		mes "提醒你一下。";
+		close;
+	}
+	if ((party_relay == 19) && (.@relaytime >= 14) && (.@relaytime < 17) && (countitem(1015) > 9) && (countitem(7172) > 9) && (countitem(7155) > 9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1015,10; //Thin_N'_Long_Tongue
+		delitem 7172,10; //Leopard_Talon
+		delitem 7155,10; //Poison_Toad's_Skin
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "帮个忙,一定要让";
+		mes "你们队伍里的";
+		mes "商人系角色,";
+		mes "把那张证明票送给洛斯比。";
+		mes "好了,那后会有期。";
+		close;
+	}
+	else if ((party_relay == 19) && (.@relaytime >= 18) && (.@relaytime < 21) && (countitem(1015) > 9) && (countitem(7172) > 9) && (countitem(7155) > 9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1015,10; //Thin_N'_Long_Tongue
+		delitem 7172,10; //Leopard_Talon
+		delitem 7155,10; //Poison_Toad's_Skin
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "帮个忙,一定要让";
+		mes "你们队伍里的";
+		mes "商人系角色,";
+		mes "把那张证明票送给洛斯比。";
+		mes "好了,那后会有期。";
+		close;
+	}
+	if (party_relay == 19) {
+		mes "[巴菲尔]";
+		mes "记住,要在合适的时间";
+		mes "把我要求的物品带来,";
+		mes "也就是午后3小时,";
+		mes "或者傍晚前后的3小时。";
+		mes "现在,我要你带来...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 条细长舌头^000000,";
+		mes "^4D4DFF10 个花豹指甲^000000,还有";
+		mes "^4D4DFF10 张牛蛙之皮^000000。";
+		mes "我会在这里等你,";
+		mes "时间一到";
+		mes "就收下这些物品。";
+		close;
+	}
+	if ((party_relay == 18) && (.@relaytime >= 14) && (.@relaytime < 17) && (countitem(7157) > 9) && (countitem(1021) > 9) && (countitem(7101) >9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 7157,10; //Black_Mask
+		delitem 1021,10; //Dokkaebi_Horn
+		delitem 7101,10; //Peco_Wing_Feather
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "帮个忙,一定要让";
+		mes "你们队伍里的";
+		mes "商人系角色,";
+		mes "把那张证明票送给洛斯比。";
+		mes "好了,那后会有期。";
+		close;
+	}
+	else if ((party_relay == 18) && (.@relaytime >= 18) && (.@relaytime < 21) && (countitem(7157) > 9) && (countitem(1021) > 9) && (countitem(7101) >9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 7157,10; //Black_Mask
+		delitem 1021,10; //Dokkaebi_Horn
+		delitem 7101,10; //Peco_Wing_Feather
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "帮个忙,一定要让";
+		mes "你们队伍里的";
+		mes "商人系角色,";
+		mes "把那张证明票送给洛斯比。";
+		mes "好了,那后会有期。";
+		close;
+	}
+	if (party_relay == 18) {
+		mes "[巴菲尔]";
+		mes "记住,我给你的任务";
+		mes "是收集一些物品,";
+		mes "并在合适的时间";
+		mes "带给我。";
+		next;
+		mes "[巴菲尔]";
+		mes "我只在一天之初";
+		mes "收3小时物品,";
+		mes "再在正午前后";
+		mes "收3小时。";
+		mes "这些就是我要你";
+		mes "带来的物品...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 张黑色覆面^000000,";
+		mes "^4D4DFF10 个土人之角^000000,还有";
+		mes "^4D4DFF10 根七彩大嘴鸟之羽^000000。";
+		mes "我会在刚才说的";
+		mes "那些时间在这里等你,";
+		mes "好吗?";
+		close;
+	}
+	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseClass == Job_Acolyte)) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "好了,言归正传。";
+		mes "我的任务是让你";
+		mes "收集一些物品,";
+		mes "并在合适的时间";
+		mes "带来。给我带来...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 张黑色覆面^000000,";
+		mes "^4D4DFF10 个土人之角^000000,还有";
+		mes "^4D4DFF10 根七彩大嘴鸟之羽^000000。";
+		next;
+		delitem 7735,1; //Mission_Certificate6
+		set party_relay,18;
+		mes "[巴菲尔]";
+		mes "明白了吗?";
+		mes "那好,把你的";
+		mes "证明票交给我,";
+		mes "你就可以开始";
+		mes "收集我列出的那些物品了。";
+		mes "后会有期~";
+		close;
+	}
+	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseClass == Job_Acolyte)) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "好了,言归正传。";
+		mes "我的任务是让你";
+		mes "收集一些物品,";
+		mes "并在合适的时间";
+		mes "带来。给我带来...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 条细长舌头^000000,";
+		mes "^4D4DFF10 个花豹指甲^000000,还有";
+		mes "^4D4DFF10 张牛蛙之皮^000000。";
+		next;
+		delitem 7735,1; //Mission_Certificate6
+		set party_relay,19;
+		mes "[巴菲尔]";
+		mes "明白了吗?";
+		mes "那好,把你的";
+		mes "证明票交给我,";
+		mes "你就可以开始";
+		mes "收集我列出的那些物品了。";
+		mes "后会有期~";
+		close;
+	}
+	if ((countitem(7735) > 0) && (BaseClass == Job_Acolyte)) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "能请你晚点再来吗?";
+		mes "现在不是跟我";
+		mes "谈话的时候。";
+		mes "我在一天之初有3小时,";
+		mes "以及正午前后3小时有空。";
+		close;
+	}
+	if (party_relay == 9) {
+		mes "[巴菲尔]";
+		mes "哦,你已经把我给的";
+		mes "证明票送出去了?";
+		mes "如果是这样,";
+		mes "我想我们暂时";
+		mes "没什么好交接的了。";
+		close;
+	}
+	if ((party_relay == 8) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (countitem(7196) > 9) && (countitem(7184) > 9) && (countitem(920) > 9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 7196,10; //Shoulder_Protection
+		delitem 7189,10; //Heart_Of_Tree
+		delitem 920,10; //Claw_Of_Wolves
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[巴菲尔]";
+		mes "请把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系成员,";
+		mes "让他送去给洛斯比,";
+		mes "好吗?祝你旅途顺利~";
+		close;
+	}
+	else if ((party_relay == 8) && ((.@relaytime >= 21) && (countitem(7196) > 9) && (countitem(7184) > 9) && (countitem(920) > 9))) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		delitem 7196,10; //Shoulder_Protection
+		delitem 7189,10; //Heart_Of_Tree
+		delitem 920,10; //Claw_Of_Wolves
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[巴菲尔]";
+		mes "请把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系成员,";
+		mes "让他送去给洛斯比,";
+		mes "好吗?祝你旅途顺利~";
+		close;
+	}
+	if (party_relay == 8) {
+		mes "[巴菲尔]";
+		mes "你的任务";
+		mes "是在我收物品的时间,";
+		mes "给我带来";
+		mes "^4D4DFF10 个树木之心^000000,";
+		mes "^4D4DFF10 个狼指甲^000000,还有";
+		mes "^4D4DFF10 个木制护肩^000000。";
+		next;
+		mes "[巴菲尔]";
+		mes "记住,我只在";
+		mes "上午8点到11点,";
+		mes "以及晚上9点到12点";
+		mes "收物品。按太平洋";
+		mes "标准时间算。别忘了!";
+		close;
+	}
+	if ((party_relay == 7) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (countitem(1027) > 9) && (countitem(1040) > 9) && (countitem(1023) > 9)) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1027,10; //Porcupine_Spike
+		delitem 1040,10; //Elder_Pixie's_Beard
+		delitem 1023,10; //Fish_Tail
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		mes "[巴菲尔]";
+		mes "请把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系成员,";
+		mes "让他送去给洛斯比,";
+		mes "好吗?祝你旅途顺利~";
+		close;
+	}
+	else if ((party_relay == 7) && ((.@relaytime >= 21) && (countitem(1027) > 9) && (countitem(1040) > 9) && (countitem(1023) > 9))) {
+		mes "[巴菲尔]";
+		mes "嗯,看来你来对了时间,";
+		mes "也带齐了我要的东西。";
+		mes "干得好。请收下";
+		mes "你的下一张证明票,";
+		mes "还有这份小小的奖励。";
+		next;
+		delitem 1027,10; //Porcupine_Spike
+		delitem 1040,10; //Elder_Pixie's_Beard
+		delitem 1023,10; //Fish_Tail
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		mes "[巴菲尔]";
+		mes "请把那张证明票";
+		mes "交给队伍里的";
+		mes "弓箭手系成员,";
+		mes "让他送去给洛斯比,";
+		mes "好吗?祝你旅途顺利~";
+		close;
+	}
+	if (party_relay == 7) {
+		mes "[巴菲尔]";
+		mes "你的任务";
+		mes "是在我收物品的时间,";
+		mes "给我带来";
+		mes "^4D4DFF10 条鱼尾^000000,";
+		mes "^4D4DFF10 根刺猬尖刺^000000,还有";
+		mes "^4D4DFF10 根老妖精胡须^000000。";
+		next;
+		mes "[巴菲尔]";
+		mes "记住,我只在";
+		mes "上午8点到11点,";
+		mes "以及晚上9点到12点";
+		mes "收物品。按太平洋";
+		mes "标准时间算。别忘了!";
+		close;
+	}
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (BaseClass == Job_Thief)) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "好了,言归正传。";
+		mes "我的任务是让你";
+		mes "收集一些物品,";
+		mes "并在合适的时间";
+		mes "带来。给我带来...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 个树木之心^000000,";
+		mes "^4D4DFF10 个狼指甲^000000,还有";
+		mes "^4D4DFF10 个木制护肩^000000。";
+		next;
+		delitem 7731,1; //Mission_Certificate2
+		set party_relay,8;
+		mes "[巴菲尔]";
+		mes "记住,如果你不在";
+		mes "我收任务物品的";
+		mes "时间来,就算你";
+		mes "东西带齐了,";
+		mes "我也不会收的,";
+		mes "好吗?";
+		close;
+	}
+	else if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 21) && (BaseClass == Job_Thief))) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "好了,言归正传。";
+		mes "我的任务是让你";
+		mes "收集一些物品,";
+		mes "并在合适的时间";
+		mes "带来。给我带来...";
+		next;
+		mes "[巴菲尔]";
+		mes "^4D4DFF10 条鱼尾^000000,";
+		mes "^4D4DFF10 根刺猬尖刺^000000,还有";
+		mes "^4D4DFF10 根老妖精胡须^000000。";
+		next;
+		delitem 7731,1; //Mission_Certificate2
+		set party_relay,7;
+		mes "[巴菲尔]";
+		mes "记住,如果你不在";
+		mes "我收任务物品的";
+		mes "时间来,就算你";
+		mes "东西带齐了,";
+		mes "我也不会收的,";
+		mes "好吗?";
+		close;
+	}
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && (BaseClass == Job_Thief)) {
+		mes "[巴菲尔]";
+		mes "哦,那张证明票...?";
+		mes "啊,很好,很好。";
+		mes "看你的职业,";
+		mes "一定是卡坦派你来的吧?";
+		mes "很高兴认识你,我是巴菲尔~";
+		next;
+		mes "[巴菲尔]";
+		mes "能请你晚点再来吗?";
+		mes "现在不是跟我";
+		mes "谈话的时候。";
+		mes "我有空的时间是";
+		mes "上午8点到11点,";
+		mes "以及晚上9点到12点。";
+		close;
+	}
+	mes "[巴菲尔]";
+	mes "...嗯?我想我们";
+	mes "之间没什么事。";
+	mes "能让我清静一下吗?";
+	mes "我帮朋友打理这些任务,";
+	mes "已经够忙的了。";
+	next;
+	mes "[巴菲尔]";
+	mes "运气好的话,也许";
+	mes "你会成为替我的朋友";
+	mes "莱德里昂完成这些";
+	mes "有趣小任务的";
+	mes "冒险者之一呢。";
+	close;
+}
+
+payon,168,314,3	script	洛斯比#payon::RelayLospii	706,{
+	if (checkweight(907,300) == 0) {
+		mes "^3355FF等一下!你现在";
+		mes "携带的物品太多了。";
+		mes "请把多余的物品";
+		mes "存进卡普拉仓库,";
+		mes "然后再回来吧。^000000";
+		close;
+	}
+	if (countitem(7730) > 0) || (countitem(7731) > 0) || (countitem(7734) > 0) || (countitem(7735) > 0) || (countitem(7738) > 0) || (countitem(7739) > 0) {
+		mes "[洛斯比]";
+		mes "喂,你还没搞清楚";
+		mes "自己该做什么吗?";
+		mes "现在不是跟我";
+		mes "说话的时候!嗯...";
+		mes "我也不知道你";
+		mes "该去见谁,不过...";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	getmapxy(.@m$,.@x,.@y,BL_NPC,strnpcinfo(3));
+	set .@juwi,getareausers(.@m$,.@x-8,.@y-8,.@x+8,.@y+8);
+	if (party_relay == 32) {
+		mes "[洛斯比]";
+		mes "喂!你把那张证明票";
+		mes "交给你们的队长了吗?";
+		mes "就是发起这场";
+		mes "接力考验的那个人!";
+		close;
+	}
+	if ((party_relay == 31) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (.@juwi > 13)) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,32;
+		getitem 7741,1; //Mission_Certificate12
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	else if ((party_relay == 31) && ((.@relaytime >= 21) && (.@juwi > 13))) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,32;
+		getitem 7741,1; //Mission_Certificate12
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	if (party_relay == 31) {
+		mes "[洛斯比]";
+		mes "好了,你要在我工作的";
+		mes "时候带10个朋友来,";
+		mes "好吗?就是,呃,";
+		mes "中午前的3小时,";
+		mes "还有午夜后的3小时。";
+		mes "只有这些时间,好吗?";
+		close;
+	}
+	if ((countitem(7740) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && ((BaseJob == Job_Archer) || (BaseJob == Job_Merchant))) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "14 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7740,1; //Mission_Certificate11
+		set party_relay,31;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	else if ((countitem(7740) > 0) && (.@relaytime >= 21) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "14 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7740,1; //Mission_Certificate11
+		set party_relay,31;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	if ((countitem(7740) > 0) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "糟糕...我忘了";
+		mes "现在不该是我";
+		mes "工作的时间。";
+		mes "等我上班的时候";
+		mes "再来,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "我...我在中午前";
+		mes "工作3小时,然后...";
+		mes "午夜后再工作3小时?";
+		mes "对,这些就是";
+		mes "我工作的时间!";
+		close;
+	}
+	if (party_relay == 22) {
+		mes "[洛斯比]";
+		mes "啊?不对不对,";
+		mes "你不该来这里!";
+		mes "把第八张证明票";
+		mes "交给你们的队长,";
+		mes "让他交给莱德里昂!";
+		mes "你的队长...你认识他吧?";
+		close;
+	}
+	if ((party_relay == 21) && ((.@relaytime >= 11) && (.@relaytime < 14)) && (.@juwi > 11)) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,22;
+		getitem 7737,1; //Mission_Certificate8
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	else if ((party_relay == 21) && ((.@relaytime >= 0) && (.@relaytime < 3)) && (.@juwi > 11)) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,22;
+		getitem 7737,1; //Mission_Certificate8
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	if (party_relay == 21) {
+		mes "[洛斯比]";
+		mes "好了,你要在我工作的";
+		mes "时候带12个朋友来,";
+		mes "好吗?就是,呃,";
+		mes "中午前的3小时,";
+		mes "还有午夜后的3小时。";
+		mes "只有这些时间,好吗?";
+		close;
+	}
+	if ((countitem(7736) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Merchant)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "12 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7736,1; //Mission_Certificate7
+		set party_relay,21;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	else if ((countitem(7736) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Merchant)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "12 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7736,1; //Mission_Certificate7
+		set party_relay,21;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	if ((countitem(7736) > 0) && (BaseClass == Job_Merchant)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "糟糕...我忘了";
+		mes "现在不该是我";
+		mes "工作的时间。";
+		mes "等我上班的时候";
+		mes "再来,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "我...我在中午前";
+		mes "工作3小时,然后...";
+		mes "午夜后再工作3小时?";
+		mes "对,这些就是";
+		mes "我工作的时间!";
+		close;
+	}
+	if (party_relay == 11) {
+		mes "[洛斯比]";
+		mes "嗯...你把第四张";
+		mes "证明票交给你们的";
+		mes "队长了吗?就是";
+		mes "队伍的队长啊。";
+		mes "发起这场接力考验的";
+		mes "那个人。";
+		close;
+	}
+	if ((party_relay == 10) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (.@juwi > 9)) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,11;
+		getitem 7733,1; //Mission_Certificate4
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	else if ((party_relay == 10) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (.@juwi > 9)) {
+		mes "[洛斯比]";
+		mes "哦!你带来了好多";
+		mes "朋友!一个...两、两个...";
+		mes "你带来了 " + .@juwi + " 个?!哼。";
+		mes "也许我给你们的任务";
+		mes "太简单了。没想到你";
+		mes "认识这么多人!";
+		next;
+		mes "[洛斯比]";
+		mes "好吧,谢谢你把";
+		mes "大家都带来。";
+		mes "为此,我送你";
+		mes "这份礼物。很酷吧?";
+		next;
+		set party_relay,11;
+		getitem 7733,1; //Mission_Certificate4
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[洛斯比]";
+		mes "好了,拿着这张";
+		mes "证明票,交给你们的队长,";
+		mes "就是发起这场接力考验的人。";
+		mes "他需要把证明票";
+		mes "交给莱德里昂,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "你们快完成了!";
+		mes "...大概吧。嗯,我也不";
+		mes "确定接下来会怎样。";
+		mes "我只记得我自己";
+		mes "要做的部分。拜托!";
+		mes "我只是个小孩啊!";
+		close;
+	}
+	if (party_relay == 10) {
+		mes "[洛斯比]";
+		mes "在我工作的时候,";
+		mes "带10个朋友到我这里来,";
+		mes "好吗?嗯...我工作的时间是...";
+		mes "下午2点到5点,还有下午6点到9点。";
+		mes "我想应该是这些时间。";
+		mes "我...我看不懂表...";
+		close;
+	}
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (BaseClass == Job_Archer)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "10 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7732,1; //Mission_Certificate3
+		set party_relay,10;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	else if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (BaseClass == Job_Archer)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "我现在正在为这个";
+		mes "任务工作,你来得";
+		mes "正是时候!让我想想...";
+		mes "我要给你...给你";
+		mes "一个要做的任——务...";
+		mes "哦!我知道了!想到了!";
+		next;
+		mes "[洛斯比]";
+		mes "我们要看看你们";
+		mes "懂不懂团队合作,对吧?";
+		mes "让我看看你有很多朋友,";
+		mes "好不好?带...";
+		mes "10 个来!对,就这样!";
+		next;
+		mes "[洛斯比]";
+		mes "我得能看见他们,";
+		mes "这样才知道你";
+		mes "没有骗我。";
+		mes "把他们带得近——一点,";
+		mes "让我知道他们是你的朋友,";
+		mes "不是随便找来的路人。";
+		next;
+		delitem 7732,1; //Mission_Certificate3
+		set party_relay,10;
+		mes "[洛斯比]";
+		mes "好了,我就待在";
+		mes "这里!哦!还有,";
+		mes "你得在我工作的";
+		mes "时候和朋友们一起来!";
+		mes "这点很重要!";
+		close;
+	}
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && (BaseClass == Job_Archer)) {
+		mes "[洛斯比]";
+		mes "你好,我是洛斯比!";
+		mes "也许我比你小,";
+		mes "但这个任务是我负责的!";
+		mes "所以你得听我的,好吗?";
+		mes "嘿嘿!别害怕~";
+		next;
+		mes "[洛斯比]";
+		mes "糟糕...我忘了";
+		mes "现在不该是我";
+		mes "工作的时间。";
+		mes "等我上班的时候";
+		mes "再来,好吗?";
+		next;
+		mes "[洛斯比]";
+		mes "我工作的时间是...呃...";
+		mes "下午2点到5点?哦!";
+		mes "还有下午6点到9点。";
+		mes "我想应该是";
+		mes "这些时间...我是说,";
+		mes "看时钟好难啊,天哪!";
+		close;
+	}
+	mes "[洛斯比]";
+	mes "你好!我是洛斯比!";
+	mes "嘿,我看起来像是";
+	mes "在上班吗?哈哈!";
+	mes "我有工作了!";
+	mes "我帮了朋友们";
+	mes "大忙呢!";
+	close;
+}
+
+// EXP Rewards
+function	script	F_PartyRelay_Exp	{
+	if (checkre(3)) { //unconfirmed
+		if (BaseLevel > 94) getexp 104760,0;
+		else if (BaseLevel > 89) getexp 85920,0;
+		else if (BaseLevel > 79) getexp 38520,0;
+		else if (BaseLevel > 69) getexp 19560,0;
+		else if (BaseLevel > 59) getexp 6720,0;
+		else if (BaseLevel > 49) getexp 2880,0;
+		else getexp 1080,0;
+	} else {
+		if (BaseLevel > 94) getexp 1047600,0;
+		else if (BaseLevel > 89) getexp 859200,0;
+		else if (BaseLevel > 79) getexp 385200,0;
+		else if (BaseLevel > 69) getexp 195600,0;
+		else if (BaseLevel > 59) getexp 67200,0;
+		else if (BaseLevel > 49) getexp 28800,0;
+		else getexp 10800,0;
+	}
+	return;
+}
+
+// Comodo Relay
+comodo,71,137,3	duplicate(RelayLedrion)	莱德里昂#comodo	109
+comodo,236,197,3	duplicate(RelayGatan)	卡坦#comodo	86
+comodo,152,184,3	duplicate(RelayBafhail)	巴菲尔#comodo	731
+comodo,64,219,3	duplicate(RelayLospii)	洛斯比#comodo	706
+
+// Einbroch Relay
+einbroch,107,93,3	duplicate(RelayLedrion)	莱德里昂#einbroch	109
+einbroch,260,128,3	duplicate(RelayGatan)	卡坦#einbroch	86
+einbroch,251,178,3	duplicate(RelayBafhail)	巴菲尔#einbroch	731
+einbroch,173,72,3	duplicate(RelayLospii)	洛斯比#einbroch	706
+
+// Relay Hugel
+hugel,102,130,3	duplicate(RelayLedrion)	莱德里昂#hugel	109
+hugel,169,139,3	duplicate(RelayGatan)	卡坦#hugel	86
+hugel,55,200,3	duplicate(RelayBafhail)	巴菲尔#hugel	731
+hugel,144,201,3	duplicate(RelayLospii)	洛斯比#hugel	706
+
+// Relay Rachel
+rachel,215,71,3	duplicate(RelayLedrion)	莱德里昂#rachel	109
+rachel,45,163,3	duplicate(RelayGatan)	卡坦#rachel	86
+rachel,245,132,3	duplicate(RelayBafhail)	巴菲尔#rachel	731
+rachel,158,215,3	duplicate(RelayLospii)	洛斯比#rachel	706
+
+// Relay Veins
+veins,274,188,5	duplicate(RelayLedrion)	莱德里昂#veins	109
+veins,138,207,3	duplicate(RelayGatan)	卡坦#veins	86
+veins,202,235,3	duplicate(RelayBafhail)	巴菲尔#veins	731
+veins,97,245,5	duplicate(RelayLospii)	洛斯比#veins	706

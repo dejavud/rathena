@@ -1,0 +1,877 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Item Creation
+//===== By: ================================================== 
+//= SinSloth
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Craft god items after the four seals are broken.
+//===== Additional Comments: =================================
+//= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Corrected several incorrect item IDs. [L0ne_W0lf]
+//= 1.3 Renewal script update. [Euphy]
+//=     Added GM management function.
+//============================================================
+
+gld_dun01,28,85,0	script	格伦布尔蒂#1::GodDwarf	826,{
+	mes "[矮人 格伦布尔蒂]";
+	mes "人类?!";
+	mes "这片土地上";
+	mes "到处都是你们这种家伙。";
+	mes "你来这里干什么？";
+	next;
+	mes "[矮人 格伦布尔蒂]";
+	mes "住在米德加兹，远离我的家乡，";
+	mes "已经够痛苦了，更别说还要面对一个爱抱怨的人类。别来烦我！";
+	next;
+	switch(select("问问他矮人的事。:问问他在做什么。:请求打造武器。:取消。")) {
+	case 1:
+		mes "[矮人 格伦布尔蒂]";
+		mes "矮人有什么好了解的？";
+		mes "我们是最坚韧的种族。毕竟，无论环境多么恶劣，";
+		mes "我们都能在任何地方生存。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "我怀疑你那脆弱的头脑能否理解，";
+		mes "住在我的家乡是多么难以忍受，但你可以试试。";
+		mes "试着想象一下。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "你们人类引以为傲的大部分知识和技能，大概都是从矮人那里传下去的。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "锻造尤其如此。";
+		mes "就连众神的工具和武器，也是我的祖先打造的。你知道吗？";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "我们拥有最伟大的知识和技能，却接受了命运，生活在巨人那寒冷贫瘠的土地上。";
+		close;
+	case 2:
+		mes "[矮人 格伦布尔蒂]";
+		mes "你刚才是不是问我在这里干什么？唔哈哈哈！我在等哪个蠢到敢来这里的人类，";
+		mes "好让我揍他一顿！";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "哦，别担心。跟你这样的弱家伙打架，只会丢我自己的脸。人类那么脆弱，却顽固地抱着傲慢不放，自相残杀。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "作为一个种族，你们人类简直没救了。我连跟人类共享同一片大陆都不愿意！但唉，我别无选择。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "一千年前那场战争之后，";
+		mes "回家乡的路就消失了。不知为什么，我再也找不到穿过天地树回去的路了...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "我被困在米德加兹了。";
+		mes "至少我还算幸运，找到了这个洞穴。毕竟我们矮人住在地下最舒服。";
+		close;
+	case 3:
+		set .@GID,getcharid(2);
+		if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+			if (($God1 >= $@god_check1) && ($God2 >= $@god_check1) && ($God3 >= $@god_check1) && ($God4 >= $@god_check1) && (is_guild_leader() == true)) {
+				mes "[矮人 格伦布尔蒂]";
+				mes "嗯...";
+				mes "要为你打造武器，我需要一些东西。你到底想要什么？";
+				next;
+				switch(select("女神颈炼:雷神腰带:史雷普尼尔之靴:雷神之锤")) {
+				case 1:
+					mes "[矮人 格伦布尔蒂]";
+					mes "我需要...";
+					mes "^0000FF4 菲力亚宝石";
+					mes "4 银饰品";
+					mes "3 雪的结晶";
+					mes "3 安静的水波";
+					mes "3 空气雕像";
+					mes "2 蓝宝石";
+					mes "3 珍珠";
+					mes "10 白宝石";
+					mes "5 诅咒红宝石";
+					mes "20 黄金^000000";
+					mes "1 体力项链^000000...";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "不过，为我打造这条女神颈炼的时机还没到。你得等到封印解除。唔哈哈哈！";
+					close;
+				case 2:
+					mes "[矮人 格伦布尔蒂]";
+					mes "我需要...";
+					mes "^0000FF1 魔法铁链";
+					mes "20 黄金";
+					mes "10 蓝宝石";
+					mes "10 神之金属";
+					mes "1 皮带^000000";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "不过，雷神腰带上的封印还没有解除。在那之前，你只能等着！布哇哈哈哈！";
+					close;
+				case 3:
+					mes "[矮人 格伦布尔蒂]";
+					mes "我需要...";
+					mes "^0000FF3 未知的锯齿轮子";
+					mes "5 天使翅膀羽毛";
+					mes "3 鱼的灵魂";
+					mes "4 太阳神的象征";
+					mes "3 灵魂的呼吸声音";
+					mes "20 黄金";
+					mes "10 铝";
+					mes "1 战士长靴^000000";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "但就算这样，在封印解除之前，我也做不出史雷普尼尔之靴。否则你就没戏了，人类。哈哈哈~!";
+					close;
+				case 4:
+					mes "[矮人 格伦布尔蒂]";
+					mes "我需要...";
+					mes "^0000FF2 索尔的铁手套";
+					mes "4 拷问器具";
+					mes "5 瓦尔基里的愤怒";
+					mes "5 暴风雨的征兆";
+					mes "5 海浪雕像";
+					mes "20 神之金属";
+					mes "5 铝";
+					mes "40 黄金";
+					mes "1 昏迷之锤^000000";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "但只要封印还在，我连雷神之锤的复制品都做不出来。在封印解除之前，你只能等着。布哇哈哈！";
+					close;
+				}
+			} 
+			mes "[矮人 格伦布尔蒂]";
+			mes "我们矮人自尊心太强，才不会在卑贱的人类面前展示我们的技艺！";
+			next;
+			mes "[矮人 格伦布尔蒂]";
+			mes "别再烦我，快滚出去！去玩你的怪物吧，你这个头脑简单的蠢货！";
+			close;
+		}
+		if (is_guild_leader() == false) {
+			mes "[矮人 格伦布尔蒂]";
+			mes "我只向地位";
+			mes "极其崇高的";
+			mes "人类展示";
+			mes "我精湛的技艺！";
+			next;
+			mes "[矮人 格伦布尔蒂]";
+			mes "虽然我讨厌";
+			mes "大多数人类，";
+			mes "但我不得不尊重被命运选中的人。去把你的^0000FF公会会长^000000带来！";
+			close;
+		}
+		mes "[矮人 格伦布尔蒂]";
+		mes "虽然把我珍贵的技艺展示给一个人类，是莫大的耻辱...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "所有封印都已解除，而持有华丽金属的人是被命运选中的。我不得不尊重你。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "首先，我要确认你是否带来了锻造神器所需的全部材料！我最讨厌人类毫无目的地跑到这里来！";
+		next;
+		if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)) {
+			mes "[矮人 格伦布尔蒂]";
+			mes "嗯...";
+			mes "我想你是";
+			mes "想要";
+			mes "^0000FF女神颈炼^000000吧！";
+			next;
+		}
+		else if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)){ //Gullraifnir Gold Blue_Jewel Oridecon Belt 
+			mes "[矮人 格伦布尔蒂]";
+			mes "嗯...";
+			mes "我想你是";
+			mes "想要";
+			mes "^0000FF雷神腰带^000000吧！";
+			next;
+		}
+		else if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
+			mes "[矮人 格伦布尔蒂]";
+			mes "嗯...";
+			mes "我想你是";
+			mes "想要";
+			mes "^0000FF史雷普尼尔之靴^000000吧！";
+			next;
+		}
+		else if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
+			mes "[矮人 格伦布尔蒂]";
+			mes "嗯...";
+			mes "我想你是";
+			mes "想要";
+			mes "^0000FF雷神之锤^000000吧！";
+			next;
+		}
+		else {
+			mes "[矮人 格伦布尔蒂]";
+			mes "...";
+			mes "......";
+			next;
+			mes "[矮人 格伦布尔蒂]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			next;
+			mes "[矮人 格伦布尔蒂]";
+			mes "...";
+			mes "......";
+			mes ".........";
+			mes ".............";
+			next;
+			mes "[矮人 格伦布尔蒂]";
+			mes "你竟敢毫无准备地跑到这里来?! 你忘了要带什么吗？这次给我听仔细了！";
+			next;
+			switch(select("女神颈炼:雷神腰带:史雷普尼尔之靴:雷神之锤")) {
+			case 1:
+				mes "[矮人 格伦布尔蒂]";
+				mes "我需要...";
+				mes "^0000FF4 菲力亚宝石";
+				mes "4 银饰品";
+				mes "3 雪的结晶";
+				mes "3 安静的水波";
+				mes "3 空气雕像";
+				mes "2 蓝宝石";
+				mes "3 珍珠";
+				mes "10 白宝石";
+				mes "5 诅咒红宝石";
+				mes "20 黄金^000000";
+				mes "1 体力项链^000000...";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "嗯，不过现在";
+				mes "封印已经解除，";
+				mes "你必须赶在别的人类";
+				mes "抢走神器之前";
+				mes "快点行动...";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "快点...!";
+				mes "一旦我打造出";
+				mes "女神颈炼，";
+				mes "封印就会";
+				mes "再次启动！";
+				close;
+			case 2:
+				mes "[矮人 格伦布尔蒂]";
+				mes "我需要...";
+				mes "^0000FF1 魔法铁链";
+				mes "20 黄金";
+				mes "10 蓝宝石";
+				mes "10 神之金属";
+				mes "1 皮带^000000";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "嗯，不过现在";
+				mes "封印已经解除，";
+				mes "你必须赶在别的人类";
+				mes "抢走神器之前";
+				mes "快点行动...";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "快点...!";
+				mes "一旦我打造出";
+				mes "雷神腰带，";
+				mes "封印就会";
+				mes "再次启动！";
+				close;
+			case 3:
+				mes "[矮人 格伦布尔蒂]";
+				mes "我需要...";
+				mes "^0000FF3 未知的锯齿轮子";
+				mes "5 天使翅膀羽毛";
+				mes "3 鱼的灵魂";
+				mes "4 太阳神的象征";
+				mes "3 灵魂的呼吸声音";
+				mes "20 黄金";
+				mes "10 铝";
+				mes "1 战士长靴^000000";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "嗯，不过现在";
+				mes "封印已经解除，";
+				mes "你必须赶在别的人类";
+				mes "抢走神器之前";
+				mes "快点行动...";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "快点...!";
+				mes "一旦我打造出";
+				mes "史雷普尼尔之靴，";
+				mes "封印就会";
+				mes "再次启动！";
+				close;
+			case 4:
+				mes "[矮人 格伦布尔蒂]";
+				mes "我需要...";
+				mes "^0000FF2 索尔的铁手套";
+				mes "4 拷问器具";
+				mes "5 瓦尔基里的愤怒";
+				mes "5 暴风雨的征兆";
+				mes "5 海浪雕像";
+				mes "20 神之金属";
+				mes "5 铝";
+				mes "40 黄金";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "嗯，不过现在";
+				mes "封印已经解除，";
+				mes "你必须赶在别的人类";
+				mes "抢走神器之前";
+				mes "快点行动...";
+				next;
+				mes "[矮人 格伦布尔蒂]";
+				mes "快点...!";
+				mes "一旦我打造出";
+				mes "雷神之锤，";
+				mes "封印就会";
+				mes "再次启动！";
+				close;
+			}
+		}
+		mes "[矮人 格伦布尔蒂]";
+		mes "哼。";
+		mes "我在这里什么活都干不了。人类，作为我的客人，跟我到^0000FF地下研究所^000000来吧。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "现在快点！^FF0000在所有封印解除后^000000，^0000FF每件神器只会给人类一件^000000！";
+		close2;
+		warp "que_god01",214,63;
+		end;
+	case 4:
+		mes "[矮人 格伦布尔蒂]";
+		mes "唔哈哈哈哈！";
+		mes "从我眼前消失，";
+		mes "你这个肮脏、";
+		mes "龌龊的人类...!";
+		close;
+	}
+}
+gld_dun02,85,84,0	duplicate(GodDwarf)	格伦布尔蒂#2	826
+gld_dun03,92,105,0	duplicate(GodDwarf)	格伦布尔蒂#3	826
+gld_dun04,268,230,0	duplicate(GodDwarf)	格伦布尔蒂#4	826
+
+que_god01,215,127,0	script	#god_hopewarp1	111,{
+	end;
+
+OnInit:
+	waitingroom "研究所入口",2,"#god_hopewarp1::OnStartArena",1;
+	enablewaitingroomevent;
+	end;
+
+OnStartArena:
+	warpwaitingpc "que_god01",155,63;
+	donpcevent "Grunburti#god::OnEnable";
+	disablewaitingroomevent;
+	end;
+
+OnReset:
+	enablewaitingroomevent;
+	end;
+}
+
+que_god01,214,128,0	script	 #que_godnpc1::GodEntrance	111,{
+	mes "[入口告示]";
+	mes "只有人类中";
+	mes "最有资格的人，";
+	mes "才能拥有";
+	mes "神的力量。";
+	close;
+}
+que_god01,215,128,0	duplicate(GodEntrance)	 #que_godnpc2	111
+que_god01,213,128,0	duplicate(GodEntrance)	 #que_godnpc3	111
+
+que_god01,154,112,4	script	格伦布尔蒂#god	826,{
+	if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+		mes "[矮人 格伦布尔蒂]";
+		mes "其中一件神器";
+		mes "已经被打造出来，";
+		mes "封印也已经";
+		mes "恢复了。你得等到";
+		mes "它们全部";
+		mes "再次解除...!";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "布哇哈哈哈哈哈哈！";
+		mes "虽然你只是";
+		mes "一个人类，";
+		mes "我还是同情你~";
+		close;
+	}
+	set .@GID,getcharid(2);
+	if (is_guild_leader() == false) {
+		mes "[矮人 格伦布尔蒂]";
+		mes "你是怎么...";
+		mes "给我滚出去！";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "你们这些愚蠢的人类";
+		mes "是怎么进来的?!";
+		mes "只有持有华丽金属的人";
+		mes "才有资格";
+		mes "踏进这个地方...!";
+		close;
+	}
+	mes "[矮人 格伦布尔蒂]";
+	mes "为人类干活";
+	mes "是莫大的耻辱。但既然命运选中你作为华丽金属的持有者，我不得不满足你的请求。";
+	next;
+	mes "[矮人 格伦布尔蒂]";
+	mes "我们只有";
+	mes "^FF000010 分钟^000000来重现一件神器。之后，封印会自行恢复，在封印再次解除之前，我什么都做不了...";
+	next;
+	mes "[矮人 格伦布尔蒂]";
+	mes "^FF0000别磨磨蹭蹭的^000000，";
+	mes "否则^FF0000我马上把机会";
+	mes "让给另一个";
+	mes "人类^000000！";
+	next;
+	mes "[矮人 格伦布尔蒂]";
+	mes "现在...!";
+	mes "选择你想让我";
+	mes "打造的";
+	mes "物品！";
+	next;
+	switch(select("女神颈炼:雷神腰带:史雷普尼尔之靴:雷神之锤")) {
+	case 1:
+		mes "[矮人 格伦布尔蒂]";
+		mes "女、女神颈炼?!";
+		mes "我从没想到";
+		mes "会有如此狂妄...!";
+		mes "这条项链若不是戴在女神芙蕾雅身上，在我眼里就毫无意义。";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "但我有什么资格评判你的资格？这些宝物";
+		mes "会凭自己的意志选择主人。让我们看看女神颈炼会不会认为你配得上！";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "再说一遍，要重现这件神器，";
+		mes "我需要以下材料...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "^0000FF4 菲力亚宝石";
+		mes "4 银饰品";
+		mes "3 雪的结晶";
+		mes "3 安静的水波";
+		mes "3 空气雕像";
+		mes "2 蓝宝石";
+		mes "3 珍珠";
+		mes "10 白宝石";
+		mes "5 诅咒红宝石";
+		mes "20 黄金";
+		mes "1 体力项链^000000";
+		next;
+		switch(select("打造女神颈炼。:取消。")) {
+		case 1:
+			if ((countitem(7073) > 3) && (countitem(7077) > 3) && (countitem(7088) > 2) && (countitem(7090) > 2) && (countitem(7092) > 2) && (countitem(726) > 1) && (countitem(722) > 2) && (countitem(727) > 9) && (countitem(724) > 4) && (countitem(969) > 19) && (countitem(2603) > 0)){ //Jewel_Of_Prayer Silver_Fancy Crystal_Of_Snow Slilince_Wave Air_Stream Blue_Jewel Scarlet_Jewel White_Jewel Cardinal_Jewel_ Gold Necklace 
+				mes "[矮人 格伦布尔蒂]";
+				mes "我做梦都没想到，";
+				mes "我竟然要为区区一个人类打造这件杰作。给我一点时间。";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[矮人 格伦布尔蒂]";
+					mes "但是...";
+					mes "封印";
+					mes "刚刚";
+					mes "恢复了。你得等到";
+					mes "它们全部";
+					mes "再次解除...!";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "布哇哈哈哈哈哈哈！";
+					mes "虽然你只是";
+					mes "一个人类，";
+					mes "我还是同情你~";
+					close;
+				}
+				delitem 7073,4;  //Jewel_Of_Prayer
+				delitem 7077,4;  //Silver_Fancy
+				delitem 7088,3;  //Crystal_Of_Snow
+				delitem 7090,3;  //Slilince_Wave
+				delitem 7092,3;  //Air_Stream
+				delitem 726,2;  //Blue_Jewel
+				delitem 722,3;  //Scarlet_Jewel
+				delitem 727,10;  //White_Jewel
+				delitem 724,5;  //Cardinal_Jewel_
+				delitem 969,20;  //Gold
+				delitem 2603,1;  //Necklace
+				getitem 2630,1; // Brysinggamen
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[女神颈炼]落入了[" + strcharinfo(0) + "]手中，他是[" + getguildname(.@GID) + "]公会的会长。",bc_all;
+				mes "[矮人 格伦布尔蒂]";
+				mes "啊，看看这耀眼的美丽。没有任何首饰能像女神颈炼那样衬托芙蕾雅。";
+				close;
+			}
+			else {
+				mes "[矮人 格伦布尔蒂]";
+				mes "愚蠢的人类！";
+				mes "重现女神颈炼";
+				mes "需要的东西，";
+				mes "你没有带齐！";
+				mes "快点...!";
+				close;
+			}
+		case 2:
+			mes "[矮人 格伦布尔蒂]";
+			mes "唔哈哈哈~";
+			mes "不知为什么，我就猜到";
+			mes "你会打退堂鼓，人类！";
+			close;
+		}
+	case 2:
+		mes "[矮人 格伦布尔蒂]";
+		mes "雷、雷神腰带?!";
+		mes "力量的腰带?!";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "这条腰带很久以前由有史以来最强大的战士索尔佩戴。但既然这些宝物会自己选择主人，我们就看看它认不认可你！";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "再说一遍，要重现这件神器，";
+		mes "我需要以下材料...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "^0000FF1 魔法铁链";
+		mes "20 黄金";
+		mes "10 蓝宝石";
+		mes "10 神之金属";
+		mes "1 皮带^000000...";
+		next;
+		switch(select("打造雷神腰带。:取消。")) {
+		case 1:
+			if ((countitem(7058) > 0) && (countitem(969) > 19) && (countitem(726) > 9) && (countitem(984) > 9) && (countitem(2627) > 0)) {
+				mes "[矮人 格伦布尔蒂]";
+				mes "二十年前，";
+				mes "我绝不会相信，";
+				mes "像雷神腰带这样强大又危险的东西，竟然会落到一个人类手里...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[矮人 格伦布尔蒂]";
+					mes "但是...";
+					mes "封印";
+					mes "刚刚";
+					mes "恢复了。你得等到";
+					mes "它们全部";
+					mes "再次解除...!";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "布哇哈哈哈哈哈哈！";
+					mes "虽然你只是";
+					mes "一个人类，";
+					mes "我还是同情你~";
+					close;
+				}
+				delitem 7058,1;  //Gullraifnir
+				delitem 969,20;  //Gold
+				delitem 726,10;  //Blue_Jewel
+				delitem 984,10;  //Oridecon
+				delitem 2627,1;  //Belt
+				getitem 2629,1; // Magingiorde
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "神器[雷神腰带]已经赐给了[" + strcharinfo(0) + "]，他是[" + getguildname(.@GID) + "]公会的会长。",bc_all;
+				mes "[矮人 格伦布尔蒂]";
+				mes "给...";
+				mes "小心使用";
+				mes "神的力量。";
+				mes "给你一个善意的";
+				mes "警告，人类...";
+				close;
+			}
+			else {
+				mes "[矮人 格伦布尔蒂]";
+				mes "愚蠢的人类！";
+				mes "重现雷神腰带";
+				mes "需要的东西，";
+				mes "你没有带齐！";
+				mes "快点...!";
+				close;
+			}
+		case 2:
+			mes "[矮人 格伦布尔蒂]";
+			mes "唔哈哈哈~";
+			mes "不知为什么，我就猜到";
+			mes "你会打退堂鼓，人类！";
+			close;
+		}
+	case 3:
+		mes "[矮人 格伦布尔蒂]";
+		mes "史雷普尼尔之靴...";
+		mes "你要明白，";
+		mes "我造不出传说中";
+		mes "那匹八条腿的";
+		mes "天马。不过...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "我可以做出一双";
+		mes "拥有史雷普尼尔之力的鞋子。这是个奇怪但可行的工艺...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "再说一遍，要重现这件神器，";
+		mes "我需要以下材料...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "^0000FF3 未知的锯齿轮子";
+		mes "5 天使翅膀羽毛";
+		mes "3 鱼的灵魂";
+		mes "4 太阳神的象征";
+		mes "3 灵魂的呼吸声音";
+		mes "20 黄金";
+		mes "10 铝";
+		mes "1 战士长靴^000000...";
+		next;
+		switch(select("打造史雷普尼尔之靴。:取消。")) {
+		case 1:
+			if ((countitem(7076) > 2) && (countitem(7079) > 4) && (countitem(7083) > 2) && (countitem(7086) > 3) && (countitem(7087) > 2) && (countitem(969) > 19) && (countitem(985) > 9) && (countitem(2406) > 0)) {
+				mes "[矮人 格伦布尔蒂]";
+				mes "我从没想过，";
+				mes "史雷普尼尔的速度";
+				mes "竟然会被";
+				mes "一个人类使用。";
+				mes "给我一点时间...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[矮人 格伦布尔蒂]";
+					mes "但是...";
+					mes "封印";
+					mes "刚刚";
+					mes "恢复了。你得等到";
+					mes "它们全部";
+					mes "再次解除...!";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "布哇哈哈哈哈哈哈！";
+					mes "虽然你只是";
+					mes "一个人类，";
+					mes "我还是同情你~";
+					close;
+				}
+				delitem 7076,3;  //Mystery_Wheel
+				delitem 7079,5;  //Feather_Of_Angel
+				delitem 7083,3;  //Soul_Of_Fish
+				delitem 7086,4;  //Symbol_Of_Sun
+				delitem 7087,3;  //Breath_Of_Soul
+				delitem 969,20;  //Gold
+				delitem 985,10;  //Elunium
+				delitem 2406,1;  //Boots_
+				getitem 2410,1; // Sleipnir
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "神器[史雷普尼尔之靴]已经赐给了[" + strcharinfo(0) + "]，他是[" + getguildname(.@GID) + "]公会的会长。",bc_all;
+				mes "[矮人 格伦布尔蒂]";
+				mes "好了...";
+				mes "穿上它，";
+				mes "以传说中的";
+				mes "史雷普尼尔的速度奔跑吧...";
+				close;
+			}
+			else {
+				mes "[矮人 格伦布尔蒂]";
+				mes "愚蠢的人类！";
+				mes "重现史雷普尼尔之靴";
+				mes "需要的东西，";
+				mes "你没有带齐！";
+				mes "快点...!";
+				close;
+			}
+		case 2:
+			mes "[矮人 格伦布尔蒂]";
+			mes "唔哈哈哈~";
+			mes "不知为什么，我就猜到";
+			mes "你会打退堂鼓，人类！";
+			close;
+		}
+	case 4:
+		mes "[矮人 格伦布尔蒂]";
+		mes "雷、雷、雷神之锤!?";
+		mes "虽然这一刻";
+		mes "已经到来，";
+		mes "我还是难以置信...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "^333333*唉...*^000000";
+		mes "这对众神和矮人族来说几乎是一种耻辱。但也许，挥舞雷神之锤就是你的命运...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "再说一遍，要重现这件神器，";
+		mes "我需要以下材料...";
+		next;
+		mes "[矮人 格伦布尔蒂]";
+		mes "^0000FF2 索尔的铁手套";
+		mes "4 拷问器具";
+		mes "5 瓦尔基里的愤怒";
+		mes "5 暴风雨的征兆";
+		mes "5 海浪雕像";
+		mes "20 神之金属";
+		mes "5 铝";
+		mes "40 黄金";
+		mes "1 昏迷之锤^000000...";
+		next;
+		switch(select("打造雷神之锤。:取消。")) {
+		case 1:
+			if ((countitem(7074) > 1) && (countitem(7075) > 3) && (countitem(7078) > 4) && (countitem(7089) > 4) && (countitem(7091) > 4) && (countitem(984) > 19) && (countitem(985) > 4) && (countitem(969) > 39) && (countitem(1522) > 0)) {
+				mes "[矮人 格伦布尔蒂]";
+				mes "不要辱没";
+				mes "雷神索尔，";
+				mes "否则你会后悔的。";
+				mes "记住我的话...";
+				next;
+				if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
+					mes "[矮人 格伦布尔蒂]";
+					mes "但是...";
+					mes "封印";
+					mes "刚刚";
+					mes "恢复了。你得等到";
+					mes "它们全部";
+					mes "再次解除...!";
+					next;
+					mes "[矮人 格伦布尔蒂]";
+					mes "布哇哈哈哈哈哈哈！";
+					mes "虽然你只是";
+					mes "一个人类，";
+					mes "我还是同情你~";
+					close;
+				}
+				delitem 7074,2;  //Iron_Glove
+				delitem 7075,4;  //Iron_Maiden
+				delitem 7078,5;  //Anger_Of_Valkurye
+				delitem 7089,5;  //Indication_Of_Tempest
+				delitem 7091,5;  //Rough_Billows
+				delitem 984,20;  //Oridecon
+				delitem 985,5;  //Elunium
+				delitem 969,40;  //Gold
+				delitem 1522,1;  //Stunner
+				getitem 1530,1; // Mjolnir
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				announce "[雷神之锤]已经赐给了[" + strcharinfo(0) + "]，他是[" + getguildname(.@GID) + "]公会的会长。",bc_all;
+				mes "[矮人 格伦布尔蒂]";
+				mes "完成了。";
+				mes "拿去吧。把世界上最强大的武器";
+				mes "握在手里是什么感觉？";
+				close;
+			}
+			else {
+				mes "[矮人 格伦布尔蒂]";
+				mes "愚蠢的人类！";
+				mes "重现雷神之锤";
+				mes "需要的东西，";
+				mes "你没有带齐！";
+				mes "快点...!";
+				close;
+			}
+		case 2:
+			mes "[矮人 格伦布尔蒂]";
+			mes "唔哈哈哈~";
+			mes "不知为什么，我就猜到";
+			mes "你会打退堂鼓，人类！";
+			close;
+		}
+	}
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	mapannounce "que_god01","记住，你们只有 10 分钟！快点！",bc_map;
+	end;
+
+OnTimer610000:
+	mapannounce "que_god01","你们太慢了！我要给另一个人类机会！下一个！",bc_map;
+	end;
+
+OnTimer612000:
+	donpcevent "god_wep_warpmaster::OnEnable";
+	end;
+
+OnTimer615000:
+	donpcevent "god_wep_warpmaster::OnDisable";
+	donpcevent "#god_hopewarp1::OnReset";
+	stopnpctimer;
+	end;
+}
+
+que_god01,169,82,0	script	god_wep_warpmaster	-1,{
+OnEnable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		enablenpc "god_failwarp#"+.@i;
+	end;
+OnDisable:
+	for(set .@i,1; .@i<=6; set .@i,.@i+1)
+		disablenpc "god_failwarp#"+.@i;
+	end;
+}
+
+que_god01,154,67,0	script	god_failwarp#1	-1,4,7,{
+OnInit:
+	disablenpc();
+	end;
+OnTouch_:
+	warp "prontera",156,324;
+	end;
+}
+que_god01,154,82,0	duplicate(god_failwarp#1)	god_failwarp#2	-1,4,7
+que_god01,145,99,0	duplicate(god_failwarp#1)	god_failwarp#3	-1,9,9
+que_god01,164,99,0	duplicate(god_failwarp#1)	god_failwarp#4	-1,9,9
+que_god01,145,118,0	duplicate(god_failwarp#1)	god_failwarp#5	-1,9,9
+que_god01,164,118,0	duplicate(god_failwarp#1)	god_failwarp#6	-1,9,9
+
+// Original name: "Godly Item Quests Related#god"
+que_god01,293,3,0	script	神器任务#god	90,{
+	callfunc "F_GM_NPC";
+	mes "[紧急情况下使用]";
+	mes "请输入密码。";
+	mes "如果想取消，请输入 0。";
+	next;
+	set .@i, callfunc("F_GM_NPC",1854,0,0,4000);
+	if (.@i == -2) {
+		mes "[紧急情况下使用]";
+		mes "密码不正确。";
+		close;
+	} else if (.@i == -1) {
+		mes "[紧急情况下使用]";
+		mes "你已经取消了请求。";
+		close;
+	} else if (.@i == 0) {
+		close;
+	} else {
+		mes "[紧急情况下使用]";
+		mes "你想使用什么服务？";
+		next;
+		switch(select("关闭传送点。:重置计时器。:重置聊天室。")) {
+		case 1:
+			mes "[紧急情况下使用]";
+			mes "点击'下一步'按钮关闭传送点。";
+			next;
+			donpcevent "god_wep_warpmaster::OnDisable";
+			mes "[紧急情况下使用]";
+			mes "你已成功关闭传送点。";
+			close;
+		case 2:
+			mes "[紧急情况下使用]";
+			mes "点击'下一步'按钮重置计时器。";
+			next;
+			donpcevent "Grunburti#god::OnEnable";
+			mes "[紧急情况下使用]";
+			mes "你已成功重置计时器。";
+			close;
+		case 3:
+			mes "[紧急情况下使用]";
+			mes "请点击'下一步'按钮，重置 que_god01 的竞技场聊天室。";
+			next;
+			donpcevent "#god_hopewarp1::OnReset";
+			mes "[紧急情况下使用]";
+			mes "你已成功重置竞技场聊天室（研究所入口 1/2）。";
+			close;
+		}
+	}
+}

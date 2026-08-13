@@ -1,0 +1,244 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Bacillus)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+ein_fild01,43,249,0	script	当地村民#hunt	898,{
+	if (checkquest(60125) != -1) {
+		if (checkquest(60125,HUNTING) != 2 ) {
+			mes "[当地村民]";
+			mes "你猎完 50 只天邪鬼了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[当地村民]";
+				mes "嗯，我看你还没猎够 50 只。……";
+				close;
+			case 2:
+				mes "[当地村民]";
+				mes "记住，我需要帮忙猎杀天邪鬼，去猎 50 只吧。";
+				close;
+			case 3:
+				mes "[当地村民]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[当地村民]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60125;
+					close;
+				case 2:
+					mes "[当地村民]";
+					mes "请去杀 50 只天邪鬼。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[当地村民]";
+			mes "厉害，你完成得真快。";
+			getexp 250266,144452;
+			erasequest 60125;
+			close;
+		}
+	}
+	if (checkquest(60126) != -1) {
+		if (checkquest(60126,HUNTING) != 2 ) {
+			mes "[当地村民]";
+			mes "你猎完 50 只天邪鬼了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[当地村民]";
+				mes "嗯，我看你还没猎够 100 只。……";
+				close;
+			case 2:
+				mes "[当地村民]";
+				mes "记住，我需要帮忙猎杀天邪鬼，去猎 100 只吧。";
+				close;
+			case 3:
+				mes "[当地村民]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[当地村民]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60126;
+					close;
+				case 2:
+					mes "[当地村民]";
+					mes "请去杀 100 只天邪鬼。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[当地村民]";
+			mes "厉害，你完成得真快。";
+			getexp 250266,144452;
+			getexp 250266,144452;
+			erasequest 60126;
+			close;
+		}
+	}
+	if (checkquest(60127) != -1) {
+		if (checkquest(60127,HUNTING) != 2 ) {
+			mes "[当地村民]";
+			mes "你猎完 150 只天邪鬼了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[当地村民]";
+				mes "嗯，我看你还没猎够 150 只。……";
+				close;
+			case 2:
+				mes "[当地村民]";
+				mes "记住，我需要帮忙猎杀天邪鬼，去猎 150 只吧。";
+				close;
+			case 3:
+				mes "[当地村民]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[当地村民]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60127;
+					close;
+				case 2:
+					mes "[当地村民]";
+					mes "请去杀 150 只天邪鬼。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[当地村民]";
+			mes "厉害，你完成得真快。";
+			getexp 250266,144452;
+			getexp 250266,144452;
+			getexp 250266,144452;
+			erasequest 60127;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 59) {
+		//for maximum level
+		if (BaseLevel < 75) {
+			mes "[当地村民]";
+			mes "嘿，那边那位。对，就是你！";
+			mes "你能帮我做件事吗？";
+			next;
+			switch(select("当然:不")) {
+			case 1:
+				mes "[当地村民]";
+				mes "我想穿过这里，但实在过不去这些天邪鬼那一关。";
+				next;
+				switch(select("收集物品:猎杀天邪鬼:取消")) {
+				case 1:
+					// Item turn in
+					mes "[当地村民]";
+					mes "你能帮忙收集^FF0000菌丝^000000吗？";
+					mes "你帮我清掉这些，我会酬谢你。";
+					next;
+					switch(select("我有菌丝:你需要什么来着？")) {
+					case 1:
+						/*
+						if (checkweight(504,10) == 0) {
+							mes "[当地村民]";
+							mes "嘿，看来你背上的重量";
+							mes "快把你压垮了。";
+							mes "等你减轻点负重再来吧。";
+							close;
+						}
+						*/
+						if (countitem(7119) > 49) {
+							mes "[当地村民]";
+							mes "我曾有疑虑，但你证明我错了。";
+							delitem 7119,50; //Spawns
+							getexp 250266,144452;
+							//getitem 504,10; //White_Potion
+							close;
+						}
+						else {
+							mes "[当地村民]";
+							mes "看起来你还没凑够。";
+							next;
+							mes "[当地村民]";
+							mes "我要看到你收集了 ^FF000050 份菌丝^000000，然后才能给你酬劳。";
+							close;
+						}
+					case 2:
+						mes "[当地村民]";
+						mes "我要看到你收集了 ^FF000050 份菌丝^000000，然后才能给你酬劳。";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[当地村民]";
+					mes "啊，好，你可以帮我猎杀一些天邪鬼。";
+					mes "你想猎多少只？";
+					next;
+					switch(select("50 只天邪鬼:100 只天邪鬼:150 只天邪鬼")) {
+					case 1:
+						mes "[当地村民]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60125;
+						close;
+					case 2:
+						mes "[当地村民]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60126;
+						close;
+					case 3:
+						mes "[当地村民]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60127;
+						close;
+					}
+				case 3:
+					mes "[当地村民]";
+					mes "如果你改变主意，请再回来。";
+					close;
+				}
+			case 2:
+				mes "[当地村民]";
+				mes "如果你改变主意，请再回来。";
+				close;
+			}
+		}
+		else {
+			mes "[当地村民]";
+			mes "嗯，嗯。我不觉得……";
+			next;
+			mes "[当地村民]";
+			mes "哎，抱歉我现在没法聊天。";
+			close;
+		}
+	}
+	else {
+		mes "[当地村民]";
+		mes "太惊人了，真的。";
+		mes "我只希望能把这一切熬过去。";
+		close;
+	}
+}
+
+

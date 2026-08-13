@@ -1,0 +1,160 @@
+//===== rAthena Script ======================================= 
+//= 离婚小恶魔
+//===== By: ================================================== 
+//= Perkka, Scriptor, LightFighter
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 官方离婚脚本。
+//= Added isloggedin() check, even though Aegis doesn't do it;
+//= should be able to divorce even when the spouse is not online.
+//===== Additional Comments: ================================= 
+//= Both players should be online to get divorced
+//= Fixed menu [Lupus]
+//= 1.1 Added check if the patner's online, added effects [Lupus]
+//= 1.2 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.2a Commented out check of 'wedding_sign' to let
+//=     old married players divorcing, optimized, fixed a bug [Lupus]
+//= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
+//= 1.4 Removed ifpartneron check, fixed typo in percentheal. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================ 
+
+nif_in,190,112,5	script	小恶魔#divorce	738,{
+	mes "[小恶魔]";
+//	if (wedding_sign == 0) {
+//		mes "Heh heh...";
+//		mes "Look at that depressed face.";
+//		mes "You must be feeling very lonely.";
+//		mes "But that's something everyone";
+//		mes "has to deal with.";
+//		next;
+//		mes "[Deviruchi]";
+//		mes "If you feel that lonely,";
+//		mes "how about raising a Pet?";
+//		mes "I hear that my kind is very";
+//		mes "popular nowadays, heh heh~";
+//		close;
+//	}
+//	else 
+  	if (!getpartnerid()) {
+		mes "哇哈哈哈~！瞧瞧你那眼神~！";
+		if (Sex == SEX_MALE) {
+			mes "那分明就是一个孤独单身汉的眼神。我敢打包票，";
+			mes "你一定是被甩在婚礼上了。";
+		}
+		else {
+			mes "那眼神里充满了老处女的哀怨--！没能哄到哪个倒霉鬼";
+			mes "跟你结婚，是吧？";
+		}
+		next;
+		mes "[小恶魔]";
+		mes "哈哈哈~！噢呵呵……嘻嘻~我要是不同情你就好了，";
+		mes "可惜呢，我可是黑暗生物啊。";
+		close;
+	}
+	mes "你看起来沮丧得很啊……算你走运，我最不在乎";
+	mes "的就是幸福的人……我感兴趣的，是那些陷入绝望的人类。";
+	mes "哈哈哈~！";
+	next;
+	mes "[小恶魔]";
+	mes "我感觉到你身上背着一个累赘的包袱……如果我没猜错，你是";
+	if (Sex == SEX_MALE)
+		mes "一个已婚男人，对吧？";
+	else
+		mes "一个已婚女人，对吧？";
+	next;
+	mes "[小恶魔]";
+	mes "我问你一件事。结婚让你幸福吗？先把什么责任啊、";
+	mes "浪漫啊那些废话都放一边。";
+	next;
+	mes "[小恶魔]";
+	mes "我是说，单单一个人，真的能带给你全部的";
+	mes "幸福吗？什么婚礼有多神圣、爱情有多神奇，这些我都懂，";
+	mes "但是……";
+	next;
+	mes "[小恶魔]";
+	mes "到头来，你和你的另一半吵个不停，你觉得无比痛苦。";
+	if (Sex == SEX_MALE)
+		mes "……全都是因为她。";
+	else
+		mes "……全都是因为他。";
+	next;
+	mes "[小恶魔]";
+	mes "没错，你命中注定要在这里遇到我。人都会犯错……";
+	mes "就算你曾经海誓山盟，就算你们立下过誓言……";
+	mes "我也能把你从婚姻的牢笼里解放出来。";
+	next;
+	mes "[小恶魔]";
+	mes "如果把婚姻看作一份契约，事情就简单了……一份到'至死";
+	mes "方休'为止的契约。而在尼芙菲姆，要钻这个";
+	mes "空子可容易了……";
+	next;
+	mes "[小恶魔]";
+	mes "*低声耳语*^555555这又不算违背^000000";
+	if (Sex == SEX_MALE) {
+		mes "^555555什么承诺，而且只要";
+		mes "你妻子不知道，她也不会在乎……难道你不想从她手里";
+		mes "解脱出来吗？^000000";
+	}
+	else {
+		mes "^555555什么承诺。哼，你丈夫";
+		mes "甚至根本不需要知道这件事……你值得拥有真正的";
+		mes "幸福，对吧？^000000";
+	}
+	next;
+	mes "[小恶魔]";
+	mes "你可以和更好的人开始一段全新的恋情……那不是很棒吗……？";
+	mes "只要你愿意，我可以帮你……我能让这一切成真！";
+	next;
+	if (select("不用了，我很幸福。:好，拜托你了。") == 1) {
+		mes "[小恶魔]";
+		mes "哼~！你一定还沉迷在永恒爱情这种愚蠢的观念里。好吧，";
+		mes "既然你觉得幸福，那我也没什么好说的了--！";
+		close2;
+		warp "niflheim",169,162;
+		end;
+	}
+	mes "[小恶魔]";
+	mes "很好，很好……现在你只要给我我想要的东西作为交换……";
+	mes "只要 2,500,000 zeny，还有……*咳！*^666666你灵魂的一小片。^000000";
+	next;
+	mes "[小恶魔]";
+	mes "之后，你就是无拘无束的单身贵族了。你只要说一声就行……";
+	next;
+	if (select("……让我再想想。:什么代价都行，马上给我离婚！") == 1) {
+		mes "[小恶魔]";
+		mes "我明白。不过你要想，别的不用想，就想想";
+		if (Sex == SEX_MALE) {
+			mes "你妻子的唠叨，想想终于能摆脱那个母老虎，该有多痛快~";
+		}
+		else {
+			mes "你丈夫有多糟糕，想想甩掉那个废物，该有多轻松~";
+		}
+		close;
+	}
+	mes "[小恶魔]";
+	if (Zeny > 2499999) {
+		mes "明智的选择~那我们马上开始吧！这可能要花点";
+		mes "时间，但总比绝望地守着婚姻^FF0000过一辈子强。^000000";
+		next;
+		specialeffect EF_MAGICROD;
+		specialeffect2 EF_DEVIL;
+		set wedding_sign,0;
+		set Zeny, Zeny-2500000;
+		percentheal -100,-100;
+		divorce;
+		mes "[小恶魔]";
+		mes "哇哈哈哈~！现在你自由了~！恢复单身的感觉，";
+		mes "是不是好多了？啊，单身的生活……";
+		close;
+	}
+	mes "嗯……我说过要带2,500,000 zeny 来，对吧？";
+	mes "这世上再没有别人能给你这样的自由……";
+	mes "心灵的安宁是无价的，不是吗？";
+	close;
+}

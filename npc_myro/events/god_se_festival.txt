@@ -1,0 +1,782 @@
+//===== rAthena Script ======================================= 
+//= 女武神的礼物 NPC
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 神器 SE 制作后的召唤活动
+//= 妹妹的台词为自定义翻译。
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added GM management function. [Euphy]
+//============================================================ 
+
+// Original name: "Festival Manager#god_se_fes00"
+yuno,1,1,0	script	庆典管理员#gq_fes0	891,{
+	callfunc "F_GM_NPC";
+	mes "[庆典管理员]";
+	mes "我是神谕庆典的活动 NPC 管理员。";
+	mes "请输入密码。";
+	next;
+	if (callfunc("F_GM_NPC","07godsefes",1) == 0) {
+		mes "[庆典管理员]";
+		mes "密码不正确。";
+		close;
+	}
+	mes "[庆典管理员]";
+	mes "您想做什么？";
+	next;
+	switch(select("关闭庆典 NPC:启用庆典 NPC")) {
+	case 1:
+		mes "[庆典管理员]";
+		mes "正在结束庆典并停用 NPC。";
+		donpcevent "露咪咪·拉维斯#gq_fes01::Onover";
+		donpcevent "露咪咪·拉维斯#gq_fes01::Onover";
+		close;
+	case 2:
+		mes "[庆典管理员]";
+		mes "正在重置庆典并启用 NPC。";
+		donpcevent "露咪咪·拉维斯#gq_fes01::Onover";
+		donpcevent "露咪咪·拉维斯#gq_fes01::OnEnable";
+		close;
+	}
+}
+
+yuno,118,192,5	script	露咪咪·拉维斯#gq_fes01	891,{
+	if (countitem(7840) > 0) {
+		mes "[露咪咪·拉维斯]";
+		mes "这就是那朵花。";
+		mes "这只是走个形式，不过还是让我确认一下你的资格吧。";
+		next;
+		if (is_guild_leader() == true) {
+			mes "[露咪咪·拉维斯]";
+			mes "你的资格已确认，你是公会会长。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "不知道你是否清楚这朵花的用途……让我来为你解释一下吧。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "这是瓦尔基里的许愿少女赐予的圣花，";
+			mes "可以由特定的召唤师召唤出特定的怪物。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "这个世界上只有两个召唤师……";
+			mes "就是我和我的妹妹蕾赫赫……";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "我们俩虽然完全不同，但我们可以……";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "...................................";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "总之，";
+			mes "你想召唤怪物吗？";
+			next;
+			switch(select("不召唤:请召唤吧")) {
+			case 1:
+				mes "[露咪咪·拉维斯]";
+				mes "我不喜欢被别人打扰……";
+				next;
+				mes "[露咪咪·拉维斯]";
+				mes "不过这也只是工作而已。";
+				close;
+			case 2:
+				break;
+			}
+			mes "[露咪咪·拉维斯]";
+			mes "我来向你说明如何召唤怪物。";
+			mes "这朵花可以在朱诺这里召唤出怪物";
+			mes "『女武神的祝福』和『女武神的礼物』，持续一个小时。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "届时将会广播通知召唤出了哪种怪物。";
+			mes "这个庆典是许愿少女为了让";
+			mes "全世界的冒险者都能参与而举办的。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "那么，你准备好召唤怪物了吗？";
+			next;
+			switch(select("不，我还没准备好。:是的！我准备好了！")) {
+			case 1:
+				mes "[露咪咪·拉维斯]";
+				mes "既然没准备好，那你来找我干什么？";
+				next;
+				mes "[露咪咪·拉维斯]";
+				mes "我会一直等到你准备好的。";
+				mes "毕竟这也只是工作而已。";
+				close;
+			case 2:
+				break;
+			}
+			mes "[露咪咪·拉维斯]";
+			mes "现在我们都准备好了。";
+			next;
+			if ($@gqse_festival == 0) {
+				mes "[露咪咪·拉维斯]";
+				mes "好，我们开始召唤怪物吧。";
+				delitem 7840,1; //Valkyrie's_Gift
+				next;
+				mes "[露咪咪·拉维斯]";
+				mes "祝你玩得愉快。";
+				donpcevent "露咪咪·拉维斯#gq_fes01::OnStart";
+				
+				announce "["+ strcharinfo(0) +"]，["+ GetGuildName( getcharid(2) ) +"] 公会的成员，正在『朱诺』召唤『女武神的礼物』。",bc_all,"0x70dbdb";
+				close;
+			}
+			else {
+				mes "[露咪咪·拉维斯]";
+				mes "看来别处已经在进行女武神的祝福召唤仪式了。";
+				next;
+				mes "[露咪咪·拉维斯]";
+				mes "请稍后再试。";
+				close;
+			}
+		}
+		else {
+			mes "[露咪咪·拉维斯]";
+			mes "看来你并不够资格。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "我不知道你是怎么得到那朵花的，";
+			mes "但如果你没有领导他人的能力……那就不能继续了。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "太苛刻了？";
+			mes "哎，没办法，这也是工作的一部分。";
+			close;
+		}
+	}
+	else {
+		mes "[露咪咪·拉维斯]";
+		mes "你连凭证都没有吗？";
+		close;
+	}
+
+OnInit:
+	enablenpc "露咪咪·拉维斯#gq_fes01";
+	end;
+
+OnEnable:
+	enablenpc "露咪咪·拉维斯#gq_fes01";
+	end;
+
+OnDisable:
+	disablenpc "露咪咪·拉维斯#gq_fes01";
+	end;
+
+OnStart:
+	initnpctimer;
+	set $@gqse_festival,1;
+	end;
+
+Oncall:
+	if (mobcount("yuno","露咪咪·拉维斯#gq_fes01::OnMyMobDead") < 31) {
+		monster "yuno",0,0,"女武神的祝福",1083,100,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1951,25,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1952,25,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1953,25,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1954,25,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的恶作剧",1002,10,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+	}
+	else if (mobcount("yuno","露咪咪·拉维斯#gq_fes01::OnMyMobDead") > 149) {
+		monster "yuno",0,0,"女武神的祝福",1083,1,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1951,1,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1952,1,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1953,1,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1954,1,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+	}
+	else {
+		monster "yuno",0,0,"女武神的祝福",1083,50,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1951,10,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1952,10,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1953,10,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的礼物",1954,10,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+		monster "yuno",0,0,"女武神的恶作剧",1002,5,"露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+	}
+	end;
+
+Onover:
+	killmonster "yuno","露咪咪·拉维斯#gq_fes01::OnMyMobDead";
+	set $@gqse_festival,0;
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+
+OnTimer10000:
+	announce "朱诺的召唤仪式将在 5 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer13000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer120000:
+	announce "朱诺的召唤仪式将在 3 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer123000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer240000:
+	announce "朱诺的召唤仪式将在 1 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer243000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer300000:
+	announce "第一只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer303000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer308000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer600000:
+	announce "第二只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::oncall";
+	end;
+
+OnTimer603000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer608000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer900000:
+	announce "第三只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer903000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer908000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1200000:
+	announce "第四只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer1203000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1208000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1500000:
+	announce "第五只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer1503000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1508000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1800000:
+	announce "第六只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer1803000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1808000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2100000:
+	announce "第七只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer2103000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2108000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2400000:
+	announce "第八只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer2403000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2408000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2700000:
+	announce "第九只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer2703000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2708000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3000000:
+	announce "第十只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer3003000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3008000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3300000:
+	announce "第十一只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer3303000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3308000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3600000:
+	announce "第十二只『女武神的礼物』已由许愿少女在朱诺召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Oncall";
+	end;
+
+OnTimer3603000:
+	announce "最后的仪式将持续 5 分钟。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3608000:
+	announce "请前往朱诺参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3900000:
+	announce "整个仪式到此结束，相信大家一定都玩得很尽兴。",bc_all,"0x70dbdb";
+	donpcevent "露咪咪·拉维斯#gq_fes01::Onover";
+	end;
+}
+
+
+// Original name: "Festival Manager#god_se_fes02"
+rachel,1,1,0	script	庆典管理员#gq_fes2	891,{
+	callfunc "F_GM_NPC";
+	mes "[庆典管理员]";
+	mes "我是神谕庆典的活动 NPC 管理员。";
+	mes "请输入密码。";
+	next;
+	if (callfunc("F_GM_NPC","07godsefes",1) == 0) {
+		mes "[庆典管理员]";
+		mes "密码不正确。";
+		close;
+	}
+	mes "[庆典管理员]";
+	mes "您想做什么？";
+	next;
+	switch(select("关闭庆典 NPC:启用庆典 NPC")) {
+	case 1:
+		mes "[庆典管理员]";
+		mes "正在结束庆典并停用 NPC。";
+		donpcevent "蕾赫赫·拉维斯#gq_fes03::Onover";
+		donpcevent "蕾赫赫·拉维斯#gq_fes03::Ondisable";
+		close;
+	case 2:
+		mes "[庆典管理员]";
+		mes "正在重置庆典并启用 NPC。";
+		donpcevent "蕾赫赫·拉维斯#gq_fes03::Onover";
+		donpcevent "蕾赫赫·拉维斯#gq_fes03::OnEnable";
+		close;
+	}
+}
+
+rachel,132,117,3	script	蕾赫赫·拉维斯#gq_fes03	891,{
+	if (countitem(7840) > 0) {
+		mes "[蕾赫赫·拉维斯]";
+		mes "是花！！";
+		mes "那我们开始吧？";
+		next;
+		if (is_guild_leader() == true) {
+			mes "[蕾赫赫·拉维斯]";
+			mes "咦，这么年轻居然就是公会会长了？";
+			mes "你的公会成员们一定很羡慕吧。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "我不确定你是否了解那朵花的用途，所以我简单说明一下。";
+			next;
+			mes "[露咪咪·拉维斯]";
+			mes "那朵花是瓦尔基里的许愿少女亲自赐予并流传下来的礼物。";
+			mes "它可以通过特定地区的召唤师来召唤特殊的怪物。";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "世上只有两个召唤师能够使用那朵花。";
+			mes "一个是我，另一个是我的双胞胎姐姐露咪咪。";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "虽然是双胞胎姐妹，";
+			mes "但我们俩长得一点都不像，你仔细看看就知道了……";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "..................................";
+			mes "……糟糕！这件事本来不能告诉别人的……";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "……呵呵呵，总之继续说正事吧。";
+			mes "那么你到底要不要召唤！？";
+			next;
+			switch(select("不召唤:召唤")) {
+			case 1:
+				mes "[蕾赫赫·拉维斯]";
+				mes "……*哭泣*。";
+				next;
+				mes "[蕾赫赫·拉维斯]";
+				mes "如果没什么事的话，请不要随便找我搭话。";
+				mes "要是换了我姐姐，她早就把你羞辱一顿了。";
+				close;
+			case 2:
+				break;
+			}
+			mes "[蕾赫赫·拉维斯]";
+			mes "好吧，那我来简单说明一下召唤仪式。";
+			mes "在拉赫这里，用那朵花进行的召唤仪式";
+			mes "会召唤出女武神的祝福和女武神的礼物。";
+			mes "召唤仪式的效果大约持续一个小时。";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "在召唤仪式期间，会持续进行全服广播。";
+			mes "这是瓦尔基里许愿少女的好意，";
+			mes "为了让各地的冒险者都能一起来参加这个庆典。";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "你准备好开始召唤仪式了吗~？";
+			next;
+			switch(select("不，还没有。:是的！我准备好了！")) {
+			case 1:
+				mes "[蕾赫赫·拉维斯]";
+				mes "你都没准备好，干嘛还要来找我搭话？";
+				next;
+				mes "[蕾赫赫·拉维斯]";
+				mes "算了，如果你还有别的事要忙，那我就等等吧。";
+				mes "毕竟这也是我工作的一部分。";
+				close;
+			case 2:
+				break;
+			}
+			mes "[蕾赫赫·拉维斯]";
+			mes "很好，那我来看看什么时候适合开始召唤仪式。";
+			next;
+			if ($@gqse_festival == 0) {
+				mes "[蕾赫赫·拉维斯]";
+				mes "好！现在正是好时机，我们开始吧！";
+				delitem 7840,1; //Valkyrie_Gift
+				next;
+				mes "[蕾赫赫·拉维斯]";
+				mes "祝你玩得开心！";
+				donpcevent "蕾赫赫·拉维斯#gq_fes03::OnStart";
+				announce "["+ strcharinfo(0) +"]，["+ GetGuildName( getcharid(2) ) +"] 公会的成员，正在『拉赫』召唤『女武神的礼物』。",bc_all,"0x70dbdb";
+				close;
+			}
+			else {
+				mes "[蕾赫赫·拉维斯]";
+				mes "*哭泣*";
+				mes "现在似乎不是好时机。";
+				next;
+				mes "[蕾赫赫·拉维斯]";
+				mes "请稍后再试。";
+				close;
+			}
+		}
+		else {
+			mes "[蕾赫赫·拉维斯]";
+			mes "……看来你的身份还不够资格和我说话？";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "我不知道你是怎么得到那朵花的，";
+			mes "但如果你没有领导他人的能力……那就不能继续了。";
+			next;
+			mes "[蕾赫赫·拉维斯]";
+			mes "太苛刻了？";
+			mes "哎，没办法，这也是工作的一部分。";
+			close;
+		}
+	}
+	else {
+		mes "[蕾赫赫·拉维斯]";
+		mes "你没有什么东西能拿来证明你自己吗？";
+		close;
+	}
+
+OnInit:
+	enablenpc "蕾赫赫·拉维斯#gq_fes03";
+	end;
+
+OnEnable:
+	enablenpc "蕾赫赫·拉维斯#gq_fes03";
+	end;
+
+OnDisable:
+	disablenpc "蕾赫赫·拉维斯#gq_fes03";
+	end;
+
+OnStart:
+	initnpctimer;
+	set $@gqse_festival,1;
+	end;
+
+Oncall:
+	if (mobcount("rachel","蕾赫赫·拉维斯#gq_fes03::OnMyMobDead") < 31) {
+		monster "rachel",0,0,"女武神的祝福",1083,100,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1951,25,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1952,25,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1953,25,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1954,25,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的恶作剧",1002,10,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+	}
+	else if (mobcount("rachel","蕾赫赫·拉维斯#gq_fes03::OnMyMobDead") > 149) {
+		monster "rachel",0,0,"女武神的祝福",1083,1,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1951,1,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1952,1,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1953,1,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1954,1,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+	}
+	else {
+		monster "rachel",0,0,"女武神的祝福",1083,50,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1951,10,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1952,10,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1953,10,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的礼物",1954,10,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+		monster "rachel",0,0,"女武神的恶作剧",1002,5,"蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+	}
+	end;
+
+Onover:
+	killmonster "rachel","蕾赫赫·拉维斯#gq_fes03::OnMyMobDead";
+	set $@gqse_festival,0;
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+
+OnTimer10000:
+	announce "拉赫的召唤仪式将在 5 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer13000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer120000:
+	announce "拉赫的女武神的礼物召唤将在大约 3 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer123000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer240000:
+	announce "拉赫的召唤仪式将在 1 分钟后开始。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer243000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer300000:
+	announce "第一只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer303000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer308000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer600000:
+	announce "第二只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer603000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer608000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer900000:
+	announce "第三只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer903000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer908000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1200000:
+	announce "第四只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer1203000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1208000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1500000:
+	announce "第五只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer1503000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1508000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1800000:
+	announce "第六只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer1803000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer1808000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2100000:
+	announce "第七只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer2103000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2108000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2400000:
+	announce "第八只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer2403000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2408000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2700000:
+	announce "第九只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer2703000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer2708000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3000000:
+	announce "第十只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer3003000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3008000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3300000:
+	announce "第十一只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer3303000:
+	announce "召唤仪式将持续约一个小时，每 5 分钟进行一次，共 12 次。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3308000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3600000:
+	announce "第十二只『女武神的礼物』已由许愿少女在拉赫召唤出来了。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Oncall";
+	end;
+
+OnTimer3603000:
+	announce "最后的仪式将持续 5 分钟。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3608000:
+	announce "请前往拉赫参加召唤仪式。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer3900000:
+	announce "整个仪式到此结束，相信大家一定都玩得很尽兴。",bc_all,"0x70dbdb";
+	donpcevent "蕾赫赫·拉维斯#gq_fes03::Onover";
+	end;
+}

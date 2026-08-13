@@ -1,0 +1,736 @@
+//===== rAthena Script =======================================
+//= Merchant Skills Quests
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Quests for skills: Crazy Uproar, Change Cart, Cart Revolution
+//===== Additional Comments: =================================
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.6 Updated to latest available official file. [Masao]
+//= 1.7 Fixed JobLevel requirements. [Euphy]
+//= 1.8 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//============================================================
+
+alberta,83,96,5	script	内克	98,7,7,{
+	if (BaseClass == Job_Merchant) {
+		if (getskilllv("MC_LOUD") == 1) {
+			mes "[内克]";
+			mes "抱歉。内克的商店……";
+			mes "哦？这不是谁吗？";
+			mes "噗咔咔咔咔咔咔咔咔咔！！！";
+			mes "好久不见！";
+			mes "最近怎么样？";
+			mes "再见到你真高兴！！";
+			mes "有什么新鲜事吗？";
+			mes "哇~ 见到你真是太开心了！";
+			mes "你啊！偶尔也来坐坐嘛！";
+			mes "我都快忘记你长什么样了！";
+			mes "噗咔咔咔咔咔咔咔咔！！！";
+			mes "真是非常非常高兴见到你！！";
+			mes "能这样见到你真是太好了！";
+			mes "常来艾尔贝塔玩吧！";
+			mes "这可是一举两得啊！！";
+			mes "既能见到你，又能大喊大叫！！";
+			mes "还有比这更棒的事吗！！！";
+			mes "可哇哈哈哈哈哈哈！！";
+			mes "噗咔咔咔咔咔咔咔咔咔！！！";
+			mes "哔咔叽咔咔咔咔咔咔咔咔！！";
+			close;
+		}
+		else if (JobLevel < 15 && Class == Job_Merchant ) {
+			mes "[内克]";
+			mes "哦，你该不会是";
+			mes "迷恋上我的嗓音才来的吧？";
+			mes "我的声音很响亮吧！";
+			mes "毕竟老远都能听得见。";
+			mes "而且。";
+			mes "（四处张望）";
+			next;
+			mes "[内克]";
+			mes "我的声音可不光是响亮！";
+			mes "！";
+			mes "等你到了15级左右的商人";
+			mes "我就会告诉你这个秘密！";
+			mes "到时候，再来找我吧！！！";
+			next;
+			mes "[内克]";
+			mes "哇哈哈哈哈哈哈哈哈哈哈哈哈！";
+			mes "叽咔咔咔咔咔咔咔咔咔咔！";
+			close;
+		}
+		else if ((countitem(722) > 6) && (countitem(532) > 0) && (countitem(921) > 49) && (JobLevel >= 15 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist))) {
+			mes "[内克]";
+			mes "哦！你！";
+			mes "你已经够格学习呐喊之术了！";
+			mes "让我来教你怎么放声大喊吧。";
+			mes "想学大声呐喊吗？";
+			next;
+			switch (select("学!!!!:不学。:那是什么?")) {
+			case 1:
+				mes "[内克]";
+				mes "啊哈哈哈！！好！！！";
+				mes "这才像话嘛！";
+				mes "我们开始吧！";
+				next;
+				delitem 722,7; //Scarlet_Jewel
+				delitem 532,1; //Banana_Juice
+				delitem 921,50; //Mushroom_Spore
+				skill "MC_LOUD",1,SKILL_PERM;
+				mes "[内克]";
+				mes "你学会了大声呐喊！！";
+				mes "想怎么喊就怎么喊吧！";
+				mes "哈哈哈哈哈哈！";
+				close;
+			case 2:
+				mes "[内克]";
+				mes "呃……好吧。";
+				mes "噗呜……";
+				close;
+			case 3:
+				mes "[内克]";
+				mes "大声呐喊是用你洪亮的声音";
+				mes "来提振战斗意志的技能。";
+				mes "消耗8点SP，就能额外";
+				mes "获得4点STR，持续5分钟！！！！！";
+				mes "如果重复使用，";
+				mes "持续时间从那时起重新算5分钟。";
+				next;
+				mes "[内克]";
+				mes "平时保持随性，";
+				mes "到了需要战斗的时候，";
+				mes "它就能帮你凝聚气势。";
+				mes "不得不说非常实用！！！！";
+				close;
+			}
+		}
+		mes "[内克]";
+		mes "哦，你是被我的";
+		mes "声音迷住了吗？";
+		mes "确实，我的声音很响亮！";
+		mes "老远都能听得见。";
+		mes "而且。";
+		mes "（四处张望）";
+		next;
+		mes "[内克]";
+		mes "我的声音可不只是响亮！";
+		mes "我还学会了一个";
+		mes "能让我放声大喊的技能……";
+		mes "那就是大声呐喊！";
+		next;
+		mes "[内克]";
+		mes "大声呐喊是用你洪亮的声音";
+		mes "来提振战斗意志的技能。";
+		mes "消耗8点SP，就能额外";
+		mes "获得4点STR，持续5分钟！！！！！";
+		mes "如果重复使用，";
+		mes "持续时间从那时起重新算5分钟。";
+		next;
+		mes "[内克]";
+		mes "平时保持随性，";
+		mes "战斗时则用呐喊";
+		mes "来凝聚更多的力量。";
+		mes "非常实用！！！！";
+		mes "要学这个技能，你先得";
+		mes "掌握声音的精髓！！！";
+		next;
+		mes "[内克]";
+		mes "你可以在裴扬找到一个";
+		mes "除了嗓门大一无是处的歌手，";
+		mes "你可以跟他学习！";
+		next;
+		mes "[内克]";
+		mes "不过那个人已经死了！";
+		mes "所以你再也学不到了！";
+		mes "哈哈哈哈哈哈哈哈！！！！";
+		mes "……………………………………";
+		mes "……哎呀，你看起来很失望嘛？";
+		mes "你想学大声呐喊吗？";
+		next;
+		mes "[内克]";
+		mes "嗯……要不我来教你？";
+		mes "当然，如果你真心想学的话。";
+		mes "首先，我得先灼烧一下声带。";
+		mes "要做到这点需要一些东西。";
+		next;
+		mes "[内克]";
+		mes "7颗珍珠、1瓶香蕉汁，";
+		mes "还有50个蘑菇孢子！";
+		mes "然后我就来灼烧你的声带！";
+		next;
+		mes "[内克]";
+		mes "准备好了就来找我吧！";
+		mes "到时候我也会把嗓子准备好的！！";
+		mes "嗷呜～～～～～～～～~~~！！";
+		close;
+	}
+	mes "[内克]";
+	mes "内克的商店现在打烊了。";
+	mes "晚点再来吧。嘿嘿~";
+	close;
+
+OnTouch_:
+	mes "[!?]";
+	mes "木哈哈哈哈哈哈哈哈哈哈哈哈！！";
+	mes "噗咔咔咔咔咔咔咔咔咔咔咔咔！";
+	close;
+}
+
+alberta,119,221,6	script	查尔隆	107,{
+	if (BaseClass == Job_Merchant) {
+		if (getskilllv("MC_CHANGECART") == 1) {
+			mes "[查尔隆]";
+			mes "嗯？我还在想是谁推着";
+			mes "手推车弄得这么吵呢。";
+			mes "原来是你啊。";
+			mes "嗯，我记得你。";
+			mes "你觉得怎样？新手推车……不错吧？";
+			next;
+			mes "[查尔隆]";
+			mes "享受生活吧。";
+			mes "生活不只是简单地";
+			mes "向前走……放慢脚步，看看四周，";
+			mes "拖着一辆沉重的手推车，";
+			mes "这才是我们商人的活法。";
+			mes "那么下次再见了。";
+			next;
+			mes "[查尔隆]";
+			mes "保重身体~";
+			close;
+		}
+		else if (JobLevel >= 30|| (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
+			mes "[查尔隆]";
+			mes "很高兴见到你，商人同行。";
+			mes "如果我没记错的话，";
+			mes "你就是最近";
+			mes "大名鼎鼎的那位商人吧。";
+			next;
+			mes "不过你的手推车";
+			mes "似乎配不上你的名声啊。";
+			mes "真可怜。";
+			next;
+			switch (select("所以我才来找你。:我的手推车怎么了?:两个才可怜?")) {
+			case 1:
+				if ((countitem(1019) > 49) && (countitem(998) > 9) && (countitem(919) > 19)) {
+					mes "[查尔隆]";
+					mes "哈哈！好，好！";
+					mes "就用你带来的这些东西，";
+					mes "我来帮你改装手推车。";
+					next;
+					delitem 1019,50; //Wooden_Block
+					delitem 998,10; //Iron
+					delitem 919,20; //Animal's_Skin
+					skill "MC_CHANGECART",1,SKILL_PERM;
+					mes "[查尔隆]";
+					mes "恭喜。";
+					mes "你可以按照自己的喜好";
+					mes "挑选手推车了。";
+					mes "而且现在你甚至不需要";
+					mes "我帮忙。你所需要的";
+					mes "只是一些SP。";
+					next;
+					mes "[查尔隆]";
+					mes "很方便，你不觉得吗？";
+					mes "哦，还有一件事！";
+					mes "每当你升级，你都能";
+					mes "换一辆不一样的新手推车。";
+					mes "所以要努力啊。";
+					next;
+					mes "[查尔隆]";
+					mes "不管怎样，这车跟你真的很配！";
+					mes "哈哈哈！祝你愉快！";
+					close;
+				}
+				mes "[查尔隆]";
+				mes "嗯……我确实是";
+				mes "帮人改装手推车，不过……";
+				mes "要这么做的话，我需要";
+				mes "一些可用的材料。";
+				next;
+				mes "[查尔隆]";
+				mes "50个木材。";
+				mes "10个铁。";
+				mes "20张动物外皮。";
+				mes "至少要这些东西";
+				mes "才能改装你的手推车。";
+				next;
+				mes "[查尔隆]";
+				mes "所以等你把东西";
+				mes "都准备好了再来找我吧。";
+				close;
+			case 2:
+				mes "[查尔隆]";
+				mes "哦不，你完全不知道吗？（改变语调）";
+				mes "这可是彰显商人自我的新方式！";
+				mes "是卓越头脑的体现！";
+				mes "改装手推车是一个";
+				mes "能让商人脱颖而出的技能！";
+				next;
+				mes "[查尔隆]";
+				mes "一个有趣的技能，让你";
+				mes "只需40点SP，就能按照";
+				mes "自己的等级使用相应的手推车！";
+				next;
+				mes "[查尔隆]";
+				mes "这就是改装手推车！";
+				mes "每个商人的基本技能。";
+				mes "我来教你怎么做，";
+				mes "你可要看仔细了，以后";
+				mes "要照着我做的一模一样";
+				mes "做出你自己的手推车！";
+				next;
+				mes "[查尔隆]";
+				mes "不过，既然是第一次，";
+				mes "你得准备一些材料。";
+				mes "50个木材！";
+				mes "10个铁！";
+				mes "20张动物外皮！";
+				mes "——请把这些带来！";
+				next;
+				mes "[查尔隆]";
+				mes "我们要做的";
+				mes "就是用那些材料做一辆车，";
+				mes "所以准备好了就回来吧。";
+				mes "好吗？";
+				close;
+			case 3:
+				mes "[查尔隆]";
+				mes "……不是'卡片'啦！";
+				close;
+			}
+		}
+		mes "[查尔隆]";
+		mes "欢迎你，年轻人。";
+		mes "卖东西有趣吗？我是";
+		mes "商人查尔隆。最近";
+		mes "我一直在研究";
+		mes "手推车。";
+		next;
+		mes "[查尔隆]";
+		mes "你不觉得那辆手推车用腻了吗？";
+		mes "想改装手推车的话就来找我吧。";
+		mes "我会做得漂漂亮亮的。";
+		mes "不过，有几个条件。";
+		next;
+		mes "[查尔隆]";
+		mes "我可是相当有名的商人，";
+		mes "所以一般不和新手打交道。";
+		mes "等你到了30级，";
+		mes "我也许会考虑";
+		mes "和你做这笔买卖。";
+		close;
+	}
+	mes "[查尔隆]";
+	mes "我是什么生意都做的";
+	mes "商人查尔隆。";
+	mes "如果你发现什么有趣的东西，";
+	mes "就回来试着";
+	mes "和我谈笔买卖吧。";
+	close;
+}
+
+-	script	::Gershaun_alberta	-1,{
+	if (BaseClass == Job_Merchant) {
+		if (getskilllv("MC_CARTREVOLUTION") == 1) {
+			mes "[克商斯]";
+			mes "啊，好久不见！";
+			mes "哦哦，你手推车上的红色印记。";
+			mes "那一定是'它'留下的痕迹……";
+			mes "看来我把这个技能教得很到位！";
+			next;
+			mes "[克商斯]";
+			mes "你身上流着和我一样的血！";
+			mes "嗯！果然如此！！";
+			mes "我太高兴了！帮我挠挠背！";
+			mes "这里！快点！";
+			close;
+		}
+		else if (JobLevel >= 35 || (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist)) {
+			mes "[克商斯]";
+			mes "哦哦。身为商人，";
+			mes "你的身体很结实嘛。";
+			mes "你一定很擅长搬运东西吧！？";
+			mes "嗯，你应该可以学习";
+			mes "手推车攻击！";
+			next;
+			switch (select("嘿~我就是为此而来的。:那是什么?")) {
+			case 1:
+				set .@care_random,rand(1,3);
+				if (.@care_random == 1) {
+					if ((countitem(533) > 1) && (countitem(998) > 19) && (countitem(938) > 29) && (countitem(601) > 19) && (countitem(962) > 4)) {
+						mes "[克商斯]";
+						mes "哦哦！";
+						mes "收到了！我就来教你";
+						mes "手推车攻击！";
+						next;
+						mes "[克商斯]";
+						mes "啊，真是个好日子！";
+						mes "我要奖励那些";
+						mes "热情挥舞手推车的人！";
+						next;
+						delitem 533,2; //Grape_Juice
+						delitem 998,20; //Iron
+						delitem 938,30; //Sticky_Mucus
+						delitem 601,20; //Wing_Of_Fly
+						delitem 962,5; //Tentacle
+						skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+						mes "现在你可以使用手推车攻击了。";
+						mes "我期待你用这惊人的";
+						mes "破坏力，让商人们";
+						mes "扬名立万。木哈哈哈哈！！！";
+						next;
+						mes "[克商斯]";
+						mes "祝你有美好的一天！！";
+						close;
+					}
+					else if (countitem(532) > 0) {
+						mes "[克商斯]";
+						mes "哦哦！";
+						mes "是香蕉汁！";
+						mes "非常感谢！";
+						mes "………………哈啊！";
+						delitem 532,1; //Banana_Juice
+						mes "真是清爽！谢谢！再见！";
+						next;
+						mes "[克商斯]";
+						mes "嗯？";
+						mes "你还没走吗？";
+						mes "啊！你还惦记着";
+						mes "手推车攻击呢！";
+						mes "好吧。看在你带来了";
+						mes "香蕉汁的份上，我就教你吧。";
+						next;
+						mes "[克商斯]";
+						mes "教你手推车攻击并不难，";
+						mes "但我需要你准备";
+						mes "改装手推车用的材料。";
+						mes "我需要的东西是……";
+						next;
+						mes "[克商斯]";
+						mes "首先我需要20个铁，";
+						mes "让手推车结实耐用。然后要30个粘稠液体";
+						mes "用来吸收冲击。";
+						mes "再来大概20个苍蝇翅膀和5条触须吧？";
+						mes "还有给我的2瓶葡萄汁！";
+						next;
+						mes "[克商斯]";
+						mes "把这些带来就行。";
+						mes "我可不是说只要30或20个。";
+						mes "这要看我的心情！";
+						mes "哈哈哈！";
+						mes "我等着。那么再见~";
+						close;
+					}
+					mes "[克商斯]";
+					mes "嗯！";
+					mes "没有提神的饮料可什么都干不了！";
+					mes "不如先带上一瓶香蕉汁";
+					mes "再来开口聊天如何？";
+					close;
+				}
+				if (.@care_random == 2) {
+					if ((countitem(533) > 1) && (countitem(998) > 14) && (countitem(938) > 24) && (countitem(601) > 14) && (countitem(962) > 4)) {
+						mes "[克商斯]";
+						mes "嗯，不错！";
+						mes "很好！我就来教你";
+						mes "……手推车攻击！";
+						next;
+						mes "[克商斯]";
+						mes "啊，真是个好日子！";
+						mes "我要奖励那些";
+						mes "热情挥舞手推车的人！";
+						next;
+						delitem 533,2; //Grape_Juice
+						delitem 998,15; //Iron
+						delitem 938,25; //Sticky_Mucus
+						delitem 601,15; //Wing_Of_Fly
+						delitem 962,5; //Tentacle
+						skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+						mes "现在你可以使用手推车攻击了。";
+						mes "我期待你用这惊人的";
+						mes "破坏力，让商人们";
+						mes "扬名立万。木哈哈哈哈！！！";
+						next;
+						mes "[克商斯]";
+						mes "祝你有美好的一天！！";
+						close;
+					}
+					else if (countitem(532) > 0) {
+						mes "[克商斯]";
+						mes "哦哦！";
+						mes "是香蕉汁！";
+						mes "多谢多谢！";
+						mes "………………哈啊！";
+						delitem 532,1; //Banana_Juice
+						mes "太棒了！谢谢！再见！";
+						next;
+						mes "[克商斯]";
+						mes "嗯？";
+						mes "你还没走吗？";
+						mes "啊！你还惦记着";
+						mes "手推车攻击呢！";
+						mes "好吧。看在你带来了";
+						mes "香蕉汁的份上，我就教你吧。";
+						next;
+						mes "[克商斯]";
+						mes "教你手推车攻击并不难，";
+						mes "但我需要你准备";
+						mes "改装手推车用的材料。";
+						mes "我需要的东西是……";
+						next;
+						mes "[克商斯]";
+						mes "首先我需要20个铁，";
+						mes "让手推车结实耐用。然后要30个粘稠液体";
+						mes "用来吸收冲击。";
+						mes "再来大概20个苍蝇翅膀和5条触须吧？";
+						mes "还有给我的2瓶葡萄汁！";
+						next;
+						mes "[克商斯]";
+						mes "把这些带给我。";
+						mes "但可不意味着我只要30和20个。";
+						mes "这全看我的心情！";
+						mes "先把这些带给我就行。";
+						mes "哈哈哈！";
+						mes "我很期待。那么再见~";
+						close;
+					}
+					mes "[克商斯]";
+					mes "嗯！";
+					mes "如今可没有免费的午餐！";
+					mes "不如先奉上一瓶香蕉汁什么的";
+					mes "再来开口聊天如何？";
+					close;
+				}
+				if (.@care_random == 3) {
+					if ((countitem(533) > 1) && (countitem(998) > 22) && (countitem(938) > 31) && (countitem(601) > 22) && (countitem(962) > 5)) {
+						mes "[克商斯]";
+						mes "嗯，不错！";
+						mes "很好！我就来教你";
+						mes "……手推车攻击！";
+						next;
+						mes "[克商斯]";
+						mes "啊，真是个好日子！";
+						mes "我要奖励那些";
+						mes "热情挥舞手推车的人！";
+						next;
+						delitem 533,2; //Grape_Juice
+						delitem 998,23; //Iron
+						delitem 938,32; //Sticky_Mucus
+						delitem 601,23; //Wing_Of_Fly
+						delitem 962,6; //Tentacle
+						skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+						mes "现在你可以使用手推车攻击了。";
+						mes "我期待你用这惊人的";
+						mes "破坏力，让商人们";
+						mes "扬名立万。木哈哈哈哈！！！";
+						next;
+						mes "[克商斯]";
+						mes "祝你有美好的一天！！";
+						close;
+					}
+					else if (countitem(532) > 0) {
+						mes "[克商斯]";
+						mes "哦哦！";
+						mes "是香蕉汁！";
+						mes "多谢多谢！";
+						mes "………………哈啊！";
+						delitem 532,1; //Banana_Juice
+						mes "太棒了！谢谢！再见！";
+						next;
+						mes "[克商斯]";
+						mes "嗯？";
+						mes "你还没走吗？";
+						mes "啊！你还惦记着";
+						mes "手推车攻击呢！";
+						mes "好吧。看在你带来了";
+						mes "香蕉汁的份上，我就教你吧。";
+						next;
+						mes "[克商斯]";
+						mes "教你手推车攻击并不难，";
+						mes "但我需要你准备";
+						mes "改装手推车用的材料。";
+						mes "我需要的东西是……";
+						next;
+						mes "[克商斯]";
+						mes "首先我需要20个铁，";
+						mes "让手推车结实耐用。然后要30个粘稠液体";
+						mes "用来吸收冲击。";
+						mes "再来大概20个苍蝇翅膀和5条触须吧？";
+						mes "还有给我的2瓶葡萄汁！";
+						next;
+						mes "[克商斯]";
+						mes "把这些带来就行。";
+						mes "我可不是说只要30或20个。";
+						mes "这要看我的心情！";
+						mes "哈哈哈！";
+						mes "我等着。那么再见~";
+						close;
+					}
+					mes "[克商斯]";
+					mes "嗯！";
+					mes "没有提神的饮料可什么都干不了！";
+					mes "不如先带上一瓶香蕉汁";
+					mes "再来开口聊天如何？";
+					close;
+				}
+			case 2:
+				mes "[克商斯]";
+				mes "……你似乎不知道";
+				mes "手推车攻击啊。";
+				mes "好吧，我给你讲一个";
+				mes "我从没对别人讲过的故事。";
+				mes "仔细听好了。";
+				next;
+				mes "[克商斯]";
+				mes "我曾研究过手推车";
+				mes "别的用法。";
+				mes "我试过用它煮拉面，";
+				mes "甚至试过用它跳绳。";
+				mes "但没有一个能";
+				mes "让我满足。";
+				next;
+				mes "[克商斯]";
+				mes "绝望中，我推着";
+				mes "手推车在野外流浪。";
+				mes "浑浑噩噩地流浪了一天又一天……";
+				mes "我遇到了一只非常厉害的怪物。";
+				mes "命悬一线！";
+				mes "为什么是我——一个没武器没防具的商人！";
+				next;
+				mes "[克商斯]";
+				mes "我吓得半死……心里想着";
+				mes "盼着这不会是我的";
+				mes "末日。在仅剩的一丝希望中，";
+				mes "我尝试了最后的可能性。";
+				mes "我用手推车去砸怪物！";
+				next;
+				mes "[克商斯]";
+				mes "怪物一下就被砸死了。";
+				mes "就在那时，我领悟到了一件事。";
+				mes "手推车也能成为武器！";
+				mes "我终于明白，我们可以";
+				mes "用手推车攻击！";
+				next;
+				mes "[克商斯]";
+				mes "手推车攻击！";
+				mes "那就是我开发的新攻击技能。";
+				mes "消耗12点SP，你抡起手推车";
+				mes "去砸你的对手……";
+				mes "正中脑袋！";
+				next;
+				mes "[克商斯]";
+				mes "你的手推车越重，";
+				mes "攻击就越强！一下下去，";
+				mes "你的对手就会受伤，";
+				mes "被迫后退！";
+				mes "这就是手推车攻击！";
+				close;
+			}
+		}
+		mes "[克商斯]";
+		mes "嗯，年轻的商人啊。";
+		mes "你一定也用手推车吧。";
+		mes "毕竟要做生意嘛。";
+		mes "但仅仅如此吗？";
+		next;
+		mes "[克商斯]";
+		mes "我曾研究过手推车";
+		mes "别的用法。";
+		mes "我试过用它煮拉面，";
+		mes "甚至试过用它跳绳。";
+		mes "但没有一个能";
+		mes "让我满足。";
+		next;
+		switch (select("我知道，我知道。:...?")) {
+		case 1:
+			mes "[克商斯]";
+			mes "……不，我要说的是。";
+			close;
+		case 2:
+			mes "[克商斯]";
+			mes "绝望中，我推着";
+			mes "手推车在野外流浪。";
+			mes "浑浑噩噩地流浪了一天又一天……";
+			mes "我遇到了一只非常厉害的怪物。";
+			mes "命悬一线！";
+			mes "为什么是我——一个没武器没防具的商人！";
+			next;
+			mes "[克商斯]";
+			mes "我吓得半死……心里想着";
+			mes "盼着这不会是我的";
+			mes "末日。在仅剩的一丝希望中，";
+			mes "我尝试了最后的可能性。";
+			mes "我用手推车去砸怪物！";
+			mes "然后呢！然后呢！";
+			next;
+			mes "[克商斯]";
+			mes "怪物一下就被砸死了。";
+			mes "就在那时，我领悟到了一件事。";
+			mes "手推车也能成为武器！";
+			mes "我终于明白，我们可以";
+			mes "用手推车攻击！";
+			next;
+			mes "[克商斯]";
+			mes "手推车攻击！";
+			mes "那就是我开发的新攻击技能。";
+			mes "消耗12点SP，你抡起手推车";
+			mes "去砸你的对手……";
+			mes "正中脑袋！";
+			next;
+			mes "[克商斯]";
+			mes "你的手推车越重，";
+			mes "攻击就越强！一下下去，";
+			mes "你的对手就会受伤，";
+			mes "被迫后退！";
+			next;
+			mes "[克商斯]";
+			mes "你想学这个技能吗？";
+			next;
+			switch (select("想学!!:我想学做寿司的手艺...")) {
+			case 1:
+				mes "[克商斯]";
+				mes "好！";
+				mes "我来给你特训！";
+				mes "首先你需要体魄！";
+				mes "先把你的商人";
+				mes "练到35级！";
+				mes "之后我们再谈！";
+				close;
+			case 2:
+				mes "[寿司王克商斯]";
+				if (Sex == SEX_FEMALE) {
+					mes "傻丫头！";
+				}
+				else {
+					mes "傻小子！";
+				}
+				mes "你想碰寿司";
+				mes "还早了一百年呢！";
+				close;
+			}
+		}
+	}
+	mes "[克商斯]";
+	mes "行不通的话，就把它弄通。";
+	mes "行不通的话，就把它弄通。";
+	mes "行不通的话，就把它弄通。";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working
+//= 1.1 Bug fixes
+//= 1.a Now using functions found in "Global_Functions.txt"
+//=     for class checks.[kobra_k88]
+//= 1.2 Added Baby Class Support [Lupus]
+//= 1.3 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
+//= 1.4 Fixed exploits [Lupus]
+//= 1.4a Fixed some typos [IVBela] 1.4b  Gershaun -> Gershuan
+//=     changed perm. variables to temp ones [Lupus]
+//= 1.4b Added missing 1 Banana Juice requirement to Cart Revolution [DracoRPG]
+//============================================================

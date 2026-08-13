@@ -1,0 +1,823 @@
+//===== rAthena Script =======================================
+//= 2008 Headgear Quests
+//===== By: ==================================================
+//= Masao
+//= Credits: Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Cats Footprint, Cute Ribbon Dyer and Brides Corolla.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Masao]
+//============================================================
+
+gef_fild05,80,149,3	script	缪#08_hat	877,{
+	mes "[缪]";
+	mes "喵...";
+	emotion ET_HUK;
+	next;
+	if(hatcat2008 == 0) {
+		mes "[缪]";
+		mes "哦？你不是冒险者吗？";
+		mes "你来这里干什么？喂，你不是来伤害野玫瑰的吧？";
+		mes "（喵！）";
+		next;
+		select("喵..?");
+		mes "[缪]";
+		mes "啊，别在意那个。";
+		mes "这里是被遗弃者的村庄。";
+		mes "是那些行走于阴影中、低调生活的人的家园。";
+		next;
+		mes "[缪]";
+		mes "....然而，我们的安宁正被那些狂吠的狗打扰着。";
+		mes "没错，冒险者。";
+		mes "你愿意行个好事，惩罚那些犬妖弓箭手吗？";
+		next;
+		mes "[缪]";
+		mes "它们在南边有自己的地盘，却还想侵占我们的地盘。";
+		next;
+		mes "[缪]";
+		mes "真是放肆。我试过用和平的方式跟它们谈，也试过把它们打跑，但都没用。";
+		next;
+		mes "[缪]";
+		mes "所以我想请你... 不惜一切手段，把它们赶出我们的地盘..";
+		next;
+		mes "[缪]";
+		mes "如果你能做到，我会给你一件我非常珍视的宝贝。";
+		next;
+		switch(select("听起来好麻烦..:我该怎么做？")){
+		case 1:
+			mes "[缪]";
+			mes "哼，是啊，是有点好笑呢。";
+			mes "来到这里的人....都是来伤害野玫瑰的..";
+			mes "我居然没注意到。";
+			next;
+			mes "[缪]";
+			mes "...白费力气了 喵...";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes " (又在喵了... 真是个怪人。)";
+			close;
+		case 2:
+			mes "[缪]";
+			mes "当然是去收拾那些犬妖弓箭手 喵！";
+			mes " ";
+			mes "（喵！）";
+			next;
+			select("又在喵?!");
+			mes "[缪]";
+			mes "嗯嗯，我说过别在意那个了。";
+			mes "我刚才说到...";
+			mes "我是说... 喵... 呃...";
+			next;
+			mes "[缪]";
+			mes "不多不少，正好 1,000 次。";
+			mes "给它们 1,000 次警告，它们就会退缩了。";
+			next;
+			select("你说的 1,000 次警告是什么意思...?");
+			mes "[缪]";
+			mes "呼~ 非要我说得那么明白吗？";
+			next;
+			mes "她一边说着，一边用手在脖子上比划，像是在模仿割喉咙的动作。";
+			next;
+			switch(select("这不是太过分了吗？:这很简单")){
+			case 1:
+				mes "[缪]";
+				mes "..但如果我们不真正给它们一个教训，它们是不会死心的。";
+				mes "好吧，如果你觉得对你来说太过分，那就算了。";
+				close;
+			case 2:
+				mes "[缪]";
+				mes "但你必须记住一件事，那就是";
+				mes "显然，千万千万不可以伤害野玫瑰。";
+				next;
+				mes "[缪]";
+				mes "如果你伤害了它们，你就完了。";
+				mes "所以你最好小心点.. ";
+				mes "喵喵喵..";
+				set hatcat2008,1;
+				setquest 7054;
+				setquest 7055;
+				close;
+			}
+		}
+	} else if(hatcat2008 == 1) {
+		if(checkquest(7055,HUNTING) == 2) {
+			mes "[缪]";
+			mes "你以为我不知道你干了什么吗？";
+			mes "啊？";
+			next;
+			mes "[缪]";
+			mes "你怎么..你怎么能杀死那些可爱的孩子..?";
+			mes "你居然还说你是站在我们这边的?!";
+			next;
+			mes "[缪]";
+			mes "我们的交易结束了!!!";
+			mes " ";
+			mes "（喵..)";
+			set hatcat2008,0;
+			erasequest 7054;
+			erasequest 7055;
+			close;
+		} else if(checkquest(7054,HUNTING) == 2) {
+			mes "[缪]";
+			mes "哦..哇，难以置信！";
+			mes "这下那些犬妖应该长记性了，是吧？";
+			mes "喵喵喵！";
+			next;
+			mes "[缪]";
+			mes "给，拿着这个。";
+			mes "这是我们'勇敢小猫'的印章。";
+			mes "它非常非常珍贵，千万别弄丢了。";
+			next;
+			select("就是这个？");
+			mes "[缪]";
+			mes "你还期待什么？";
+			mes "那个爪印真的是很珍贵的东西！";
+			mes "好了，拿着它走吧。野玫瑰身边有冒险者会觉得不自在。";
+			set hatcat2008,2;
+			getitem 5446,1;
+			erasequest 7054;
+			erasequest 7055;
+			close;
+		}
+		mes "[缪]";
+		mes "你现在明白了吧？";
+		mes "一千次！-轻笑-";
+		mes "（喵喵喵~）";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "(真是个怪人.. 算了..那个喵喵声是怎么回事?)";
+		mes "你只要遵守诺言就行。";
+		mes "等活干完之后...好吗？";
+		next;
+		mes "[缪]";
+		mes "当然！这个你不用担心~";
+		close;
+	} else if(hatcat2008 == 2) {
+		mes "[缪]";
+		mes "这里是被遗弃者的村庄。";
+		mes "是那些行走于阴影中、低调生活的人的家园。";
+		next;
+		mes "[缪]";
+		mes "哦，你不就是那位拿走我们'勇敢小猫'印章的冒险者吗。";
+		mes "你来这里干什么？";
+		next;
+		mes "[缪]";
+		mes "哦对了，没错，尽管我们给了犬妖那么多威胁..";
+		mes "我们的处境却一点都没变。你介意再帮我们一次吗？";
+		next;
+		mes "缪用手在脖子上比划，像是在割喉咙。";
+		mes "她的嘴型好像在说。";
+		mes " '一.千.次.' ";
+		next;
+		switch(select("不要！:好的。")) {
+		case 1:
+			mes "[缪]";
+			mes "...!...";
+			mes ".. 啊.. 太可惜了。";
+			mes "唉，看来一块诱饵坏掉了.... ";
+			mes "没关系。就是这样。喵。";
+			close;
+		case 2:
+			mes "[缪]";
+			mes "你知道该怎么做，对吧？";
+			mes "千万不要碰野玫瑰，只去猎杀犬妖弓箭手。";
+			mes "给它们 1,000 次绝望！";
+			set hatcat2008,1;
+			setquest 7054;
+			setquest 7055;
+			close;
+		}
+	}
+	mes "[缪]";
+	mes "喵..";
+	mes "这阳光...让我好困..";
+	close;
+}
+
+morocc_in,137,102,5	script	实习生#2008hat01	82,{
+	mes "[实习生 艾尔戈]";
+	mes "欢迎光临。";
+	mes "如果您是想染东西，请跟我们的老师谈。";
+	mes "如果是关于送货的事，请跟我旁边的朋友谈。";
+	next;
+	switch(select("那你到底在做什么？:我知道了。")){
+	case 1:
+		mes "[艾尔戈]";
+		mes "嗯，我给衣物染色。";
+		mes "比如手帕啦，发带啦。";
+		next;
+		mes "[艾尔戈]";
+		mes "小东西我能染得很漂亮..";
+		mes "比如^4d4dff粉纱发圈^000000。";
+		mes "如果你想染粉纱发圈，就带一个给我。";
+		next;
+		mes "[艾尔戈]";
+		mes "对我来说是个练习的好机会，";
+		mes "而且你一分钱都不用付。";
+		mes "哦对了，不过至少需要^4d4dff染料^000000。";
+		next;
+		mes "[艾尔戈]";
+		mes "当然，我不会失败的。";
+		mes "我会全力以赴。";
+		mes "我想挑战一下自己的手艺!!";
+		next;
+		if (countitem(2250) > 0 || countitem(5441) > 0 || countitem(5439) > 0 || countitem(5440) > 0 || countitem(5438) > 0) {
+			mes "["+strcharinfo(0)+"]";
+			mes "(我有一个粉纱发圈...该怎么办..?)";
+			next;
+			switch(select("请艾尔戈帮忙染色。:先不管了。")){
+			case 1:
+				mes "[艾尔戈]";
+				mes "哦，你想给你的粉纱发圈染色，是吧？";
+				mes "你的粉纱发圈是什么颜色的？";
+				mes "你想染哪一个？";
+				next;
+				switch(select("黄色的..:白色的..:蓝色的..:红色的..:绿色的..:算了。")){
+				case 1:
+					if(countitem(2250) > 0) {
+						mes "[艾尔戈]";
+						mes "好好，黄色粉纱发圈，是吧？";
+						mes "你想染成什么颜色？";
+						next;
+						switch(select("白色:蓝色:红色:绿色")){
+						case 1:
+							if(countitem(982) > 0) {
+								mes "[艾尔戈]";
+								mes "哇，纯洁无瑕的白色！";
+								mes "好，开始吧。";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 2250,1;
+								delitem 982,1;
+								getitem 5441,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成白色，请给我^4d4dff1 白色染料^000000。";
+							close;
+						case 2:
+							if(countitem(978) > 0) {
+								mes "[艾尔戈]";
+								mes "清爽的蓝色!!";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 2250,1;
+								delitem 978,1;
+								getitem 5440,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成蓝色，请给我^4d4dff1 蓝色染料^000000。";
+							close;
+						case 3:
+							if(countitem(975) > 0) {
+								mes "[艾尔戈]";
+								mes "可爱的红色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 2250,1;
+								delitem 975,1;
+								getitem 5439,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成红色，请给我^4d4dff1 红色染料^000000。";
+							close;
+						case 4:
+							if(countitem(979) > 0) {
+								mes "[艾尔戈]";
+								mes "大自然的绿色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 2250,1;
+								delitem 979,1;
+								getitem 5438,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成绿色，请给我^4d4dff1 绿色染料^000000。";
+							close;
+						}
+					}
+					mes "[艾尔戈]";
+					mes "黄色是粉纱发圈的本色。";
+					mes "但你连一个都没有。";
+					close;
+				case 2:
+					if(countitem(5441) > 0) {
+						mes "[艾尔戈]";
+						mes "好好，这个雪白发带，是吧？";
+						mes "你想染成什么颜色？";
+						next;
+						switch(select("黄色:蓝色:红色:绿色")) {
+						case 1:
+							if(countitem(976) > 0) {
+								mes "[艾尔戈]";
+								mes "基础的黄色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5441,1;
+								delitem 976,1;
+								getitem 2250,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成黄色，请给我^4d4dff1 黄色染料^000000。";
+							close;
+						case 2:
+							if(countitem(978) > 0) {
+								mes "[艾尔戈]";
+								mes "清爽的蓝色!!";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5441,1;
+								delitem 978,1;
+								getitem 5440,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成蓝色，请给我^4d4dff1 蓝色染料^000000。";
+							close;
+						case 3:
+							if(countitem(975) > 0) {
+								mes "[艾尔戈]";
+								mes "可爱的红色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5441,1;
+								delitem 975,1;
+								getitem 5439,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成红色，请给我^4d4dff1 红色染料^000000。";
+							close;
+						case 4:
+							if(countitem(979) > 0) {
+								mes "[艾尔戈]";
+								mes "大自然的绿色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5441,1;
+								delitem 979,1;
+								getitem 5438,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成绿色，请给我^4d4dff1 绿色染料^000000。";
+							close;
+						}
+					}
+					mes "[艾尔戈]";
+					mes "你想染雪白发带，对吧？";
+					mes "但你连一个都没有。";
+					close;
+				case 3:
+					if(countitem(5440) > 0) {
+						mes "[艾尔戈]";
+						mes "好好，这个蔚蓝发带，是吧？";
+						mes "你想染成什么颜色？";
+						next;
+						switch(select("白色:黄色:红色:绿色")) {
+						case 1:
+							if(countitem(982) > 0) {
+								mes "[艾尔戈]";
+								mes "哇，纯洁无瑕的白色！";
+								mes "好，开始吧。";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5440,1;
+								delitem 982,1;
+								getitem 5441,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成白色，请给我^4d4dff1 白色染料^000000。";
+							close;
+						case 2:
+							if(countitem(976) > 0) {
+								mes "[艾尔戈]";
+								mes "基础的黄色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5440,1;
+								delitem 976,1;
+								getitem 2250,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成黄色，请给我^4d4dff1 黄色染料^000000。";
+							close;
+						case 3:
+							if(countitem(975) > 0) {
+								mes "[艾尔戈]";
+								mes "可爱的红色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5440,1;
+								delitem 975,1;
+								getitem 5439,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成红色，请给我^4d4dff1 红色染料^000000。";
+							close;
+						case 4:
+							if(countitem(979) > 0) {
+								mes "[艾尔戈]";
+								mes "大自然的绿色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5440,1;
+								delitem 979,1;
+								getitem 5438,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成绿色，请给我^4d4dff1 绿色染料^000000。";
+							close;
+						}
+					}
+					mes "[艾尔戈]";
+					mes "你想染蔚蓝发带，对吧？";
+					mes "但你连一个都没有。";
+					close;
+				case 4:
+					if(countitem(5439) > 0) {
+						mes "[艾尔戈]";
+						mes "好好，这个艳红发带，是吧？";
+						mes "你想染成什么颜色？";
+						next;
+						switch(select("白色:蓝色:黄色:绿色")){
+						case 1:
+							if (countitem(982) > 0){
+								mes "[艾尔戈]";
+								mes "哇，纯洁无瑕的白色！";
+								mes "好，开始吧。";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5439,1;
+								delitem 982,1;
+								getitem 5441,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成白色，请给我^4d4dff1 白色染料^000000。";
+							close;
+						case 2:
+							if(countitem(978) > 0) {
+								mes "[艾尔戈]";
+								mes "清爽的蓝色!!";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5439,1;
+								delitem 978,1;
+								getitem 5440,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成蓝色，请给我^4d4dff1 蓝色染料^000000。";
+							close;
+						case 3:
+							if(countitem(976) > 0) {
+								mes "[艾尔戈]";
+								mes "基础的黄色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5439,1;
+								delitem 976,1;
+								getitem 2250,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成黄色，请给我^4d4dff1 黄色染料^000000。";
+							close;
+						case 4:
+							if(countitem(979) > 0) {
+								mes "[艾尔戈]";
+								mes "大自然的绿色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5439,1;
+								delitem 979,1;
+								getitem 5438,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成绿色，请给我^4d4dff1 绿色染料^000000。";
+							close;
+						}
+					}
+					mes "[艾尔戈]";
+					mes "你想染艳红发带，对吧？";
+					mes "但你连一个都没有。";
+					close;
+				case 5:
+					if(countitem(5438) > 0) {
+						mes "[艾尔戈]";
+						mes "好好，这个鲜绿发带，是吧？";
+						mes "你想染成什么颜色？";
+						next;
+						switch(select("白色:蓝色:红色:黄色")) {
+						case 1:
+							if(countitem(982) > 0) {
+								mes "[艾尔戈]";
+								mes "哇，纯洁无瑕的白色！";
+								mes "好，开始吧。";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5438,1;
+								delitem 982,1;
+								getitem 5441,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成白色，请给我^4d4dff1 白色染料^000000。";
+							close;
+						case 2:
+							if(countitem(978) > 0) {
+								mes "[艾尔戈]";
+								mes "清爽的蓝色!!";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5438,1;
+								delitem 978,1;
+								getitem 5440,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成蓝色，请给我^4d4dff1 蓝色染料^000000。";
+							close;
+						case 3:
+							if(countitem(975) > 0) {
+								mes "[艾尔戈]";
+								mes "可爱的红色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5438,1;
+								delitem 975,1;
+								getitem 5439,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成红色，请给我^4d4dff1 红色染料^000000。";
+							close;
+						case 4:
+							if(countitem(976) > 0) {
+								mes "[艾尔戈]";
+								mes "基础的黄色！";
+								mes "开始吧！";
+								next;
+								mes "- 艾尔戈开始把染料和化学药剂溶进水里，然后开始给粉纱发圈染色。 -";
+								next;
+								mes "[艾尔戈]";
+								mes ".. 嗯..";
+								mes "这样应该就行了。";
+								mes "你觉得怎么样？";
+								mes "这个颜色染得好看吗？";
+								delitem 5438,1;
+								delitem 976,1;
+								getitem 2250,1;
+								close;
+							}
+							mes "[艾尔戈]";
+							mes "如果你想染成黄色，请给我^4d4dff1 黄色染料^000000。";
+							close;
+						}
+					}
+					mes "[艾尔戈]";
+					mes "你想染鲜绿发带，对吧？";
+					mes "但你连一个都没有。";
+					close;
+				case 6:
+					mes "["+strcharinfo(0)+"]";
+					mes "啊，这次我还没想好。下次再来吧。";
+					mes "保重。";
+					next;
+					mes "[艾尔戈]";
+					mes "好。没关系。回头见~ 拜拜~!";
+					close;
+				}
+			case 2:
+				mes "["+strcharinfo(0)+"]";
+				mes "嗯，下次我给你带一个来。";
+				mes "保重。";
+				next;
+				mes "[艾尔戈]";
+				mes "好，再见！";
+				close;
+			}
+		}
+	case 2:
+		mes "[艾尔戈]";
+		mes "呃..能请你离开吗？";
+		mes "我得回去干活了...";
+		close;
+	}
+}
+
+in_orcs01,119,106,3	script	兽人女士#2008hat03	1273,2,2,{
+
+OnTouch:
+	mes "["+strcharinfo(0)+"]";
+	mes "这位兽人女士正全神贯注地做着什么。";
+	mes "我不知道她在做什么...但就算我走到她面前，她也不会注意到我。";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "我该跟她搭话吗?...呃..我们互相听得懂吗？";
+	next;
+	mes "兽人女士突然转过身来，一脸惊讶。";
+	mes "一朵噬人树花从她手中掉在了地上。";
+	next;
+	switch(select("帮兽人女士捡起花。:快跑！")) {
+	case 1:
+		mes "[兽人女士]";
+		mes ".. ...";
+		mes "带武器冒险者，帮兽人？";
+		mes "你怪人。";
+		mes "我名字，艾特-纳-齐尔-贝。";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "没想到兽人女士竟然向我做了自我介绍。";
+		mes "我该怎么回应？";
+		next;
+		switch(select("问问她在做什么。:道别。")){
+		case 1:
+			mes "[艾特]";
+			mes "我在做花冠。";
+			mes "把花...和丝带编在一起..";
+			mes "新娘...戴...花冠..";
+			next;
+			select("你能给我做一个吗？");
+			if((countitem(10007) > 0) && (countitem(1032) > 999)) {
+				mes "[艾特]";
+				mes ".. 材料..你..有..";
+				mes "..做一个，太费时间。";
+				next;
+				mes "[艾特]";
+				mes "跟你换.. 我刚做好的这个。";
+				mes "但你，怪人。";
+				mes "你们人类..难..懂。";
+				delitem 10007,1;
+				delitem 1032,1000;
+				getitem 5436,1;
+				close;
+			}
+			mes "[艾特]";
+			mes "我需要... 宠物发带。";
+			mes "1,000 噬人树花..";
+			mes "给我带来....";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "(^4d4dff宠物发带和 1,000 噬人树花^000000，嗯..)";
+			mes "明白了。我去把材料找来。";
+			close;
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "我面带微笑，一言不发地向她点头道别。";
+			mes "她也点了点头，仿佛明白那是在道别。";
+			close;
+		}
+	case 2:
+		mes "["+strcharinfo(0)+"]";
+		mes "趁她还在发愣，快跑吧。";
+		close2;
+		warp "gef_fild10",223,203;
+		end;
+	}
+	end;
+}

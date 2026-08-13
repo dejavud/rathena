@@ -1,0 +1,505 @@
+//===== rAthena Script =======================================
+//= 艾尔贝塔城
+//===== By: ==================================================
+//= DZeroX
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= 艾尔贝塔特有的城市 NPC
+//===== Additional Comments: =================================
+//= 1.0 Converted from Aegis 10.4 [DZeroX]
+//= 1.1 Optimized, missing next, REMOVED .GATs! again [Lupus]
+//= 1.2 Implemented progression fixes provided by $ephiroth. [L0ne_W0lf]
+//= 1.2b More pregression clean up provided by Barron-Monster. [L0ne_W0lf]
+//= 1.3 Removed npc "Tourist#al" as it's a quest NPC. [L0ne_W0lf]
+//= 1.4 Removed "Fastidious Old Man" duplicate. [L0ne_W0lf]
+//= 1.5 Updated to match AEGIS script. [Kisuka]
+//= 1.6 Added Izlude RE coordinates. [Euphy]
+//= 1.7 Bug fixes and syntax. [Capuche]
+//============================================================
+
+alberta,97,51,0	script	商人#fabian	84,{
+	mes "[商人]";
+	mes "唉……环游世界的时候，";
+	mes "总会听到一些疯狂的事情。";
+	next;
+	mes "[商人]";
+	mes "有一次，我听说有一种卡片，";
+	mes "里面蕴含着怪物的力量。";
+	mes "要是有人弄到一张，";
+	mes "就能使用那只怪物的力量。";
+	next;
+	mes "[商人]";
+	mes "我猜那不过是某种流行或骗局，";
+	mes "让你去收集所有的卡片什么的。";
+	mes "一张卡片怎么可能";
+	mes "真的蕴含怪物的力量呢？！";
+	next;
+	mes "[商人]";
+	mes "真是的……";
+	close;
+}
+
+alberta,53,39,0	script	商人#steiner	100,{
+	mes "[商人]";
+	mes "噢……！";
+	mes "欢迎来到艾尔贝塔，";
+	mes "年轻的冒险家！";
+	next;
+	mes "[商人]";
+	mes "抱歉，我看起来有些心不在焉。";
+	mes "我正在盘算一个计划。";
+	mes "听说吉芬有一家商店，";
+	mes "出售抗魔法的铠甲。";
+	next;
+	mes "[商人]";
+	mes "如果我大量批发，";
+	mes "再在这里高价转卖……";
+	close;
+}
+
+alberta_in,20,183,0	script	青年#chad	1_M_03,{
+	mes "[青年]";
+	mes "人们说传说武器冈格尼尔";
+	mes "从不射偏目标。";
+	mes "不知道是不是真的……";
+	next;
+	mes "[青年]";
+	mes "人们还说婴儿是鹳鸟";
+	mes "组装好再送来人间的，";
+	mes "女孩都喜欢坏坏的男孩，";
+	mes "圣诞老人也存在！";
+	mes "不过只在圣诞镇。";
+	next;
+	mes "[青年]";
+	mes "我在想……";
+	mes "这些到底有没有";
+	mes "一样是真的……";
+	close;
+}
+
+alberta,131,139,2	script	醉汉	1_M_JOBGUIDER,{
+	mes "[醉汉]";
+	mes "^666666*嗝*^000000";
+	mes "看、看什么看？";
+	mes "滚开！！";
+	next;
+	switch(select("一言不发。","别理他。")) {
+	case 1:
+		mes "[醉汉]";
+		mes "哈哈哈哈 ^666666*嗝*^000000……你胆子不小啊。";
+		mes "别看我现在的样子，";
+		mes "我以前可是'玛丽号'上的水手。";
+		next;
+		switch(select("没听说过。","真的？别骗我！")) {
+		case 1:
+			mes "[醉汉]";
+			mes "没听说过？！谁不知道";
+			mes "臭名昭著的海盗船'玛丽号'！";
+			mes "^666666*嗝~*^000000";
+			next;
+			mes "[醉汉]";
+			mes "啊~从前的日子。要是……";
+			mes "要是我们没遇上那场风暴……";
+			mes "^666666*嗝*^000000";
+			next;
+			mes "[醉汉]";
+			mes "啊~船长。我最想念我们的船长了……";
+			mes "没有敌人能在船长的剑下活命。";
+			close;
+		case 2:
+			mes "[醉汉]";
+			mes "没错！没人敢惹'玛丽号'的船员！";
+			mes "剑术上没人赢得了船长！";
+			next;
+			mes "[醉汉]";
+			mes "船长~！！！^666666*嗝~*^000000";
+			mes "他会这样挥剑，然后……然后！！";
+			next;
+			mes "[醉汉]";
+			mes "和船长交手的那个混蛋，";
+			mes "还有他身边的同伙，";
+			mes "全被火焰吞没了！";
+			next;
+			mes "[醉汉]";
+			mes "天啊，那把剑一定有什么神秘的力量，";
+			mes "要么就是船长实在太强了……！";
+			next;
+			mes "[醉汉]";
+			mes "呼~~^666666*呜* *呜呜……*^000000";
+			mes "天啊，我想念大家！";
+			mes "现在我难受死了！请你走吧。";
+			close;
+		}
+	case 2:
+		mes "[醉汉]";
+		mes "这就对了！";
+		mes "走开~";
+		close;
+	}
+}
+
+alberta,58,80,2	script	商人#shakir	99,{
+	mes "[商人]";
+	if (rand(2)) {
+		mes "我们商人在卖东西的时候，";
+		mes "有自己的谈判技能。";
+		mes "这个技能能让我们";
+		mes "比别人卖出更多的钱。";
+		next;
+		mes "[商人]";
+		mes "这可不光是喊着";
+		mes "'请多给点钱吧！'那么简单！";
+		mes "你得有魅力，还要精通话术！";
+		next;
+		mes "[商人]";
+		mes "这个了不起的技能";
+		mes "能让我们多赚最多 24% 的 Zeny。";
+		mes "不过要努力修炼才能学会！！";
+	} else {
+		mes "我们商人可以";
+		mes "摆路边摊";
+		mes "来做生意。";
+		next;
+		mes "[商人]";
+		mes "用低价买进技能，";
+		mes "我们能从城里的商店";
+		mes "低价买进货物，";
+		mes "装进租来的手推车里。";
+		next;
+		mes "[商人]";
+		mes "之后我们就能到处旅行，";
+		mes "卖出货物赚取利润！";
+		next;
+		mes "[商人]";
+		mes "这样做生意既方便又安全。";
+		mes "虽然很容易犯困，";
+		mes "可千万别睡着了。";
+	}
+	close;
+}
+
+alberta,62,156,2	script	毕力都	102,{
+	mes "[毕力都]";
+	switch(rand(3)){
+	case 0:
+		mes "嘿，你知道吗，有一次";
+		mes "我走在森林里，看到一根";
+		mes "绿色的小茎在动来动去。";
+		next;
+		mes "[毕力都]";
+		mes "我走过去想看看是什么，";
+		mes "刚要碰它，那根茎";
+		mes "居然打了我的手一下！";
+		next;
+		mes "[毕力都]";
+		mes "吓了我一跳，我赶紧退后，";
+		mes "这才发现那不是茎，";
+		mes "而是一种很小的动物。";
+		next;
+		mes "[毕力都]";
+		mes "幸好我没惹恼它。";
+		mes "再小的动物，";
+		mes "被激怒了也很危险。";
+		close;
+	case 1:
+		mes "你知道去斐扬路上的森林里，";
+		mes "那些懒洋洋的熊吗？";
+		next;
+		mes "[毕力都]";
+		mes "我好玩朝它扔了块石头，";
+		mes "它突然就朝我冲过来！";
+		mes "我吓得拼命逃跑，然后砰！！！";
+		next;
+		mes "[毕力都]";
+		mes "它撞上了一根低矮的树枝，";
+		mes "把自己撞晕了！我发誓，";
+		mes "再也不拿动物寻开心了！";
+		close;
+	case 2:
+		mes "我曾经见过一群狼";
+		mes "围攻一只又大又懒的熊！";
+		next;
+		mes "[毕力都]";
+		mes "狼比看上去要团结得多。";
+		mes "只要其中一只受到攻击，";
+		mes "附近的狼都会赶来帮忙。";
+		next;
+		mes "[毕力都]";
+		mes "要是它的同伴在附近，";
+		mes "想跟它动手前可得三思。";
+		mes "小心别被群殴了！";
+		close;
+	}
+}
+
+alberta,93,174,2	script	玛利祖母	103,{
+	mes "[玛利祖母]";
+	mes "不久前，";
+	mes "一艘废弃的船";
+	mes "漂进了";
+	mes "艾尔贝塔港。";
+	next;
+	mes "[玛利祖母]";
+	mes "为了救可能的幸存者，";
+	mes "一些镇民冒险上了船。";
+	mes "可他们全都惊恐地逃了出来，";
+	mes "说船里有尸体在走动。";
+	next;
+	mes "[玛利祖母]";
+	mes "船里还挤满了危险的海洋生物，";
+	mes "就算想进去也进不去。";
+	next;
+	mes "[玛利祖母]";
+	mes "我们对那艘不祥的船束手无策，";
+	mes "只能放任不管。";
+	mes "如今有探险队进入那艘船，";
+	mes "清剿里面的怪物。";
+	next;
+	mes "[玛利祖母]";
+	mes "对像你这样的年轻人来说，";
+	mes "或许是个不错的历练。";
+	mes "但不够强的话，";
+	mes "还是别拿生命冒险。";
+	close;
+}
+
+alberta,189,151,5	script	船员#fisk	4W_SAILOR,{
+	mes "[船员]";
+	mes "嗨，伙计，";
+	mes "想去哪儿？";
+	next;
+	switch(select("沉船 -> 250 Zeny。","依斯鲁得岛码头 -> 500 Zeny。","算了。")) {
+	case 1:
+		if (Zeny < 250) {
+			mes "[船员]";
+			mes "喂，别想骗我！";
+			mes "我说了 250 Zeny！";
+			close;
+		}
+		Zeny = Zeny - 250;
+		warp "alb2trea",43,53;
+		end;
+	case 2:
+		if (Zeny < 500) {
+			mes "[船员]";
+			mes "不先拿出 500 Zeny，";
+			mes "别想上船！";
+			close;
+		}
+		Zeny = Zeny - 500;
+		if (checkre(0))
+			warp "izlude",195,212;
+		else
+			warp "izlude",176,182;
+		end;
+	case 3:
+		mes "[船员]";
+		mes "好吧……";
+		mes "旱鸭子。";
+		close;
+	}
+}
+
+alb2trea,39,50,6	script	船员#a2t	4W_SAILOR,{
+	mes "[船员]";
+	mes "想回艾尔贝塔的陆地了？";
+	next;
+	if (select("好的，麻烦你了。","我改主意了。") == 1)
+		warp "alberta",192,169;
+	close;
+}
+
+alberta,195,151,2	script	司特	4_M_04,{
+	mes "[司特]";
+	mes "你好~";
+	mes "想参加";
+	mes "沉船探险队吗？";
+	next;
+	mes "[司特]";
+	mes "噢！加入之前我得提醒你。";
+	mes "要是不够强，";
+	mes "最好还是别去。";
+	next;
+	mes "[司特]";
+	mes "那么，";
+	mes "要报名吗？";
+	mes "入场费只要";
+	mes "200 Zeny。";
+	next;
+	switch(select("帮我报名！","呃，不用了。")) {
+	case 1:
+		if (Zeny < 200) {
+			mes "[司特]";
+			mes "看来你没带够钱，朋友。";
+			mes "等你凑够了再来吧。";
+			close;
+		}
+		Zeny = Zeny - 200;
+		warp "alb2trea",62,69;
+		close;
+	case 2:
+		mes "[司特]";
+		mes "好吧，那么……";
+		mes "改变主意的话，";
+		mes "随时来找我。";
+		close;
+	}
+}
+
+alberta,190,173,4	script	菲历斯	4_M_03,{
+	mes "[菲历斯]";
+	if ((MaxWeight - Weight) < 10000) {
+		mes "等一下！！";
+		mes "你带的东西太多了！";
+		mes "再也拿不下更多物品了！";
+		mes "请先减轻负重，";
+		mes "再来找我。";
+		close;
+	}
+	if (@event_zelopy == 0) {
+		mes "你在这儿干什么？";
+		mes "这船上可没有免费的东西，";
+		mes "想要什么就自己挣！！";
+		next;
+		mes "[菲历斯]";
+		mes "嗯，不如拿 10 个杰勒比结晶来，";
+		mes "我给你 1 瓶药水。怎么样？";
+		mes "要是嫌难，";
+		mes "3 个结晶换 1 根红萝卜也行。";
+		next;
+		mes "[菲历斯]";
+		mes "要是对我的提议感兴趣，";
+		mes "就把东西带来给我。";
+		@event_zelopy = 1;
+		close;
+	}
+	mes "嗯..你想用杰勒比结晶";
+	mes "换红色药水还是红萝卜？";
+	mes "嗯..要哪个？";
+	next;
+	switch(select("请给我红色药水。","请给我红萝卜。")) {
+	case 1:
+		mes "[菲历斯]";
+		mes "好吧……";
+		mes "让我看看";
+		mes "你带了什么……";
+		next;
+		mes "[菲历斯]";
+		if (countitem(909) < 10) {
+			mes "喂！你没在听吗？";
+			mes "我说了 10 个结晶换 1 瓶红色药水..";
+			mes "你聋了吗？";
+			close;
+		} else {
+			.@max = countitem(909)/10;
+			mes "嗯，不错……";
+			mes "你想换多少瓶";
+			mes "药水？";
+			next;
+			switch(select("能换多少换多少。","我要换这么多。","算了，我喜欢我的结晶。")) {
+			case 1:
+				delitem 909,.@max*10;// Jellopy
+				getitem 501,.@max;// Red_Potion
+				break;
+			case 2:
+				mes "[菲历斯]";
+				mes "一次最多给你 100 瓶，";
+				mes "别多想了，好吗？";
+				mes "不想要的话就说'0'。";
+				mes "现在你最多能换 " + .@max + " 瓶，";
+				mes "记住最多 100 瓶，";
+				mes "你想压垮我吗？";
+				input .@amount;
+				next;
+				mes "[菲历斯]";
+				if (.@amount <= 0) {
+					mes "多谢惠顾，随时再来。";
+					close;
+				}
+				if (.@amount > 100) {
+					mes "喂，我怎么说的？";
+					mes "一次最多 100 瓶，";
+					mes "你想害死我吗！";
+					close;
+				}
+				if (countitem(909) < .@amount*10) {
+					mes "嗯，看来你不够。";
+					mes "想要更多就来找我，";
+					mes "多带点杰勒比结晶来。";
+					close;
+				}
+				delitem 909,.@amount*10;// Jellopy
+				getitem 501,.@amount;// Red_Potion
+				break;
+			case 3:
+				mes "[菲历斯]";
+				mes "没问题，";
+				mes "下次见。";
+				close;
+			}
+			mes "[菲历斯]";
+			mes "拿好！我说到做到。";
+			mes "别一口气全灌下去啊。";
+			close;
+		}
+	case 2:
+		mes "[菲历斯]";
+		mes "好吧，让我看看";
+		mes "你带了什么……";
+		next;
+		mes "[菲历斯]";
+		if (countitem(909) < 3) {
+			mes "哼，听着，软脚虾，";
+			mes "我说了 3 个结晶换 1 根红萝卜..";
+			mes "懂了吗？";
+			close;
+		}
+		.@max = countitem(909)/3;
+		mes "还不错嘛，软脚虾……";
+		mes "你要多少？";
+		next;
+		switch(select("能换多少换多少。","我要换这么多。","算了，我喜欢我的结晶。")) {
+		case 1:
+			delitem 909,.@max*3;// Jellopy
+			getitem 515,.@max;// Carrot
+			break;
+		case 2:
+			mes "[菲历斯]";
+			mes "说好一次最多 100 根，";
+			mes "别多想了，好吗？";
+			mes "不想要的话就说'0'。";
+			input .@amount;
+			next;
+			mes "[菲历斯]";
+			if (.@amount == 0) {
+				mes "好吧，下次见。";
+				close;
+			}
+			if (.@amount > 100) {
+				mes "喂，软脚虾，";
+				mes "我说了最多 100 根，不能再多了！";
+				mes "我才不会为你这种人累断腰！";
+				close;
+			}
+			if (countitem(909) < .@amount*3) {
+				mes "看来你不够。";
+				mes "还想要的话，就再去弄点来。";
+				close;
+			}
+			delitem 909,.@amount*3;// Jellopy
+			getitem 515,.@amount;// Carrot
+			break;
+		case 3:
+			mes "[菲历斯]";
+			mes "回见。";
+			close;
+		}
+		mes "[菲历斯]";
+		mes "拿好~！我说到做到。";
+		mes "别把自己撑死了。";
+		close;
+	}
+}

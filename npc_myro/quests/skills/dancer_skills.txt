@@ -1,0 +1,742 @@
+//===== rAthena Script ======================================= 
+//= Dancer Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Charming Wink
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.4a Changed NPC location [Yommy]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+comodo,204,172,5	script	卡奈尔#qsk_dan01	724,{
+	if (BaseJob == Job_Dancer && JobLevel > 39) {
+		if (DANCER_SK == 0) {
+			mes "[卡奈尔]";
+			mes "众所周知，我们必须";
+			mes "美丽动人，才能迷住";
+			mes "观看我们舞蹈的人。";
+			mes "但如果只依赖外表，";
+			mes "那就是对表演者全部潜力的";
+			mes "可怕浪费。";
+			next;
+			mes "[卡奈尔]";
+			mes "是的，我看得出，";
+			mes "你还不明白";
+			mes "正确的心态";
+			mes "才是真正美丽的";
+			mes "基本要素。现在告诉我，";
+			mes "你对自己的舞技有信心吗……？";
+			next;
+			if (select("当然有，老太婆！:我……我没把握……") == 1) {
+				mes "[卡奈尔]";
+				mes "哦呵呵～我想你是";
+				mes "把自信和傲慢";
+				mes "搞混了！天真的人分辨不出";
+				mes "两者之间至关重要的区别。";
+				mes "现在……准备受罚吧！";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "哎哟……！";
+				mes "那、那鞭子！";
+				mes "好、好痛啊！";
+				specialeffect2 EF_HIT2;
+				percentheal -5,0;
+				close;
+			}
+			mes "[卡奈尔]";
+			mes "意识到自己的缺陷";
+			mes "和不足，是迈向进步的";
+			mes "第一个关键步骤。";
+			mes "然而，你如此明显地";
+			mes "荒废了你的舞蹈天赋……";
+			mes "这就该受罚！";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "搞什么……？啊！";
+			mes "别、别再用鞭子";
+			mes "抽我了！好、好痛啊！";
+			specialeffect2 EF_HIT2;
+			percentheal -10,0;
+			next;
+			mes "[卡奈尔]";
+			mes "哦呵呵～算你走运，";
+			mes "我会教你必须学会的东西，";
+			mes "让你超越现在的局限。";
+			mes "等我调教完你，天使和恶魔";
+			mes "都抵挡不住你的魅力～";
+			next;
+			if (select("才不要，你不配教我！:好吧，我看看能学到什么。") == 1) {
+				mes "[卡奈尔]";
+				mes "好啊……你仍然没有";
+				mes "掌握散发魅力与谦逊的";
+				mes "高超艺术！";
+				mes "如此公然冒犯我们的职业，";
+				mes "必须付出代价！";
+				mes "觉悟吧！";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "不要啊——！";
+				mes "又是那条";
+				mes "鞭子！啊，好——";
+				mes "好痛啊！";
+				specialeffect2 EF_HIT2;
+				percentheal -10,0;
+				close;
+			}
+			mes "[卡奈尔]";
+			mes "哦呵呵～很好，你承认";
+			mes "自己还有很多要学。";
+			mes "那么，别浪费时间了。";
+			mes "你的第一课将是形象训练";
+			mes "和自我想象。那么，为此……";
+			next;
+			mes "[卡奈尔]";
+			mes "……你必须给我";
+			mes "带来^FF00001 面水晶镜子^000000！";
+			mes "这件工具对课程至关重要，";
+			mes "快去把它";
+			mes "给我找来！";
+			set DANCER_SK,1;
+			close;
+		}
+		else if (DANCER_SK == 1) {
+			if (countitem(747) > 0) {
+				mes "[卡奈尔]";
+				mes "终于，你带着";
+				mes "镜子回来了。现在，";
+				mes "仔细地端详";
+				mes "你的倒影。凝视";
+				mes "每一处瑕疵和不足，";
+				mes "每一处迷人的特点。";
+				next;
+				mes "[卡奈尔]";
+				mes "没有一张脸是完美的，";
+				mes "但要知道，这张脸只属于你，";
+				mes "正是它赋予了你";
+				mes "无人能及的美丽。";
+				mes "现在，跟着我";
+				mes "重复这些真理……";
+				next;
+				mes "[卡奈尔]";
+				mes "『我很美丽……";
+				mes "我让人无法抗拒……』";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "我很美丽……";
+				mes "我让人无法抗拒……";
+				next;
+				mes "[陶醉的卡奈尔]";
+				mes "大声点！";
+				mes "更有感情！";
+				mes "『我很美丽！";
+				mes "我让人无法抗拒！";
+				mes "我是全世界";
+				mes "最有魅力的女人！』";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "我很美丽！";
+				mes "我让人无法抗拒！";
+				mes "我是全世界";
+				mes "最有魅力的女人！";
+				specialeffect2 EF_FLASHER;
+				next;
+				mes "^3355FF你的自信心";
+				mes "直线飙升。幸运的是，";
+				mes "你成功避免了";
+				mes "变成自恋狂。^000000";
+				delitem 747,1; //Crystal_Mirror
+				set DANCER_SK,2;
+				close;
+			}
+			else {
+				mes "[恼怒的卡奈尔]";
+				mes "我说过让你";
+				mes "不带^FF00001 面水晶镜子^000000";
+				mes "就回来吗？！现在快去";
+				mes "把它找来，别等我";
+				mes "找到理由罚你！";
+				specialeffect EF_CLAYMORE;
+				close;
+			}
+		}
+		else if (DANCER_SK == 2) {
+			mes "[卡奈尔]";
+			mes "是的，变得美丽的";
+			mes "第一个也是最重要的步骤，";
+			mes "就是认识并接受";
+			mes "自己的美丽。";
+			mes "先有自信，后有美丽。";
+			mes "绝不能本末倒置。";
+			next;
+			mes "[卡奈尔]";
+			mes "既然你已经树立了";
+			mes "正确的审美观，";
+			mes "是时候学习一门";
+			mes "高级的——该怎么说呢——";
+			mes "诱惑技巧了。我认识一位";
+			mes "我极力推荐的专家。";
+			next;
+			mes "[卡奈尔]";
+			mes "去普隆德拉教堂";
+			mes "找我的妹妹。";
+			mes "如果提起我的名字，";
+			mes "她应该会愿意";
+			mes "教你。我本想自己教，可我得";
+			mes "好好欣赏我的新水晶镜子～";
+			next;
+			mes "^3355FF看来她是要";
+			mes "吞下你的镜子了。^000000";
+			emotion ET_ANGER, playerattached();
+			set DANCER_SK,3;
+			close;
+		}
+		else if (DANCER_SK > 2 && DANCER_SK < 7) {
+			mes "[卡奈尔]";
+			mes "啊，多么迷人的";
+			mes "容貌和身段。我的";
+			mes "美丽真是无人能——";
+			mes "哦！是你啊。那么，我在";
+			mes "普隆德拉教堂的妹妹";
+			mes "教了你什么吗？";
+			emotion ET_GO;
+			close;
+		}
+		else if (DANCER_SK == 7) {
+			mes "[卡奈尔]";
+			mes "啊，那么你";
+			mes "找到艾尔了？";
+			mes "你从她那里";
+			mes "学到什么了吗？";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "其实，我只听说了";
+			mes "媚眼的事，但具体";
+			mes "怎么做并没学到。";
+			mes "她……她喝醉了，";
+			mes "没法再教我更多了。";
+			next;
+			mes "[卡奈尔]";
+			mes "哦，我早该料到";
+			mes "会发生这种事。哦，";
+			mes "算了，现在也没办法了。";
+			mes "不过你应该知道，";
+			mes "把我妹妹灌醉……";
+			mes "是要受罚的。";
+			next;
+			mes "[卡奈尔]";
+			mes "啪！";
+			specialeffect2 EF_HIT2;
+			percentheal -5,0;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "？！";
+			mes "搞什么";
+			mes "鬼啊？";
+			next;
+			mes "[卡奈尔]";
+			mes "现在，真正的舞娘";
+			mes "应该能自己领悟";
+			mes "媚眼的秘诀。";
+			mes "但既然我是如此";
+			mes "善良的女人，我就屈尊";
+			mes "为你讲解吧。哦呵呵～";
+			next;
+			mes "^3355FF善良的女人……？";
+			mes "可她刚刚打了你！";
+			mes "虽然下手很轻，但";
+			mes "打终究是打。^000000";
+			set DANCER_SK,8;
+			close;
+		}
+		else if (DANCER_SK == 8) {
+			mes "[卡奈尔]";
+			mes "好了，正确眨出媚眼的";
+			mes "秘诀，是让眼皮";
+			mes "随着自然的节奏";
+			mes "妩媚地移动。";
+			mes "闭上眼睛一秒钟，然后按这个节拍慢慢睁开。";
+			next;
+			mes "[卡奈尔]";
+			mes "一，二，三~";
+			mes "看着我，像";
+			mes "这样做。一，二，三~";
+			mes "现在，让我看看你试试。";
+			emotion ET_BEST;
+			next;
+			switch(select("一二三~-:一，二，散~:一，二，三~")) {
+			default:
+				mes "[卡奈尔]";
+				mes "不对，不对！";
+				mes "错了，";
+				mes "完全错了！";
+				mes "你就不能做对吗？！";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "哎、哎哟！";
+				mes "请、请不要……！";
+				mes "别再用鞭子了！";
+				specialeffect2 EF_HIT2;
+				percentheal -5,0;
+				close;
+			case 3:
+				mes "["+ strcharinfo(0) +"]";
+				mes "一，二，三~";
+				emotion ET_BEST, playerattached();
+				specialeffect2 EF_FLASHER;
+				next;
+				mes "[卡奈尔]";
+				mes "很好，就是这样。";
+				mes "现在，";
+				mes "别忘了，节奏和自然";
+				mes "这两个要素";
+				mes "对这门诱惑技巧";
+				mes "是绝对不可或缺的。";
+				emotion ET_CHUP;
+				next;
+				mes "[卡奈尔]";
+				mes "既然你已经掌握了";
+				mes "媚眼的艺术，你就";
+				mes "应该知道，你无法";
+				mes "迷惑比你强得多的人。";
+				mes "所以你的媚眼";
+				mes "不会对所有人都有效。";
+				next;
+				mes "[卡奈尔]";
+				mes "当然，我的媚眼";
+				mes "没有这个缺点。哦呵呵～";
+				mes "总之，我们该分别了。";
+				mes "希望未来的日子里，你能成长为";
+				mes "更加迷人、更有魅力的舞娘。";
+				emotion ET_SMILE;
+				next;
+				mes "^3355FF你终于学会了";
+				mes "媚眼技能。^000000";
+				set DANCER_SK,9;
+				specialeffect2 EF_ABSORBSPIRITS;
+				skill "DC_WINKCHARM",1,SKILL_PERM;
+				close;
+			}
+		}
+		else if (DANCER_SK > 8 && getskilllv("DC_WINKCHARM")) {
+			mes "[卡奈尔]";
+			mes "嗯……？";
+			mes "你还有什么";
+			mes "想问我的吗？";
+			mes "啊，你一定";
+			mes "是被我的美貌";
+			mes "迷住了，对吧？";
+			emotion ET_HNG;
+			next;
+			mes "[卡奈尔]";
+			mes "哦，如此美丽";
+			mes "一定是一种罪过！";
+			mes "我应该像我的妹妹一样，";
+			mes "去普隆德拉教堂";
+			mes "祈祷赎罪～";
+			close;
+		}
+
+		else if (DANCER_SK == 9 && getskilllv("DC_WINKCHARM") == 0) {
+			mes "[卡奈尔]";
+			mes "嗯？哦，我记得你！";
+			mes "现在是吉普赛了啊～";
+			mes "这造型很适合你。";
+			mes "我想，转生之后，";
+			mes "你一定忘了不少东西，";
+			mes "我说对了吧？看这个媚眼……";
+			next;
+			mes "[卡奈尔]";
+			mes "现在想起来了吗？一切都";
+			mes "在于眼皮自然、妩媚";
+			mes "而有节奏的移动。";
+			mes "希望你用你的媚眼";
+			mes "让你内在的美";
+			mes "绽放光彩～";
+			next;
+			mes "^3355FF你学会了";
+			mes "媚眼技能。^000000";
+			specialeffect2 EF_ABSORBSPIRITS;
+			skill "DC_WINKCHARM",1,SKILL_PERM;
+			close;
+		}
+	}
+	else if (BaseJob == Job_Dancer && JobLevel < 40) {
+		mes "[卡奈尔]";
+		mes "哦，你真是个";
+		mes "可爱的小姑娘！啊，";
+		mes "抱歉，等你到了";
+		mes "嗯，我想想，职业等级 40 级，";
+		mes "长成淑女之后，我就能";
+		mes "教你一些东西了～";
+		close;
+	}
+
+	else if (BaseJob != Job_Dancer) {
+		if (Sex == SEX_FEMALE) {
+			mes "[卡奈尔]";
+			mes "哦，多么可爱的";
+			mes "小姑娘～！还有";
+			mes "这圆滚滚的小肚子，";
+			mes "真是太——可爱了～";
+			close;
+		}
+		else {
+			mes "[卡奈尔]";
+			mes "嘿，那边那位，";
+			mes "帅哥～";
+			mes "^333333*媚眼～*^000000";
+			emotion ET_CHUP;
+			specialeffect2 EF_VALLENTINE2;
+			next;
+			mes "^3355FF奇怪的是，";
+			mes "她的媚眼";
+			mes "让你的心怦怦直跳。^000000";
+			close;
+		}
+	}
+}
+
+prontera,183,333,1	script	艾尔#qsk_dan02	79,{
+	if (BaseJob == Job_Dancer) {
+		if (DANCER_SK == 3) {
+			mes "[艾尔]";
+			mes "嘘，嘿！我这儿有";
+			mes "便宜，但稍微有点";
+			mes "非法的传送服务，去";
+			mes "兽人洞窟、古城";
+			mes "和死亡之坑。怎么样，";
+			mes "你想来一份吗？";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "其实，嗯，我来这里";
+			mes "是找人的。";
+			mes "你该不会";
+			mes "正好认识卡奈尔的";
+			mes "妹妹吧？";
+			next;
+			mes "[艾尔]";
+			mes "啊，这么说，是我那";
+			mes "自命清高的姐姐";
+			mes "派你来的，是吧？";
+			mes "看你的穿着，";
+			mes "我就该想到的。";
+			mes "那么，你想成为";
+			mes "更加迷人的表演者，嗯？";
+			next;
+			mes "[艾尔]";
+			mes "哎……";
+			mes "真失望。";
+			mes "这么说……你不是";
+			mes "来买这些传送的？";
+			mes "你确定真的不要吗？";
+			set DANCER_SK,4;
+			close;
+		}
+		else if (DANCER_SK == 4) {
+			mes "[艾尔]";
+			mes "好吧，好吧……";
+			mes "那么你是来让我教你";
+			mes "什么诱惑技巧";
+			mes "之类的，对吧？";
+			mes "哼。不过，我这堂课嘛？";
+			mes "又长又复杂。";
+			next;
+			mes "[艾尔]";
+			mes "讲那么久，解释那么多";
+			mes "错综复杂的细节，";
+			mes "我的喉咙肯定会";
+			mes "冒烟的。所以首先，";
+			mes "你得给我带点提神的";
+			mes "饮料，我们才能开始……";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "哦……好吧。";
+			mes "行，我想我可以";
+			mes "分你一两瓶药水，";
+			mes "或者带一瓶";
+			mes "果汁回来——";
+			next;
+			mes "[艾尔]";
+			mes "哇哦，哇哦，那些";
+			mes "破烂我不要！我要";
+			mes "喝真正的酒。";
+			mes "你知道，就是";
+			mes "更……^FF0000酒精^000000类的。";
+			next;
+			mes "[艾尔]";
+			mes "哦，我还需要一些";
+			mes "零食，来补充我";
+			mes "教学用的体力！对，";
+			mes "来点装在盘子里的美味水果，";
+			mes "再来点饼干！";
+			next;
+			mes "[艾尔]";
+			mes "所以呢，我想吃";
+			mes "^FF00001 个苹果^000000、^FF00003 根香蕉^000000，还有";
+			mes "^FF00005 块姜饼^000000。啊，";
+			mes "记得带上^FF0000白瓷盘^000000";
+			mes "来盛它们，还有";
+			mes "别忘了^FF0000酒精^000000，好吗？";
+			next;
+			mes "[艾尔]";
+			mes "最后一件事……！";
+			mes "别让教堂里的任何人";
+			mes "知道我们在干什么。";
+			mes "我可不想";
+			mes "惹太多麻烦！";
+			set DANCER_SK,5;
+			close;
+		}
+		else if (DANCER_SK == 5) {
+			if (countitem(970) > 0 && countitem(512) > 0 && countitem(513) > 2 && countitem(538) > 4 && countitem(736) > 0) {
+				mes "[艾尔]";
+				mes "太好了，你把";
+				mes "食物带来了！幸好";
+				mes "我饿坏了，因为";
+				mes "我要把它们全部吃光！";
+				next;
+				mes "^3355FF艾尔像一只";
+				mes "被饿了太久的";
+				mes "贪婪野兽一样，";
+				mes "狼吞虎咽地吃光了食物。^000000";
+				next;
+				mes "[艾尔]";
+				mes "太好吃了！";
+				mes "我已经好久好久";
+				mes "没有吃这么多了！";
+				mes "话又说回来，在教堂里";
+				mes "可没多少机会大吃大喝。";
+				mes "啊，对了，上课！";
+				next;
+				mes "[艾尔]";
+				mes "那么，有史以来最简单、";
+				mes "最微妙、也最动人的";
+				mes "动作，就是";
+				mes "^FF0000媚眼^000000。它曾在危机时刻";
+				mes "救过我，掌握它";
+				mes "会为你的魅力加分。";
+				next;
+				mes "[艾尔]";
+				mes "在外行眼里，";
+				mes "媚眼看起来只是";
+				mes "一个简单的动作，对吧？";
+				mes "你闭上一只眼睛，";
+				mes "然后再睁开。但如果";
+				mes "你做对了……如果你……";
+				next;
+				mes "[艾尔]";
+				mes "哦，我已经好久";
+				mes "没有喝这么多了！";
+				mes "呃，感觉有点——总之，";
+				mes "只、只要闭上眼睛，然后——";
+				mes "^333333*打嗝*^000000 媚眼";
+				mes "真是太太太太容易了～";
+				next;
+				mes "[微醉的艾尔]";
+				mes "做吧！照我的样子";
+				mes "做！媚眼，就、就";
+				mes "像这样，好吗？看到了吗？";
+				mes "^333333*媚——眼——*^000000";
+				emotion ET_BEST;
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "哇、哇哦……";
+				mes "那真是……";
+				mes "太美了！";
+				mes "而这一切只需要";
+				mes "一个简单的媚眼！";
+				next;
+				mes "[烂醉如泥的艾尔]";
+				mes "是、是啊……那个……";
+				mes "秘诀就四……";
+				mes "*嗝* 就在于——";
+				mes "哇哈哈哈哈！";
+				mes "一切都在转！";
+				emotion ET_SMILE;
+				next;
+				mes "^3355FF醉醺醺的艾尔";
+				mes "用拳头捶着你，";
+				mes "一个人疯狂地";
+				mes "大笑起来。^000000";
+				percentheal -10,0;
+				specialeffect2 EF_HIT2;
+				emotion ET_THINK, playerattached();
+				delitem 970,1; //Alchol
+				delitem 512,1; //Apple
+				delitem 513,3; //Banana
+				delitem 538,5; //Well_Baked_Cookie
+				delitem 736,1; //White_Platter
+				set DANCER_SK,6;
+				close;
+			}
+			else {
+				mes "[艾尔]";
+				mes "如果我在课上到一半";
+				mes "时饿晕过去，";
+				mes "你还指望我";
+				mes "教你什么呢？没错，";
+				mes "我需要一些既营养";
+				mes "又美味的零食吃～";
+				next;
+				mes "[艾尔]";
+				mes "所以呢，我想吃";
+				mes "^FF00001 个苹果^000000、^FF00003 根香蕉^000000，还有";
+				mes "^FF00005 块姜饼^000000。啊，";
+				mes "记得带上^FF0000白瓷盘^000000";
+				mes "来盛它们，还有";
+				mes "别忘了^FF0000酒精^000000，好吗？";
+				close;
+			}
+		}
+		else if (DANCER_SK == 6) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "你还没有告诉我，";
+			mes "让一个简单的媚眼";
+			mes "拥有如此撩人魅力的";
+			mes "秘诀";
+			mes "到底是什么。我真的需要——";
+			next;
+			mes "[醉得不省人事的艾尔]";
+			mes "呼噜呼噜……嗯？";
+			mes "四的，我知道，我……";
+			mes "我四天才，耶……";
+			mes "……呼噜呼噜……";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "醒、醒醒！";
+			mes "我费了这么大劲";
+			mes "才来学";
+			mes "这门技巧的！";
+			next;
+			mes "[不耐烦的艾尔]";
+			mes "闭嘴！";
+			mes "我困死了！";
+			mes "走、走开。去找";
+			mes "我姐姐卡奈尔……";
+			mes "……呼噜呼噜……";
+			set DANCER_SK,7;
+			close2;
+			warp "prontera",156,272;
+			end;
+		}
+		else if (DANCER_SK > 6 && DANCER_SK < 8) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "艾尔，我真的";
+			mes "需要你教我";
+			mes "关于媚眼";
+			mes "剩下的一切";
+			mes "知识——";
+			next;
+			mes "[艾尔]";
+			mes "^333333*打嗝*^000000 呼噜——啥？";
+			mes "我得教你";
+			mes "走开。去找我";
+			mes "姐姐吧，我现在太累了。";
+			mes "走开，让我静静，姑娘！";
+			close2;
+			warp "prontera",156,272;
+			end;
+		}
+		else if (DANCER_SK > 8) {
+			mes "[清醒的艾尔]";
+			mes "哦……";
+			mes "头、头痛……";
+			emotion ET_FRET;
+			next;
+			mes "[艾尔]";
+			mes "哦，天哪，看看你！";
+			mes "我看得出来，";
+			mes "你已经变得";
+			mes "美丽多了。是的，你比我";
+			mes "记忆中的样子";
+			mes "更加优雅、更加精致了。";
+			next;
+			mes "[艾尔]";
+			mes "永远相信自己的美丽，";
+			mes "把你的魅力当作武器";
+			mes "来使用……那么，这个世界上";
+			mes "你想要的任何东西";
+			mes "都会属于你！哇哈哈哈！";
+			close;
+		}
+		else {
+			mes "[艾尔]";
+			mes "嘘，嘿！我这儿有";
+			mes "便宜，但稍微有点";
+			mes "非法的传送服务，去";
+			mes "兽人洞窟、古城";
+			mes "和死亡之坑。怎么样，";
+			mes "你想来一份吗？";
+			next;
+			mes "[??????]";
+			mes "艾尔修女……";
+			mes "你又在试图";
+			mes "兜售非法传送";
+			mes "了吗？艾尔修女？";
+			next;
+			mes "[艾尔]";
+			mes "哦，糟了，是牧师！";
+			mes "嘘，如果有人问你，";
+			mes "我什么都没干！";
+			emotion ET_HUK;
+			next;
+			mes "[艾尔]";
+			mes "谢了，亲爱的……";
+			mes "我知道你会";
+			mes "把我的违禁品";
+			mes "当成我们的小秘密。^333333*媚眼*^000000";
+			emotion ET_BEST;
+			close;
+		}
+	}
+	else {
+		mes "[艾尔]";
+		mes "嘘，嘿！我这儿有";
+		mes "便宜，但稍微有点";
+		mes "非法的传送服务，去";
+		mes "兽人洞窟、古城";
+		mes "和死亡之坑。怎么样，";
+		mes "你想来一份吗？";
+		next;
+		mes "[??????]";
+		mes "艾尔修女……";
+		mes "你又在试图";
+		mes "兜售非法传送";
+		mes "了吗？艾尔修女？";
+		next;
+		mes "[艾尔]";
+		mes "哦，糟了，是牧师！";
+		mes "嘘，如果有人问你，";
+		mes "我什么都没干！";
+		emotion ET_HUK;
+		next;
+		mes "[艾尔]";
+		mes "谢了，亲爱的……";
+		mes "我知道你会";
+		mes "把我的违禁品";
+		mes "当成我们的小秘密。^333333*媚眼*^000000";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

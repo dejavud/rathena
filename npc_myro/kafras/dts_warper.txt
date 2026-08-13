@@ -1,0 +1,1293 @@
+//===== rAthena Script ======================================= 
+//= Dungeon Teleport Service
+//===== By: ================================================== 
+//= Evera
+//===== Current Version: ===================================== 
+//= 2.9a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Cool Event Corp NPCs vs. Kafra Dungeon Teleport Service and voting system.
+//= This is a special event on official servers where there's a
+//= big competition between Kafra Corp. and Cool Event Corp.
+//= To warp to selected levels of certain dungeons.
+//
+// Global Variables in use:
+//	Voting Time check:		$DTS_Time
+//	Cool Event Corp. Vote Numbers:	$DTS_JondaVotes
+//	Kafra Vote Numbers:		$DTS_KafraVotes
+//	Winner:				$DTS_Result
+//	Teleport Service Period Check:	$DTS_PeriodCheck
+//	Kafra Points:			$DTS_KafraWins
+//	Cool Event Corp. Points:	$DTS_JondaWins
+//	Setitem Check:			$DTS_VoteCount
+// For Detailed information on what each varibale does, see
+// the "Vote Globalvar Girl#yuno" NPC at the end of the file.
+// Character Variable in use: lhz_vote (how many times player has voted, keeps htem from re-voting.)
+//===== Additional Comments: ================================= 
+//= 1.0 Initial release [Evera]
+//= 1.1 SVN release, removed from major town (found true info after research),
+//=     put more arg(2) parameters, fixed a few bugs [Evera]
+//= 1.2 Mushed some variables together, optimized a bit [Evera]
+//= 1.3 Removed selfconfig [Evera]
+//= 1.4 Changed global variables to read from 3 global variables, updated names,
+//=      fixed array bug [Evera]
+//= 1.5 Mushed voting varialbes into 1 variable. [Evera]
+//= 1.6 Removed Duplicates [Silent]
+//= 1.7 Fixed bug of DTS_Admin not running by itself [Evera]
+//= 1.8 Changed requirement to lvl 60 [Evera]
+//= 1.9 Removed global eligibility option [Evera]
+//= 2.0 Fixed zeny bug [Evera]
+//= 2.1 Fixed headers with and updated with newer information [Evera]
+//= 2.2 Changed dtseligible 2 to MISC_QUEST|128, to clean up variable usage. [Evera]
+//=     Also added F_ClearGarbage function to the scripts. [Evera]
+//= 2.3 Changed dtseligible to be $dtsday when MISC_QUEST|128
+//=     Added $dtsday for vote session counter
+//=     Fixed bug that involved having both warpers enabled at the same time. [Evera]
+//=     New $dtsday system and bug fix[Evera]
+//= 2.3a fixed 2 bugs with comparision [Lupus]
+//= 2.3b corrected Glast warp coords [Lupus] 2.3c Bailand -> Bayalan
+//= 2.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.5 Converted from Aegis file. (11.3) [L0ne_W0lf]
+//= 2.6 Moved Morocc NPCs to Morocc Ruins. [L0ne_W0lf]
+//= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
+//= 2.8 Corrected another typo this time in a variable.
+//= 2.9 Added GM management function. [Euphy]
+//= 2.9a Tweaked NPC sprite & cutin used. [Liam]
+//============================================================ 
+
+einbroch,246,70,0	script	投票计时器#ein	-1,{
+OnInit:
+	if ($dts) {
+		set $dts,0;
+		set $dtsvote,0;
+		set $dtsday,0;
+	}
+	initnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	// A part that keeps the same status even after a server shut down
+	if ($DTS_Result == 1) {
+		if ($DTS_JondaWins == 0) {
+			donpcevent "投票计时器2#ein::OnEnable";
+		}
+		else if ($DTS_JondaWins == 1) {
+			if ($DTS_KafraWins < 2) {
+				donpcevent "投票计时器2#ein::OnEnable";
+			}
+			else {
+				donpcevent "投票计时器3#ein::OnEnable";
+			}
+		}
+		else {
+			if ($DTS_KafraWins < 2) {
+				donpcevent "投票计时器2#ein::OnEnable";
+			}
+			else {
+				donpcevent "投票计时器3#ein::OnEnable";
+			}
+		}
+		stopnpctimer;
+	}
+	else if ($DTS_Result == 2) {
+		if ($DTS_JondaWins == 0) {
+			donpcevent "投票计时器2#ein::OnEnable";
+		}
+		else if ($DTS_JondaWins == 1) {
+			if ($DTS_KafraWins < 2) {
+				donpcevent "投票计时器2#ein::OnEnable";
+			}
+			else {
+				donpcevent "投票计时器4#ein::OnEnable";
+			}
+		}
+		else {
+			if ($DTS_KafraWins < 2) {
+				donpcevent "投票计时器2#ein::OnEnable";
+			}
+			else {
+				donpcevent "投票计时器4#ein::OnEnable";
+			}
+		}
+		stopnpctimer;
+	}
+	else {
+		if ($DTS_Time == 1440) {
+			if (($DTS_JondaVotes >= 20) || ($DTS_KafraVotes >= 20)) {
+				if ($DTS_JondaVotes > $DTS_KafraVotes) {
+					if ($DTS_JondaWins == 0) {
+						if ($DTS_KafraWins < 2) {
+							set $DTS_KafraWins,$DTS_KafraWins+1;
+							set $DTS_Result,1;
+							set $DTS_Time,0;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else if ($DTS_KafraWins == 2) {
+							set $DTS_Result,1;
+							set $DTS_Time,0;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+					}
+					else if ($DTS_JondaWins == 1) {
+						if ($DTS_KafraWins < 2) {
+							set $DTS_KafraWins,$DTS_KafraWins+1;
+							set $DTS_Result,1;
+							set $DTS_Time,0;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else {
+							set $DTS_Time,0;
+							set $DTS_Result,1;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器3#ein::OnEnable";
+						}
+					}
+					else {
+						if ($DTS_KafraWins < 2) {
+							set $DTS_KafraWins,$DTS_KafraWins+1;
+							set $DTS_Result,1;
+							set $DTS_Time,0;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else {
+							set $DTS_Result,1;
+							set $DTS_Time,0;
+							donpcevent "审查协会#6::OnEnable";
+							donpcevent "投票计时器3#ein::OnEnable";
+						}
+					}
+				}
+				else {
+					if ($DTS_KafraWins == 0) {
+						if ($DTS_JondaWins < 2) {
+							set $DTS_JondaWins,$DTS_JondaWins+1;
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else {
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+					}
+					else if ($DTS_KafraWins == 1) {
+						if ($DTS_JondaWins < 2) {
+							set $DTS_JondaWins,$DTS_JondaWins+1;
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else {
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器4#ein::OnEnable";
+						}
+					}
+					else {
+						if ($DTS_JondaWins < 2) {
+							set $DTS_JondaWins,$DTS_JondaWins+1;
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器2#ein::OnEnable";
+						}
+						else {
+							set $DTS_Result,2;
+							set $DTS_Time,0;
+							donpcevent "审查协会#7::OnEnable";
+							donpcevent "投票计时器4#ein::OnEnable";
+						}
+					}
+				}
+			}
+			else {
+				set $DTS_Result,3;
+				set $DTS_Time,0;
+				donpcevent "投票计时器#ein::OnEnable";
+			}
+		}
+		else {
+			set $DTS_Time,$DTS_Time+1;
+			donpcevent "投票计时器#ein::OnEnable";
+		}
+	}
+	end;
+}
+
+einbroch,245,71,0	script	投票计时器2#ein	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	if ($DTS_PeriodCheck == 8640) {
+		set $DTS_PeriodCheck,0;
+		set $DTS_Result,0;
+		set $DTS_KafraVotes,0;
+		set $DTS_JondaVotes,0;
+		set $DTS_VoteCount,$DTS_VoteCount+1;
+		donpcevent "投票计时器#ein::OnEnable";
+	}
+	else {
+		set $DTS_PeriodCheck,$DTS_PeriodCheck+1;
+		donpcevent "投票计时器2#ein::OnEnable";
+	}
+	end;
+}
+
+einbroch,246,71,0	script	投票计时器3#ein	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	if ($DTS_PeriodCheck == 8640) {
+		set $DTS_PeriodCheck,0; //Global Variable
+		set $DTS_Result,0; //Global Variable
+		set $DTS_KafraVotes,0; //Global Variable
+		set $DTS_JondaVotes,0; //Global Variable
+		set $DTS_JondaWins,$DTS_JondaWins-1;
+		set $DTS_VoteCount,$DTS_VoteCount+1;
+		donpcevent "投票计时器#ein::OnEnable";
+	}
+	else {
+		set $DTS_PeriodCheck,$DTS_PeriodCheck+1; //Global Variable
+		donpcevent "投票计时器3#ein::OnEnable";
+	}
+	end;
+}
+
+einbroch,247,71,0	script	投票计时器4#ein	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	stopnpctimer;
+	if ($DTS_PeriodCheck == 8640) {
+		set $DTS_PeriodCheck,0; //Global Variable
+		set $DTS_Result,0; //Global Variable
+		set $DTS_KafraVotes,0; //Global Variable
+		set $DTS_JondaVotes,0; //Global Variable
+		set $DTS_KafraWins,$DTS_KafraWins-1;
+		set $DTS_VoteCount,$DTS_VoteCount+1;
+		donpcevent "投票计时器#ein::OnEnable";
+	}
+	else {
+		set $DTS_PeriodCheck,$DTS_PeriodCheck+1; //Global Variable
+		donpcevent "投票计时器4#ein::OnEnable";
+	}
+	end;
+}
+
+// Voting Poll NPCs Kafras and Cool Corp.
+// Cool Event Staff should actually be Cool Event Voting Staff
+// names had to be shortened to keep them unique.
+function	script	F_VoteKafra	{
+	callfunc "F_ClearGarbage";				//Clear outdated, unused variables
+	switch(getarg(0)){
+	case 1: cutin "kafra_01",2; break;
+	case 2: cutin "kafra_02",2; break;
+	case 3: cutin "kafra_03",2; break;
+	case 4: cutin "kafra_04",2; break;
+	case 5: cutin "kafra_05",2; break;
+	case 6: cutin "kafra_06",2; break;
+	case 7: cutin "kafra_07",2; break;
+	case 8: cutin "kafra_08",2; break;
+	case 9: cutin "kafra_09",2; break;
+	}
+	mes "[卡普拉投票工作人员]";
+	mes "您好,冒险者。";
+	mes "如您所知,我们正在举行选举,";
+	mes "以决定由哪家公司提供地下城传";
+	mes "送服务。";
+	mes "请问有什么可以帮您?";
+	next;
+	switch(select("竞选理由:投票:使用传送服务:取消")) {
+	case 1:
+		mes "[卡普拉投票工作人员]";
+		mes "准它企划社和卡普拉公司都计划";
+		mes "提供前往地下城的传送服务。";
+		next;
+		mes "[卡普拉投票工作人员]";
+		mes "但由于技术限制,";
+		mes "同一时间只能有一家公司提供这";
+		mes "项地下城传送服务。";
+		mes "因此,";
+		mes "两家公司同意举行特别选举。";
+		next;
+		mes "[卡普拉投票工作人员]";
+		mes "每家公司对地下城传送服务都有";
+		mes "自己的方针和保证,";
+		mes "在这场选举中,";
+		mes "最终将由顾客来决定什么对自己";
+		mes "最有利。";
+		next;
+		mes "[卡普拉投票工作人员]";
+		mes "目前,";
+		mes "地下城传送服务将以一系列试运";
+		mes "营期的方式提供。";
+		mes "这样,顾客在做出最终决定前,";
+		mes "可以亲身体验两家公司各自的好";
+		mes "处。";
+		next;
+		mes "[卡普拉投票工作人员]";
+		mes "如果您具备投票资格,";
+		mes "请在每次选举中投票,";
+		mes "决定下一试运营期由哪家公司提";
+		mes "供地下城传送服务。";
+		mes "感谢您的支持~";
+		break;
+	case 2:
+		//if (lhz_boss < 17) {
+		//	mes "[卡普拉投票工作人员]";
+		//	mes "哦,非常抱歉,";
+		//	mes "您目前不具备投票资格。";
+		//	mes "如需了解投票资格信息,";
+		//	mes "请前往艾尔帕兰的卡普拉总部。";
+		//	mes "谢谢,祝您愉快。";
+		//	close2;
+		//	cutin "",255;
+		//	end;
+		//}
+		//else {
+			if ($DTS_Result == 0) {
+				if (lhz_vote <= $DTS_VoteCount) {
+					mes "[卡普拉投票工作人员]";
+					mes "我们卡普拉公司计划向以下地下";
+					mes "城提供地下城传送服务...";
+					next;
+					if ($DTS_KafraWins == 0) {
+						mes "^FF0000玩具工厂 第2层^000000";
+					}
+					else if ($DTS_KafraWins == 1) {
+						mes "^FF0000玩具工厂 第2层^000000^FF0000艾尔帕兰钟塔 第3层^000000";
+					}
+					else {
+						mes "^FF0000玩具工厂 第2层^000000^FF0000艾尔帕兰钟塔 第3层^000000";
+						mes "^FF0000托尔火山密穴 2层^000000";
+					}
+					next;
+					mes "[卡普拉投票工作人员]";
+					mes "如果您对这些地区的传送服务感";
+					mes "兴趣,";
+					mes "请投我们一票。";
+					mes "您愿意投票支持卡普拉公司吗?";
+					next;
+					switch(select("不:愿意")) {
+					case 1:
+						mes "[卡普拉投票工作人员]";
+						mes "我明白了。";
+						mes "不过如果您改变主意,";
+						mes "随时欢迎回来。";
+						mes "谢谢,祝您愉快,冒险者。";
+						break;
+					case 2:
+						set lhz_vote,$DTS_VoteCount+1;
+						set $DTS_KafraVotes,$DTS_KafraVotes+1;
+						mes "[卡普拉投票工作人员]";
+						mes "感谢您的投票!";
+						mes "我们将继续努力,";
+						mes "为顾客提供最高质量的服务。";
+						mes "祝您愉快,";
+						mes "请记住卡普拉的服务永远与您同";
+						mes "在~";
+						break;
+					}
+				}
+				else {
+					mes "[卡普拉投票工作人员]";
+					mes "非常抱歉,";
+					mes "您已经参加过本次选举了。";
+					mes "下次选举时,";
+					mes "您就可以再次投票。";
+					mes "感谢您的支持~";
+				}
+			}
+			else if ($DTS_Result == 3) {
+				if (lhz_vote <= $DTS_VoteCount) {
+					mes "[卡普拉投票工作人员]";
+					mes "统计上次选举的票数后,";
+					mes "我们得出结论:";
+					mes "未达到最低投票参与人数。";
+					next;
+					mes "[卡普拉投票工作人员]";
+					mes "因此,将再次举行选举,";
+					mes "以决定由哪家公司提供地下城传";
+					mes "送服务。";
+					mes "卡普拉公司将传送到以下地下城";
+					mes "...";
+					next;
+					if ($DTS_KafraWins == 0) {
+						mes "^FF0000玩具工厂 第2层^000000";
+					}
+					else if ($DTS_KafraWins == 1) {
+						mes "^FF0000玩具工厂 第2层^000000^FF0000艾尔帕兰钟塔 第3层^000000";
+					}
+					else {
+						mes "^FF0000玩具工厂 第2层^000000^FF0000艾尔帕兰钟塔 第3层^000000";
+						mes "^FF0000托尔火山密穴 2层^000000";
+					}
+					next;
+					mes "[卡普拉投票工作人员]";
+					mes "如果您对这些地区的传送服务感";
+					mes "兴趣,";
+					mes "请投我们一票。";
+					mes "您愿意投票支持卡普拉公司吗?";
+					next;
+					switch(select("不:愿意")) {
+					case 1:
+						mes "[卡普拉投票工作人员]";
+						mes "我明白了。";
+						mes "不过如果您改变主意,";
+						mes "随时欢迎回来。";
+						mes "谢谢,祝您愉快,冒险者。";
+						break;
+					case 2:
+						set lhz_vote,$DTS_VoteCount+1;
+						set $DTS_KafraVotes,$DTS_KafraVotes+1;
+						mes "[卡普拉投票工作人员]";
+						mes "感谢您的投票!";
+						mes "我们将继续努力,";
+						mes "为顾客提供最高质量的服务。";
+						mes "祝您愉快,";
+						mes "请记住卡普拉的服务永远与您同";
+						mes "在~";
+						break;
+					}
+				}
+				else {
+					mes "[卡普拉投票工作人员]";
+					mes "统计上次选举的票数后,";
+					mes "我们得出结论:";
+					mes "未达到最低投票参与人数。";
+					next;
+					mes "[卡普拉投票工作人员]";
+					mes "因此,将再次举行选举,";
+					mes "以决定由哪家公司提供地下城传";
+					mes "送服务。";
+					mes "不过,由于您已经投过票,";
+					mes "本次选举无法再次投票。";
+					next;
+					mes "[卡普拉投票工作人员]";
+					mes "非常感谢您参与这些选举,";
+					mes "期待您在下次选举中再次投票。";
+					mes "谢谢,祝您愉快~";
+				}
+			}
+			else {
+				mes "[卡普拉投票工作人员]";
+				mes "非常抱歉,";
+				mes "目前没有正在进行的选举。";
+				mes "投票开始时,";
+				mes "欢迎您参与并发出自己的声音。";
+				mes "感谢您的支持~";
+			}
+		//}
+		break;
+	case 3:
+		if ($DTS_Result == 2) {
+			mes "[卡普拉投票工作人员]";
+			mes "感谢您选择地下城传送服务。";
+			mes "请注意,";
+			mes "传送免费券和卡普拉储蓄点数不";
+			mes "适用于这项特别服务。";
+			next;
+			if ($DTS_KafraWins == 0) {
+				switch(select("玩具工厂 第2层 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						cutin "",255;
+						set Zeny, Zeny-4000;
+						warp "xmas_dun02",130,123;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到玩具分类";
+						mes "场的4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 2:
+					mes "[卡普拉投票工作人员]";
+					mes "我们卡普拉公司,";
+					mes "一直努力为您提供最好的服务。";
+					mes "希望我们的服务能满足您的冒险";
+					mes "需求,";
+					mes "达到卓越的标准。";
+					break;
+				}
+			}
+			else if ($DTS_KafraWins == 1) {
+				switch(select("玩具工厂 第2层 -> 4,000 z:钟塔 第3层 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "kafra_09",255;
+						warp "xmas_dun02",130,123;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到玩具分类";
+						mes "场的4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 2:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "kafra_09",255;
+						warp "alde_dun03",265,22;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到钟塔的";
+						mes "4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 3:
+					mes "[卡普拉投票工作人员]";
+					mes "我们卡普拉公司,";
+					mes "一直努力为您提供最好的服务。";
+					mes "希望我们的服务能满足您的冒险";
+					mes "需求,";
+					mes "达到卓越的标准。";
+					break;
+				}
+			}
+			else {
+				switch(select("玩具工厂 第2层 -> 4,000 z:钟塔 第3层 -> 4,000 z:托尔火山密穴 2层 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "kafra_09",255;
+						warp "xmas_dun02",130,123;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到玩具分类";
+						mes "场的4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 2:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "kafra_09",255;
+						warp "alde_dun03",265,22;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到钟塔的";
+						mes "4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 3:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "kafra_09",255;
+						warp "mag_dun02",47,40;
+						end;
+					}
+					else {
+						mes "[卡普拉投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的钱不够支付传送到托尔火山";
+						mes "密穴 2层的4,000 zeny 费用。";
+						mes "请再确认一下您的资金。";
+					}
+					break;
+				case 4:
+					mes "[卡普拉投票工作人员]";
+					mes "我们卡普拉公司,";
+					mes "一直努力为您提供最好的服务。";
+					mes "希望我们的服务能满足您的冒险";
+					mes "需求,";
+					mes "达到卓越的标准。";
+					break;
+				}
+			}
+		}
+		else if ($DTS_Result == 1) {
+			mes "[卡普拉投票工作人员]";
+			mes "非常抱歉,";
+			mes "根据最近一次选举的结果,";
+			mes "目前由准它企划社提供地下城传";
+			mes "送服务。";
+			mes "给您带来不便,敬请谅解。";
+		}
+		else {
+			mes "[卡普拉投票工作人员]";
+			mes "非常抱歉,";
+			mes "投票期间地下城传送服务暂停。";
+			mes "选举结束后,";
+			mes "地下城传送服务就会恢复。";
+		}
+		break;
+	case 4:
+		mes "[卡普拉投票工作人员]";
+		mes "我们卡普拉公司,";
+		mes "一直努力为您提供最好的服务。";
+		mes "希望我们的服务能满足您的冒险";
+		mes "需求,";
+		mes "达到卓越的标准。";
+		break;
+	}
+	close2;
+	cutin "",255;
+	end;
+}
+
+yuno,162,191,4	script	卡普拉投票工作人员#yuno	861,{
+	callfunc "F_VoteKafra",9;
+}
+prontera,164,125,4	script	卡普拉投票工作人员#prt	116,{
+	callfunc "F_VoteKafra",2;
+}
+moc_ruins,104,133,4	script	卡普拉投票工作人员#moc	116,{
+	callfunc "F_VoteKafra",2;
+}
+geffen,122,37,4	script	卡普拉投票工作人员#gef	116,{
+	callfunc "F_VoteKafra",2;
+}
+payon,158,182,4	script	卡普拉投票工作人员#pay	116,{
+	callfunc "F_VoteKafra",2;
+}
+alberta,119,70,4	script	卡普拉投票工作人员#alb	116,{
+	callfunc "F_VoteKafra",2;
+}
+aldebaran,145,102,4	script	卡普拉投票工作人员#alde	116,{
+	callfunc "F_VoteKafra",2;
+}
+lighthalzen,163,60,4	script	卡普拉投票工作人员#lght	861,{
+	callfunc "F_VoteKafra",9;
+}
+
+-	script	准它企划社社员::VotingStaffCCE	874,{
+	callfunc "F_ClearGarbage";				//Clear outdated, unused variables
+	cutin "zonda_01",2;
+	mes "[准它企划社投票工作人员]";
+	mes "您好!";
+	mes "别忘了发出您的声音,";
+	mes "在准它企划社与卡普拉公司争夺";
+	mes "地下城传送服务经营权的选举中";
+	mes "投上您的一票!";
+	next;
+	switch(select("竞选理由:投票:使用传送服务:取消")) {
+	case 1:
+		mes "[准它企划社投票工作人员]";
+		mes "准它企划社一直计划为顾客提供";
+		mes "全新的地下城传送服务,";
+		mes "一项卡普拉公司尚未提供的服务。";
+		mes "然而...";
+		next;
+		mes "[准它企划社投票工作人员]";
+		mes "已经垄断公共传送市场的卡普拉";
+		mes "公司,";
+		mes "竟然也计划提供类似的服务。";
+		next;
+		mes "[准它企划社投票工作人员]";
+		mes "由于技术限制,";
+		mes "只能有一家公司获选提供这项地";
+		mes "下城传送服务。";
+		mes "因此,";
+		mes "我们将通过选举让顾客来决定。";
+		next;
+		mes "[准它企划社投票工作人员]";
+		mes "将举行多轮选举,";
+		mes "让顾客亲自体验每家公司各自的";
+		mes "特色服务。";
+		mes "不过请注意,";
+		mes "必须具备投票资格才能投票。";
+		next;
+		mes "[准它企划社投票工作人员]";
+		mes "如需了解投票资格详情,";
+		mes "请前往位于修发兹共和国里希塔";
+		mes "乐镇的总部。";
+		mes "感谢您抽出宝贵时间。";
+		break;
+	case 2:
+		//if (lhz_boss < 17) {
+		//	mes "[准它企划社投票工作人员]";
+		//	mes "非常抱歉,您目前";
+		//	mes "不具备投票资格。";
+		//	mes "如需了解获取投票权的相关信息,";
+		//	mes "请前往我们里希塔乐镇的总部。";
+		//	mes "感谢您抽出宝贵时间。";
+		//	close2;
+		//	cutin "zonda_01",255;
+		//	end;
+		//}
+		//else {
+			if ($DTS_Result == 0) {
+				if (lhz_vote <= $DTS_VoteCount) {
+					mes "[准它企划社投票工作人员]";
+					mes "如果准它企划社获选提供地下城";
+					mes "传送服务,";
+					mes "我们将把冒险者传送到以下地下";
+					mes "城...";
+					next;
+					if ($DTS_JondaWins == 0) {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+					}
+					else if ($DTS_JondaWins == 1) {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+						mes "^FF0000钟塔 第3层^000000";
+					}
+					else {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+						mes "^FF0000钟塔 第3层^000000^FF0000克雷斯特汉姆入口^000000";
+					}
+					next;
+					mes "[准它企划社投票工作人员]";
+					mes "如果您对这些目的地感兴趣,";
+					mes "投我们一票对您最有利。";
+					mes "您愿意投票支持准它企划社吗?";
+					next;
+					switch(select("不:愿意")) {
+					case 1:
+						mes "[准它企划社投票工作人员]";
+						mes "啊,这样啊... 那么,";
+						mes "如果您改变主意,";
+						mes "随时欢迎回来投准它企划社一票,";
+						mes "好吗?";
+						mes "祝您愉快~";
+						break;
+					case 2:
+						set lhz_vote,$DTS_VoteCount+1;
+						set $DTS_JondaVotes,$DTS_JondaVotes+1;
+						mes "[准它企划社投票工作人员]";
+						mes "感谢您的投票!";
+						mes "正是因为有您这样的顾客,";
+						mes "准它企划社才能取得成功,";
+						mes "提供您所期待的优质服务。";
+						mes "谢谢,祝您愉快~";
+						break;
+					}
+				}
+				else {
+					mes "[准它企划社投票工作人员]";
+					mes "非常抱歉,";
+					mes "您已经在本次选举中投过票了。";
+					mes "不过,";
+					mes "请不要因此放弃在下次选举中投";
+					mes "准它企划社一票~";
+				}
+			}
+			else if ($DTS_Result == 3) {
+				if (lhz_vote <= $DTS_VoteCount) {
+					mes "[准它企划社投票工作人员]";
+					mes "很遗憾,";
+					mes "上次选举的投票参与人数不足,";
+					mes "所以我们将再次举行选举,";
+					mes "以决定由哪家公司提供地下城传";
+					mes "送服务。";
+					next;
+					mes "[准它企划社投票工作人员]";
+					mes "如果准它企划社获选提供地下城";
+					mes "传送服务,";
+					mes "我们将把冒险者传送到以下地下";
+					mes "城...";
+					next;
+					if ($DTS_JondaWins == 0) {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+					}
+					else if ($DTS_JondaWins == 1) {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+						mes "^FF0000钟塔 第3层^000000";
+					}
+					else {
+						mes "^FF0000依斯鲁得海底洞穴 3层^000000";
+						mes "^FF0000钟塔 第3层^000000^FF0000克雷斯特汉姆入口^000000";
+					}
+					next;
+					mes "[准它企划社投票工作人员]";
+					mes "如果您对这些目的地感兴趣,";
+					mes "投我们一票对您最有利。";
+					mes "您愿意投票支持准它企划社吗?";
+					next;
+					switch(select("不:愿意")) {
+					case 1:
+						mes "[准它企划社投票工作人员]";
+						mes "啊,这样啊... 那么,";
+						mes "如果您改变主意,";
+						mes "随时欢迎回来投准它企划社一票,";
+						mes "好吗?";
+						mes "祝您愉快~";
+						break;
+					case 2:
+						set lhz_vote,$DTS_VoteCount+1;
+						set $DTS_JondaVotes,$DTS_JondaVotes+1;
+						mes "[准它企划社投票工作人员]";
+						mes "感谢您的投票!";
+						mes "正是因为有您这样的顾客,";
+						mes "准它企划社才能取得成功,";
+						mes "提供您所期待的优质服务。";
+						mes "谢谢,祝您愉快~";
+						break;
+					}
+				}
+				else {
+					mes "[准它企划社投票工作人员]";
+					mes "很遗憾,";
+					mes "上次选举的投票参与人数不足,";
+					mes "所以我们将再次举行选举,";
+					mes "以决定由哪家公司提供地下城传";
+					mes "送服务。";
+					next;
+					mes "[准它企划社投票工作人员]";
+					mes "感谢您已在这第二轮选举中投出";
+					mes "了自己的一票。";
+					mes "感谢您的支持~";
+				}
+			}
+			else {
+				mes "[准它企划社投票工作人员]";
+				mes "非常抱歉,";
+				mes "目前没有正在进行的选举。";
+				mes "请在下次选举中前来投票,";
+				mes "决定由哪家公司提供地下城传送";
+				mes "服务。";
+			}
+		//}
+		break;
+	case 3:
+		if ($DTS_Result == 1) {
+			mes "[准它企划社投票工作人员]";
+			mes "请记住,";
+			mes "这项服务不接受传送免费券,";
+			mes "也不累积储蓄点数。";
+			mes "那么,请选择您的目的地。";
+			next;
+			if ($DTS_JondaWins == 0) {
+				switch(select("依斯鲁得海底洞穴 3层 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "iz_dun02",234,206;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 2:
+					mes "[准它企划社投票工作人员]";
+					mes "请放心,";
+					mes "准它企划社将竭尽全力确保每一";
+					mes "位顾客满意,";
+					mes "无论老少,不分大小。";
+					mes "谢谢~";
+					break;
+				}
+			}
+			else if ($DTS_JondaWins == 1) {
+				switch(select("依斯鲁得海底洞穴 3层 -> 4,000 z:钟塔 第3层 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "iz_dun02",234,206;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 2:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "c_tower3",64,143;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 3:
+					mes "[准它企划社投票工作人员]";
+					mes "请放心,";
+					mes "准它企划社将竭尽全力确保每一";
+					mes "位顾客满意,";
+					mes "无论老少,不分大小。";
+					mes "谢谢~";
+					break;
+				}
+			}
+			else {
+				mes "[准它企划社投票工作人员]";
+				mes "请记住,";
+				mes "这项服务不接受传送免费券,";
+				mes "也不累积储蓄点数。";
+				mes "那么,请选择您的目的地。";
+				next;
+				switch(select("依斯鲁得海底洞穴 3层 -> 4,000 z:钟塔 第3层 -> 4,000 z:克雷斯特汉姆入口 -> 4,000 z:取消")) {
+				case 1:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "iz_dun02",234,206;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 2:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "c_tower3",64,143;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 3:
+					if (Zeny >= 4000) {
+						set Zeny, Zeny-4000;
+						cutin "zonda_01",255;
+						warp "glast_01",368,303;
+						end;
+					}
+					else {
+						mes "[准它企划社投票工作人员]";
+						mes "非常抱歉,";
+						mes "您的zeny不够支付传送到该目的";
+						mes "地的费用。";
+						mes "传送费用是 4,000 zeny。";
+					}
+					break;
+				case 4:
+					mes "[准它企划社投票工作人员]";
+					mes "请放心,";
+					mes "准它企划社将竭尽全力确保每一";
+					mes "位顾客满意,";
+					mes "无论老少,不分大小。";
+					mes "谢谢~";
+					break;
+				}
+			}
+		}
+		else if ($DTS_Result == 2) {
+			mes "[准它企划社投票工作人员]";
+			mes "非常抱歉,由于上次选举的结果,";
+			mes "准它企划社目前不提供地下城传";
+			mes "送服务。";
+			mes "下次请投我们一票,好吗?";
+			mes "祝您愉快~";
+		}
+		else {
+			mes "[准它企划社投票工作人员]";
+			mes "非常抱歉,";
+			mes "选举期间地下城传送服务暂停,";
+			mes "选举结果公布后恢复。";
+			mes "谢谢,祝您愉快。";
+		}
+		break;
+	case 4:
+		mes "[准它企划社投票工作人员]";
+		mes "准它企划社始终努力,";
+		mes "不仅让顾客满意,";
+		mes "更要超越您最高的期待。";
+		mes "谢谢,祝您愉快。";
+		break;
+	}
+	close2;
+	cutin "zonda_01",255;
+	end;
+}
+
+yuno,153,191,6	duplicate(VotingStaffCCE)	准它企划社社员#yuno	874
+prontera,147,125,6	duplicate(VotingStaffCCE)	准它企划社社员#prt	874
+moc_ruins,97,133,6	duplicate(VotingStaffCCE)	准它企划社社员#moc	874
+geffen,117,37,6	duplicate(VotingStaffCCE)	准它企划社社员#gef	874
+payon,153,182,6	duplicate(VotingStaffCCE)	准它企划社社员#pay	874
+alberta,114,70,6	duplicate(VotingStaffCCE)	准它企划社社员#alb	874
+aldebaran,138,102,6	duplicate(VotingStaffCCE)	准它企划社社员#alde	874
+lighthalzen,154,60,6	duplicate(VotingStaffCCE)	准它企划社社员#lhz	874
+
+yuno,103,225,0	script	审查协会#5	-1,{
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer7200000:
+	stopnpctimer;
+	if (($DTS_Result == 0) || ($DTS_Result == 3)) {
+		announce "目前,地下城传送服务经营商选举正在各大城市举行。欢迎您的参与。",bc_all,"0x70dbdb";
+	}
+	donpcevent "审查协会#5::OnEnable";
+	end;
+}
+
+einbroch,248,71,0	script	审查协会#6	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	announce "地下城传送服务经营商选举的所有选票已收齐并统计完毕。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer5000:
+	announce "结果已经揭晓...",bc_all,"0x70dbdb";
+	end;
+
+OnTimer10000:
+	announce "本次由准它企划社担任地下城传送服务经营商。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer15000:
+	announce "衷心感谢所有投票和支持的朋友。",bc_all,"0x70dbdb";
+	stopnpctimer;
+	end;
+}
+
+einbroch,249,71,0	script	审查协会#7	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	announce "地下城传送服务经营商选举的所有选票已收齐并统计完毕。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer5000:
+	announce "结果已经揭晓...",bc_all,"0x70dbdb";
+	end;
+
+OnTimer10000:
+	announce "本次由卡普拉公司担任地下城传送服务经营商。",bc_all,"0x70dbdb";
+	end;
+
+OnTimer15000:
+	announce "衷心感谢所有投票和支持的朋友。",bc_all,"0x70dbdb";
+	stopnpctimer;
+	end;
+}
+
+/*
+// GM only NPC used for modifying values related to the DTS system.
+// Disabled in official script.
+sec_in02,17,160,4	script	全局变量投票女孩#yuno	864,{
+	callfunc "F_GM_NPC";
+	mes "[克莉丝蒂的女仆]";
+	mes "克莉丝蒂小姐！";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
+		mes "[克莉丝蒂的女仆]";
+		mes "我是克莉丝蒂小姐的女仆。";
+		next;
+		switch(select("检查全局变量:Setitem 清零:修改全局变量")) {
+		case 1:
+			mes "当前全局变量为";
+			next;
+			mes "[克莉丝蒂的女仆]";
+			mes "全局 1 - 投票时间检查 : "+$DTS_Time+"";
+			mes "全局 2 - 准它企划社得票数 : "+$DTS_JondaVotes+"";
+			mes "全局 3 - 卡普拉得票数 : "+$DTS_KafraVotes+"";
+			mes "全局 4 - 获胜方 : "+$DTS_Result+"";
+			mes "全局 5 - 传送服务期间检查: "+$DTS_PeriodCheck+"";
+			mes "全局 6 - 卡普拉积分 : "+$DTS_KafraWins+"";
+			mes "全局 7 - 准它企划社积分 : "+$DTS_JondaWins+"";
+			mes "全局 8 - Setitem 检查 : "+$DTS_VoteCount+"";
+			next;
+			mes "[克莉丝蒂的女仆]";
+			mes "当前 Setitem 值为 "+lhz_vote+"。";
+			close;
+		case 2:
+			set lhz_vote,0;
+			close;
+		case 3:
+			mes "[克莉丝蒂的女仆]";
+			mes "你想修改哪个";
+			mes "全局变量的值？";
+			next;
+			switch(select("1 - 投票时间:2 - 准它企划社得票数:3 - 卡普拉得票数:4 - 获胜方:5 - 传送服务期间:6 - 卡普拉传送编号:7 - 准它企划社传送编号:8 - Setitem 值")) {
+			case 1:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 1000";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 1000)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_Time,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 2:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 1000";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 1000)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_JondaVotes,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 3:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 1000";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 1000)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_KafraVotes,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 4:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 3";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 3)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_Result,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 5:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 1000";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 1000)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_PeriodCheck,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 6:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 2";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 2)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_KafraWins,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 7:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 2";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 2)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_JondaWins,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			case 8:
+				mes "[克莉丝蒂的女仆]";
+				mes "请输入 0 到 10000";
+				mes "之间的数字。";
+				next;
+				input .@input;
+				if ((.@input < 0) || (.@input > 10000)) {
+					mes "[克莉丝蒂的女仆]";
+					mes "数值不正确。";
+					close;
+				}
+				set $DTS_VoteCount,.@input;
+				mes "[克莉丝蒂的女仆]";
+				mes "数值已修改。";
+				close;
+			}
+		}
+	}
+	else {
+		mes "[克莉丝蒂的女仆]";
+		mes "克莉丝蒂小姐……";
+		close;
+	}
+}
+*/

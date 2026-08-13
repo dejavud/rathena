@@ -1,0 +1,90 @@
+//===== rAthena Script =======================================
+//= 冰淇淋贩卖员
+//===== By: ==================================================
+//= KOOK SWU, Kisuka
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= 一个男人卖冰淇淋给你
+//===== Additional Comments: =================================
+//= 1.1 Optimized, changed overlapping coords in Alberta [Lupus]
+//= 1.2 According to the patch, IceCream seller has been removed from Morocc [Lupus]
+//= 1.3 No more label menu and updated to match AEGIS script. [Kisuka]
+//= 1.4 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 1.5 Fixed small checkweight issue. [Kisuka]
+//============================================================
+
+-	script	冰淇淋贩卖员::IceCreamer	-1,{
+	mes "[冰淇淋贩卖员]";
+	mes "用圣诞镇的雪做的";
+	mes "新鲜冰淇淋！";
+	mes "快来尝尝，过时不候！";
+	mes "^3355FF100 Zeny^000000 一个，";
+	mes "冰淇淋！冰淇淋！";
+	next;
+	if(select("给我来点冰淇淋！:取消交易") == 2) {
+		mes "你真的不要吗？";
+		mes "我卖不了多久就要收摊了，";
+		mes "一旦卖光，";
+		mes "就再也没有了！！！";
+		close;
+	}
+	mes "[冰淇淋贩卖员]";
+	mes "用圣诞镇的雪做的";
+	mes "新鲜冰淇淋！";
+	mes "人人都想要我们的美味冰淇淋，";
+	mes "但数量有限，";
+	mes "一次最多只能买 5 个！！";
+	next;
+	while(true) {
+		input .@input;
+		if(.@input < 1) {
+			mes "[冰淇淋贩卖员]";
+			mes "如果您不想买，";
+			mes "请让后面的客人";
+			mes "来购买好吗？";
+			mes "谢谢您。";
+			close;
+		}
+		if(.@input > 5) {
+			mes "[冰淇淋贩卖员]";
+			mes "哎哟";
+			mes "您也太贪心了吧。";
+			mes "这位客人，";
+			mes "要是吃下超过 5 个冰淇淋，";
+			mes "今晚您可能就要";
+			mes "不停地跑厕所了。";
+			next;
+			continue;
+		}
+		break;
+	}
+	if(Zeny<.@input*100) {
+		mes "[冰淇淋贩卖员]";
+		mes "这位客人，您的钱包好像有点瘪啊。";
+		mes "冰淇淋 ^3355FF100 Zeny^000000 一个。";
+		close;
+	}
+	if(checkweight(536,.@input) == 0) {
+		mes "[冰淇淋贩卖员]";
+		mes "这位客人，您身上带的东西好像很多啊。";
+		mes "冰淇淋虽然不占地方，";
+		mes "但购买前还是要";
+		mes "考虑一下自己的负重。";
+		close;
+	}
+	set Zeny,Zeny-100*.@input;
+	getitem 536,.@input;	// Ice_Cream
+	close;
+}
+
+// 艾尔贝塔
+alberta,120,45,2	duplicate(IceCreamer)	冰淇淋贩卖员#1	85
+
+// 梦罗克田野
+moc_fild16,88,304,4	duplicate(IceCreamer)	冰淇淋贩卖员#2	85
+
+// 梦罗克
+//morocc,160,144,4	duplicate(IceCreamer)	冰淇淋贩卖员#3	85

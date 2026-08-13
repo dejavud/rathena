@@ -1,0 +1,342 @@
+//===== rAthena Script =======================================
+//= Novice Goods Exchanger
+//===== By: ==================================================
+//= ???, rAthena Team
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Exchanges your Basic Monster drops for Red Potions.
+//===== Additional Comments: =================================
+//= 1.2 Rescripted to Aegis 10.standards. [L0ne_W0lf[
+//=     Made it easier to add new items to exhange list
+//=     meaning only the exchange is done in a function now.
+//= 1.3 Fixed dialog mix-up in function. [L0ne_W0lf]
+//= 1.4 Added checkweight, and input min/max values. [L0ne_W0lf]
+//============================================================
+
+prontera,123,102,5	script	商人#pron	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[商人]";
+		mes "哈哈！你是超人吗？";
+		mes "身上带了这么多东西！";
+		mes "还是把一些存进卡普拉仓库吧~";
+		close;
+	}
+	mes "[商人]";
+	mes "你好呀！";
+	mes "你有没有收集到坚硬外壳、";
+	mes "毛之类的东西？杰勒比结晶也行，";
+	mes "哦对，我正好需要那些。";
+	next;
+	mes "[商人]";
+	mes "当然，我不会让你白给我。";
+	mes "用 5 个坚硬外壳、10 个毛，";
+	mes "或者 10 个杰勒比结晶，";
+	mes "换你 1 瓶红色药水，怎么样？";
+	next;
+	switch(select("好啊!:我觉得太黑了!:不用了，谢谢。")) {
+	case 1:
+		mes "[商人]";
+		mes "那么，你要拿哪种东西来？";
+		mes "坚硬外壳、毛，";
+		mes "还是杰勒比结晶？";
+		next;
+		switch(select("坚硬外壳:杰勒比结晶:毛:取消")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3: callfunc "F_PotExchange",914,10;
+		case 4:
+			mes "[商人]";
+			mes "好的~ 没问题。";
+			close;
+		}
+	case 2:
+		mes "[商人]";
+		mes "太黑……？";
+		mes "你去查查这些物品的市价，";
+		mes "吃亏的其实是我才对。";
+		close;
+	case 3:
+		mes "[商人]";
+		mes "好的，没关系。";
+		mes "改变主意的话再来找我吧。";
+		close;
+	}
+}
+
+morocc,180,259,3	script	商人#Morocc	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[商人]";
+		mes "哈哈！你是超人吗？";
+		mes "身上带了这么多东西！";
+		mes "还是把一些存进卡普拉仓库吧~";
+		close;
+	}
+	mes "[商人]";
+	mes "你好呀！";
+	mes "你有没有收集到坚硬外壳、";
+	mes "羽毛之类的东西？杰勒比结晶也行，";
+	mes "哦对，我正好需要那些。";
+	next;
+	mes "[商人]";
+	mes "当然，我不会让你白给我。";
+	mes "用 5 个坚硬外壳、7 个羽毛，";
+	mes "或者 10 个杰勒比结晶，";
+	mes "换你 1 瓶红色药水，怎么样？";
+	next;
+	switch(select("好啊!:我觉得太黑了!:不用了，谢谢。")) {
+	case 1:
+		mes "[商人]";
+		mes "那么，你要拿哪种东西来？";
+		mes "坚硬外壳、羽毛，";
+		mes "还是杰勒比结晶？";
+		next;
+		switch(select("坚硬外壳:羽毛:杰勒比结晶:取消")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[商人]";
+			mes "好的~ 没问题。";
+			close;
+		}
+	case 2:
+		mes "[商人]";
+		mes "太黑……？";
+		mes "你去查查这些物品的市价，";
+		mes "吃亏的其实是我才对。";
+		close;
+	case 3:
+		mes "[商人]";
+		mes "好的，没关系。";
+		mes "改变主意的话再来找我吧。";
+		close;
+	}
+}
+
+payon,200,134,5	script	商人#pay	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[商人]";
+		mes "哈哈！你是超人吗？";
+		mes "身上带了这么多东西！";
+		mes "还是把一些存进卡普拉仓库吧~";
+		close;
+	}
+	mes "[商人]";
+	mes "你好呀！";
+	mes "你有没有收集到树根之类的东西？";
+	mes "杰勒比结晶也行，哦对，";
+	mes "我正好需要那些。";
+	next;
+	mes "[商人]";
+	mes "当然，我不会让你白给我。";
+	mes "用 6 个树根或者 10 个杰勒比结晶，";
+	mes "换你 1 瓶红色药水，怎么样？";
+	next;
+	switch(select("好啊!:我觉得太黑了!:不用了，谢谢。")) {
+	case 1:
+		mes "[商人]";
+		mes "那么，你要拿哪种东西来？";
+		mes "树根，还是杰勒比结晶？";
+		next;
+		switch(select("树根:杰勒比结晶:取消")) {
+		case 1: callfunc "F_PotExchange",902,6;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3:
+			mes "[商人]";
+			mes "好的~ 没问题。";
+			close;
+		}
+	case 2:
+		mes "[商人]";
+		mes "太黑……？";
+		mes "你去查查这些物品的市价，";
+		mes "吃亏的其实是我才对。";
+		close;
+	case 3:
+		mes "[商人]";
+		mes "好的，没关系。";
+		mes "改变主意的话再来找我吧。";
+		close;
+	}
+}
+
+aldebaran,152,63,5	script	商人#alde	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[商人]";
+		mes "哈哈！你是超人吗？";
+		mes "身上带了这么多东西！";
+		mes "还是把一些存进卡普拉仓库吧~";
+		close;
+	}
+	mes "[商人]";
+	mes "你好呀！";
+	mes "你有没有收集到昆虫外壳、";
+	mes "羽毛之类的东西？杰勒比结晶也行，";
+	mes "哦对，我正好需要那些。";
+	next;
+	mes "[商人]";
+	mes "当然，我不会让你白给我。";
+	mes "用 1 个昆虫外壳、7 个羽毛，";
+	mes "或者 10 个杰勒比结晶，";
+	mes "换你 1 瓶红色药水，怎么样？";
+	next;
+	switch(select("好啊!:我觉得太黑了!:不用了，谢谢。")) {
+	case 1:
+		mes "[商人]";
+		mes "那么，你要拿哪种东西来？";
+		mes "昆虫外壳、羽毛，";
+		mes "还是杰勒比结晶？";
+		next;
+		switch(select("昆虫外壳:羽毛:杰勒比结晶:取消")) {
+		case 1: callfunc "F_PotExchange",955,1;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[商人]";
+			mes "好的~ 没问题。";
+			close;
+		}
+	case 2:
+		mes "[商人]";
+		mes "太黑……？";
+		mes "你去查查这些物品的市价，";
+		mes "吃亏的其实是我才对。";
+		close;
+	case 3:
+		mes "[商人]";
+		mes "好的，没关系。";
+		mes "改变主意的话再来找我吧。";
+		close;
+	}
+}
+
+geffen,173,88,5	script	商人#geff	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[商人]";
+		mes "哈哈！你是超人吗？";
+		mes "身上带了这么多东西！";
+		mes "还是把一些存进卡普拉仓库吧~";
+		close;
+	}
+	mes "[商人]";
+	mes "你好呀！";
+	mes "你有没有收集到坚硬外壳、";
+	mes "蛹壳之类的东西？杰勒比结晶也行，";
+	mes "哦对，我正好需要那些。";
+	next;
+	mes "[商人]";
+	mes "当然，我不会让你白给我。";
+	mes "用 5 个坚硬外壳、6 个蛹壳，";
+	mes "或者 10 个杰勒比结晶，";
+	mes "换你 1 瓶红色药水，怎么样？";
+	next;
+	switch(select("好啊!:我觉得太黑了!:不用了，谢谢。")) {
+	case 1:
+		mes "[商人]";
+		mes "那么，你要拿哪种东西来？";
+		mes "坚硬外壳、蛹壳，";
+		mes "还是杰勒比结晶？";
+		next;
+		switch(select("坚硬外壳:蛹壳:杰勒比结晶:取消")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",915,6;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[商人]";
+			mes "好的~ 没问题。";
+			close;
+		}
+	case 2:
+		mes "[商人]";
+		mes "太黑……？";
+		mes "你去查查这些物品的市价，";
+		mes "吃亏的其实是我才对。";
+		close;
+	case 3:
+		mes "[商人]";
+		mes "好的，没关系。";
+		mes "改变主意的话再来找我吧。";
+		close;
+	}
+}
+
+function	script	F_PotExchange	{
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+
+	if (countitem(.@item_req) < .@req_amount) {
+		mes "[商人]";
+		mes "喂，你答应好的 "+ getitemname(.@item_req) +" 都到哪里去了？";
+		mes "把 "+ getitemname(.@item_req) +" 拿来！";
+		close;
+	}
+	else {
+		mes "[商人]";
+		mes "好，让我看看你身上有多少 "+ getitemname(.@item_req) +"。嗯……";
+		next;
+		mes "[商人]";
+		mes "你总共有 "+ countitem(.@item_req) +" 个 "+ getitemname(.@item_req) +"。";
+		mes "这些总共可以换 "+ (countitem(.@item_req)/.@req_amount) +" 瓶红色药水。";
+		next;
+		mes "[商人]";
+		mes "怎么样？成交吗？";
+		next;
+		if (select("成交。:不成交。") == 1) {
+			mes "[商人]";
+			mes "你想用这些 "+ getitemname(.@item_req) +" 换多少瓶红色药水，心里有数吧？";
+			next;
+			mes "[商人]";
+			mes "一次最少换 1 瓶，";
+			mes "最多换 100 瓶红色药水。";
+			mes "想反悔的话，输入 '0' 取消就行。";
+			next;
+			while(1) {
+				input .@input,0,101;
+				if (.@input == 0) {
+					mes "[商人]";
+					mes "什么……？你干嘛还要来跟我搭话？";
+					mes "真是优柔寡断，不是吗？";
+					close;
+				}
+				else if (.@input > 100) {
+					mes "[商人]";
+					mes "一次最多只能给你 100 瓶红色药水。";
+					mes "我们再来一次。";
+					next;
+				}
+				else {
+					break;
+				}
+			}
+			.@put_out_item = .@input * .@req_amount;
+			if (countitem(.@item_req) < .@put_out_item) {
+				mes "[商人]";
+				mes "哎呀，你输入的数字好像不对。";
+				mes "最好再确认一下你能换多少红色药水。";
+				close;
+			}
+			mes "[商人]";
+			mes "拿去吧！数数我给你的红色药水，应该没错。";
+			mes "谢谢，这笔买卖真不错~";
+			delitem .@item_req,.@put_out_item; //Shell
+			getitem 501,.@input; //Red_Potion
+			close;
+		}
+		mes "[商人]";
+		mes "哈~ 好吧。";
+		mes "不过，红色药水对你这样的冒险者来说，";
+		mes "不是更有用吗？";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Made it as a function. U can add your own Merchs [Lupus]
+//= 1.1a Fixed item select [KarLaeda]
+//============================================================ 

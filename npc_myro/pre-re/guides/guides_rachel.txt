@@ -1,0 +1,118 @@
+//===== rAthena Script =======================================
+//= Rachel Guide
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.2b
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Rachel City guide
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Change the while loops a bit. [L0ne_W0lf]
+//= 1.2 Deleted an Unnecessary "next;" [Samuray22]
+//	-Thanks to $ephiroth.
+//= 1.2a Fixed some errors with the loop[Samuray22]
+//	-Thanks to $ephiroth.
+//= 1.2b Deleted a unnecessary "end". [Samuray22]
+//============================================================
+
+rachel,138,146,5	script	拉赫 解说员	934,{
+	mes "[拉赫解说员]";
+	mes "欢迎来到阿卢纳贝兹教国的首都拉赫，";
+	mes "女神弗雷亚温暖的气息";
+	mes "眷顾着这座城市。";
+	mes "如果是第一次使用导览服务，";
+	mes "建议您先看看''注意事项''。";
+	set .@loop1,1;
+	while(.@loop1) {
+		next;
+		switch(select("城市导览:删除小地图上的标记:注意事项:取消")) {
+		case 1:
+			mes "[拉赫解说员]";
+			mes "只要是拉赫城里的地方，我都能为您指路。";
+			mes "您想去哪里呢？";
+			if (.@compass_check == 0) {
+				mes "需要我把这些地点";
+				mes "标记到您的小地图上吗？";
+				next;
+				if (select("是:否") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while(.@loop2) {
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+
+				switch(select("瑟斯隆尼勒:旅馆:武器店:道具店:机场:取消")) {
+				case 1:
+					mes "[拉赫解说员]";
+					mes "瑟斯隆尼勒是弗雷亚女神化身——";
+					mes "教皇驻锡的圣地，";
+					mes "沿着北边的路走就能看到。";
+					if (.@compass_check == 1) viewpoint 1,150,249,1,0xFF0000;
+					break;
+				case 2:
+					mes "[拉赫解说员]";
+					mes "旅行的疲惫可以在旅馆里消除，";
+					mes "拉赫的旅馆就是我旁边左边那栋建筑。";
+					if (.@compass_check == 1) viewpoint 1,115,149,2,0xFF00FF;
+					break;
+				case 3:
+					mes "[拉赫解说员]";
+					mes "想看看拉赫出售的武器吗？";
+					mes "武器店就在西城门附近。";
+					if (.@compass_check == 1) viewpoint 1,42,87,3,0x99FFFF;
+					break;
+				case 4:
+					mes "[拉赫解说员]";
+					mes "拉赫的道具店出售最高级的药水，";
+					mes "位置也在西城门附近。";
+					if (.@compass_check == 1) viewpoint 1,83,78,4,0x0000FF;
+					break;
+				case 5:
+					mes "[拉赫解说员]";
+					mes "机场在东城门的外面。";
+					if (.@compass_check == 1) viewpoint 1,273,125,5,0x00FF00;
+					break;
+				case 6:
+					mes "[拉赫解说员]";
+					mes "如果不想让小地图继续显示位置标记，";
+					mes "请选择''删除小地图上的标记''。";
+					set .@loop2,0;
+					break;
+				}
+			}
+			break;
+
+		case 2:
+			viewpoint 2,150,249,1,0xFF0000;
+			viewpoint 2,115,149,2,0xFF00FF;
+			viewpoint 2,42,87,3,0x99FFFF;
+			viewpoint 2,83,78,4,0x0000FF;
+			viewpoint 2,273,125,5,0x00FF00;
+			mes "[拉赫解说员]";
+			mes "好了，标记已经清除了。";
+			mes "还想了解其他地点的话，请随时告诉我。";
+			break;
+		case 3:
+			mes "[拉赫解说员]";
+			mes "使用''城市导览''时，";
+			mes "地点会被标记在屏幕右上角的小地图上。";
+			mes "如果看不到小地图，请按快捷键''ctrl+tab''，";
+			mes "或点击基本信息窗口里的''地图''按钮。";
+			mes "另外，看不全城市全貌时，";
+			mes "可以用''-''按钮缩小小地图。";
+			break;
+		case 4:
+			mes "[拉赫解说员]";
+			mes "祝您在阿卢纳贝兹";
+			mes "有一段美妙的旅程。";
+			close2;
+			set .@loop1,0;
+			break;
+		}
+	}
+	close;
+}

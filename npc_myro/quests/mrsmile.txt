@@ -1,0 +1,111 @@
+//===== rAthena Script ======================================= 
+//= 笑脸面具任务
+//===== By: ================================================== 
+//= kobra_k88, Akaru
+//===== Current Version: ===================================== 
+//= 1.4a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 用三叶幸运草、毛和杰勒比结晶交换笑脸面具。
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Fixed a little Typo error in duplicates. (bugreport:749) [Samuray22]
+//============================================================ 
+
+-	script	微笑小姐::SmileHelper	92,{
+	mes "[微笑小姐]";
+	mes "你好～你好～";
+	mes "这里是微笑小姐。";
+	mes "有什么可以为你效劳的？";
+	next;
+	switch(select("^3355FF笑脸面具^000000？:制作^3355FF笑脸面具^000000:离开")) {
+	case 1:
+		mes "[微笑小姐]";
+		mes "这是奉^5577FF国王特里斯坦三世^000000之命举办的全国活动，";
+		mes "旨在鼓励卢恩·米德加兹王国的国民";
+		mes "在更欢乐的气氛中玩耍！";
+		mes "我是^3355FF『微笑小姐』^000000，";
+		mes "以^3355FF让微笑传遍卢恩·米德加兹王国～^000000";
+		mes "的名义主持这项全国活动。";
+		next;
+		mes "[微笑小姐]";
+		mes "用简单又容易取得的物品，";
+		mes "我就可以为你提供";
+		mes "^3355FF『笑脸面具』^000000。";
+		mes "所需物品如下。";
+		next;
+		mes "[微笑小姐]";
+		mes "^3355FF10个杰勒比结晶^000000";
+		mes "^3355FF10个毛^000000";
+		mes "^3355FF10棵三叶幸运草^000000";
+		next;
+		mes "[微笑小姐]";
+		mes "通过这次活动，";
+		mes "希望大家都能幸福快乐、笑容满面，";
+		mes "与其他人聚在一起，";
+		mes "让仙境传说成为世界上最有趣的游戏。";
+		close;
+	case 2:
+		if (countitem(909) > 9 && countitem(914) > 9 && countitem(705) > 9) {
+			mes "[微笑小姐]";
+			mes "恭喜！";
+			mes "请收下这个笑脸面具。";
+			next;
+			delitem 909,10; //Jellopy
+			delitem 914,10; //Fluff
+			delitem 705,10; //Clover
+			getitem 2278,1; //Mr_Smile
+			mes "[微笑小姐]";
+			mes "国王特里斯坦三世";
+			mes "已承诺竭尽全力，让仙境传说变得更美好、更有趣。";
+			next;
+			mes "以上事项";
+			mes "由卢恩·米德加兹王国";
+			mes "公共情报局发布。";
+			close;
+		}
+		else {
+			mes "[微笑小姐]";
+			mes "哦——很遗憾，";
+			mes "你带来的物品";
+			mes "还不够制作笑脸面具。";
+			mes "^3355FF10个杰勒比结晶^000000";
+			mes "^3355FF10个毛^000000";
+			mes "^3355FF10棵三叶幸运草^000000";
+			mes "请核对以上所需物品。";
+			close;
+		}
+	case 3:
+		mes "[微笑小姐]";
+		mes "感谢你的来访。";
+		mes "我们……";
+		mes "卢恩·米德加兹王国";
+		mes "一直在努力让仙境传说";
+		mes "成为更美好、更有趣的游戏。";
+		next;
+		mes "[微笑小姐]";
+		mes "我们真诚地请求";
+		mes "你的配合。";
+		mes "以上事项";
+		mes "由卢恩·米德加兹王国公共情报局发布。";
+		close;
+	}
+}
+
+// Additional Smile Assistance staff
+alberta,113,53,4	duplicate(SmileHelper)	微笑小姐#alb	92
+aldebaran,136,135,4	duplicate(SmileHelper)	微笑小姐#alde	92
+geffen,119,107,4	duplicate(SmileHelper)	微笑小姐#gef	92
+moc_ruins,59,154,3	duplicate(SmileHelper)	微笑小姐#moc	92
+payon,186,104,5	duplicate(SmileHelper)	微笑小姐#pay	92
+prontera,157,187,4	duplicate(SmileHelper)	微笑小姐#prt	92
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working. 1.1 Optimized
+//= 1.2 updated Payon coords [Lupus]
+//= 1.3 fixed exploit [Lupus]
+//============================================================ 

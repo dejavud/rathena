@@ -1,0 +1,393 @@
+//===== rAthena Script =======================================
+//= 朱诺城
+//===== By: ==================================================
+//= KitsuneStarwind, kobra_k88, L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 朱诺城 NPC
+//===== Additional Comments: =================================
+//= Added additional npcs.  Added Metto quest. [kobra_k88]
+//= Moved item quest to quest folder. Re-edited a majority of the npcs. [kobra_k88]
+//=a Removed duplicate npcs already found in the sage quest.
+//= Fixed & Spellchecked [massdriller]
+//= 1.3 Started updating Juno NPCs based on iRO. 10% complete.
+//= 1.3.2 Started updating Juno NPCs based on iRO. 30% complete.
+//= 1.3.3 Removed Noyee NPC (it's implemented in sleipnir_seal.txt)
+//= 1.4 Updated to Aegis 10.3 standards. [L0ne_W0lf]
+//=     Added Juno Airship Representative.
+//= 1.4a Corrected a Typo error (bugreport:716) [Samuray22]
+//= 1.5 Added Renewal coordinates for Payon and Izlude. [Euphy]
+//=     Split Soldier NPCs into Pre-RE/RE (sprite change).
+//============================================================
+
+// 朱诺
+//============================================================
+yuno,184,173,4	script	朱诺 玩家#juno	729,{
+	if (rand(1,5) == 1) {
+		mes "[朱诺 玩家]";
+		mes "^3355FF朱诺^000000被一股古老而神秘的力量托在空中。";
+		next;
+		mes "[朱诺 玩家]";
+		mes "据说这股力量来自一个叫^3355FF朱诺匹斯^000000的古代文明遗迹，它比朱诺更早存在于这里。";
+		next;
+		mes "[朱诺 玩家]";
+		mes "研究显示，朱诺的能源基于^3355FF伊米尔之心碎片^000000。我听说这种能源就在朱诺匹斯曾经存在的地方被发现。";
+		next;
+		mes "[朱诺 玩家]";
+		mes "由于许多学者来到朱诺研究这种能源，我们的城市基本上是众所周知的学者圣地。";
+		close;
+	}
+	else {
+		mes "[朱诺 玩家]";
+		mes "贤者之城，";
+		mes "^3355FF朱诺，^000000由";
+		mes "三座岛屿组成。";
+		next;
+		mes "[朱诺 玩家]";
+		mes "它们是所罗门，荣誉之岛；米内塔，繁荣之岛；斯诺托拉，知识之岛。";
+		next;
+		mes "[朱诺 玩家]";
+		mes "每座岛的位置是";
+		mes "西北：所罗门";
+		mes "东北：斯诺托拉";
+		mes "南：米内塔。";
+		close;
+	}
+}
+
+yuno,337,227,4	script	朱诺祖母#juno	103,{
+	mes "[老奶奶]";
+	if (rand(1,50) == 1) {
+		if (Zeny > 999) {
+			mes "那么，你喜欢糖果吗？";
+			next;
+			mes "^3355FF老奶奶递给你一些糖果^000000。";
+			next;
+			mes "[老奶奶]";
+			mes "你已经做出了选择。你得不得到这颗糖果并不重要。那完全不重要。你必须明白为什么会发生这样的事。";
+			next;
+			mes "[老奶奶]";
+			mes "这是 ^3355FF1,000 Zeny^000000。";
+			mes "你接受吗？";
+			next;
+			if (select("接受:不接受") == 1) {
+				mes "[老奶奶]";
+				mes "*咯咯笑*";
+				mes "给你~";
+				set Zeny, Zeny-1000;
+				getitem 529,1; //Candy
+				next;
+				mes "[老奶奶]";
+				mes "*咯咯笑*";
+				mes "那么……";
+				mes "再见~";
+				close;
+			}
+			mes "[老奶奶]";
+			mes "是的，没错。现在你必须问问自己，为什么不接受我给的糖果。";
+			close;
+		}
+		else {
+			mes "*咯咯咯咯*";
+			mes "时候到了。";
+			mes "那么……";
+			close;
+		}
+	}
+	else {
+		mes "我是一个能预见一切的贤者老奶奶……";
+		next;
+		mes "[老奶奶]";
+		mes "你听说过一只在朱诺附近徘徊很久的 Boss 怪物吗？它只被称为^FF3355死灵之主^000000。";
+		next;
+		mes "[老奶奶]";
+		mes "据说它来自死者的领域。它带着许多不死怪物，意图把生物引向它冰冷如冰的领域。";
+		next;
+		mes "[老奶奶]";
+		mes "你已经选择了是否挑战死灵之主。你现在要做的，只是明白你为什么做出这个决定。";
+		close;
+	}
+}
+
+yuno,328,239,4	script	朱诺武道家#juno	732,{
+	mes "[塞尔吉奥夫]";
+	mes "我叫塞尔吉奥夫，";
+	mes "是侍奉老奶奶的";
+	mes "武道家。";
+	next;
+	mes "[塞尔吉奥夫]";
+	mes "我要告诉你关于^3355FF大嘴鸟王^000000的事，它是高级的大嘴鸟。大嘴鸟王比大嘴鸟更快，而且相当有攻击性。";
+	next;
+	mes "[塞尔吉奥夫]";
+	mes "它用强壮的喙攻击，许多大嘴鸟跟随它。大嘴鸟和大嘴鸟王之间的力量差距相当大。";
+	close;
+}
+
+yuno,343,68,4	script	朱诺绝对者#juno	730,{
+	mes "[尼诺]";
+	if (rand(1,1000) == 1) {
+		mes "你能让我告诉你这个故事，非常幸运。这只在^FF3355千分之一的机会^000000中发生。";
+		next;
+		mes "[尼诺]";
+		mes "你所体验的这个世界其实是虚构的！是时候让你看清现实的本来面目了！";
+		next;
+		mes "[尼诺]";
+		mes "睁开你的眼睛！别再被虚拟现实操纵了！";
+		close2;
+		warp "prontera",182,206;
+		end;
+	}
+	mes "你听说过一位曾被认为是神之子的埃及国王吗？他的名字是^3355FF法老^000000。";
+	next;
+	mes "[尼诺]";
+	mes "据传他是个高阶巫师，用他的力量诅咒无辜的人。据说他仍然存在，对人们施加诅咒。";
+	next;
+	mes "[尼诺]";
+	mes "作为冒险者，你在旅途中可能会见到他。小心……";
+	close;
+}
+
+yuno,165,111,4	script	朱诺贤者#juno	123,,{
+	mes "[勒·墨菲斯]";
+	if (rand(1,50) == 25) {
+		if (Zeny > 4999) {
+			mes "看我的手。我拿着两种不同的药草。";
+			next;
+			mes "[勒·墨菲斯]";
+			mes "一颗是^3355FF蓝色药草^000000，它会让你忘记现实，留在这个虚拟现实里^000000。";
+			next;
+			mes "[勒·墨菲斯]";
+			mes "另一颗是^FF3355红色药草^000000，它会向你揭示什么是真实。";
+			next;
+			mes "[勒·墨菲斯]";
+			mes "无论你选哪一颗，都必须花费 ^3355FF5,000 Zeny^000000。现在，请选择一颗。";
+			next;
+			if (select("选择 ^FF3355红色药草^000000:选择 ^3355FF蓝色药草^000000。") == 1) {
+				mes "[勒·墨菲斯]";
+				mes "如你所选，你将忘记一切，留在这个虚拟现实里。";
+				set Zeny, Zeny-5000;
+				getitem 507,1; //Red_Herb
+				close2;
+				warp "prontera",182,206;
+				end;
+			}
+			mes "[勒·墨菲斯]";
+			mes "你将看到真相。";
+			set Zeny, Zeny-5000;
+			getitem 510,1; //Blue_Herb
+			close2;
+			warp "pay_dun03",200,222;
+			end;
+		}
+		else {
+			mes "嗯。很遗憾，你刚刚错过了一个幸运的机会。不过，我看得出你没有足够的财富让这个机会成真。";
+			close;
+		}
+	}
+	else {
+		mes "^3355FF天启^000000……";
+		mes "那是很久以前守护朱诺的一个机器人的名字。";
+		next;
+		mes "[勒·墨菲斯]";
+		mes "因为它的人工智能多年来已经损坏，它再也分不清敌友。可悲的是，那个机器人现在只是一个没有心智的怪物。";
+		close;
+	}
+}
+
+yuno,157,205,4	script	朱诺匠人#juno	54,{
+	mes "[匠人]";
+	mes "*喃喃自语……*";
+	next;
+	mes "[匠人]";
+	mes "噢，你好。让我自我介绍一下。我是一个匠人，试图继承朱诺物品制造者的权利和职责。";
+	next;
+	switch(select("关于强力装备:关于独特物品:关于正宗美食:结束对话")) {
+	case 1:
+		mes "[匠人]";
+		mes "让我推荐^3355FF神圣盾牌^000000和^3355FF神圣复仇者^000000，它们是十字军的特殊物品。";
+		next;
+		mes "[匠人]";
+		mes "这些装备非常轻，能力也足够。它们恰好还拥有神圣之力。";
+		next;
+		mes "[匠人]";
+		mes "因此，这种装备对某些怪物更强大，比如幽灵或不死族。";
+		next;
+		mes "[匠人]";
+		mes "不过据传，由于稀有，只有少数被选中的十字军能得到这些物品。";
+		close;
+	case 2:
+		mes "[匠人]";
+		mes "它看起来像一张标有同心圆和星星的简单卷轴。虽然^FF3355破旧的魔法卷轴^000000非常古老，但许多贤者为了研究想要它。";
+		next;
+		mes "[匠人]";
+		mes "似乎你咏唱高阶魔法时可以使用那个物品。";
+		close;
+	case 3:
+		mes "[匠人]";
+		mes "^3355FF年糕^000000！是的，它是许多人喜爱的传统食物。有很多关于老式市场的怀旧回忆与年糕相连。";
+		next;
+		mes "[匠人]";
+		mes "啊~";
+		mes "我希望现在能吃一点年糕。";
+		close;
+	case 4:
+		mes "[匠人]";
+		mes "虽然朱诺以贤者之城闻名，但我希望你明白，普通人也在这里生活和繁荣。请享受朱诺提供的独特氛围。";
+		close;
+	}
+}
+
+-	script	::JunoSoldier1	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "这附近有一种叫熔岩巨人的怪物。这个巨人由一颗石心构成，当它被熔岩冲走时，力量恰好被魔力放大了。";
+	next;
+	mes "[朱诺士兵]";
+	mes "从它身上滴落的熔岩非常烫，能熔化用优质钢制成的铠甲和武器。";
+	next;
+	mes "[朱诺士兵]";
+	mes "你遇到这个怪物时最好小心。它会在眨眼之间损坏铠甲和武器。";
+	close;
+}
+
+-	script	::JunoSoldier2	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "地理学者……";
+	mes "那种怪物看起来像从地上开出的花。";
+	next;
+	mes "[朱诺士兵]";
+	mes "奇怪的是，它能把身体伸到很远的地方。即使你离它很远，它仍然能构成威胁。";
+	next;
+	mes "[朱诺士兵]";
+	mes "这个怪物的名字源于一个故事，关于一个可怜的地理学者，不幸的是，他沉浸在研究中时被这个怪物吃掉了。";
+	close;
+}
+
+-	script	::JunoSoldier3	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "朱诺附近存在一个名叫'假天使'的堕落天使。它假装无辜，假装祝福冒险者，然后毫无预警地从背后刺他们。";
+	next;
+	mes "[朱诺士兵]";
+	mes "别被它的外表欺骗，否则你会陷入麻烦。";
+	close;
+}
+
+-	script	::JunoSoldier4	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "'山羊'是一种怪物，它原本是生活在高山上的羚羊，不知怎的变成了怪物。";
+	next;
+	mes "[朱诺士兵]";
+	mes "即使你设法躲开它的角，你仍然需要小心它有力的腿。";
+	next;
+	mes "[朱诺士兵]";
+	mes "山羊的腿之所以这么强壮，是因为它不忙着屠杀无辜时总是在爬悬崖。";
+	close;
+}
+
+-	script	::JunoSoldier5	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "你见过";
+	mes "大杰勒比吗？";
+	mes "那些东西好大！";
+	next;
+	mes "[朱诺士兵]";
+	mes "很难相信";
+	mes "这么大又";
+	mes "闪亮的杰勒比竟然存在！";
+	close;
+}
+
+-	script	::JunoSoldier6	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "在贤者的武器中，有一把'反击匕首'。";
+	next;
+	mes "[朱诺士兵]";
+	mes "它的用途限于贤者职业，能提高发动暴击的几率。所以，对贤者来说，那把匕首非常有用，还能让他们在战斗中看起来很帅。";
+	close;
+}
+
+-	script	::JunoSoldier7	-1,{
+	mes "[朱诺士兵]";
+	mes "欢迎来到朱诺，高尚之城。";
+	next;
+	mes "[朱诺士兵]";
+	mes "有一面名叫'神圣使命'的圣盾，只有十字军能使用。";
+	next;
+	mes "[朱诺士兵]";
+	mes "它是一面细长的盾牌，正面中央刻着天使翅膀。对恶魔和不死怪物，它特别强大。";
+	close;
+}
+
+yuno,142,183,5	script	飞空艇 宣传人员	100,{
+	mes "[飞空艇 宣传人员]";
+	mes "你好，我在这里向你介绍";
+	mes "我们计划在不久的将来";
+	mes "运营的朱诺飞空艇。";
+	next;
+	mes "[飞空艇 宣传人员]";
+	mes "不幸的是，它仍在";
+	mes "开发中，我们还没";
+	mes "完成测试。不过，";
+	mes "我们觉得有必要让";
+	mes "热切的顾客知道";
+	mes "我们的进展。";
+	next;
+	mes "[飞空艇 宣传人员]";
+	mes "我们正在开发的飞空艇将为你提供前往任何城镇的便捷旅行。你也可以在空中欣赏风景。还会提供各地的独特产品。";
+	next;
+	mes "[飞空艇 宣传人员]";
+	mes "我们向顾客承诺，";
+	mes "一旦飞空艇投入";
+	mes "运营，将带来";
+	mes "惊人的旅行体验。在此期间，";
+	mes "我们提供一项特别的";
+	mes "传送服务。";
+	next;
+	mes "[飞空艇 宣传人员]";
+	mes "传送费是 1,800 Zeny，无论你想去哪里。请告诉我你想去的目的地。";
+	next;
+	switch(select("普隆德拉:依斯鲁得岛:吉芬:梦罗克:斐扬:艾尔贝塔:克魔岛:取消")) {
+		case 1: callsub S_Warp,"prontera",116,72;
+		case 2: if (checkre(0)) callsub S_Warp,"izlude",128,98; else callsub S_Warp,"izlude",94,103;
+		case 3: callsub S_Warp,"geffen",120,39;
+		case 4: callsub S_Warp,"morocc",156,46;
+		case 5: if (checkre(0)) callsub S_Warp,"payon",162,59; else callsub S_Warp,"payon",69,100;
+		case 6: callsub S_Warp,"alberta",117,56;
+		case 7: callsub S_Warp,"comodo",209,143;
+		case 8: close;
+	}
+
+	S_Warp:
+	if (Zeny >= 1800) {
+		set Zeny, Zeny-1800;
+		warp getarg(0),getarg(1),getarg(2);
+		end;
+	}
+	else {
+		mes "[飞空艇 宣传人员]";
+		mes "很遗憾，你带的钱不够。";
+		mes "请检查一下你有多少 Zeny。";
+		close;
+	}
+}

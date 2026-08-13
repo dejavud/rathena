@@ -1,0 +1,2186 @@
+//===== rAthena Script =======================================
+//= 塔拿之塔任务
+//===== By: ==================================================
+//= Muad_Dib
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 第 13.1 章 塔拿之塔任务。
+//===== Additional Comments: =================================
+//= 1.0 Adapted from official release. [Euphy]
+//= 1.0a Added 'npcskill' command. [Euphy]
+//= 1.1 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
+//============================================================
+
+hu_fild01,140,163,5	script	守塔人	852,3,3,{
+	mes "[伽铁]";
+	mes "你好，冒险者。";
+	mes "我是塔拿之塔的守塔人";
+	mes "伽铁·克努姆。";
+	mes "有什么可以帮你的吗？";
+	next;
+	switch(select("塔拿之塔？:入场费？:进入塔内:取消")) {
+	case 1:
+		mes "[伽铁]";
+		mes "是的，你面前的这座塔";
+		mes "是一处古代遗迹，";
+		mes "它的名字来自塔内出土的";
+		mes "一块石板上刻着的词语。";
+		mes "如今，这里已经成了";
+		mes "一处热门的旅游景点。";
+		next;
+		mes "[伽铁]";
+		mes "自从雷肯贝公司开始";
+		mes "对这座塔进行重建工程后，";
+		mes "它在冒险者中越来越有名。";
+		mes "目前 1 层和 2 层已经修复完毕，";
+		mes "并且清除了所有怪物。";
+		next;
+		mes "[伽铁]";
+		mes "不过，3 层及以上楼层的";
+		mes "重建尚未完成。那些楼层";
+		mes "仍然怪物横行，所以我们正在";
+		mes "雇用临时工去消灭它们。";
+		next;
+		mes "[伽铁]";
+		mes "如果你对临时合同工作感兴趣，";
+		mes "或者想详细了解这个地方，";
+		mes "请去问里面的向导。";
+		mes "祝你参观愉快~";
+		close;
+	case 2:
+		mes "[伽铁]";
+		mes "欢迎各位前来参观塔拿之塔。";
+		mes "目前只有 1 层和 2 层对公众开放。";
+		mes "入场费为每人 5,000 zeny。";
+		next;
+		mes "[伽铁]";
+		mes "5,000 zeny 对一个景点来说";
+		mes "可能有点贵，但相信我，";
+		mes "这座塔会给你带来非常独特的体验。";
+		mes "另外，老顾客和合同工还有特别优惠~";
+		close;
+	case 3:
+		mes "[伽铁]";
+		mes "你要进入塔拿之塔吗？";
+		mes "入场费是 ^FF00005,000 zeny^000000。";
+		next;
+		switch(select("进入:下次再说吧。")) {
+		case 1:
+			if (thana_tower > 0) {
+				mes "[伽铁]";
+				mes "哦，"+strcharinfo(0)+"！";
+				mes "欢迎回来！既然你有";
+				mes "雷肯贝的临时工作合同，";
+				mes "你的入场费只要 3,000 zeny。";
+				next;
+				switch(select("进入:不用了。")) {
+				case 1:
+					if (Zeny > 2999) {
+						mes "[伽铁]";
+						mes "谢谢，请继续努力工作。";
+						mes "啊，别忘了：和那些怪物";
+						mes "战斗时安全第一！";
+						set Zeny, Zeny - 3000;
+						close2;
+						warp "tha_scene01",131,220;
+						end;
+					}
+					mes "[伽铁]";
+					mes "哦，抱歉……你的 zeny 好像不够。";
+					mes "算了，晚点再来吧~";
+					close;
+				case 2:
+					mes "[伽铁]";
+					mes "那你一定很忙。";
+					mes "别担心，我们随时都在这里。";
+					mes "再见~";
+					close;
+				}
+			}
+			if (Zeny > 4999) {
+				mes "[伽铁]";
+				mes "啊，已经收到你的入场费了。";
+				mes "非常感谢。";
+				mes "祝你在塔拿之塔参观愉快~";
+				close2;
+				set Zeny, Zeny - 5000;
+				warp "tha_scene01",131,220;
+				end;
+			}
+			mes "[伽铁]";
+			mes "嗯……";
+			mes "抱歉，你的 zeny";
+			mes "好像不够付入场费。";
+			mes "请稍后再来……";
+			close;
+		case 2:
+			mes "[伽铁]";
+			mes "好的。欢迎你再来";
+			mes "塔拿之塔参观。";
+			close;
+		}
+	case 4:
+		mes "[伽铁]";
+		mes "嗯？好的。";
+		mes "如果你想参观这座塔拿之塔，";
+		mes "请随时来找我。";
+		mes "祝你愉快。";
+		close;
+	}
+
+OnTouch_:
+	mes "[守塔人]";
+	mes "抱歉，你不能进入。";
+	mes "这个地方由雷肯贝公司管理，";
+	mes "未经许可，禁止入内。";
+	close;
+}
+
+tha_t01,149,78,4	script	向导	90,{
+	if (thana_tower == 0) {
+		mes "[迪切]";
+		mes "欢迎来到塔拿之塔。";
+		mes "这座塔的重建是雷肯贝公司的项目，";
+		mes "1 层和 2 层现在已经对公众开放。";
+		mes "那么，今天有什么可以帮你的吗？";
+		next;
+		switch(select("塔的信息:临时工作合同:取消")) {
+		case 1:
+			mes "[迪切]";
+			mes "这座塔是何时建造的，";
+			mes "由谁建造的，用途是什么，";
+			mes "全都是谜。有很多传言说";
+			mes "它是法师的实验室、";
+			mes "英雄的纪念碑，或者恶魔的要塞……";
+			next;
+			mes "[迪切]";
+			mes "雷肯贝公司一直在研究";
+			mes "这座塔的起源，但至今";
+			mes "未能确认任何事情。虽然我们";
+			mes "已经有许多研究员被塔里的怪物夺去了生命，但我们不会放弃！";
+			next;
+			mes "[迪切]";
+			mes "雷肯贝公司坚信这座塔";
+			mes "藏着许多秘密，并为了追寻";
+			mes "这些知识，成功重建了";
+			mes "这座塔的前两层。";
+			next;
+			mes "[迪切]";
+			mes "目前，我们正集中精力";
+			mes "重建塔的 3 层和 4 层。";
+			mes "幸运的是，许多冒险者";
+			mes "以临时合同工的身份";
+			mes "在那些楼层消灭怪物。";
+			next;
+			mes "[迪切]";
+			mes "照这个进度，我们预计";
+			mes "在不久的将来就能完成";
+			mes "3 层和 4 层的重建，";
+			mes "离开放塔拿之塔全部 12 层的目标也更近了。";
+			next;
+			switch(select("塔里的怪物？:临时合同工作？:……")) {
+			case 1:
+				mes "[迪切]";
+				mes "是的，当我们开始重建";
+				mes "塔拿之塔时，这些看起来";
+				mes "像天使的怪物不知从哪里冒出来，";
+				mes "攻击所有工人。";
+				next;
+				mes "[迪切]";
+				mes "起初，目击者以为";
+				mes "这些怪物可能是";
+				mes "真正的天使。但如果是这样，";
+				mes "它们为什么无缘无故地攻击人呢？";
+				next;
+				mes "[迪切]";
+				mes "总之，我们请朱诺贤者学院";
+				mes "进行了调查，他们确认";
+				mes "这些天使般的生物是真正的怪物——";
+				mes "它们与天使相似纯属巧合。";
+				close;
+			case 2:
+				mes "[迪切]";
+				mes "你可能已经从守塔人那里听说了，";
+				mes "我们正在以临时工的形式";
+				mes "雇用冒险者去消灭";
+				mes "3 层及以上楼层的塔中怪物。";
+				next;
+				mes "[迪切]";
+				mes "我负责雇用临时合同工，";
+				mes "如果你有兴趣就来找我谈谈。";
+				mes "在塔拿之塔，只有临时工";
+				mes "才能进入上面的楼层。";
+				next;
+				goto L_Contract;
+			case 3:
+				mes "[迪切]";
+				mes "为了开发 2 层以上的楼层，";
+				mes "我们需要雇用尽可能多的";
+				mes "临时合同工。你何不考虑";
+				mes "以临时合同工的身份为我们工作呢？";
+				close;
+			}
+		case 2:
+			mes "[迪切]";
+			mes "你可能已经从守塔人那里听说了，";
+			mes "我们正在以临时工的形式";
+			mes "雇用冒险者去消灭";
+			mes "3 层及以上楼层的塔中怪物。";
+			next;
+			mes "[迪切]";
+			mes "我负责雇用临时合同工，";
+			mes "如果你有兴趣就来找我谈谈。";
+			mes "在塔拿之塔，只有临时工";
+			mes "才能进入上面的楼层。";
+			next;
+			goto L_Contract;
+		case 3:
+			mes "[迪切]";
+			mes "那么，如果你有任何问题，";
+			mes "稍后随时来问我。";
+			mes "我的名字是迪切·拉帕。";
+			mes "祝你愉快！";
+			close;
+		}
+	}
+	mes "[迪切]";
+	mes "关于怪物剿灭的更详细信息，";
+	mes "请问 2 层向导和我旁边的向导。";
+	mes "那么，祝你在雷肯贝公司";
+	mes "工作顺利~";
+	close;
+
+L_Contract:
+	switch(select("下次再说吧:好的，我想为你们工作。")) {
+	case 1:
+		mes "[迪切]";
+		mes "嗯，好吧。";
+		mes "不过一旦你决定要为雷肯贝工作，";
+		mes "帮助重建这座塔，";
+		mes "请尽快来找我。";
+		close;
+	case 2:
+		mes "[迪切]";
+		mes "太好了！";
+		mes "请先填一下这份雇佣协议。";
+		mes "让我看看。你的名字是……";
+		mes strcharinfo(0) + "，对吧？";
+		next;
+		select("是的");
+		mes "[迪切]";
+		mes "好的，请仔细阅读这份协议。";
+		mes "如果你同意所有条款，";
+		mes "就在最下面签名吧。";
+		next;
+		mes "^3355FF迪切递给你一份";
+		mes "雇佣协议文件供你阅读。^000000";
+		next;
+		mes "- 雇佣协议 -";
+		mes " ";
+		mes "1. 本雇佣协议在雷肯贝公司";
+		mes "（''雇主''）与";
+		mes "（''雇员''）"+strcharinfo(0)+"之间生效。";
+		mes "1-1. 本雇佣协议在双方之间";
+		mes "归类为佣兵合同。";
+		mes "2. 本合同条款自双方";
+		mes "（雇主与雇员）签字后";
+		mes "立即生效。";
+		mes "3. 雇员执行任务时，";
+		mes "任务结果必须以可接受的";
+		mes "实物证明进行核实，";
+		mes "并提交给雇主。";
+		mes "3-1. 怪物剿灭的可接受证明";
+		mes "示例请参见第 7A 节。";
+		mes "3-2. 可接受的证明由";
+		mes "雇主代表确定和定义。";
+		mes "4. 雇主在收到剿灭证明后";
+		mes "向雇员分配报酬。";
+		mes "4-1. 怪物剿灭的可能报酬";
+		mes "包括以下内容。";
+		mes ".................................................";
+		mes ".................................................";
+		mes ".................................................";
+		mes ".................................................";
+		mes ".................................................";
+		mes "13. 本合同条款仅适用于";
+		mes "塔拿之塔内。";
+		mes "14. 雇员可享受";
+		mes "塔拿之塔入场费折扣。";
+		mes " ";
+		mes " ";
+		mes " ";
+		mes "雇主签名____________";
+		mes "雇员签名____________";
+		next;
+		switch(select("签名:不签名")) {
+		case 1:
+			mes "^3355FF你在两份雇佣协议上签了名。^000000";
+			next;
+			mes "[迪切]";
+			mes "谢谢。现在，你已经是";
+			mes "雷肯贝公司的正式员工了！";
+			mes "嗯，虽然只限于这座塔内。";
+			mes "这份合同不适用于这个地方以外。";
+			next;
+			mes "[迪切]";
+			mes "从现在起，你可以找 2 层向导";
+			mes "进入 3 层。如果你对任务报酬";
+			mes "有任何疑问，请问 ^3355FF李业^000000。";
+			next;
+			mes "[迪切]";
+			mes "如果你想了解更多";
+			mes "关于你工作的信息，";
+			mes "请和 2 层向导谈谈。";
+			mes "谢谢，欢迎加入雷肯贝公司~";
+			set thana_tower, 1;
+			close;
+		case 2:
+			mes "[迪切]";
+			mes "哦？合同里有你不同意的条款吗？";
+			mes "嗯。好吧，没关系。";
+			mes "不过如果你改变主意，";
+			mes "随时回来找我。谢谢~";
+			close;
+		}
+	}
+}
+
+tha_t01,140,78,4	script	向导#reward	831,{
+	mes "[李业]";
+	if (thana_tower == 0) {
+		mes "你好，我是塔拿之塔";
+		mes "雇员任务报酬部的";
+		mes "李业·库尼兹特。";
+		next;
+		switch(select("雇员的任务报酬？:祝你工作顺利。")) {
+		case 1:
+			mes "[李业]";
+			mes "目前，雷肯贝公司正在";
+			mes "雇用临时工来开发";
+			mes "塔拿之塔的高层。";
+			mes "如果你想申请，";
+			mes "请问我旁边的迪切。";
+			close;
+		case 2:
+			mes "[李业]";
+			mes "谢谢。啊，祝你在";
+			mes "塔拿之塔参观愉快。";
+			close;
+		}
+	}
+	mes "啊，你好~";
+	mes "有什么可以帮你的吗？";
+	next;
+	if(select("领取报酬:没事") == 2) {
+		mes "[李业]";
+		mes "那么，好的。";
+		mes "请尽力消灭";
+		mes "塔拿之塔高层的怪物吧~";
+		close;
+	}
+	mes "[李业]";
+	mes "你是"+strcharinfo(0)+"，对吧？";
+	mes "让我查一下临时工记录——啊。";
+	mes "找到了。那么，请告诉我";
+	mes "你带来了什么任务证明？";
+	next;
+	setarray .@Items[1],7435,7440,7441,7442;
+	set .@i, select("金色手环:红色羽毛:蓝色羽毛:受诅咒的印");
+	mes "[李业]";
+	if (!countitem(.@Items[.@i])) {
+		mes "抱歉，你身上没有带";
+		mes callfunc("F_GetPlural",getitemname(.@Items[.@i]))+"。";
+		mes "请再检查一次你的物品栏，";
+		mes "然后再来找我兑换报酬，好吗？";
+		close;
+	}
+	mes "每个";
+	mes getitemname(.@Items[.@i])+"的报酬是……";
+	mes " ";
+	mes "1,000 zeny";
+	//mes "2,000 EXP";
+	next;
+	set .@zeny_tt,(countitem(.@Items[.@i]) * 1000);
+	//set .@exp_tt,(countitem(.@Items[.@i]) * 2000);
+	mes "[李业]";
+	mes "你一共带来了 "+callfunc("F_InsertPlural",countitem(.@Items[.@i]),getitemname(.@Items[.@i]))+"，";
+	mes "所以你将获得总共……";
+	mes " ";
+	mes ""+.@zeny_tt+" zeny";
+	//mes ""+.@exp_tt+" EXP";
+	next;
+	mes "[李业]";
+	mes "你要现在用你所有的";
+	mes callfunc("F_GetPlural",getitemname(.@Items[.@i]))+"兑换报酬吗？";
+	next;
+	switch(select("是:否")) {
+		case 1:
+			mes "[李业]";
+			mes "太好了！这是你的";
+			mes .@zeny_tt+" zeny。谢谢，";
+			//mes .@exp_tt+" EXP. Thank you,";
+			mes "请继续努力工作~";
+			delitem .@Items[.@i], countitem(.@Items[.@i]);
+			set Zeny, Zeny + .@zeny_tt;
+			//getexp .@exp_tt,0;
+			close;
+		case 2:
+			mes "[李业]";
+			mes "好的，没问题。";
+			mes "想领取报酬的时候，";
+			mes "随时回来找我，好吗？";
+			close;
+	}
+}
+
+tha_t02,231,161,5	script	入口向导	874,{
+	mes "[布拉德]";
+	if (thana_tower == 0) {
+		mes "你现在位于 3 层入口前。";
+		mes "只有签约的临时工";
+		mes "才获准进入该区域。";
+		mes "有关雷肯贝临时合同的信息，";
+		mes "请问 2 层向导。";
+		close;
+	}
+	mes "这里是通往 3 层的通道。";
+	mes "只有签约人员才能进入。";
+	mes "有什么可以帮你的吗？";
+	next;
+	switch(select("让我去 3 层。:塔的信息。:聊聊天。")) {
+	case 1:
+		mes "[布拉德]";
+		mes "哦，好的。让我查一下";
+		mes "你是否在临时工名单上。嗯……";
+		mes "啊，你是"+strcharinfo(0)+"，对吧？";
+		next;
+		mes "[布拉德]";
+		if (getareausers("tha_t02",226,156,236,166) < 5) {
+			mes "首先，我们需要等到至少";
+			mes "5 名临时工集合组成工作组。";
+			mes "目前，总共有";
+			mes getareausers("tha_t02",226,156,236,166)+" 名临时工";
+			mes "在等待进入 3 层。";
+			next;
+			mes "[布拉德]";
+			mes "如果可以的话，请叫你的朋友";
+			mes "到我附近来帮你。请理解，";
+			mes "出于各种安全原因，";
+			mes "我们有临时工组队人数的要求。";
+			close;
+		}
+		mes "太好了，你来得正是时候。";
+		mes "我们刚好凑齐了最低 5 人的";
+		mes "临时工队伍，很快就会打开";
+		mes "通往 3 层的大门。";
+		next;
+		mes "[布拉德]";
+		mes "通往 3 层的大门很快就会关闭，";
+		mes "请尽快进入。我们必须尽快关门，";
+		mes "因为不能让塔里的怪物";
+		mes "跑到下面的楼层来……";
+		if (thana_tower > 3) {
+			next;
+			mes "^4d4dff布拉德轻轻一笑，只有我注意到了。";
+			mes "我点点头，然后看着他打开了大门。^000000";
+		}
+		close2;
+		donpcevent "3rdf_warp#tt::OnEnable";
+		end;
+	case 2:
+		mes "[布拉德]";
+		mes "这扇门是连接 3 层的唯一通道。";
+		mes "4 层之后，楼层之间的通道";
+		mes "只能单向通行，也就是说，";
+		mes "你无法从进来的路出去。";
+		next;
+		mes "[布拉德]";
+		mes "你看，有一种奇怪的力量";
+		mes "影响着 5 层及以上的所有楼层，";
+		mes "它不允许人们从进入楼层的";
+		mes "通道原路返回。";
+		next;
+		mes "[布拉德]";
+		mes "所以如果你要上到 4 层以上，";
+		mes "请小心行事，并确保";
+		mes "找到回来的路。";
+		next;
+		mes "[布拉德]";
+		mes "顶层是 12 层，";
+		mes "随着你不断向上，怪物也越来越强。";
+		mes "地理特征也会发生很大变化。";
+		next;
+		mes "[布拉德]";
+		mes "因为高层太危险了，";
+		mes "我们只在集齐 5 人以上时";
+		mes "才打开 3 层大门。因此，";
+		mes "如果临时工不足 5 人，";
+		mes "你可能需要等待。";
+		close;
+	case 3:
+		if (thana_tower < 3) {
+			mes "[布拉德]";
+			mes "……？";
+			mes "你有什么问题吗？";
+			next;
+			if(select("关于开发的事。:准它企划社和雷肯贝公司的关系。:没有。") == 3) {
+				mes "[布拉德]";
+				mes "保重。";
+				close;
+			}
+			mes "[布拉德]";
+			mes "……嗯，你好奇心挺强的。";
+			mes "如果你想知道更多，能帮我个忙吗？";
+			mes "毕竟你问的是我们的机密信息……";
+			next;
+			if(select("真的？别吓我啊。:直接告诉我吧。:我以后再听。") == 3) {
+				mes "[布拉德]";
+				mes "如你所愿……";
+				mes "保重！";
+				close;
+			}
+			mes "[布拉德]";
+			mes "哈哈。这没什么大不了的。";
+			mes "我们准它企划社是一家经营众多业务领域的公司。";
+			mes "从简单的活动策划、地下城向导，到物品贸易。";
+			next;
+			mes "[布拉德]";
+			mes "虽然我们的生意起步时很小，但在雷肯贝公司的帮助下越做越大。";
+			mes "他们提议一起开发这座塔。";
+			next;
+			mes "[布拉德]";
+			mes "雷肯贝公司只负责发掘遗迹用于研究。";
+			mes "其余部分将建成观光景点，这正是准它企划社擅长管理的。";
+			next;
+			mes "[布拉德]";
+			mes "这是有史以来最大的生意。";
+			mes "作为旅游景点也相当赚钱。";
+			mes "但是……";
+			next;
+			mes "[布拉德]";
+			mes "塔内出现了相当强大的怪物。";
+			mes "这些怪物以前并不在那里出没。";
+			mes "而那件事发生后的第二天……";
+			next;
+			mes "[布拉德]";
+			mes "……总之，有一些意外出现的怪物，也出了一些乱子……";
+			mes "我们和雷肯贝公司都受到了冲击。";
+			mes "经济上受到了影响，但更严重的是……";
+			next;
+			mes "[布拉德]";
+			mes "许多参与开发的工作人员";
+			mes "来到 3 层，牺牲了自己。";
+			next;
+			mes "[布拉德]";
+			mes "我们在这笔生意上倾注了全部心血，却发生了那样的事故……";
+			mes "最终我们与雷肯贝公司合并了。";
+			next;
+			mes "[布拉德]";
+			mes "开发暂时搁置了。";
+			mes "改成了招募冒险者去打倒怪物……";
+			mes "这不是很好笑吗？";
+			next;
+			mes "[布拉德]";
+			mes "不管那里发生了什么，冒险者都不会受重伤。";
+			mes "即使他们不去查明事故的根源……";
+			next;
+			switch(select("哦……:你说的是什么事故？")) {
+			case 1:
+				mes "[布拉德]";
+				mes "是啊，也没什么大不了的。哈哈……";
+				mes "既然我们在这里工作……";
+				mes "总会知道那些生灵死亡的事。";
+				next;
+				mes "[布拉德]";
+				mes "准它企划社被视为追随者……";
+				mes "他们既不澄清死了多少人，";
+				mes "也不说明任何原因。";
+				next;
+				mes "[布拉德]";
+				mes "现在你对这件事感到好奇了。";
+				mes "他们到底在为什么牺牲？";
+				next;
+				mes "[布拉德]";
+				mes "我说得太多了。";
+				mes "抱歉，我本不该这样谈论这件事……";
+				mes "只是一直很在意罢了。";
+				set thana_tower, 3;
+				close;
+			case 2:
+				mes "[布拉德]";
+				mes "如果你答应帮我一个忙……";
+				next;
+				switch(select("好！我答应。:不，我不干。")) {
+				case 1:
+					callsub L_Request;
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "（那事故是什么……？";
+					mes "他以后也许会告诉我……）";
+					close;
+				case 2:
+					mes "[布拉德]";
+					mes "……没办法……";
+					mes "他们要求你去探索塔的内部。";
+					mes "你正是为此被雇用的。";
+					close;
+				}
+			}
+		}
+		else if (thana_tower == 3) {
+			callsub L_Request;
+			close;
+		}
+		else if (thana_tower == 4) {
+			mes "[布拉德]";
+			mes "雷肯贝公司一定另有企图，";
+			mes "因为他们对这座塔本身似乎并不怎么感兴趣。";
+			mes "我想知道他们的企图是什么。";
+			next;
+			mes "[布拉德]";
+			mes "这座塔被封印，与外界隔绝。";
+			mes "我们需要解除那些封印，探索内部并开发它。";
+			next;
+			mes "[布拉德]";
+			mes "我们正在开发 3 层和 4 层……";
+			mes "那里仍然有封印。";
+			mes "你在附近搜索时也许能找到一些线索。";
+			close;
+		}
+		else if ((thana_tower > 4) && (thana_tower < 9)) {
+			mes "[布拉德]";
+			mes "魔法钥匙和信息？";
+			mes "……我们完全没有弄清楚这座塔的全部秘密……";
+			next;
+			mes "[布拉德]";
+			mes "封印是谁设下的？";
+			mes "……你能再深入调查一下吗？";
+			mes "一定有确凿的证据……";
+			close;
+		}
+		else if (thana_tower == 9) {
+			mes "[布拉德]";
+			mes "有什么新进展吗？";
+			next;
+			select("我找到了瓦尔蒙特的笔记本……");
+			mes "- 你给他看了瓦尔蒙特的笔记本。";
+			mes "布拉德读了起来。 -";
+			next;
+			mes "[布拉德]";
+			mes "……我认得这个。";
+			mes "这是贤者瓦尔蒙特的亲笔笔记。";
+			mes "雷肯贝的雷根希姆大型研究所一直在……";
+			next;
+			mes "[布拉德]";
+			mes "……这不就是他们现在正在找的东西吗？！";
+			mes "他们的任务不就是找出瓦尔蒙特的研究资料吗……？";
+			next;
+			mes "[布拉德]";
+			mes "为了协助完成未竟的研究……";
+			mes "需要瓦尔蒙特的研究资料……";
+			mes "……所以他们的任务不只是调查这座塔。";
+			next;
+			mes "[布拉德]";
+			mes "可以作为优势的东西……";
+			mes "连他们也不知道在哪里……";
+			mes "……总之，这是他们的主要目标之一。";
+			next;
+			mes "[布拉德]";
+			mes "这太了不起了。贤者瓦尔蒙特的遗物。真是难以置信！";
+			mes "现在，我们拿这个怎么办？";
+			next;
+			mes "[布拉德]";
+			mes "本来，我们在这座塔里发现的一切都归雷肯贝公司所有。";
+			mes "这东西理应属于他们，但是……";
+			next;
+			mes "[布拉德]";
+			mes "你想把它留下来吗，"+strcharinfo(0)+"？";
+			mes "这绝对要保密。";
+			mes "……嗯，这是对他们的小小报复。";
+			next;
+			mes "[布拉德]";
+			mes "通过这本笔记，我能猜到这座塔里还有几个秘密。";
+			mes "这些秘密应该由你来揭开，"+strcharinfo(0)+"，赶在雷肯贝之前。";
+			next;
+			mes "[布拉德]";
+			mes "无论他们获得多大的力量……他们都不会了解这座塔的真相……";
+			mes "哈哈……";
+			next;
+			mes "[布拉德]";
+			mes "……哈哈……我感觉轻松多了。";
+			mes "谢谢。";
+			mes "这点东西不成敬意，算是回礼。";
+			next;
+			mes "[布拉德]";
+			mes "希望这些对你有用，"+strcharinfo(0)+"。";
+			next;
+			mes "- 布拉德给了你笔记和一个神秘紫箱。 -";
+			mes " ";
+			mes "^4d4dff你获得了一个神秘紫箱，";
+			mes "还有一些经验值。^000000";
+			set thana_tower, 10;
+			completequest 7053;
+			getexp 120000,10000;
+			getitem 617,1; //Old_Violet_Box
+			close;
+		}
+		else {
+			mes "[布拉德]";
+			mes "你好好保守秘密了吗？";
+			mes "这座塔的顶层有幻影吗？";
+			if (rand(3) == 1) {
+				mes "你看起来很累。这不算什么，但这是给你的。";
+				npcskill "AL_HEAL",11,50,70;
+			}
+			close;
+		}
+	}
+
+L_Request:
+	mes "[布拉德]";
+	mes "啊，并不难。";
+	mes "你探索完这座塔后，把你了解到的事情详细告诉我。";
+	next;
+	mes "[布拉德]";
+	mes "……我不能相信雷肯贝公司。许多同事和朋友为他们而死。";
+	mes "但雷肯贝公司从不公开他们的死因。";
+	next;
+	mes "[布拉德]";
+	mes "从一开始，条件就对我们不利……";
+	mes "除了研究资料，所有开发出的地方都将变成旅游景点……";
+	mes "说实话，所有人员都来自准它企划社。";
+	next;
+	mes "[布拉德]";
+	mes "他们也知道这一点。";
+	mes "这项事业需要很多牺牲，也需要愿意承担的人。";
+	next;
+	mes "[布拉德]";
+	mes "现在我不再觉得自己是受害者了，只想知道是什么导致了这些事故……";
+	mes "^4d4dff是什么让我们成了受害者……？^000000";
+	mes "这就是我想知道的。";
+	next;
+	mes "[布拉德]";
+	mes "这座塔是什么？";
+	mes "他们为什么要开发这个危险的地方？";
+	mes "又是为了什么？我的同事们就该为此送命吗？";
+	next;
+	mes "[布拉德]";
+	mes "我是真的想知道。";
+	mes "他们为什么必须牺牲自己……";
+	mes "请告诉我……";
+	next;
+	mes "他是真的想知道。";
+	mes "他的手正在颤抖……";
+	mes "我默默地点了点头，没有回答。";
+	set thana_tower, 4;
+	setquest 7048;
+	return;
+}
+
+tha_t02,227,163,0	script	3rdf_warp#tt	45,1,1,{
+	end;
+OnInit:
+	disablenpc "3rdf_warp#tt";
+	end;
+OnTouch_:
+	if (thana_tower == 0) warp "tha_t02",227,158;
+	else warp "tha_t03",219,159;
+	end;
+OnEnable:
+	enablenpc "3rdf_warp#tt";
+	initnpctimer;
+	end;
+OnTimer30000:
+	stopnpctimer;
+	disablenpc "3rdf_warp#tt";
+	end;
+}
+
+tha_t03,67,70,0	script	符文装置#tt1	111,4,4,{
+	if ((countitem(7421) == 0) && (countitem(7426) == 0)) {
+		mes "^3355FF一股神秘的能量场";
+		mes "似乎包围着这台机械装置，";
+		mes "它的力量阻止你靠近。^000000";
+		next;
+		switch(select("调查一下。:不管它了。")) {
+		case 1:
+			mes "["+strcharinfo(0)+"]";
+			mes "这东西似乎很神秘……";
+			mes "让我调查一下。";
+			next;
+			mes "^3355FF你顺着魔力探查，发现符文装置里裹着什么东西。^000000";
+			next;
+			if (Class == Job_Taekwon) {
+				mes "^3355FF你用尽全力踢向能量场。";
+				mes "吸收了冲击之后，能量场";
+				mes "伴随着轻柔的''嘶——''声消散了。^000000";
+				next;
+				goto L_Key;
+			}
+			else if (getequipweaponlv(EQI_HAND_R) == 4) {
+				mes "^3355FF你手持"+getequipname(EQI_HAND_R)+"，";
+				mes "用尽全力砸向能量场。";
+				mes "吸收了冲击之后，能量场";
+				mes "伴随着轻柔的''嘶——''声消散了。^000000";
+				next;
+				goto L_Key;
+			}
+			else {
+				mes "^3355FF你用武器拼尽全力";
+				mes "砸向能量场，";
+				mes "却没能打破结界。";
+				mes "你大概需要一件更强大的武器……^000000";
+				close;
+			}
+		case 2:
+			mes "^3355FF你决定不去碰这台机器。^000000";
+			close;
+		}
+	}
+	mes "你已经从这个符文装置获得了所需的一切。";
+	close;
+
+OnTouch_:
+	if ((countitem(7421) == 0) && (countitem(7426) == 0))
+		specialeffect EF_LEVEL99_4;
+	end;
+
+L_Key:
+	specialeffect EF_BRANDISH2;
+	mes "打破装置后，外壳碎裂了。";
+	mes "能量场开始消失，";
+	mes "你看到里面一个红色的物体正是魔力的来源。";
+	next;
+	mes "- 你获得了强大的红色钥匙。 -";
+	getitem 7421,1; //Key_Red
+	if (thana_tower != 4) close;
+	mes "^4d4dff一握住钥匙，一股震撼的感觉穿过你的脑海。";
+	mes "你看到了光的幻影……^000000";
+	next;
+	switch(select("忽视它。:集中精神。")) {
+	case 1:
+		mes "^3355FF你决定不去碰这台机器。^000000";
+		close;
+	case 2:
+		mes "你集中精神看着光。";
+		mes "一些文字开始浮现……";
+		next;
+		mes "^b22222我用门之封印技术";
+		mes "封印了大门和魔法石。";
+		mes "虽然封印已经就位，";
+		mes "但我仍不禁担心";
+		mes "它们将来可能会破碎。";
+		next;
+		mes "^b22222当某个，该怎么说，";
+		mes "特殊的集团觊觎着魔法石，";
+		mes "又能轻易破坏封印时，我无法安心。";
+		mes "既然封印现在已经破碎，";
+		mes "是不是有很多人受伤了？";
+		next;
+		mes "^b22222这座塔蕴含着强大的魔力";
+		mes "和许多邪恶。它本身就很危险，";
+		mes "但我封印它，是因为一个人强烈的欲望……";
+		next;
+		mes "^b22222我不建议再继续深入。";
+		mes "你将不得不挑战那个可怜的存在，";
+		mes "这座塔正是以他的名字命名的。";
+		mes "他的灵魂仍安息在这里……";
+		next;
+		mes "^b22222没有人相信我，一个疯狂的科学家。";
+		mes "虽然我想把这个秘密保守下去，但总得";
+		mes "有人知道。于是我制造了";
+		mes "这个符文装置，藏下了这条信息。";
+		next;
+		mes "^b22222请证明我的经历";
+		mes "不仅仅是一场幻觉。^000000";
+		next;
+		mes "就这些了。";
+		mes "文字化作红色钥匙的模样飞走了……";
+		set thana_tower, 5;
+		changequest 7048,7049;
+		specialeffect2 EF_COMBOATTACK1;
+		close;
+	}
+}
+
+tha_t04,195,195,0	script	符文装置#tt2	111,3,3,{
+	if ((countitem(7422) == 0) && (countitem(7427) == 0)) {
+		mes "^3355FF你发现一块屏幕，";
+		mes "上面有三个小面板，";
+		mes "下方是数字键盘。";
+		mes "当你按下一个数字键时，";
+		mes "听到一声蜂鸣，屏幕亮了起来。^000000";
+		next;
+		mes "[屏幕]";
+		mes "请输入一个三位数。";
+		mes "不要重复使用同一个数字，";
+		mes "也不要使用数字 0。";
+		next;
+		while (1) {
+			set .@yagu100, rand(1,9);
+			set .@yagu10, rand(1,9);
+			set .@yagu1, rand(1,9);
+			if (((.@yagu100 != .@yagu10) && (.@yagu100 != .@yagu1)) && (.@yagu10 != .@yagu1))
+				break;
+		}
+		while (1) {
+			while (1) {
+				input .@input;
+				if (.@input < 100 || .@input > 999) {
+					mes "[屏幕]";
+					mes "数字输入不符合要求。";
+					mes "请输入一个三位数。";
+					close;
+				}
+				set .@input100, .@input / 100;
+				set .@input10, (.@input % 100) / 10;
+				if (((.@input100 > 0) && (.@input10 > 0)) && (.@input % 10 > 0)) {
+					if (((.@input100 != .@input10) && (.@input100 != .@input % 10)) && (.@input10 != .@input % 10))
+						break;
+					mes "[屏幕]";
+					mes "违反数字输入规则。";
+					mes "输入了数字 0，或者某个数字被输入了多次。";
+					next;
+				}
+			}
+			set .@retry, .@retry + 1;
+			mes "[屏幕]";
+			mes "你输入的是……";
+			mes "^0000ff" + .@input100 + "^000000、^0000ff" + .@input10 + "^000000、^0000ff" + (.@input % 10) + "^000000";
+			mes " ";
+			mes "正在计算结果……请稍候……";
+			next;
+			set .@strike, 0;
+			set .@ball, 0;
+			if (.@yagu100 == .@input100) set .@strike, .@strike + 1;
+			if (.@yagu10 == .@input10) set .@strike, .@strike + 1;
+			if (.@yagu1 == .@input % 10) set .@strike, .@strike + 1;
+			if ((.@yagu100 == .@input10) || (.@yagu100 == .@input % 10)) set .@ball, .@ball + 1;
+			if ((.@yagu10 == .@input100) || (.@yagu10 == .@input % 10)) set .@ball, .@ball + 1;
+			if ((.@yagu1 == .@input100) || (.@yagu1 == .@input10)) set .@ball, .@ball + 1;
+			if (.@strike == 3) {
+				mes "[屏幕]";
+				mes "输入的数字已接受。";
+				mes "访问已授权。";
+				next;
+				mes "^3355FF屏幕显示访问授权通知后，";
+				mes "魔力凝聚在屏幕表面，";
+				mes "一个物体渐渐成形……^000000";
+				next;
+				mes "^4d4dff强大的黄色钥匙出现了。^000000";
+				getitem 7422,1; //Key_Yellow
+				if (thana_tower != 5) close;
+				mes "^4d4dff一股剧烈的感觉穿过你的脑海。";
+				mes "你看到了光的幻影，就像获得第一把钥匙时那样。^000000";
+				next;
+				switch(select("忽视它。:集中精神。")) {
+				case 1:
+					mes "你决定忽视它。";
+					close;
+				case 2:
+					mes "你集中精神看着光。";
+					mes "一些文字开始浮现……";
+					next;
+					mes "^b22222你找到第二把钥匙了？";
+					mes "我想告诉你封印在哪里，但我不会轻易揭晓。";
+					mes "给你一个提示。去 5 层的雄鹰那里。";
+					next;
+					mes "^b22222我来这里的原因是……";
+					mes "为了找一个人。";
+					mes "我们人类无法理解这一点……";
+					next;
+					mes "^b22222当我在朱匹洛斯找到她时，我无法安心。";
+					mes "与她一同待在洞穴深处的巨人们";
+					mes "让我不得不加快调查……";
+					next;
+					mes "^b22222确认了她的存在后，我盲目地执着于寻找她的踪迹。";
+					mes "你问''她''是谁？她有着女人的形态……";
+					next;
+					mes "^b22222我追寻着她的踪迹，却不知道她早在 10 年前就已存在。";
+					mes "然后我来到了这个地方。";
+					next;
+					mes "^b22222这座塔是为了……而建的……^000000";
+					next;
+					mes "它突然晃动了一下，然后消失了。";
+					set thana_tower, 6;
+					changequest 7049,7050;
+					specialeffect2 EF_COMBOATTACK1;
+					close;
+				}
+			}
+			else {
+				mes "[屏幕]";
+				mes "*嘀————*";
+				mes "未授权的数字序列。";
+				next;
+				mes "[屏幕]";
+				mes "位置正确的数字总数：^FF0000" + .@strike + "^000000";
+				mes " ";
+				mes "数字正确的总数：^FF0000" + .@ball + "^000000";
+				next;
+				if (.@retry > 4) {
+					mes "[屏幕]";
+					mes "正确的授权数字序列是……";
+					mes "^ff0000" + .@yagu100 + "^000000、^ff0000" + .@yagu10 + "^000000、^ff0000" + .@yagu1 + "^000000";
+					mes "重试时授权数字将会改变。";
+					close;
+				}
+			}
+		}
+	}
+	mes "你已经从这个符文装置获得了所需的一切。";
+	close;
+
+OnTouch_:
+	if ((countitem(7422) == 0) && (countitem(7427) == 0))
+		specialeffect EF_LEVEL99_4;
+	end;
+}
+
+tha_t05,62,179,0	script	辉煌雕像#tt3	111,3,3,{
+	if ((countitem(7423) == 0) && (countitem(7428) == 0)) {
+		mes "我能感觉到这尊美丽的石像散发着魔力。";
+		mes "翅膀之间有一道小裂缝。";
+		next;
+		mes "左翼的裂缝闪着红光，右翼的裂缝闪着金光。";
+		mes "你要怎么做？";
+		next;
+		if(select("把钥匙插进裂缝……:不管它了。") == 2) {
+			mes "^3355FF你决定不去碰这尊雕像。^000000";
+			close;
+		}
+		if ((countitem(7421) > 0) && (countitem(7422) > 0)) {
+			mes "["+strcharinfo(0)+"]";
+			mes "我先试试左翼。";
+			mes "该插什么钥匙呢？";
+			next;
+			input .@inputstr$;
+			if ((.@inputstr$ != "红色钥匙") && (.@inputstr$ != "红色钥匙")) {
+				mes "它插不进裂缝。";
+				close;
+			}
+			mes "钥匙插进去后咔哒一声。";
+			mes "你感觉魔力变强了……";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "现在是右边……";
+			next;
+			input .@inputstr$;
+			if ((.@inputstr$ != "黄色钥匙") && (.@inputstr$ != "黄色钥匙")) {
+				mes "它插不进裂缝。";
+				close;
+			}
+			mes "钥匙插进去后咔哒一声。";
+			mes "鸟的喙突然张开，射出强烈的光芒。";
+			mes "里面有一个钥匙形状的物体……";
+			next;
+			mes "^4d4dff强大的蓝色钥匙出现了。^000000";
+			getitem 7423,1; //Key_Blue
+			if (thana_tower != 6) close;
+			mes "^4d4dff一握住钥匙，一股震撼的感觉穿过你的脑海。";
+			mes "你看到了光的幻影……^000000";
+			next;
+			switch(select("集中精神。:忽视它。")) {
+			case 1:
+				mes "这部分不像之前那么清晰。";
+				mes "你试图弄清楚它在说什么……";
+				next;
+				mes "^b22222……这座塔是一个魔法种族建造的，不是人类。";
+				mes "这对我来说相当有趣……";
+				mes "我开始调查他们为什么要建造这座塔……";
+				next;
+				mes "^b22222我发现这座塔是魔法种族";
+				mes "在千年战争期间的传送门。^000000";
+				next;
+				mes "……看不太清楚……";
+				mes "^b22222……梦罗克在千年战争结束后，";
+				mes "穿过这扇门，从魔法世界来到了米德加兹大陆……";
+				next;
+				mes "^b22222问题是，当她来到这里时，魔王同时出现了……";
+				mes "真相是……^000000";
+				next;
+				mes "幻象晃动着，化作光融化在钥匙表面。";
+				set thana_tower, 7;
+				changequest 7050,7051;
+				specialeffect2 EF_COMBOATTACK1;
+				close;
+			case 2:
+				mes "你决定忽视它。";
+				close;
+			}
+		}
+		mes "你试着把什么东西塞进裂缝，但没有用。";
+		close;
+	}
+	mes "你已经从这尊雕像获得了所需的一切。";
+	close;
+
+OnTouch_:
+	if ((countitem(7423) == 0) && (countitem(7428) == 0))
+		specialeffect EF_LEVEL99_4;
+	end;
+}
+
+tha_t06,226,230,0	script	辉煌雕像#tt4	111,3,3,{
+	if ((countitem(7424) == 0) && (countitem(7429) == 0)) {
+		mes "我能感觉到这尊辉煌的雕像散发着魔力。";
+		mes "这一定是封印之一。";
+		next;
+		mes "你看到一个漂浮的带孔圆形物体。";
+		mes "红、黄、蓝三道光排成一排。";
+		mes "你要怎么做？";
+		next;
+		if(select("调查一下。:不管它了。") == 2) {
+			mes "^3355FF如果没有什么异常，";
+			mes "你觉得没有必要调查……^000000";
+			close;
+		}
+		if ((countitem(7421) > 0) && (countitem(7422) > 0) && (countitem(7423) > 0)) {
+			mes "当你把钥匙按对应的颜色";
+			mes "插入装饰物的钥匙孔时，石像咔的一声打开了。";
+			mes "你能看到里面有小齿轮在转动。";
+			next;
+			switch(select("调查机器外壳:调查齿轮:取消")) {
+			case 1:
+				mes "^3355FF你物品栏里的钥匙";
+				mes "似乎没有对机器外壳产生影响。";
+				mes "侧面安装的屏幕";
+				mes "仍然是空白的，没有启动。^000000";
+				close;
+			case 2:
+				set .@small_1, 0;
+				set .@small_2, 0;
+				set .@big_1, 0;
+				set .@big_2, 0;
+				set .@big_3, 0;
+				mes "^3355FF你触碰齿轮，";
+				mes "发现它们其实在非常缓慢地转动。";
+				mes "你注意到有 2 个小齿轮";
+				mes "和 3 个大齿轮，";
+				mes "这台机器上总共有 5 个齿轮。^000000";
+				next;
+				mes "^3355FF大齿轮上下垂直移动，";
+				mes "挤压着小齿轮";
+				mes "使它们转动。^000000";
+				next;
+				mes "^3355FF从机器的晃动和";
+				mes "吱嘎声判断，齿轮可能错位了。";
+				mes "你也许可以通过";
+				mes "正确对齐所有齿轮";
+				mes "来启动机器。^000000";
+				while (1) {
+					next;
+					mes "^3355FF你想移动哪个齿轮？^000000";
+					switch(select("第 1 小齿轮:第 2 小齿轮:第 1 大齿轮:第 2 大齿轮:第 3 大齿轮:查看当前齿轮状态:重置齿轮到初始状态")) {
+					case 1:
+						switch(select("升起齿轮:降下齿轮:压紧齿轮")) {
+						case 1:
+							mes "^EE0000*咔嗒*^000000";
+							set .@small_1, 2;
+							if ((.@small_1 == 2) && (.@small_2 == 2) && (.@big_1 == 2) && (.@big_2 == 2) && (.@big_3 == 2)) break;
+							continue;
+						case 2:
+							mes "^00B2EE*吱——*^000000";
+							set .@small_1, 1;
+							if ((.@small_1 == 1) && (.@small_2 == 1) && (.@big_1 == 1) && (.@big_2 == 1) && (.@big_3 == 1)) break;
+							continue;
+						case 3:
+							mes "^5C246E*嗡——*^000000";
+							set .@small_1, 3;
+							if ((.@small_1 == 3) && (.@small_2 == 3) && (.@big_1 == 3) && (.@big_2 == 3) && (.@big_3 == 3)) break;
+							continue;
+						}
+						break;
+					case 2:
+						switch(select("升起齿轮:降下齿轮:压紧齿轮")) {
+						case 1:
+							mes "^5C246E*嗡——*^000000";
+							set .@small_2, 3;
+							if ((.@small_1 == 3) && (.@small_2 == 3) && (.@big_1 == 3) && (.@big_2 == 3) && (.@big_3 == 3)) break;
+							continue;
+						case 2:
+							mes "^EE0000*咔嗒*^000000";
+							set .@small_2, 2;
+							if ((.@small_1 == 2) && (.@small_2 == 2) && (.@big_1 == 2) && (.@big_2 == 2) && (.@big_3 == 2)) break;
+							continue;
+						case 3:
+							mes "^00B2EE*吱——*^000000";
+							set .@small_2, 1;
+							if ((.@small_1 == 1) && (.@small_2 == 1) && (.@big_1 == 1) && (.@big_2 == 1) && (.@big_3 == 1)) break;
+							continue;
+						}
+						break;
+					case 3:
+						switch(select("升起齿轮:降下齿轮:垂直移动齿轮")) {
+						case 1:
+							mes "^00B2EE*吱——*^000000";
+							set .@big_1, 1;
+							if ((.@small_1 == 1) && (.@small_2 == 1) && (.@big_1 == 1) && (.@big_2 == 1) && (.@big_3 == 1)) break;
+							continue;
+						case 2:
+							mes "^5C246E*嗡——*^000000";
+							set .@big_1, 3;
+							if ((.@small_1 == 3) && (.@small_2 == 3) && (.@big_1 == 3) && (.@big_2 == 3) && (.@big_3 == 3)) break;
+							continue;
+						case 3:
+							mes "^EE0000*咔嗒*^000000";
+							set .@big_1, 2;
+							if ((.@small_1 == 2) && (.@small_2 == 2) && (.@big_1 == 2) && (.@big_2 == 2) && (.@big_3 == 2)) break;
+							continue;
+						}
+						break;
+					case 4:
+						switch(select("升起齿轮:降下齿轮:垂直移动齿轮")) {
+						case 1:
+							mes "^EE0000*咔嗒*^000000";
+							set .@big_2, 2;
+							if ((.@small_1 == 2) && (.@small_2 == 2) && (.@big_1 == 2) && (.@big_2 == 2) && (.@big_3 == 2)) break;
+							continue;
+						case 2:
+							mes "^5C246E*嗡——*^000000";
+							set .@big_2, 3;
+							if ((.@small_1 == 3) && (.@small_2 == 3) && (.@big_1 == 3) && (.@big_2 == 3) && (.@big_3 == 3)) break;
+							continue;
+						case 3:
+							mes "^00B2EE*吱——*^000000";
+							set .@big_2, 1;
+							if ((.@small_1 == 1) && (.@small_2 == 1) && (.@big_1 == 1) && (.@big_2 == 1) && (.@big_3 == 1)) break;
+							continue;
+						}
+						break;
+					case 5:
+						switch(select("升起齿轮:降下齿轮:垂直移动齿轮")) {
+						case 1:
+							mes "^EE0000*咔嗒*^000000";
+							set .@big_3, 2;
+							if ((.@small_1 == 2) && (.@small_2 == 2) && (.@big_1 == 2) && (.@big_2 == 2) && (.@big_3 == 2)) break;
+							continue;
+						case 2:
+							mes "^00B2EE*吱——*^000000";
+							set .@big_3, 1;
+							if ((.@small_1 == 1) && (.@small_2 == 1) && (.@big_1 == 1) && (.@big_2 == 1) && (.@big_3 == 1)) break;
+							continue;
+						case 3:
+							mes "^5C246E*嗡——*^000000";
+							set .@big_3, 3;
+							if ((.@small_1 == 3) && (.@small_2 == 3) && (.@big_1 == 3) && (.@big_2 == 3) && (.@big_3 == 3)) break;
+							continue;
+						}
+						break;
+					case 6:
+						if (.@small_1 == 0) mes "第 1 小齿轮：无变化";
+						else if (.@small_1 == 1) mes "第 1 小齿轮：降下";
+						else if (.@small_1 == 2) mes "第 1 小齿轮：升起";
+						else mes "第 1 小齿轮：压紧";
+
+						if (.@small_2 == 0) mes "第 2 小齿轮：无变化";
+						else if (.@small_2 == 1) mes "第 2 小齿轮：压紧";
+						else if (.@small_2 == 2) mes "第 2 小齿轮：降下";
+						else mes "第 2 小齿轮：升起";
+
+						if (.@big_1 == 0) mes "第 1 大齿轮：无变化";
+						else if (.@big_1 == 1) mes "第 1 大齿轮：升起";
+						else if (.@big_1 == 2) mes "第 1 大齿轮：移动";
+						else mes "第 1 大齿轮：降下";
+
+						if (.@big_2 == 0) mes "第 2 大齿轮：无变化";
+						else if (.@big_2 == 1) mes "第 2 大齿轮：移动";
+						else if (.@big_2 == 2) mes "第 2 大齿轮：升起";
+						else mes "第 2 大齿轮：降下";
+
+						if (.@big_3 == 0) mes "第 3 大齿轮：无变化";
+						else if (.@big_3 == 1) mes "第 3 大齿轮：降下";
+						else if (.@big_3 == 2) mes "第 3 大齿轮：升起";
+						else mes "第 3 大齿轮：移动";
+						continue;
+					case 7:
+						set .@small_1, 0;
+						set .@small_2, 0;
+						set .@big_1, 0;
+						set .@big_2, 0;
+						set .@big_3, 0;
+						continue;
+					}
+					break;
+				}
+				mes "你调整着齿轮，";
+				mes "它们突然咔哒一声";
+				mes "动了起来。";
+				next;
+				mes "石像上的一部分装饰开始旋转，";
+				mes "一道闪光沿着优雅的雕像攀升。";
+				mes "一股强大的诅咒之力涌现，发出耀眼的绿光。";
+				specialeffect EF_DISPELL;
+				specialeffect EF_POTION6;
+				next;
+				mes "^4d4dff突然间，绿色钥匙出现了，你能感觉到其中蕴含的强大力量。^000000";
+				getitem 7424,1; //Key_Green
+				if (thana_tower != 7) close;
+				mes "^4d4dff当你拿起钥匙时，";
+				mes "你的身体因一股未知的力量而颤抖，";
+				mes "你看到了带有文字的幻象。^000000";
+				next;
+				switch(select("集中精神。:忽视它。")) {
+				case 1:
+					mes "^b22222……你找到了 4 把钥匙，";
+					mes "终于解开了 4 重咒语……";
+					mes "这座塔在很久以前";
+					mes "曾是召唤恶魔的传送门。";
+					mes "而最后的来访者";
+					mes "就是臭名昭著的魔王梦罗克。";
+					next;
+					mes "^b22222当我追寻她的踪迹时，";
+					mes "我意识到她的咒语";
+					mes "散落在塔的各处。";
+					mes "然后，不知怎的，它消失在了地下。";
+					next;
+					mes "^b22222那场大战";
+					mes "和旷日持久的战争……";
+					mes "但她的目的是……";
+					mes "那个……封印传送门……";
+					mes "所以……我试着去封印……";
+					mes "但并不完整……";
+					mes "传送门的守护者是……^000000";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "很难读下去。";
+					next;
+					mes "^b22222……所以我改变了";
+					mes "接合点的位置……";
+					mes "我的意思是，直通塔内";
+					mes "去搅乱它……";
+					mes "总之，我想尊重她的忠诚，";
+					mes "封锁这扇门……";
+					next;
+					mes "^b22222如果我想……就必须";
+					mes "解开最后一重咒语……";
+					mes "他终于要来见……";
+					mes "带着他的碎片……然后……^000000";
+					next;
+					mes "幻象晃动着，";
+					mes "渐渐淡入钥匙之中。";
+					set thana_tower, 8;
+					changequest 7051,7052;
+					specialeffect2 EF_BEGINSPELL6;
+					specialeffect2 EF_SPELLBREAKER;
+					close;
+				case 2:
+					mes "幻象太强烈了，你放弃了阅读。";
+					close;
+				}
+			case 3:
+				mes "你决定忽视它。";
+				close;
+			}
+		}
+		mes "你没有适合这个钥匙孔的钥匙。";
+		close;
+	}
+	mes "咒语已经解开了。你已经从这尊雕像获得了所需的一切。";
+	close;
+
+OnTouch_:
+	if ((countitem(7424) == 0) && (countitem(7429) == 0))
+		specialeffect EF_LEVEL99_4;
+	end;
+}
+
+tha_t06,204,181,0	script	闪亮之剑#tt5	111,3,3,{
+	if ((countitem(7425) == 0) && (countitem(7430) == 0)) {
+		mes "一把破旧的古剑悬挂在华丽的桌子上方。";
+		mes "它散发着阴森的气息。";
+		next;
+		if ((countitem(7421) > 0) && (countitem(7422) > 0) && (countitem(7423) > 0) && (countitem(7424) > 0)) {
+			mes "当你靠近时，你口袋里的钥匙";
+			mes "突然以一股神秘的力量回应。";
+			specialeffect2 EF_ABSORBSPIRITS;
+			next;
+			if(select("观察一下。:不管它了。") == 2) {
+				mes "^3355FF你决定不去碰这把剑。^000000";
+				close;
+			}
+			mes "当你越走越近时，剑发出巨大的响声震动起来。";
+			mes "你的目光不断被剑柄吸引。";
+			mes "然后你失去了对双手的控制，它们伸出去抓住了剑柄……";
+			next;
+			switch(select("抓向剑刃:抓向剑柄:伸向桌子")) {
+			case 1:
+				mes "在某种未知的召唤下，你决定抓住剑刃。";
+				mes "你的双手受了伤，开始流血。";
+				specialeffect2 EF_HIT1;
+				percentheal -20,0;
+				close;
+			case 2:
+				mes "在某种未知的召唤下，你决定抓住剑柄。";
+				mes "钥匙的神秘力量传到剑上，剑从桌子上掉了下来。";
+				next;
+				mes "与此同时，桌面上出现了一个小洞。";
+				mes "现在，你握着剑……";
+				specialeffect EF_EXIT2;
+				next;
+				switch(select("劈向桌子:把剑插入洞中:把剑安全带走")) {
+				case 1:
+					mes "你用剑劈向桌子。";
+					mes "无数相互冲突的咒语作用在上面，你意识到自己选错了。";
+					mes "剑自动回到了桌子上，就像之前一样。";
+					specialeffect EF_HIT1;
+					specialeffect2 EF_HIT1;
+					percentheal -20,0;
+					close;
+				case 2:
+					mes "当你把剑插进去时，周围电光闪烁，洞里冒出黑烟。";
+					mes "烟雾渐渐散去，你看到一个有着特定形状的物体……";
+					specialeffect EF_CHANGEDARK;
+					next;
+					mes "^4d4dff 突然间，一把黑色钥匙从烟雾中出现，你感觉到其中蕴含的强大诅咒之力。^000000";
+					getitem 7425,1; //Key_Black
+					if (thana_tower != 8) close;
+					next;
+					mes "当你拿起钥匙观察时，桌子下方咔哒一声弹开了一个抽屉。";
+					mes "你能看到抽屉里有一本旧笔记本。";
+					next;
+					mes "这本笔记本显然包含着重要的信息。";
+					mes "也许这本笔记本就是雷肯贝不惜一切牺牲也想找到的东西。";
+					next;
+					mes "^4d4dff你决定把笔记本和钥匙给布拉德看。";
+					mes "你获得了瓦尔蒙特的笔记本。^000000";
+					set thana_tower, 9;
+					changequest 7052,7053;
+					getitem 11011,1; //Barmund_Note
+					close;
+				case 3:
+					mes "当你举起剑时，你感受到无数相互冲突的咒语带来的冲击。";
+					mes "对啊……偷窃是最糟糕的。";
+					mes "剑自动回到了桌子上，就像之前一样。";
+					close;
+				}
+			case 3:
+				mes "你伸手到桌子底下摸索，但什么都没有。";
+				close;
+			}
+		}
+		mes "你强烈地感觉到这里有一股被诅咒的、被封印的力量，";
+		mes "但很难弄清楚是什么引起的。";
+		mes "你无法靠近它。";
+		close;
+	}
+	mes "你已经用这把剑解开了一个封印。";
+	mes "你已经从这里获得了所需的一切。";
+	close;
+
+OnTouch_:
+	if ((countitem(7425) == 0) && (countitem(7430) == 0))
+		specialeffect EF_LEVEL99_4;
+	end;
+}
+
+tha_t08,1,1,0	script	#Charm Stone Admintt01	844,{
+	end;
+OnInit:
+OnEnable:
+	initnpctimer;
+	end;
+OnTimer1000:
+	donpcevent "闪耀水晶#tt_r1::OnEnable";
+	donpcevent "闪耀水晶#tt_g1::OnEnable";
+	donpcevent "闪耀水晶#tt_b1::OnEnable";
+	donpcevent "闪耀水晶#tt_y1::OnEnable";
+	end;
+OnTimer600000:
+	donpcevent "闪耀水晶#tt_r1::OnDisable";
+	donpcevent "闪耀水晶#tt_g1::OnDisable";
+	donpcevent "闪耀水晶#tt_b1::OnDisable";
+	donpcevent "闪耀水晶#tt_y1::OnDisable";
+	donpcevent "闪耀水晶#tt_r2::OnEnable";
+	donpcevent "闪耀水晶#tt_g2::OnEnable";
+	donpcevent "闪耀水晶#tt_b2::OnEnable";
+	donpcevent "闪耀水晶#tt_y2::OnEnable";
+	end;
+OnTimer1200000:
+	donpcevent "闪耀水晶#tt_r2::OnDisable";
+	donpcevent "闪耀水晶#tt_g2::OnDisable";
+	donpcevent "闪耀水晶#tt_b2::OnDisable";
+	donpcevent "闪耀水晶#tt_y2::OnDisable";
+	donpcevent "闪耀水晶#tt_r3::OnEnable";
+	donpcevent "闪耀水晶#tt_g3::OnEnable";
+	donpcevent "闪耀水晶#tt_b3::OnEnable";
+	donpcevent "闪耀水晶#tt_y3::OnEnable";
+	end;
+OnTimer1800000:
+	donpcevent "闪耀水晶#tt_r3::OnDisable";
+	donpcevent "闪耀水晶#tt_g3::OnDisable";
+	donpcevent "闪耀水晶#tt_b3::OnDisable";
+	donpcevent "闪耀水晶#tt_y3::OnDisable";
+	donpcevent "闪耀水晶#tt_r4::OnEnable";
+	donpcevent "闪耀水晶#tt_g4::OnEnable";
+	donpcevent "闪耀水晶#tt_b4::OnEnable";
+	donpcevent "闪耀水晶#tt_y4::OnEnable";
+	end;
+OnTimer2400000:
+	donpcevent "闪耀水晶#tt_r4::OnDisable";
+	donpcevent "闪耀水晶#tt_g4::OnDisable";
+	donpcevent "闪耀水晶#tt_b4::OnDisable";
+	donpcevent "闪耀水晶#tt_y4::OnDisable";
+	donpcevent "#Charm Stone Admintt01::OnEnable";
+	end;
+}
+
+tha_t08,90,153,0	script	闪耀水晶#tt_r1	844,{
+	if (countitem(7421) > 0) {
+		mes "水晶球散发着神秘的力量。";
+		next;
+		mes "在水晶球旁边，你发现地板上刻着褪色的图案。";
+		mes "看起来像是某种需要插入什么东西的钥匙孔……";
+		next;
+		mes "红色钥匙一靠近钥匙孔就突然有了反应。";
+		mes "你把钥匙插进钥匙孔，它原来是一块小宝石。";
+		next;
+		mes "当你触摸这块闪耀着红光的宝石时……";
+		mes "你感到内心深处一阵孤立和忧郁……";
+		next;
+		mes "^4d4dff你找到了一块凝聚着残酷命运与深邃黑暗的红色魔法石。^000000";
+		delitem 7421,1; //Key_Red
+		getitem 7426,1; //Magic_Gem_Red
+		close;
+	}
+	mes "水晶球散发着神秘的力量。";
+	mes "里面肯定有什么东西……怎么才能打开它呢？";
+	close;
+
+OnInit:
+OnDisable:
+	disablenpc();
+	end;
+OnEnable:
+	enablenpc();
+	end;
+}
+tha_t08,90,62,0	duplicate(闪耀水晶#tt_r1)	闪耀水晶#tt_r2	844
+tha_t08,49,59,0	duplicate(闪耀水晶#tt_r1)	闪耀水晶#tt_r3	844
+tha_t08,49,144,0	duplicate(闪耀水晶#tt_r1)	闪耀水晶#tt_r4	844
+
+tha_t08,49,153,0	script	闪耀水晶#tt_y1	844,{
+	if (countitem(7422) > 0) {
+		mes "水晶球散发着神秘的力量。";
+		next;
+		mes "在水晶球旁边，你发现地板上刻着褪色的图案。";
+		mes "看起来像是某种需要插入什么东西的钥匙孔……";
+		next;
+		mes "黄色钥匙一靠近钥匙孔就突然有了反应。";
+		mes "你把钥匙插进钥匙孔，它原来是一块小宝石。";
+		next;
+		mes "当你触摸这块闪耀着黄光的宝石时……";
+		mes "你的心脏开始剧痛，仿佛正在经历心碎。";
+		next;
+		mes "^4d4dff你找到了一块凝聚着悲伤与神秘力量的黄色魔法石。^000000";
+		delitem 7422,1; //Key_Yellow
+		getitem 7427,1; //Magic_Gem_Yellow
+		close;
+	}
+	mes "水晶球散发着神秘的力量。";
+	mes "里面肯定有什么东西……怎么才能打开它呢？";
+	close;
+
+OnInit:
+OnDisable:
+	disablenpc();
+	end;
+OnEnable:
+	enablenpc();
+	end;
+}
+tha_t08,90,150,0	duplicate(闪耀水晶#tt_y1)	闪耀水晶#tt_y2	844
+tha_t08,90,59,0	duplicate(闪耀水晶#tt_y1)	闪耀水晶#tt_y3	844
+tha_t08,49,56,0	duplicate(闪耀水晶#tt_y1)	闪耀水晶#tt_y4	844
+
+tha_t08,49,65,0	script	闪耀水晶#tt_b1	844,{
+	if (countitem(7423) > 0) {
+		mes "水晶球散发着神秘的力量。";
+		next;
+		mes "在水晶球旁边，你发现地板上刻着褪色的图案。";
+		mes "看起来像是某种需要插入什么东西的钥匙孔……";
+		next;
+		mes "蓝色钥匙一靠近钥匙孔就突然有了反应。";
+		mes "你把钥匙插进钥匙孔，它原来是一块小宝石。";
+		next;
+		mes "当你触摸这块闪耀着蓝光的宝石时……";
+		mes "耳边传来某人的啜泣声，你闻到风中血腥的味道，突然变得愤怒起来。";
+		next;
+		mes "^4d4dff你找到了一块凝聚着怨恨与神秘力量的蓝色魔法石。^000000";
+		delitem 7423,1; //Key_Blue
+		getitem 7428,1; //Magic_Gem_Blue
+		close;
+	}
+	mes "水晶球散发着神秘的力量。";
+	mes "里面肯定有什么东西……怎么才能打开它呢？";
+	close;
+
+OnInit:
+OnDisable:
+	disablenpc();
+	end;
+OnEnable:
+	enablenpc();
+	end;
+}
+tha_t08,49,150,0	duplicate(闪耀水晶#tt_b1)	闪耀水晶#tt_b2	844
+tha_t08,90,147,0	duplicate(闪耀水晶#tt_b1)	闪耀水晶#tt_b3	844
+tha_t08,90,56,0	duplicate(闪耀水晶#tt_b1)	闪耀水晶#tt_b4	844
+
+tha_t08,90,65,0	script	闪耀水晶#tt_g1	844,{
+	if (countitem(7424) > 0) {
+		mes "水晶球散发着神秘的力量。";
+		next;
+		mes "在水晶球旁边，你发现地板上刻着褪色的图案。";
+		mes "看起来像是某种需要插入什么东西的钥匙孔……";
+		next;
+		mes "绿色钥匙一靠近钥匙孔就突然有了反应。";
+		mes "你把钥匙插进钥匙孔，它原来是一块小宝石。";
+		next;
+		mes "当你触摸这块闪耀着绿光的宝石时……";
+		mes "你的头开始作痛，为某事感到担忧和焦虑。";
+		next;
+		mes "^4d4dff你找到了一块凝聚着深深痛苦的绿色魔法石。^000000";
+		delitem 7424,1; //Key_Green
+		getitem 7429,1; //Magic_Gem_Green
+		close;
+	}
+	mes "水晶球散发着神秘的力量。";
+	mes "里面肯定有什么东西……怎么才能打开它呢？";
+	close;
+
+OnInit:
+OnDisable:
+	disablenpc();
+	end;
+OnEnable:
+	enablenpc();
+	end;
+}
+tha_t08,49,62,0	duplicate(闪耀水晶#tt_g1)	闪耀水晶#tt_g2	844
+tha_t08,49,147,0	duplicate(闪耀水晶#tt_g1)	闪耀水晶#tt_g3	844
+tha_t08,90,144,0	duplicate(闪耀水晶#tt_g1)	闪耀水晶#tt_g4	844
+
+tha_t12,161,57,0	script	金色修士雕像#tt	111,{
+	if ($@thana_summon == 0) {
+		if (countitem(7427) > 0) {
+			mes "这是一尊散发金光的雕像。";
+			mes "剑上似乎缺了一颗宝石。";
+			mes "当我靠近雕像时，黄色魔法石发出了明亮的光。";
+			specialeffect EF_BEGINSPELL5;
+			specialeffect2 EF_BEGINSPELL5;
+			next;
+			if(select("插入黄色魔法石。:逃跑。") == 2) close;
+			if ($@thana_summon == 0) {
+				mes "把黄色魔法石插入剑中后，雕像开始有了反应。";
+				specialeffect EF_BEGINSPELL5;
+				delitem 7427,1; //Magic_Gem_Yellow
+				set $@thana_summon, 1;
+				donpcevent "#tteffect01::OnEnable";
+				mapannounce "tha_t12","金色的魔力解开了部分封印。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+				close;
+			}
+			mes "已经有人往这尊雕像里插入了魔法石。";
+			close;
+		}
+		mes "雕像散发着神秘的光。";
+		mes "奇怪的力量阻止了你的靠近。";
+		close;
+	}
+	mes "雕像的光太强了，我看不清也碰不到它。";
+	close;
+}
+
+tha_t12,154,17,0	script	绿色贤者雕像#tt	111,{
+	if ($@thana_summon == 1) {
+		if (countitem(7429) > 0) {
+			mes "一尊雕像散发着绿光。";
+			mes "贤者的法杖似乎缺了一颗宝石。";
+			mes "当我靠近雕像时，绿色魔法石发出了明亮的光。";
+			specialeffect EF_BEGINSPELL4;
+			specialeffect2 EF_BEGINSPELL4;
+			next;
+			if(select("插入绿色魔法石。:逃跑。") == 2) close;
+			if ($@thana_summon == 1) {
+				mes "把绿色魔法石插入法杖后，雕像开始有了反应。";
+				specialeffect EF_BEGINSPELL4;
+				delitem 7429,1; //Magic_Gem_Green
+				set $@thana_summon, 2;
+				donpcevent "#tteffect02::OnEnable";
+				mapannounce "tha_t12","绿色的魔力解开了部分封印。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+				close;
+			}
+			mes "已经有人往这尊雕像里插入了魔法石。";
+			close;
+		}
+		mes "雕像散发着神秘的光。";
+		mes "奇怪的力量阻止了你的靠近。";
+		close;
+	}
+	mes "雕像的光太强了，我看不清也碰不到它。";
+	close;
+}
+
+tha_t12,103,17,0	script	蓝色天使雕像#tt	111,{
+	if ($@thana_summon == 2) {
+		if (countitem(7428) > 0) {
+			mes "天使雕像笼罩在蓝光之中。";
+			mes "雕像的腰带上似乎缺了一颗宝石。";
+			mes "当我靠近雕像时，蓝色魔法石发出了明亮的光。";
+			specialeffect EF_BEGINSPELL2;
+			specialeffect2 EF_BEGINSPELL2;
+			next;
+			if(select("插入蓝色魔法石。:逃跑。") == 2) close;
+			if ($@thana_summon == 2) {
+				mes "把蓝色魔法石插入腰带后，雕像开始有了反应。";
+				specialeffect EF_BEGINSPELL2;
+				delitem 7428,1; //Magic_Gem_Blue
+				set $@thana_summon, 3;
+				donpcevent "#tteffect03::OnEnable";
+				mapannounce "tha_t12","蓝色的魔力解开了部分封印。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+				close;
+			}
+			mes "已经有人往这尊雕像里插入了魔法石。";
+			close;
+		}
+		mes "雕像散发着神秘的光。";
+		mes "奇怪的力量阻止了你的靠近。";
+		close;
+	}
+	mes "雕像的光太强了，我看不清也碰不到它。";
+	close;
+}
+
+tha_t12,96,57,0	script	血腥骑士雕像#tt	111,{
+	if ($@thana_summon == 3) {
+		if (countitem(7426) > 0) {
+			mes "一尊雕像闪耀着血一样的光。";
+			mes "铠甲的心脏部位似乎缺了一颗宝石。";
+			mes "当我靠近雕像时，红色魔法石发出了明亮的光。";
+			specialeffect EF_BEGINSPELL3;
+			specialeffect2 EF_BEGINSPELL3;
+			next;
+			if(select("插入红色魔法石。:逃跑。") == 2) close;
+			if ($@thana_summon == 3) {
+				mes "把红色魔法石插入铠甲后，雕像开始有了反应。";
+				specialeffect EF_BEGINSPELL3;
+				delitem 7426,1; //Magic_Gem_Red
+				set $@thana_summon, 4;
+				donpcevent "#tteffect04::OnEnable";
+				mapannounce "tha_t12","红色的魔力解开了部分封印。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+				close;
+			}
+			mes "已经有人往这尊雕像里插入了魔法石。";
+			close;
+		}
+		mes "雕像散发着神秘的光。";
+		mes "奇怪的力量阻止了你的靠近。";
+		close;
+	}
+	mes "雕像的光太强了，我看不清也碰不到它。";
+	close;
+}
+
+tha_t12,129,86,0	script	黑暗恶魔雕像#tt	111,{
+	if ($@thana_summon == 4) {
+		if (countitem(7430) > 0) {
+			mes "恶魔雕像散发着黑暗的光。";
+			mes "右眼似乎缺了一颗宝石。";
+			mes "当我靠近雕像时，黑色魔法石发出了明亮的光。";
+			specialeffect EF_BEGINSPELL7;
+			specialeffect2 EF_BEGINSPELL7;
+			next;
+			if(select("插入黑色魔法石。:逃跑。") == 2) close;
+			if ($@thana_summon == 4) {
+				mes "把黑色魔法石插入眼窝后，雕像开始有了反应。";
+				specialeffect EF_BEGINSPELL7;
+				delitem 7430,1; //Magic_Gem_Black
+				set $@thana_summon, 5;
+				donpcevent "#gateto_thanatos::OnEnable";
+				donpcevent "#tteffect01::OnStop";
+				donpcevent "#tteffect02::OnStop";
+				donpcevent "#tteffect03::OnStop";
+				donpcevent "#tteffect04::OnStop";
+				mapannounce "tha_t12","黑色魔法石的魔力解开了最后的封印。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+				close;
+			}
+			mes "已经有人往这尊雕像里插入了魔法石。";
+			close;
+		}
+		mes "雕像散发着神秘的光。";
+		mes "奇怪的力量阻止了你的靠近。";
+		close;
+	}
+	mes "雕像的光太强了，我看不清也碰不到它。";
+	close;
+}
+
+tha_t12,134,52,0	script	#tteffect01	139,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer500:
+OnTimer1000:
+OnTimer1500:
+OnTimer2000:
+OnTimer2500:
+	specialeffect EF_BEGINSPELL5;
+	end;
+OnTimer3000:
+	donpcevent "#tteffect01::OnEnable";
+	end;
+}
+
+tha_t12,132,47,0	script	#tteffect02	139,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer500:
+OnTimer1000:
+OnTimer1500:
+OnTimer2000:
+OnTimer2500:
+	specialeffect EF_BEGINSPELL4;
+	end;
+OnTimer3000:
+	donpcevent "#tteffect02::OnEnable";
+	end;
+}
+
+tha_t12,127,47,0	script	#tteffect03	139,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer500:
+OnTimer1000:
+OnTimer1500:
+OnTimer2000:
+OnTimer2500:
+	specialeffect EF_BEGINSPELL2;
+	end;
+OnTimer3000:
+	donpcevent "#tteffect03::OnEnable";
+	end;
+}
+
+tha_t12,125,52,0	script	#tteffect04	139,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer500:
+OnTimer1000:
+OnTimer1500:
+OnTimer2000:
+OnTimer2500:
+	specialeffect EF_BEGINSPELL3;
+	end;
+OnTimer3000:
+	donpcevent "#tteffect04::OnEnable";
+	end;
+}
+
+tha_t12,129,56,0	script	#tteffect05	139,{
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer500:
+OnTimer1000:
+OnTimer1500:
+OnTimer2000:
+OnTimer2500:
+	specialeffect EF_BEGINSPELL7;
+	end;
+OnTimer3000:
+	donpcevent "#tteffect05::OnEnable";
+	end;
+}
+
+tha_t12,130,52,0	script	#gateto_thanatos	45,1,1,{
+	end;
+OnInit:
+	disablenpc "#gateto_thanatos";
+	end;
+OnEnable:
+	enablenpc "#gateto_thanatos";
+OnOn2:
+	initnpctimer;
+	end;
+OnTouch_:
+	set .@touch,1;
+OnTimer6000:
+	if (($@thana_summon == 0) || ($@thana_summon == 6)) {
+		disablenpc "#gateto_thanatos";
+		stopnpctimer;
+	} else if ($@thana_summon == 5) {
+		if (.@touch) warp "thana_boss",136,116;
+		else donpcevent "#gateto_thanatos::OnOn2";
+	}
+	end;
+OnTimer1000:
+OnTimer5000:
+	set .@pillar,1;
+OnTimer3000:
+	specialeffect EF_BEGINSPELL7,AREA,"#tteffect05";
+	specialeffect EF_BEGINSPELL3,AREA,"#tteffect04";
+	specialeffect EF_BEGINSPELL2,AREA,"#tteffect03";
+	specialeffect EF_BEGINSPELL4,AREA,"#tteffect02";
+	specialeffect EF_BEGINSPELL5,AREA,"#tteffect01";
+	if (.@pillar) specialeffect EF_MAPPILLAR2;
+	end;
+}
+
+thana_boss,217,167,3	script	记忆封印#tt1	1711,3,3,{
+	end;
+OnEnable:
+	hideoffnpc strnpcinfo(0);
+	set .hide,0;
+	end;
+OnDisable:
+	hideonnpc strnpcinfo(0);
+	set .hide,0;
+	end;
+OnTouch_:
+	set .@seal, atoi(charat(strnpcinfo(2),2));
+	if (.hide & (1<<.@seal)) end;
+
+	//  .@i: ItemID,MobID,MapX,MapY,EffectNum
+	// .@j$: FragmentName
+	switch(.@seal) {
+	case 1:
+		setarray .@i[0],7437,1711,217,167,EF_LANDPROTECTOR;
+		set .@j$,"悲哀";
+		break;
+	case 2:
+		setarray .@i[0],7436,1712,202,75,EF_CRASHEARTH;
+		set .@j$,"苦恼";
+		break;
+	case 3:
+		setarray .@i[0],7438,1709,80,76,EF_REPAIRWEAPON;
+		set .@j$,"憎恨";
+		break;
+	case 4:
+		setarray .@i[0],7439,1710,62,171,EF_REMOVETRAP;
+		set .@j$,"绝望";
+		break;
+	}
+
+	specialeffect EF_GUMGANG;
+	if ($@thana_summon2 > 3) {
+		mes "^3355FF你无法靠近这个纹章，";
+		mes "因为它正在散发着高热。^000000";
+		close;
+	}
+	mes "封印似乎在沉睡。";
+	mes "封印的纹章上缺了一块碎片。";
+	mes "我之前肯定见过一块熟悉的碎片……";
+	next;
+	input .@inputstr$;
+	set .@exact_tt$, .@j$+"的碎片";
+	if (countitem(.@i[0]) > 0 && .@exact_tt$ == .@inputstr$) {
+		mes "^3355FF你把";
+		mes .@exact_tt$;
+		mes "插入纹章，";
+		mes "它的光芒变强了。^000000";
+		close2;
+		hideonnpc strnpcinfo(0);
+		set .hide, .hide | (1<<.@seal);
+		delitem .@i[0],1;
+		specialeffect .@i[4];
+		monster "thana_boss",.@i[2],.@i[3],"达纳托斯的"+.@j$,.@i[1],1,strnpcinfo(0)+"::OnMyMobDead";
+		switch($@thana_summon2) {
+			case 0: set .@str$,"……是谁……解开了……"+.@j$+"的记忆……？"; break;
+			case 1: set .@str$,"……为什么……要解开……"+.@j$+"的记忆……？"; break;
+			case 2: set .@str$,"……呃……住手……"+.@j$+"的记忆……"; break;
+			default: set .@str$,"……终于……你解开了最后一块记忆……"; break;
+		}
+		mapannounce "thana_boss",.@str$,bc_map,"0x7b68ee"; //FW_NORMAL 12 0 0
+		end;
+	}
+	mes "^3355FF这个动作没有效果。";
+	mes "你得试试别的。^000000";
+	close;
+
+OnMyMobDead:
+	set $@thana_summon2, $@thana_summon2+1;
+	if ($@thana_summon2 == 4)
+		mapwarp "thana_boss","thana_boss",141,228;
+	end;
+}
+thana_boss,202,75,3	duplicate(记忆封印#tt1)	记忆封印#tt2	1712,3,3
+thana_boss,80,76,7	duplicate(记忆封印#tt1)	记忆封印#tt3	1709,3,3
+thana_boss,62,171,5	duplicate(记忆封印#tt1)	记忆封印#tt4	1710,3,3
+
+thana_boss,141,228,0	script	#thanatos_seal	139,3,3,{
+	end;
+OnEnable:
+	enablenpc "#thanatos_seal";
+	end;
+OnDisable:
+	disablenpc "#thanatos_seal";
+	end;
+OnTouch_:
+	if ($@thana_summon2 == 4) {
+		initnpctimer;
+		donpcevent "记忆封印#tt5::OnEnable";
+		disablenpc "#thanatos_seal";
+	}
+	end;
+OnTimer1000:
+	mapannounce "thana_boss","达纳托斯：吼啊啊啊啊啊啊啊！",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer4000:
+	mapannounce "thana_boss","达纳托斯：……破碎了……崩坏了……扩散了……化作泪水归来……",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer7000:
+	mapannounce "thana_boss","达纳托斯：我再次复活，为了实现我的野心！",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer10000:
+	mapannounce "thana_boss","达纳托斯：……散发着浓烈的血腥味……浸透了悲伤……",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer13000:
+	mapannounce "thana_boss","达纳托斯：我将再次清除所有入侵这片大陆的人！",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer16000:
+	mapannounce "thana_boss","达纳托斯：来吧，成为第一个倒在我威力之下的人！",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	donpcevent "记忆封印#tt5::OnDisable";
+	donpcevent "#sommon_thanatos::OnEnable";
+	set $@thana_summon2, 5;
+	stopnpctimer;
+	end;
+}
+
+thana_boss,141,235,3	script	记忆封印#tt5	1708,{
+	end;
+OnInit:
+	disablenpc "记忆封印#tt5";
+	end;
+OnEnable:
+	enablenpc "记忆封印#tt5";
+	end;
+OnDisable:
+	disablenpc "记忆封印#tt5";
+	specialeffect EF_ICECRASH;
+	end;
+}
+
+thana_boss,141,218,0	script	#sommon_thanatos	-1,{
+OnEnable:
+	specialeffect EF_MAPPILLAR2,AREA,"#sommon_thanatos";
+	specialeffect EF_SEISMICWEAPON,AREA,"#sommon_thanatos";
+	monster "thana_boss",141,218,"达纳托斯的幻影",1708,1,"#sommon_thanatos::OnMyMobDead";
+	end;
+OnMyMobDead:
+	if (mobcount("thana_boss","#sommon_thanatos::OnMyMobDead") < 1) {
+		mapannounce "thana_boss","吼啊啊啊啊啊啊……这不可能………………………",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+		donpcevent "#cooltime_thana::OnEnable";
+		set $@thana_summon, 6;
+	}
+	end;
+}
+
+thana_boss,1,1,0	script	#cooltime_thana	844,{
+	end;
+OnInit:
+	set $@thana_summon, 0;
+	set $@thana_summon2, 0;
+	end;
+OnEnable:
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTimer3000:
+	mapannounce "thana_boss","警告！！",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer6000:
+	mapannounce "thana_boss","封印将在 30 秒后重新启动。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer16000:
+	mapannounce "thana_boss","还剩 20 秒……",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer26000:
+	mapannounce "thana_boss","还剩 10 秒……",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer31000:
+	mapannounce "thana_boss","5 秒。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer32000:
+	mapannounce "thana_boss","4 秒。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer33000:
+	mapannounce "thana_boss","3 秒。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer34000:
+	mapannounce "thana_boss","2 秒。",bc_map,"0x00ff00"; //FW_NORMAL 12 0 0
+	end;
+OnTimer35000:
+	mapannounce "thana_boss","时间到！",bc_map,"0xff0000"; //FW_NORMAL 12 0 0
+	end;
+OnTimer36000:
+OnTimer37000:
+	mapwarp "thana_boss","tha_t12",130,52;
+	end;
+OnTimer7200000:
+	set $@thana_summon, 0;
+	set $@thana_summon2, 0;
+	donpcevent "记忆封印#tt1::OnEnable";
+	donpcevent "记忆封印#tt2::OnEnable";
+	donpcevent "记忆封印#tt3::OnEnable";
+	donpcevent "记忆封印#tt4::OnEnable";
+	donpcevent "#thanatos_seal::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+tha_scene01,30,30,0	warp	scene	1,1,tha_scene01,131,220
+tha_t04,81,36,0	warp	to 5th Floor	1,1,tha_t05,62,8
+tha_t06,119,120,0	script	to 7th Floor	45,1,1,{
+	end;
+OnTouch:
+	if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger || Class == Job_Summoner) && BaseLevel > 94)) {
+		if (countitem(7425) > 0) {
+			mes "黑色钥匙的影子在传送门中央闪烁。";
+			mes "要通过这里，我好像需要什么东西。";
+			next;
+			mes "黑色钥匙对传送门起了反应，漂浮在空中。";
+			next;
+			mes "钥匙似乎分裂成许多粒子，突然塌缩成一个球体。";
+			mes "新形成的黑色魔法石的力量移除了路障。";
+			close2;
+			delitem 7425,1; //Key_Black
+			getitem 7430,1; //Magic_Gem_Black
+			warp "thana_step",69,369;
+			end;
+		}
+		mes "黑色钥匙的影子在传送门中央闪烁。";
+		mes "要通过这里，我好像需要什么东西。";
+		close;
+	}
+	mes "神秘的力量阻挡了我的去路。";
+	close;
+}

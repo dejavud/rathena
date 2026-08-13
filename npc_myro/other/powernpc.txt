@@ -1,0 +1,254 @@
+//===== rAthena Script =======================================
+//= 官方昆仑力量竞技场
+//===== By: ==================================================
+//= KarLaeda
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; SVN r9000+
+//===== Additional Comments: =================================
+//= [Official Conversion]
+//= 1.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.2 Cleaning. [Euphy]
+//============================================================
+
+gonryun,180,118,4	script	铁人#gnp	85,{
+	if (checkweight(1201,1) == 0) {
+		mes "- 请稍等一下！！ -- 现在你身上的物品 -";
+		mes "- 实在太多了。 -- 请减轻一些负重 -- 之后再来吧。 -";
+		close;
+	}
+	if (BaseJob == Job_Novice) {
+		mes "[宋武斗]";
+		mes "小孩子不许进来。";
+		close;
+	}
+	if (in_battle == 3) set in_battle,1;
+	if (in_battle < 1) {
+		mes "[宋武斗]";
+		mes "嘿~ 这可不是天天能见到的东西。哦~ 你看起来很强壮嘛！";
+		mes "要不要试试？";
+		next;
+		switch(select("有何不可？:？？？？？:不用了。")){
+		case 1:
+			mes "[宋武斗]";
+			mes "哈哈~ 我就知道你会试。如果你能举起这个，";
+			mes "我就告诉你一件有趣的事。准备好了吗？";
+			next;
+			mes "^0000FF宋武斗指着一块石头，";
+			mes "让你把它举起来。";
+			if (BaseJob < Job_Knight) callsub L_Lifting,690;
+			else if (BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Merchant || BaseJob == Job_Monk) callsub L_Lifting,1100;
+			else callsub L_Lifting,730;
+			break;
+		case 2:
+			mes "[宋武斗]";
+			mes "这没什么大不了的。如果你觉得自己力气大，";
+			mes "这也许是个体验新事物的好机会。要试试吗？？";
+			break;
+		case 3:
+			mes "[宋武斗]";
+			mes "看来不行啊……";
+			emotion ET_HNG;
+			break;
+		}
+	} else if (in_battle == 1) {
+		mes "[宋武斗]";
+		mes "又见到你了！要去吗？？";
+		next;
+		if (select("当然:下次吧") == 1) {
+			mes "[宋武斗]";
+			mes "好！哈哈。我喜欢你的自信。祝你好运~";
+			close2;
+			warp "gon_test",53,6;
+			end;
+		} else {
+			mes "[宋武斗]";
+			mes "嗯……好吧。那我们下次再见。";
+		}
+	} else {
+		mes "[宋武斗]";
+		mes "你从那里逃出来了？看来你还不够强啊！";
+		mes "我再给你一次机会。回头见。";
+		emotion ET_HNG;
+		set in_battle,1;
+	}
+	close;
+
+L_Lifting:
+	if (checkweight(7049,getarg(0))) {
+		mes "你轻轻松松地举起了石头。^000000";
+		set in_battle,1;
+		getitem 7049, getarg(0); // Stone
+		next;
+		emotion ET_BEST;
+		mes "[宋武斗]";
+		mes "哇~ 太棒了~下次见面，我带你去个好地方。回见~";
+	} else {
+		mes "对你来说似乎太重了。^000000";
+		next;
+		mes "[宋武斗]";
+		mes "你还缺乏锻炼。多练练再来吧。";
+	}
+	return;
+}
+
+gon_test,50,14,4	script	管理员#gnp	780,{
+	mes "[管理员]";
+	if (BaseJob == Job_Novice) {
+		mes "小孩子不许进来。";
+		close;
+	}
+	if ($@in_battle) {
+		mes "抱歉，斗技场现在有人在使用。请稍后再试。";
+		close;
+	}
+	mes "准备好了吗？ 记住，参加比试要付 500z。";
+	next;
+	if (select("好，让我比试！:请稍等一下。") == 2) {
+		mes "[管理员]";
+		mes "好的，回头见。";
+		close;
+	}
+	if (Zeny < 500) {
+		mes "[管理员]";
+		mes "抱歉，你的 zeny 不够。";
+		close;
+	}
+	set Zeny,Zeny - 500;
+	set in_battle,1;
+	warp "gon_test",42,86;
+	set $@in_battle,1;
+	setnpctimer 0,"Summoner#gnp";
+	startnpctimer "Summoner#gnp";
+	end;
+}
+
+gon_test,42,89,4	script	召唤师#gnp	774,{
+	mes "[宋允雨]";
+	if (in_battle == 3) {
+		mes "请先去登记，然后再回来。";
+		close;
+	} else if (in_battle == 2) {
+		mes "你已经进行过一场比试了。一次只能进行一场比试。";
+		mes "如果想和其他怪物比试，请重新进入。";
+		close;
+	}
+	mes "欢迎。你想召唤哪只怪物？";
+	next;
+	set .@gnpGroup, select("第 1 组:第 2 组:第 3 组:第 4 组:第 5 组:第 6 组:第 7 组:第 8 组:第 9 组:第 10 组:第 11 组");
+	set .@gnpGroupMob$,.gnpMobsName$[(.@gnpGroup-1)*6];
+	for (set .@i,1; .@i < 6; set .@i, .@i+1)
+		set .@gnpGroupMob$, .@gnpGroupMob$ + ":" + .gnpMobsName$[(.@gnpGroup-1)*6 + .@i];
+	set .@gnpMob, select(.@gnpGroupMob$);
+	mes "[宋允雨]";
+	mes "比试开始！";
+	close2;
+	set in_battle,2;
+	if (getnpctimer(0) < 180000) monster "gon_test",56,86,.gnpMobsName$[(.@gnpGroup-1)*6 + .@gnpMob - 1],.gnpMobsId[(.@gnpGroup-1)*6 + .@gnpMob - 1],1,"Summoner#gnp::OnGnpMobDead";
+	end;
+OnInit:
+	initnpctimer;
+	stopnpctimer;
+	setarray .gnpMobsName$[0],"皮革缎带","毒血症","献血证明","狼蛛","螳螂拳","沙漠臼齿";
+	setarray .gnpMobsId[0],1419,1428,1434,1430,1457,1432;
+	setarray .gnpMobsName$[6],"野猪骷髅","食人熊","矿工","斗犬","人鱼公主","独生子";
+	setarray .gnpMobsId[6],1462,1442,1469,1460,1425,1472;
+	setarray .gnpMobsName$[12],"三叶舞","猎犬","胡桃夹子","海马","杰克","尸体";
+	setarray .gnpMobsId[12],1454,1455,1443,1426,1436,1423;
+	setarray .gnpMobsName$[18],"马尔杜克","洋葱茎","蚯蚓","自动人偶","卖火柴的女孩","红色恶魔";
+	setarray .gnpMobsId[18],1458,1440,1429,1459,1444,1422;
+	setarray .gnpMobsName$[24],"那伽","霉菌","追踪导弹","亚龙","阿比龙","细菌";
+	setarray .gnpMobsId[24],1421,1481,1424,1465,1466,1433;
+	setarray .gnpMobsName$[30],"常胜系统","胖弓箭手","小黑山羊","变态","宝箱","菜鸟";
+	setarray .gnpMobsId[30],1427,1473,1431,1446,1474,1471;
+	setarray .gnpMobsName$[36],"飓风","外来野猪","迷宫地主","怨念骑士","怨念弓箭手","蝴蝶";
+	setarray .gnpMobsId[36],1450,1439,1461,1467,1453,1479;
+	setarray .gnpMobsName$[42],"嘴唇","温迪戈","符咒卡片","触手怪","肌肉警报","恶魔十字";
+	setarray .gnpMobsId[42],1451,1475,1437,1441,1476,1435;
+	setarray .gnpMobsName$[48],"蛆虫","大块头","读书季节","闪光手指","手提包","怨念骑士长";
+	setarray .gnpMobsId[48],1477,1448,1478,1489,1488,1438;
+	setarray .gnpMobsName$[54],"女王","火焰人","行刑者之剑","变异龙","杂烩汤","巨剑";
+	setarray .gnpMobsId[54],1482,1464,1487,1449,1456,1486;
+	setarray .gnpMobsName$[60],"怪兽鸟","拷问者","战士","副拷问者","巨型剑";
+	setarray .gnpMobsId[60],1447,1483,1490,1484,1485;
+	end;
+
+OnTimer120000:
+	areaannounce "gon_test",41,81,74,92,"还剩 1 分钟",0;
+	end;
+
+OnTimer180000:
+	killmonster "gon_test","Summoner#gnp::OnGnpMobDead";
+	end;
+
+OnTimer182000:
+	areaannounce "gon_test",41,81,74,92,"时间到。",0;
+	end;
+
+OnGnpMobDead:
+	setnpctimer 0;
+	set in_battle,1;
+	areaannounce "gon_test",41,81,74,92,"谢谢光临，欢迎再来。",0;
+	sleep 4000;
+OnTimer184000:
+	stopnpctimer;
+	areawarp "gon_test",41,81,74,92,"gon_test",44,4;
+	set $@in_battle,0;
+	end;
+}
+
+gon_test,46,14,3	script	斗技场向导	770,{
+	mes "[宋希妍]";
+	mes ".....你好~这里是斗技场。有什么问题吗？";
+	next;
+	switch(select("斗技场？:小姐你有空吗？:进去。:出去。:没有。")){
+	case 1:
+		mes "[宋希妍]";
+		mes "正如这个地方的名字，这里是进行比试的场地。";
+		mes "我们准备了各种等级不同的怪物。";
+		next;
+		mes "[宋希妍]";
+		mes "一阶 Boss 怪物还在准备中。进入这里需要收取少量费用。";
+		break;
+	case 2:
+		mes "[宋希妍]";
+		mes "啊……什么？啊，抱歉我现在要工作……对不起……";
+		break;
+	case 3:
+		mes "[宋希妍]";
+		mes "好的，谢谢。祝您玩得愉快。";
+		close2;
+		set in_battle,3;
+		warp "gon_test",25,98;
+		end;
+	case 4:
+		mes "[宋希妍]";
+		mes "谢谢。欢迎再来。";
+		close2;
+		warp "gonryun",177,112;
+		end;
+	case 5:
+		mes "[宋希妍]";
+		mes "........再见……";
+		break;
+	}
+	close;
+}
+
+gon_test,70,103,3	script	周安安#gnp	773,{
+	mes "[周安安]";
+	mes "想回去吗？";
+	next;
+	if (select("是。:否。") == 1) {
+		mes "[周安安]";
+		mes "谢谢。欢迎再来。";
+		close2;
+		set in_battle,1;
+		warp "gon_test",44,4;
+		end;
+	}
+	mes "[周安安]";
+	mes "谢谢。";
+	close;
+}

@@ -1,0 +1,418 @@
+//===== rAthena Script ======================================= 
+//= Sage Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Create Converter, Elemental Change
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 standards. [5511]
+//= 1.5 Optimized. [Euphy]
+//============================================================
+
+yuno_in03,176,24,3	script	米秀娜	755,{
+	if(BaseJob != Job_Sage) {
+		mes "[米秀娜]";
+		mes "你好，我是米秀娜，修百依蔡乐魔法学校的导师之一。";
+		mes "难道你是贤者或者学者？哦……你不是吗？";
+		next;
+		mes "[米秀娜]";
+		mes "哦，那真是太可惜了。很抱歉。";
+		mes "如果你认识或者在旅途中遇到";
+		mes "还没听说过我课程的贤者或学者，";
+		mes "请介绍他们来找我。";
+		next;
+		mes "[米秀娜]";
+		mes "抱歉打扰你了，";
+		mes "感谢你抽出时间。";
+		mes "祝你愉快，冒险者。";
+		close;
+	}
+	if(SAG_SK == 100) {
+		set .@Element, getskilllv("SA_ELEMENTFIRE") + getskilllv("SA_ELEMENTGROUND") + getskilllv("SA_ELEMENTWIND") + getskilllv("SA_ELEMENTWATER");
+		set .@Convert, getskilllv("SA_CREATECON");
+		if(.@Element && .@Convert) {
+			mes "[米秀娜]";
+			mes "如果你有还没学过";
+			mes "瓦尔蒙德爵士卷轴技能的";
+			mes "贤者或学者朋友，";
+			mes "请介绍他们来找我。";
+			next;
+			mes "[米秀娜]";
+			mes "我相信你已经发现";
+			mes "这些属性系技能在战斗中非常有用。";
+			mes "长远来看，知识就是力量……";
+			close;
+		}
+		mes "[米秀娜]";
+		mes "啊，你一定是把我教你的东西忘了。";
+		mes "也许你弄丢了我给你的技能卷轴？";
+		mes "没关系，我会帮你回忆起来的。";
+		next;
+		if(.@Element == 0) {
+			mes "[米秀娜]";
+			mes "你可以选择想学的^FF0000属性转换^000000技能，";
+			mes "即使是你之前没学过的也可以，";
+			mes "只要满足该技能的要求就行。";
+			next;
+			mes "[米秀娜]";
+			mes "请记住，一旦学会了属性转换技能，";
+			mes "就不能再更改了。";
+			mes "那么，你想学哪个技能？";
+			next;
+			setarray .@ReqSkill[0],280,283,282,281;
+			setarray .@ReqSkill$[0],"火焰属性附加","地属性附加","风属性附加","水属性附加";
+			setarray .@Skill[0],1018,1017,1019,1008;
+			setarray .@Skill$[0],"火","地","风","水";
+			while(1) {
+				set .@i, select("火属性转换:地属性转换:风属性转换:水属性转换")-1;
+				if(getskilllv(.@ReqSkill[.@i]) == 0) {
+					mes "[米秀娜]";
+					mes "很抱歉，你还没学会^FF0000"+.@ReqSkill$[.@i]+"^000000，";
+					mes "而这是学习^FF0000"+.@Skill$[.@i]+"属性转换^000000";
+					mes "所必需的技能。你需要";
+					mes "先学会"+.@ReqSkill$[.@i]+"，";
+					mes "或者选择其他属性转换技能。";
+					next;
+				}
+				else {
+					mes "[米秀娜]";
+					mes "很好，我将教你";
+					mes "^FF0000"+.@Skill$[.@i]+"属性转换^000000技能";
+					mes "和^FF0000属性卷轴制作技能^000000。";
+					mes "我念咒语的时候请保持不动。";
+					next;
+					mes "[米秀娜]";
+					mes "%$#@!#$% 呀~~";
+					specialeffect2 EF_RUWACH;
+					next;
+					mes "[米秀娜]";
+					mes "呀！";
+					specialeffect2 EF_BRANDISHSPEAR;
+					next;
+					mes "^3355FF你成功学会了"+.@Skill$[.@i]+"属性转换";
+					mes "技能和属性卷轴制作技能。^000000";
+					skill .@Skill[.@i],1,SKILL_PERM;
+					if(.@Convert == 0)
+						skill "SA_CREATECON",1,SKILL_PERM;
+					next;
+					break;
+				}
+			}
+		}
+		else if(.@Convert == 0) {
+			mes "[米秀娜]";
+			mes "好吧，我要施一个法术，";
+			mes "帮你回忆起忘记的技能。";
+			mes "别动，尽量保持静止……";
+			next;
+			mes "[米秀娜]";
+			mes "%$#@!#$% 呀~~";
+			specialeffect2 EF_RUWACH;
+			next;
+			mes "[米秀娜]";
+			mes "呀！";
+			specialeffect2 EF_BRANDISHSPEAR;
+			next;
+			mes "^3355FF你成功回忆起了属性卷轴制作技能，";
+			mes "又可以再次使用它了。^000000";
+			skill "SA_CREATECON",1,SKILL_PERM;
+			next;
+		}
+		mes "[米秀娜]";
+		mes "啊，你学得和我预想的一样快。";
+		mes "很好，希望你能善用这些才能。";
+		mes "那么再见了，"+strcharinfo(0)+"。";
+		close;
+	}
+	else if(SAG_SK == 0) {
+		mes "[米秀娜]";
+		mes "你好，我是米秀娜，修百依蔡乐魔法学校的导师之一。";
+		mes "有什么可以为你效劳的？";
+		next;
+		select("我来寻求新的知识。");
+		mes "[米秀娜]";
+		mes "啊，你一定就是"+strcharinfo(0)+"了。";
+		mes "我一直盼望着见到你。";
+		mes "在追求知识的崇高道路上，";
+		mes "请允许我建议你去读一读";
+		mes "最近刚修复的瓦尔蒙德爵士卷轴。";
+		next;
+		mes "[米秀娜]";
+		mes "瓦尔蒙德爵士的卷轴记载着";
+		mes "关于火、水、地、风四大元素的知识。";
+		mes "这些知识可以应用于";
+		mes "两种新的贤者技能。";
+		next;
+		mes "[米秀娜]";
+		mes "第一种叫做^FF0000属性转换^000000，";
+		mes "它能按照你所学属性转换技能的";
+		mes "特定元素，改变魔物的属性。";
+		next;
+		mes "[米秀娜]";
+		mes "第二种叫做属性卷轴制作，";
+		mes "它能制作出使用属性转换技能";
+		mes "所需的转换道具。";
+		next;
+		mes "[米秀娜]";
+		mes "虽然这两种技能的知识";
+		mes "已经失传多年，但我们终于";
+		mes "恢复了其中的大部分。";
+		mes "那么，你准备好学习这些技能了吗？";
+		next;
+		if (select("以后再说吧。:是的，我准备好了。") == 1) {
+			mes "[米秀娜]";
+			mes "啊，你现在一定很忙。";
+			mes "没关系，等你准备好";
+			mes "再来学习吧。那么，";
+			mes "再见，祝你愉快~";
+			close;
+		}
+		mes "[米秀娜]";
+		mes "很好。首先，你必须学会";
+		mes "属性卷轴制作技能，";
+		mes "这是学习属性转换技能的基础。";
+		next;
+		mes "[米秀娜]";
+		mes "请带来所需的材料，";
+		mes "我们来制作一个基础元素转换器，";
+		mes "这样你才能学习这个技能。";
+		mes "让我看看，你需要带来……";
+		next;
+		mes "[米秀娜]";
+		mes "^ff00007 硬角^000000、";
+		mes "^ff000012 彩色昆虫外壳^000000、";
+		mes "^ff000010 蜗牛壳^000000、";
+		mes "^ff00004 空卷轴^000000和";
+		mes "^ff000010 蝎子尾巴^000000。";
+		next;
+		mes "[米秀娜]";
+		mes "好吧，我会在这里等你回来。";
+		mes "记住，我们需要这些物品";
+		mes "来制作转换器，这样你才能";
+		mes "通过我的示范学会这个技能……";
+		set SAG_SK,1;
+		close;
+	}
+	else if(SAG_SK == 1) {
+		if (countitem(904) < 10 || countitem(947) < 7 || countitem(1013) < 12 || countitem(946) < 10 || countitem(7433) < 4) {
+			mes "[米秀娜]";
+			mes "嗯，你还没集齐制作元素转换器";
+			mes "所需的全部材料。";
+			mes "让我再提醒你一次要带什么，";
+			mes "这样下次就不会忘了……";
+			next;
+			mes "[米秀娜]";
+			mes "^ff00007 硬角^000000、";
+			mes "^ff000012 彩色昆虫外壳^000000、";
+			mes "^ff000010 蜗牛壳^000000、";
+			mes "^ff00004 空卷轴^000000和";
+			mes "^ff000010 蝎子尾巴^000000。";
+			next;
+			mes "[米秀娜]";
+			mes "别忘了，我们需要全部这些物品";
+			mes "来制作转换器，这样你才能";
+			mes "通过观看我的示范，";
+			mes "学会属性卷轴制作技能。";
+			close;
+		}
+		else {
+			mes "[米秀娜]";
+			mes "太好了，你什么都带来了。";
+			mes "现在，让我来讲解这个技能。";
+			mes "作为贤者，你所学的技能决定了";
+			mes "你能制作哪种元素转换器。";
+			next;
+			mes "[米秀娜]";
+			mes "^FF0000火焰属性附加^000000技能";
+			mes "能制作火属性转换器。";
+			mes "^FF0000地属性附加^000000技能";
+			mes "能制作地属性转换器。";
+			next;
+			mes "[米秀娜]";
+			mes "^FF0000风属性附加^000000能制作风属性转换器，";
+			mes "^FF0000水属性附加^000000能制作水属性转换器。";
+			mes "这些都说得通，对吧？";
+			next;
+			mes "[米秀娜]";
+			mes "元素转换器的制作成功率，";
+			mes "取决于火焰属性附加、地属性附加、";
+			mes "风属性附加或水属性附加技能的等级，";
+			mes "以及你自身的能力。";
+			next;
+			mes "[米秀娜]";
+			mes "现在，请收下这份";
+			mes "瓦尔蒙德爵士卷轴的抄本，";
+			mes "使用属性卷轴制作技能时，";
+			mes "可以参考它来制作元素转换器。";
+			next;
+			mes "^3355FF通过研读瓦尔蒙德爵士卷轴的抄本，";
+			mes "你学会了属性卷轴制作技能。^000000";
+			specialeffect2 EF_ABSORBSPIRITS;
+			delitem 904,10; // Scorpion_Tail
+			delitem 947,7; // Horn
+			delitem 1013,12; // Rainbow_Shell
+			delitem 946,10; // Snail's_Shell
+			delitem 7433,4; // Blank_Scroll
+			set SAG_SK,2;
+			skill "SA_CREATECON",1,SKILL_PERM;
+			next;
+			mes "[米秀娜]";
+			mes "哇，"+strcharinfo(0)+"！";
+			mes "你学这个技能真快！";
+			mes "难怪人们说你是";
+			mes "最出色的贤者之一！";
+			next;
+			mes "[米秀娜]";
+			mes "现在你可以学习另一个技能——";
+			mes "属性转换了。好吧，";
+			mes "这节课我还需要准备一些东西，";
+			mes "我们稍后再谈，好吗？";
+			close;
+		}
+	}
+	else if(SAG_SK == 2) {
+		if(getskilllv("SA_CREATECON") == 0) {
+			skill "SA_CREATECON",1,SKILL_PERM;
+			mes "- 与米秀娜交谈时，我回忆起了^ff0000属性卷轴制作技能^000000！ -";
+			next;
+		}
+		mes "[米秀娜]";
+		mes "你可以选择想学的^FF0000属性转换^000000技能，";
+		mes "即使是你之前没学过的也可以，";
+		mes "只要满足该技能的要求就行。";
+		next;
+		mes "[米秀娜]";
+		mes "请记住，一旦学会了属性转换技能，";
+		mes "就不能再更改了。";
+		mes "那么，你想学哪个技能？";
+		next;
+		setarray .@ReqSkill[0],280,283,282,281;
+		setarray .@ReqSkill$[0],"火焰属性附加","地属性附加","风属性附加","水属性附加";
+		setarray .@ReqItem$[0],"火灵矿石","地灵矿石","风灵矿石","水灵矿石";
+		setarray .@Skill$[0],"火","地","风","水";
+		while(1) {
+			set .@i, select("火属性转换:地属性转换:风属性转换:水属性转换")-1;
+			if(getskilllv(.@ReqSkill[.@i]) == 0) {
+				mes "[米秀娜]";
+				mes "很抱歉，你还没学会^FF0000"+.@ReqSkill$[.@i]+"^000000，";
+				mes "而这是学习"+.@Skill$[.@i]+"属性转换技能";
+				mes "所必需的。请先学会"+.@ReqSkill$[.@i]+"，";
+				mes "或者选择其他属性转换技能让我教你。";
+				next;
+			}
+			else {
+				mes "[米秀娜]";
+				mes "很好。请带来以下物品，";
+				mes "这样你就能学习";
+				mes .@Skill$[.@i]+"属性转换技能了。";
+				next;
+				mes "[米秀娜]";
+				mes "^FF000020 "+.@ReqItem$[.@i]+"^000000、";
+				mes "^FF00001 斐扬水溶液试管^000000和";
+				mes "^FF00001 梦罗克水溶液试管^000000。";
+				mes "材料备齐后请回来找我。";
+				set SAG_SK, 10 * (.@i+1); //10,20,30,40
+				close;
+			}
+		}
+	}
+	else if(SAG_SK == 10 || SAG_SK == 20 || SAG_SK == 30 || SAG_SK == 40) {
+		if(getskilllv("SA_CREATECON") == 0) {
+			skill "SA_CREATECON",1,SKILL_PERM;
+			mes "- 与米秀娜交谈时，我回忆起了^ff0000属性卷轴制作技能^000000！ -";
+			next;
+		}
+		set .@i, (SAG_SK/10) - 1;
+		setarray .@ReqItem[0],990,993,992,991;
+		setarray .@ReqItem$[0],"火灵矿石","地灵矿石","风灵矿石","水灵矿石";
+		setarray .@Skill[0],1018,1017,1019,1008;
+		setarray .@Skill$[0],"火","地","风","水";
+		if (countitem(.@ReqItem[.@i]) < 20 || countitem(1089) < 1 || countitem(1088) < 1) {
+			mes "[米秀娜]";
+			mes "收集物品遇到困难了吗？";
+			mes "以防万一，让我再提醒你一次，";
+			mes "学习"+.@Skill$[.@i]+"属性转换技能";
+			mes "需要带来什么。";
+			next;
+			mes "[米秀娜]";
+			mes "^ff000020 "+.@ReqItem$[.@i]+"^000000、";
+			mes "^ff00001 斐扬水溶液试管^000000和";
+			mes "^ff00001 梦罗克水溶液试管^000000。";
+			mes "别忘了，下次来见我时";
+			mes "要把材料备齐，好吗？";
+			close;
+		}
+		mes "[米秀娜]";
+		mes "啊，你回来了。现在我终于可以";
+		mes "教你"+.@Skill$[.@i]+"属性转换技能了。";
+		mes "这个技能有一定几率";
+		mes "将目标魔物的属性永久转换为"+.@Skill$[.@i]+"属性。";
+		next;
+		mes "[米秀娜]";
+		mes "记住，施展这个技能必须使用";
+		mes "元素转换器，而且和属性卷轴制作";
+		mes "技能一样，它有成功率。";
+		mes "所以请注意这一点。";
+		next;
+		mes "[米秀娜]";
+		mes "那么，"+strcharinfo(0)+"，";
+		mes "我要施一个法术，帮你记住";
+		mes .@Skill$[.@i]+"属性转换技能。";
+		mes "尽量保持不动……";
+		next;
+		mes "^3355FF米秀娜开始吟唱起奇异的咒语，";
+		mes "柔和的蓝色光芒环绕着他的身体，";
+		mes "慢慢变得越来越亮、越来越强。^000000";
+		specialeffect2 EF_RUWACH;
+		next;
+		mes "[米秀娜]";
+		mes "@#$%^~ 呀！";
+		specialeffect2 EF_BRANDISHSPEAR;
+		delitem .@ReqItem[.@i],20;
+		delitem 1089,1; // Payon Potion
+		delitem 1088,1; // Morocc Potion
+		set SAG_SK,100;
+		skill .@Skill[.@i],1,0;
+		next;
+		mes "[米秀娜]";
+		mes strcharinfo(0)+"……";
+		mes "很高兴告诉你，你已成功记住";
+		mes .@Skill$[.@i]+"属性转换技能。";
+		mes "希望它在战斗中对你有所帮助。";
+		mes "那么再见了~";
+		close;
+	}
+	else {
+		mes "[米秀娜]";
+		mes "如果你有还没学过";
+		mes "瓦尔蒙德爵士卷轴技能的";
+		mes "贤者或学者朋友，";
+		mes "请介绍他们来找我。";
+		next;
+		mes "[米秀娜]";
+		mes "我相信你已经发现";
+		mes "这些属性系技能在战斗中非常有用。";
+		mes "长远来看，知识就是力量……";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//===== Additional Comments: ================================= 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.3c Fixed some typos [IVBela]
+//============================================================

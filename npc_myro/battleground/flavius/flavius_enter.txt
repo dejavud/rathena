@@ -1,0 +1,347 @@
+//===== rAthena Script =======================================
+//= BattleGround System - Flavius Entrance NPCs
+//===== Description: =========================================
+//= [Official Conversion]
+//= Flavius Battleground Entrance NPCs
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
+
+// Flavius Officer - Guillaume
+//============================================================
+bat_room,133,178,5	script	弗拉维斯军官#01a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[纪尧姆军军官]";
+	mes "让那些臭克罗伊的家伙见识一下纪尧姆军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[纪尧姆军军官]";
+			mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[纪尧姆军军官]";
+				mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2070,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[纪尧姆军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2070;
+					set .@mapcount2,getmapusers("bat_b01");
+					if (.@mapcount2 > 0) {
+						mes "[纪尧姆军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与克罗伊军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@FlaviusBG1 > 0) {
+							mes "[纪尧姆军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[纪尧姆军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让克罗伊的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",85,223;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[纪尧姆军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,133,121,1	script	弗拉维斯军官#01b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[克罗伊军军官]";
+	mes "让那些臭纪尧姆的家伙见识一下克罗伊军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[克罗伊军军官]";
+			mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[克罗伊军军官]";
+				mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2070,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[克罗伊军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2070;
+					set .@mapcount2,getmapusers("bat_b01");
+					if (.@mapcount2 > 0) {
+						mes "[克罗伊军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与纪尧姆军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@FlaviusBG1 > 0) {
+							mes "[克罗伊军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[克罗伊军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让纪尧姆的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",85,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[克罗伊军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,135,178,5	script	纪尧姆骑士#3	417,{
+	mes "[纪尧姆骑士]";
+	mes "弗拉维斯战斗的目标，是抢在敌人之前摧毁他们的水晶，先取得2分。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "两军的水晶都由特殊路障保护，直接攻击无法摧毁路障。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "但只要消灭守卫敌军基地的守卫，路障就能被移除。";
+	next;
+	mes "[纪尧姆骑士]";
+	mes "水晶免疫一切技能；想摧毁敌方的水晶，只能靠物理攻击。";
+	next;
+	mes "[纪尧姆骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "如果准备好了，就点击^0000FF界面上的战斗按钮^000000开始。";
+	else {
+		mes "请记住：参战时你会获得一个凭证，上面记录着你不能参加同类战斗的剩余时间。";
+		mes "按 Alt+U 键可以查看剩余时间。";
+	}
+	next;
+	mes "[纪尧姆骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000！";
+	else
+		mes "准备好战斗了吗？那就向我旁边的招募员申请吧！";
+	close;
+}
+
+bat_room,151,178,5	duplicate(纪尧姆骑士#3)	纪尧姆骑士#4	417
+
+bat_room,135,121,1	script	克罗伊骑士#3	413,{
+	mes "[克罗伊骑士]";
+	mes "弗拉维斯战斗的目标，是抢在敌人之前摧毁他们的水晶，先取得2分。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "两军的水晶都由特殊路障保护，直接攻击无法摧毁路障。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "但只要消灭守卫敌军基地的守卫，路障就能被移除。";
+	next;
+	mes "[克罗伊骑士]";
+	mes "水晶免疫一切技能；想摧毁敌方的水晶，只能靠物理攻击。";
+	next;
+	mes "[克罗伊骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "如果准备好了，就点击^0000FF界面上的战斗按钮^000000开始。";
+	else {
+		mes "请记住：参战时你会获得一个凭证，上面记录着你不能参加同类战斗的剩余时间。";
+		mes "按 Alt+U 键可以查看剩余时间。";
+	}
+	next;
+	mes "[克罗伊骑士]";
+	if (getbattleflag("feature.bgqueue"))
+		mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000！";
+	else
+		mes "准备好战斗了吗？那就向我旁边的招募员申请吧！";
+	close;
+}
+
+bat_room,151,121,1	duplicate(克罗伊骑士#3)	克罗伊骑士#4	413
+
+// Flavius Officer - Croix
+//============================================================
+bat_room,148,178,5	script	弗拉维斯军官#02a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[纪尧姆军军官]";
+	mes "让那些臭克罗伊的家伙见识一下纪尧姆军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[纪尧姆军军官]";
+			mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[纪尧姆军军官]";
+				mes "你想加入我们、对抗克罗伊军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2070,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[纪尧姆军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2070;
+					set .@mapcount2,getmapusers("bat_b02");
+					if (.@mapcount2 > 0) {
+						mes "[纪尧姆军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与克罗伊军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@FlaviusBG2 > 0) {
+							mes "[纪尧姆军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[纪尧姆军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让克罗伊的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",141,224;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[纪尧姆军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}
+
+bat_room,148,121,1	script	弗拉维斯军官#02b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	if (checkweight(1201,1) == 0) {
+		mes "- 等一下！！ -";
+		mes "- 你身上带的物品实在太多了。 -";
+		mes "- 请减轻一些负重之后 -";
+		mes "- 再来试试吧。 -";
+		close;
+	}
+	mes "[克罗伊军军官]";
+	mes "让那些臭纪尧姆的家伙见识一下克罗伊军的厉害！";
+	next;
+	switch(select("我要加入你们的军队！:结束对话")) {
+	case 1:
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+			mes "[克罗伊军军官]";
+			mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+		}
+		else {
+			if (BaseLevel < 80) {
+				mes "[克罗伊军军官]";
+				mes "你想加入我们、对抗纪尧姆军，我很高兴。但很抱歉：我不能让你这样的新兵上残酷的战场送死。";
+			}
+			else {
+				set .@chk_urtime,checkquest(2070,PLAYTIME);
+				if ((.@chk_urtime == 0)|| (.@chk_urtime == 1)) {
+					mes "[克罗伊军军官]";
+					mes "你看起来刚从战场回来。";
+					mes "现在回去还太早。去休息一下吧，敌人交给我们！";
+				}
+				else {
+					if (.@chk_urtime == 2)
+						erasequest 2070;
+					set .@mapcount2,getmapusers("bat_b02");
+					if (.@mapcount2 > 0) {
+						mes "[克罗伊军军官]";
+						mes "我刚收到报告，一支精锐部队已经开赴战场，正在与纪尧姆军交战。";
+						mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+					}
+					else {
+						if ($@FlaviusBG2 > 0) {
+							mes "[克罗伊军军官]";
+							mes "已经有一支精锐部队整装待发，准备开赴战场了。";
+							mes "何不先等一等？在此之前，建议你磨快武器、备好补给。";
+						}
+						else {
+							mes "[克罗伊军军官]";
+							mes "你看起来已经做好战斗准备了！";
+							mes "去让纪尧姆的家伙尝尝恐惧的滋味吧！";
+							mes "今天，我们的胜利欢呼将响彻整个战场！";
+							close2;
+							warp "bat_room",141,207;
+							end;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case 2:
+		mes "[克罗伊军军官]";
+		mes "今天，胜利必将属于我们！";
+		break;
+	}
+	close;
+}

@@ -1,0 +1,69 @@
+//========================
+// myro 自定义脚本
+// - 孙燕姿 祝福 NPC -
+// 改编自 resources/plutoea/npc/custom/npc_son.txt
+// 功能：祝福玩家，给予 3 分钟移动加速（增加敏捷 LV10）
+//========================
+
+prontera,146,93,6	script	孙燕姿#son	756,{
+	mes "[孙燕姿]";
+	mes "你好~";
+	mes "我是音乐精灵 ^3355FF孙燕姿^000000";
+	mes "能在仙境传说中";
+	mes "见到你~ 真的很高兴唷!";
+	mes "让我用音乐的力量祝福你";
+	mes "为你的旅途加把劲吧!";
+	next;
+	switch (select("请为我祝福:下一次再麻烦你了")) {
+	case 1:
+		mes "[孙燕姿]";
+		mes "我会用音乐与存在于";
+		mes "世上的风之精灵们沟通";
+		mes "试着借用他们的力量";
+		mes "为你送上祝福";
+		next;
+		mes "[孙燕姿]";
+		mes "风之精灵们，请听我的倾诉……";
+		mes "请祝福我的朋友，让他的脚步更轻盈";
+		specialeffect2 EF_BLESSING;
+		sc_start SC_SPEEDUP0,180000,25;
+		next;
+		mes "[孙燕姿]";
+		mes "好了，感受到轻快的步伐了吗?";
+		mes "我的祝福会在 ^3355FF3 分钟^000000 内";
+		mes "一直伴随着你唷";
+		next;
+		mes "[孙燕姿]";
+		mes "愿精灵的力量永远与你同在";
+		mes "也请继续喜爱仙境传说喔";
+		break;
+	case 2:
+		mes "[孙燕姿]";
+		mes "没关系";
+		mes "有需要的话，请记得找我";
+		mes "我会在此为你服务";
+		next;
+		mes "[孙燕姿]";
+		mes "记得，在美好的仙境里";
+		mes "抛开一切，好好的享受";
+		mes "创造属于你的浪漫传说";
+		break;
+	}
+	close;
+	end;
+}
+
+alberta,25,238,3	duplicate(孙燕姿#son)	孙燕姿#alb	756
+ayothaya,212,192,5	duplicate(孙燕姿#son)	孙燕姿#ayo	756
+aldebaran,143,116,5	duplicate(孙燕姿#son)	孙燕姿#alde	756
+amatsu,200,79,5	duplicate(孙燕姿#son)	孙燕姿#ama	756
+geffen,124,62,8	duplicate(孙燕姿#son)	孙燕姿#gef	756
+izlude,134,92,4	duplicate(孙燕姿#son)	孙燕姿#izl	756
+jawaii,223,204,4	duplicate(孙燕姿#son)	孙燕姿#jawa	756
+morocc,160,97,5	duplicate(孙燕姿#son)	孙燕姿#moc	756
+payon,190,104,5	duplicate(孙燕姿#son)	孙燕姿#pay	756
+yuno,164,48,5	duplicate(孙燕姿#son)	孙燕姿#yuno	756
+gonryun,156,14,5	duplicate(孙燕姿#son)	孙燕姿#gon	756
+xmas,157,111,5	duplicate(孙燕姿#son)	孙燕姿#xmas	756
+louyang,224,60,5	duplicate(孙燕姿#son)	孙燕姿#lou	756
+niflheim,21,159,5	duplicate(孙燕姿#son)	孙燕姿#nif	756

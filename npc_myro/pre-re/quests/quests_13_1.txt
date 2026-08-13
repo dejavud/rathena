@@ -1,0 +1,21 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Ash-Vacuum
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Contains duplicate NPCs from main script.
+//===== Additional Comments: ================================= 
+//= 1.0 Moved Izlude NPC to pre-re/re paths. [Euphy]
+//= 1.1 Renewal script update for ep16.1 [Capuche]
+//============================================================ 
+
+izlude,99,136,5	duplicate(PromotionalStaff_izlude)	宣传官员#iz	100
+prt_castle,121,51,3	duplicate(同盟管理人员#prt_)	同盟管理人员#prt	4_M_CRU_OLD
+prt_castle,117,51,5	duplicate(联盟盟员#prt_)	联盟盟员#prt	4_M_SAGE_A
+prt_castle,83,67,5	duplicate(勇士招募官_)	勇士招募官	4_M_MANAGER
+prt_castle,88,165,3	duplicate(Laur_)	劳尔	1_M_LIBRARYMASTER
+mid_camp,264,263,4	duplicate(迭戈#ep13bs_)	迭戈#ep13bs	4_M_RACHMAN1

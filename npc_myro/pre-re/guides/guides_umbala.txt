@@ -1,0 +1,121 @@
+//===== rAthena Script =======================================
+//= Umbala Guides
+//===== By: ==================================================
+//= Dizzy, Translated by Celest; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guide for the City of Umbala
+//===== Additional Comments: =================================
+//= 1.1 Fixed location command format [Lupus]
+//= 1.2 Optimized, updated common guide names [Lupus]
+//= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
+//= 1.5 Rescripted to official 10.3 standards. [L0ne_W0lf]
+//= 1.6 Corrected activating ontouch. [L0ne_W0lf]
+//============================================================
+
+umbala,128,94,4	script	汶巴拉 解说员#um	702,{
+	mes "[汶巴拉解说员]";
+	mes "这是个非常奇特的地方……";
+	mes "尚未开发，";
+	mes "而且布满了复杂曲折的小路……";
+	next;
+	mes "[汶巴拉解说员]";
+	mes "不过我在这里";
+	mes "待了好几个月，";
+	mes "对这一带的地理环境";
+	mes "和村里的景点都很熟悉。";
+	mes "想找什么建筑，尽管问我。";
+	next;
+	switch(select("建筑位置。:删除小地图上的标记。:退出。")) {
+	case 1:
+		mes "[汶巴拉解说员]";
+		mes "那么，你想找哪里？";
+		next;
+		switch(select("村长之家:萨满之家:武器店:道具店:蹦极跳台:取消")) {
+		case 1:
+			mes "[汶巴拉解说员]";
+			mes "我在你的小地图上";
+			mes "标了个 ^FF3355+^000000。";
+			next;
+			mes "[汶巴拉解说员]";
+			mes "只有村长大人懂得";
+			mes "外面的语言，";
+			mes "所以你最好先去拜访他。";
+			viewpoint 1,66,250,2,0xFF3355;
+			break;
+		case 2:
+			mes "[汶巴拉解说员]";
+			mes "我在你的小地图上";
+			mes "标了个 ^CE6300+^000000。";
+			next;
+			mes "[汶巴拉解说员]";
+			mes "雨檀萨满拥有";
+			mes "某种神秘的力量……";
+			mes "据说她能制作粗糙的附魔石，";
+			mes "还能把纯净的附魔石";
+			mes "分割成粗糙的附魔石。";
+			viewpoint 1,217,186,3,0xCE6300;
+			break;
+		case 3:
+			mes "[汶巴拉解说员]";
+			mes "我在你的小地图上";
+			mes "标了个 ^55FF33+^000000。";
+			next;
+			mes "[汶巴拉解说员]";
+			mes "雨檀人为了防备敌人的袭击，";
+			mes "通常都全副武装。";
+			mes "听说过去他们";
+			mes "曾多次遭到外来的攻击。";
+			viewpoint 1,126,154,4,0x55FF33;
+			break;
+		case 4:
+			mes "[汶巴拉解说员]";
+			mes "我在你的小地图上";
+			mes "标了个 ^3355FF+^000000。";
+			next;
+			mes "[汶巴拉解说员]";
+			mes "道具店里有许多旅行的好帮手，";
+			mes "不妨进去逛逛？";
+			viewpoint 1,136,127,5,0x3355FF;
+			break;
+		case 5:
+			mes "[汶巴拉解说员]";
+			mes "我在你的小地图上";
+			mes "标了个 ^00FF00+^000000。";
+			next;
+			mes "[汶巴拉解说员]";
+			mes "汶巴拉有个独特的地方";
+			mes "叫''蹦极跳台''。";
+			mes "想不想去试试胆量，";
+			mes "亲自体验一下雨檀族的仪式？";
+			viewpoint 1,139,198,6,0x00FF00;
+			break;
+		case 6:
+			mes "[汶巴拉解说员]";
+			mes "如果想清除小地图上的位置标记，";
+			mes "请选择''删除小地图上的标记''。";
+		}
+		break;
+	case 2:
+		viewpoint 2,66,250,2,0xFF3355;
+		viewpoint 2,217,186,3,0xCE6300;
+		viewpoint 2,126,154,4,0x55FF33;
+		viewpoint 2,136,127,5,0x3355FF;
+		viewpoint 2,139,198,6,0x00FF00;
+		mes "[汶巴拉解说员]";
+		mes "小地图上的标记";
+		mes "已经全部清除了。";
+		mes "想再标记建筑位置就尽管说。";
+		break;
+	case 3:
+		mes "[汶巴拉解说员]";
+		mes "亲身感受雨檀文化";
+		mes "也别有一番乐趣。保重。";
+		break;
+	}
+	close;
+}

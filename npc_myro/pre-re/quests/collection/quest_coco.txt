@@ -1,0 +1,243 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Acorns)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+mjolnir_01,293,20,3	script	纳特斯#Coco_Hunt	779,{
+	if (checkquest(60113) != -1) {
+		if (checkquest(60113,HUNTING) != 2 ) {
+			mes "[纳特斯]";
+			mes "你猎完 50 只松鼠了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[纳特斯]";
+				mes "嗯，我看你还没猎够 50 只。……";
+				close;
+			case 2:
+				mes "[纳特斯]";
+				mes "记住，我需要帮忙猎杀松鼠，去猎 50 只吧。";
+				close;
+			case 3:
+				mes "[纳特斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[纳特斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60113;
+					close;
+				case 2:
+					mes "[纳特斯]";
+					mes "请去杀 50 只松鼠。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[纳特斯]";
+			mes "厉害，你完成得真快。";
+			getexp 3600,3905;
+			erasequest 60113;
+			close;
+		}
+	}
+	if (checkquest(60114) != -1) {
+		if (checkquest(60114,HUNTING) != 2 ) {
+			mes "[纳特斯]";
+			mes "你猎完 50 只松鼠了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[纳特斯]";
+				mes "嗯，我看你还没猎够 100 只。……";
+				close;
+			case 2:
+				mes "[纳特斯]";
+				mes "记住，我需要帮忙猎杀松鼠，去猎 100 只吧。";
+				close;
+			case 3:
+				mes "[纳特斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[纳特斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60114;
+					close;
+				case 2:
+					mes "[纳特斯]";
+					mes "请去杀 100 只松鼠。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[纳特斯]";
+			mes "厉害，你完成得真快。";
+			getexp 3600,3905;
+			getexp 3600,3905;
+			erasequest 60114;
+			close;
+		}
+	}
+	if (checkquest(60115) != -1) {
+		if (checkquest(60115,HUNTING) != 2 ) {
+			mes "[纳特斯]";
+			mes "你猎完 150 只松鼠了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[纳特斯]";
+				mes "嗯，我看你还没猎够 150 只。……";
+				close;
+			case 2:
+				mes "[纳特斯]";
+				mes "记住，我需要帮忙猎杀松鼠，去猎 150 只吧。";
+				close;
+			case 3:
+				mes "[纳特斯]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[纳特斯]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60115;
+					close;
+				case 2:
+					mes "[纳特斯]";
+					mes "请去杀 150 只松鼠。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[纳特斯]";
+			mes "厉害，你完成得真快。";
+			getexp 3600,3905;
+			getexp 3600,3905;
+			getexp 3600,3905;
+			erasequest 60115;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 17) {
+		//for maximum level
+		if (BaseLevel < 60) {
+			mes "[纳特斯]";
+			mes "我……我就是找不到。";
+			mes "这些讨厌的松鼠把所有橡实都藏起来了。";
+			mes "你可以帮帮我吗？";
+			next;
+			switch(select("当然:不")) {
+			case 1:
+				mes "[纳特斯]";
+				mes "哦，太好了！我一看到你，就知道可以指望你！";
+				next;
+				switch(select("收集物品:猎杀松鼠:取消")) {
+				case 1:
+					// Item turn in
+					mes "[纳特斯]";
+					mes "你能帮我找 ^00CE0025 个橡实^000000吗？";
+					mes "如果你能做到，我会重重酬谢。";
+					next;
+					switch(select("我有 25 个橡实:请再说一遍？")) {
+					case 1:
+						/*
+						if (checkweight(502,5) == 0) {
+							mes "[纳特斯]";
+							mes "嘿，看来你背上的重量";
+							mes "快把你压垮了。";
+							mes "等你减轻点负重再来吧。";
+							close;
+						}
+						*/
+						if (countitem(1026) > 24) {
+							mes "[纳特斯]";
+							mes "哦太好了，你找到它们藏东西的地方了。";
+							mes "给我给我！！！";
+							next;
+							mes "[纳特斯]";
+							mes "哦对了，抱歉，我就是爱吃烤橡实。嗯～";
+							mes "这是我答应给你的。";
+							delitem 1026,25; //Acorn
+							getexp 3600,3905;
+							//getitem 502,5; //Orange_Potion
+							close;
+						}
+						else {
+							mes "[纳特斯]";
+							mes "我的^00CE00橡实^000000呢？";
+							mes "嘿，我不是在开玩笑，你最好别藏着掖着。";
+							close;
+						}
+					case 2:
+						mes "[纳特斯]";
+						mes "我需要 ^00CE0025 个橡实^000000。";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[纳特斯]";
+					mes "啊，好，你可以帮我猎杀一些松鼠。";
+					mes "你想猎多少只？";
+					next;
+					switch(select("50 只松鼠:100 只松鼠:150 只松鼠")) {
+					case 1:
+						mes "[纳特斯]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60113;
+						close;
+					case 2:
+						mes "[纳特斯]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60114;
+						close;
+					case 3:
+						mes "[纳特斯]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60115;
+						close;
+					}
+				case 3:
+					mes "[纳特斯]";
+					mes "如果你改变主意，请再回来。";
+					close;
+				}
+			case 2:
+				mes "[纳特斯]";
+				mes "如果你改变主意，请再回来。";
+				close;
+			}
+		}
+		else {
+			mes "[纳特斯]";
+			mes "你太强了，不该来对付这些东西！";
+			close;
+		}
+	}
+	else {
+		mes "[纳特斯]";
+		mes "你太小了，没法帮我对付这些东西。";
+		mes "你能长高一点再来吗？";
+		close;
+	}
+}

@@ -1,0 +1,13 @@
+//===== rAthena Script ======================================= 
+//= Cooking Quest
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Official Cooking Quest (10.3)
+//===== Changelogs: ==========================================
+//= 1.0 Location changed in ep16.1 [Capuche]
+//============================================================
+
+prt_castle,43,30,3	duplicate(Charles Orleans#cook_)	夏罗乐 欧罗莱昂#cook	4_M_OILMAN
+prt_castle,45,35,5	duplicate(Madeleine Chu#cook_)	马德连 修#cook	4_COOK
+prt_castle,45,28,3	duplicate(Child with Cat#cook_)	拎着小猫的 小孩#cook	4_F_YUNYANG
+prt_castle,44,30,5	duplicate(Wickebine#cook_)	薇可宾#cook	4_F_JOB_ASSASSIN

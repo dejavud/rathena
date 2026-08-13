@@ -1,0 +1,251 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Bill of Birds)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild02,74,329,3	script	格雷戈尔#PecoPeco_Hunt	97,{
+	if (checkquest(60101) != -1) {
+		if (checkquest(60101,HUNTING) != 2 ) {
+			mes "[格雷戈尔]";
+			mes "你猎完 50 只大嘴鸟了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[格雷戈尔]";
+				mes "嗯，我看你还没猎够 50 只。……";
+				close;
+			case 2:
+				mes "[格雷戈尔]";
+				mes "请快去杀 50 只那些美味……呃，讨厌的大嘴鸟。";
+				close;
+			case 3:
+				mes "[格雷戈尔]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[格雷戈尔]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60101;
+					close;
+				case 2:
+					mes "[格雷戈尔]";
+					mes "请快去杀 50 只那些美味……呃，讨厌的大嘴鸟。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[格雷戈尔]";
+			mes "哦太感谢你了！";
+			mes "我想我现在可以安心休息了。";
+			getexp 4000,2000;
+			erasequest 60101;
+			close;
+		}
+	}
+	if (checkquest(60102) != -1) {
+		if (checkquest(60102,HUNTING) != 2 ) {
+			mes "[格雷戈尔]";
+			mes "你猎完 50 只大嘴鸟了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[格雷戈尔]";
+				mes "嗯，我看你还没猎够 100 只。……";
+				close;
+			case 2:
+				mes "[格雷戈尔]";
+				mes "请快去杀 100 只那些美味……呃，讨厌的大嘴鸟。";
+				close;
+			case 3:
+				mes "[格雷戈尔]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[格雷戈尔]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60102;
+					close;
+				case 2:
+					mes "[格雷戈尔]";
+					mes "请快去杀 100 只那些美味……呃，讨厌的大嘴鸟。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[格雷戈尔]";
+			mes "哦太感谢你了！";
+			mes "我想我现在可以安心休息了。";
+			getexp 4000,2000;
+			getexp 4000,2000;
+			erasequest 60102;
+			close;
+		}
+	}
+	if (checkquest(60103) != -1) {
+		if (checkquest(60103,HUNTING) != 2 ) {
+			mes "[格雷戈尔]";
+			mes "你猎完 150 只大嘴鸟了吗？";
+			next;
+			switch(select("是:不:我想放弃")) {
+			case 1:
+				mes "[格雷戈尔]";
+				mes "嗯，我看你还没猎够 150 只。……";
+				close;
+			case 2:
+				mes "[格雷戈尔]";
+				mes "请快去杀 150 只那些美味……呃，讨厌的大嘴鸟。";
+				close;
+			case 3:
+				mes "[格雷戈尔]";
+				mes "你确定要停止狩猎吗？";
+				mes "你目前的进度都会被清除";
+				next;
+				switch(select("是:不")) {
+				case 1:
+					mes "[格雷戈尔]";
+					mes "那好吧，如果你改变主意就回这里来。";
+					erasequest 60103;
+					close;
+				case 2:
+					mes "[格雷戈尔]";
+					mes "请快去杀 150 只那些美味……呃，讨厌的大嘴鸟。";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[格雷戈尔]";
+			mes "哦太感谢你了！";
+			mes "我想我现在可以安心休息了。";
+			getexp 4000,2000;
+			getexp 4000,2000;
+			getexp 4000,2000;
+			erasequest 60103;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 9) {
+		//for maximum level
+		if (BaseLevel < 31) {
+			mes "[格雷戈尔]";
+			mes "大嘴鸟真是迷人。";
+			mes "我还在做我的……呃，研究……";
+			mes "不过现在的研究性质有点不一样了。";
+			next;
+			mes "[格雷戈尔]";
+			mes "你看我一直在……呃，''研究''";
+			mes "这些动物，通过收集它们的";
+			mes "鸟嘴，但最近它们似乎";
+			mes "对我变得有敌意了。";
+			next;
+			mes "[格雷戈尔]";
+			mes "可以帮我一个忙吗？";
+			next;
+			switch(select("什么样的忙？:不")) {
+			case 1:
+				mes "[格雷戈尔]";
+				mes "我好怕这些大嘴鸟会因为我的……呃，研究活动而伤害我。";
+				next;
+				mes "[格雷戈尔]";
+				mes "你能杀了它们保护我吗？";
+				mes "我想我会觉得安全些了……";
+				mes "拜托……";
+				next;
+				switch(select("收集物品:猎杀大嘴鸟:取消")) {
+				case 1:
+					// Item turn in
+					mes "[格雷戈尔]";
+					mes "我的……呃，研究需要一些^FF0000鸟嘴^000000……";
+					next;
+					switch(select("我有一些鸟嘴:你需要什么来着？")) {
+					case 1:
+						if (countitem(925) > 24) {
+							mes "[格雷戈尔]";
+							mes "太感谢你了。";
+							delitem 925,25; //Bill_Of_Birds
+							getexp 4000,2000;
+							next;
+							mes "[格雷戈尔]";
+							mes "这一定会很美味！";
+							close;
+						}
+						else {
+							mes "[格雷戈尔]";
+							mes "看起来你还没凑够。";
+							next;
+							mes "[格雷戈尔]";
+							mes "你能帮我带 ^FF000025 个鸟嘴^000000回来吗？";
+							close;
+						}
+					case 2:
+						mes "[格雷戈尔]";
+						mes "你能帮我带 ^FF000025 个鸟嘴^000000回来吗？";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[格雷戈尔]";
+					mes "啊，好，你可以帮我猎杀一些大嘴鸟。";
+					mes "你想猎多少只？";
+					next;
+					switch(select("50 只大嘴鸟:100 只大嘴鸟:150 只大嘴鸟")) {
+					case 1:
+						mes "[格雷戈尔]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60101;
+						close;
+					case 2:
+						mes "[格雷戈尔]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60102;
+						close;
+					case 3:
+						mes "[格雷戈尔]";
+						mes "完成任务后再回来吧，我会给你一点酬劳。";
+						setquest 60103;
+						close;
+					}
+				case 3:
+					mes "[格雷戈尔]";
+					mes "如果你改变主意，请再回来。";
+					close;
+				}
+			case 2:
+				mes "[格雷戈尔]";
+				mes "如果你改变主意，请再回来。";
+				close;
+			}
+		}
+		else {
+			mes "[格雷戈尔]";
+			mes "嗯……你看起来太强了，不该在这里战斗。";
+			close;
+		}
+	}
+	else {
+		mes "[格雷戈尔]";
+		mes "你好呀。";
+		next;
+		mes "[格雷戈尔]";
+		mes "那边那些小鸡似乎才跟你的身手相当。";
+		close;
+	}
+}

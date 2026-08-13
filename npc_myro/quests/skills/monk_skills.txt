@@ -1,0 +1,449 @@
+//===== rAthena Script ======================================= 
+//= Monk Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen, Samuray22
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Spiritual Bestowment, Excruciating Palm
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+prt_monk,270,198,3	script	见习武僧#qsk_mo	753,{
+	if (BaseJob == Job_Monk) {
+		if (MONK_SK == 7) {
+			mes "[武僧]";
+			mes "花时间去思考";
+			mes "你最重要的目标、";
+			mes "你最高的追求，";
+			mes "永远都不是浪费。";
+			mes "永远不要混淆";
+			mes "手段与你想达成的目的。";
+			close;
+		}
+		if (MONK_SK == 6 && getskilllv("MO_KITRANSLATION") == 0) {
+			mes "[武僧]";
+			mes "你忘记了";
+			mes "施展注气";
+			mes "的基本功了吗？";
+			mes "怎么会这样……？";
+			next;
+			mes "[武僧]";
+			mes "啊，我明白了。";
+			mes "你已经突破了";
+			mes "曾经束缚你的极限，";
+			mes "成为了神拳大师。";
+			mes "抱歉，我小看你了。";
+			next;
+			mes "[武僧]";
+			mes "很好。能帮你重新学会";
+			mes "注气技能，是我的荣幸。";
+			mes "顺带一提，你大概也会";
+			mes "一并重新学会气爆散。";
+			next;
+			mes "[武僧]";
+			mes "现在安静地放松，";
+			mes "我要施展我特殊的";
+			mes "点穴疗法，把这些技能";
+			mes "刻进你的神经系统";
+			mes "和肌肉记忆";
+			mes "里去……";
+			next;
+			mes "^3355FF*哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+			mes "哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+			mes "哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+			mes "哒哒哒哒哒哒哒哒* *戳*^000000";
+			set MONK_SK,7;
+			skill "MO_KITRANSLATION",1,SKILL_PERM;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
+			next;
+			mes "[武僧]";
+			mes "完成了。请";
+			mes "继续用这些";
+			mes "特殊的技能去促进";
+			mes "这个世界的和平与和谐。";
+			mes "再见了，我的朋友。";
+			close;
+		}
+		if (MONK_SK > 2) {
+			mes "[武僧]";
+			mes "花时间去思考";
+			mes "你最重要的目标、";
+			mes "你最高的追求，";
+			mes "永远都不是浪费。";
+			mes "永远不要混淆";
+			mes "手段与你想达成的目的。";
+			next;
+			mes "[武僧]";
+			mes "啊，我有个请求。";
+			mes "请不要告诉别人";
+			mes "我教了你注气。";
+			mes "我不想花时间去教";
+			mes "太多人";
+			mes "这个技能……";
+			close;
+		}
+		if (MONK_SK == 2) {
+			if (Weight == 0) {
+				mes "[武僧]";
+				mes "啊。做得好。我看";
+				mes "你已经自己领悟了";
+				mes "最重要的东西，";
+				mes "那就是无私。";
+				mes "现在我相信你不会";
+				mes "滥用我要教你的东西了。";
+				next;
+				mes "[武僧]";
+				mes "我的考验也许显得太苛刻，";
+				mes "但没有正确的修行，";
+				mes "就不可能学会注气。凡事皆然，";
+				mes "觉悟永远属于有准备的人。";
+				next;
+				mes "[武僧]";
+				mes "现在先放松一会儿。";
+				mes "我会用点穴术";
+				mes "训练你的神经系统，";
+				mes "让身体记住施展注气";
+				mes "所需的气流运转";
+				mes "和动作。";
+				next;
+				mes "^3355FF*哒……哒*";
+				mes "*哒……哒*";
+				mes "*哒哒哒*^000000";
+				next;
+				mes "^3355FF*哒哒哒*";
+				mes "*哒哒哒*";
+				mes "*哒……哒哒*^000000";
+				next;
+				mes "^3355FF*哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+				mes "哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+				mes "哒哒哒哒哒哒哒哒-哒哒哒哒哒哒哒哒-";
+				mes "哒哒哒哒哒哒哒哒* *戳*^000000";
+				next;
+				mes "[武僧]";
+				mes "完成了。你现在";
+				mes "已经能使用注气了。";
+				mes "啊，对了。我其实从没";
+				mes "给这个技能起过名字，不过见过它的";
+				mes "其他武僧一般都这么叫。";
+				next;
+				mes "[武僧]";
+				mes "记住，这个技能";
+				mes "咏唱时间和技能延迟都很长，";
+				mes "使用时要格外小心。这个";
+				mes "技能消耗40点SP，能把一颗气弹";
+				mes "传给你的队友。";
+				next;
+				mes "[武僧]";
+				mes "多加练习，你会";
+				mes "更好地理解这个技能的用法。";
+				mes "请记住，战斗有时";
+				mes "在所难免，但它只是";
+				mes "达成目的的手段，";
+				mes "而不是目的本身。";
+				set MONK_SK,3;
+				skill "MO_KITRANSLATION",1,SKILL_PERM;
+				next;
+				mes "[武僧]";
+				mes "我们的技能不应";
+				mes "用来制造流血。如果你";
+				mes "能超越争斗，你就会";
+				mes "明白打斗毫无意义、";
+				mes "毫无价值。愿和平";
+				mes "与你同在，我的朋友。";
+				close;
+			}
+			else {
+				mes "[武僧]";
+				mes "你领悟到";
+				mes "无私的真谛了吗？";
+				mes "当你抛弃贪婪";
+				mes "和世俗的欲望时，";
+				mes "你就能接受我的教导了。";
+				close;
+			}
+		}
+		if (MONK_SK == 1) {
+			mes "[武僧]";
+			mes "争斗毫无意义。";
+			mes "领悟万物归一，";
+			mes "便能超越冲突";
+			mes "与分歧。";
+			mes "修持你的心，";
+			mes "真理自会显现。";
+			next;
+			mes "[武僧]";
+			mes "嗯？你来找我";
+			mes "所为何事？啊，原来";
+			mes "你想学我开发的技能。我的同僚";
+			mes "说得没错：想学这个的人越来越多了。";
+			next;
+			mes "[武僧]";
+			mes "别误会我的意思。";
+			mes "力量与正义、";
+			mes "智慧与行动，确实";
+			mes "必须平衡。然而，";
+			mes "已经有太多追逐力量、嗜血成性的人来找过我了。";
+			next;
+			mes "[武僧]";
+			mes "公平起见，我";
+			mes "给你一个机会。向我";
+			mes "证明你会用我教的技能";
+			mes "去维护和平与正义。";
+			mes "证明你已经";
+			mes "摆脱了私心。";
+			set MONK_SK,2;
+			close;
+		}
+	}
+	mes "[武僧]";
+	mes "争斗毫无意义。";
+	mes "领悟万物归一，";
+	mes "便能超越冲突";
+	mes "与分歧。";
+	mes "修持你的心，";
+	mes "真理自会显现。";
+	close;
+}
+
+monk_test,316,69,5	script	武僧#qsk_mo	823,{
+	if (BaseJob == Job_Monk) {
+		if (MONK_SK == 6) {
+			mes "[武僧]";
+			mes "你是怎么说服";
+			mes "那位武僧教你";
+			mes "注气的？把我们";
+			mes "两人的绝技都发扬光大是好事，";
+			mes "只是世人也许还没准备好。";
+			close;
+		}
+		if (MONK_SK == 5) {
+			mes "[武僧]";
+			mes "首先，气爆散";
+			mes "的施展方式是把你的";
+			mes "内力转化为";
+			mes "外力。然后，";
+			mes "把这一切凝聚在掌心。练错了可是会爆炸的。";
+			next;
+			mes "[武僧]";
+			mes "这个技能确实会造成";
+			mes "剧痛，消耗20点SP";
+			mes "甚至10点HP。它能";
+			mes "击退怪物，还有机会";
+			mes "使其眩晕，但只有被选中的怪物会受到伤害。";
+			next;
+			mes "[武僧]";
+			mes "如果你对其他玩家";
+			mes "使用这个技能，会造成";
+			mes "一定量的伤害，";
+			mes "但不会击退目标";
+			mes "身边的其他玩家。明白了吗？";
+			next;
+			mes "[武僧]";
+			mes "总之，不断练习";
+			mes "这些要领，你就能";
+			mes "精通气爆散。";
+			mes "既然你已经学会了";
+			mes "注气，那就一定能";
+			mes "做到的。";
+			set MONK_SK,6;
+			skill "MO_BALKYOUNG",1,SKILL_PERM;
+			next;
+			mes "[武僧]";
+			mes "好了，课程";
+			mes "结束了。希望你";
+			mes "用新学的技能";
+			mes "为正义而战、";
+			mes "铲除邪恶。暂时";
+			mes "告别了，我的朋友。";
+			close;
+		}
+		if (MONK_SK == 4 && countitem(905) > 19 && countitem(711) > 2) {
+			mes "[武僧]";
+			mes "什么……？";
+			mes "你已经学会了";
+			mes "注气";
+			mes "技能？我猜你接下来";
+			mes "是想学气爆散";
+			mes "对吧。我说得没错吧？";
+			next;
+			mes "[武僧]";
+			mes "嗯。好吧，你已经";
+			mes "强到能轻松打败";
+			mes "不少曼陀罗魔花了。";
+			mes "很好。你似乎准备好了。过一会儿再来吧，";
+			mes "让我完成准备工作。";
+			delitem 905,20; //Stem
+			delitem 711,3; //Shoot
+			set MONK_SK,5;
+			close;
+		}
+		if (MONK_SK == 4) {
+			mes "[武僧]";
+			mes "什么……？";
+			mes "你已经学会了";
+			mes "注气";
+			mes "技能？我猜你接下来";
+			mes "是想学气爆散";
+			mes "对吧。我说得没错吧？";
+			next;
+			mes "[武僧]";
+			mes "正如我之前";
+			mes "提到的，你必须讨伐";
+			mes "曼陀罗魔花来证明，";
+			mes "你在力量与慈悲方面，";
+			mes "都有资格";
+			mes "学习气爆散。";
+			next;
+			mes "[武僧]";
+			mes "去战斗吧，保护那些";
+			mes "被凶暴的曼陀罗魔花";
+			mes "恐吓的无辜之人。";
+			mes "如果你带给我^FF000020个植物梗^000000";
+			mes "和^FF00003个芽苗^000000，我就认可你实力的证明。";
+			next;
+			mes "[武僧]";
+			mes "现在明白了吗？";
+			close;
+		}
+		if (MONK_SK == 3) {
+			mes "[武僧]";
+			mes "你是来学";
+			mes "气爆散的吗？要是";
+			mes "能直接教你就好了。";
+			mes "要实现你的请求，";
+			mes "我们面临两个障碍。";
+			next;
+			mes "[武僧]";
+			mes "首先，你必须";
+			mes "先学会注气";
+			mes "技能。想让那位武僧";
+			mes "把这个技能教给你，";
+			mes "就算不是完全不可能，";
+			mes "也非常困难。";
+			next;
+			mes "[武僧]";
+			mes "其次，你需要";
+			mes "通过我的一个小小的";
+			mes "力量考验，好让我确信";
+			mes "你的身体能够承受";
+			mes "使用气爆散时";
+			mes "涉及的强大力量。";
+			next;
+			mes "[武僧]";
+			mes "嗯。我知道曼陀罗魔花";
+			mes "一直在威胁旅人，";
+			mes "所以如果你能向我证明";
+			mes "你一直在狩猎它们，";
+			mes "就能证明你有资格";
+			mes "学习气爆散。";
+			next;
+			mes "[武僧]";
+			mes "如果你能想办法说服";
+			mes "那位武僧教你";
+			mes "施展注气，";
+			mes "那我就会要求你带来";
+			mes "狩猎曼陀罗魔花得到的";
+			mes "^FF000020个植物梗^000000和^FF00003个芽苗^000000。";
+			next;
+			mes "[武僧]";
+			mes "当然，如果你没有";
+			mes "先学会注气技能，";
+			mes "通过我的考验";
+			mes "也毫无意义。";
+			mes "祝你好运……";
+			set MONK_SK,4;
+			close;
+		}
+		if (MONK_SK == 1) {
+			mes "[武僧]";
+			mes "有一位隐居的";
+			mes "和平主义武僧，";
+			mes "他能教授注气";
+			mes "技能。然而，";
+			mes "他很固执，拒绝了许多想拜师学艺的人。";
+			next;
+			mes "[武僧]";
+			mes "如果你能说服他";
+			mes "把这个技能教给你";
+			mes "就好了，因为";
+			mes "这个技能是不可能";
+			mes "独自学会的。";
+			mes "真是太可惜了……";
+			close;
+		}
+		if (MONK_SK == 0) {
+			mes "[武僧]";
+			mes "没有正义的力量";
+			mes "不会长久。没有力量的";
+			mes "正义无法伸张。";
+			mes "力量不等于";
+			mes "正义，但真正的正义";
+			mes "可以成为通往力量的途径。";
+			next;
+			mes "[武僧]";
+			mes "永远记住这个真理。";
+			mes "正义与力量、慈悲";
+			mes "与刚强、智慧与行动。";
+			mes "这些都是相辅相成、";
+			mes "必须始终保持和谐平衡的。";
+			next;
+			mes "[武僧]";
+			mes "有些技能也是如此。";
+			mes "我开发了一个";
+			mes "纯粹体现力量的技能，";
+			mes "那就是气爆散！";
+			mes "然而，没有与之互补的技能，";
+			mes "它就毫无用处。";
+			next;
+			mes "[武僧]";
+			mes "与我的技能互补的，";
+			mes "是一个被称为注气的";
+			mes "技能，它只能由";
+			mes "一位武僧传授。然而，";
+			mes "他认为世人不配，拒绝把这个技能教给别人。";
+			next;
+			mes "[武僧]";
+			mes "虽然我已经劝他";
+			mes "应该把那个技能";
+			mes "发扬光大，但我必须尊重他的决定。不过，你";
+			mes "可以去试试和他谈谈，如果你想学些新技能的话。";
+			set MONK_SK,1;
+			next;
+			mes "[武僧]";
+			mes "想找到他，只要去找";
+			mes "那位总是宣扬";
+			mes "争斗皆空的武僧";
+			mes "就行了。那就是他。";
+			close;
+		}
+	}
+	mes "[武僧]";
+	mes "没有正义的力量";
+	mes "不会长久。没有力量的";
+	mes "正义无法伸张。";
+	mes "力量不等于";
+	mes "正义，但真正的正义";
+	mes "可以成为通往力量的途径。";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//= 1.4 Updated to the official one. [Samuray22]
+//= 1.4a replaced item "names" with item id. [Lupus]
+//============================================================

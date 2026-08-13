@@ -1,0 +1,265 @@
+//===== rAthena Script =======================================
+//= Buying Shop Scripts
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.1b
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Buying Shop licenses.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Kisuka]
+//= 1.1 Added Catalog Magician. [Euphy]
+//= 1.1a Moved Catalog Magician to Renewal path. [Euphy]
+//= 1.1b Added missing weight checks. [Euphy]
+//============================================================ 
+
+// Black Marketeer (Buy Licenses - Non-Merchant Classes) :: qskill_buy_store
+//============================================================ 
+que_job01,68,84,1	script	黑市商人#Buying	881,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "[贾斯先生]";
+		mes "跟我比起来，你都算贪心的了！";
+		mes "先去把袋子减轻一点怎么样？";
+		close;
+	}
+	if (getskilllv("ALL_BUYING_STORE") == 1) {
+		mes "[贾斯先生]";
+		mes "喂，你已经跟许书生签过约了。";
+		mes "我跟你没什么生意好做。";
+		close;
+	}
+	mes "[贾斯先生]";
+	mes "你会来找我，一定是急需什么东西吧。";
+	mes "你想要什么？";
+	next;
+	switch(select("简易采购商店执照:你是谁？:没什么，没什么！")) {
+	case 1:
+		mes "[贾斯先生]";
+		mes "我就知道！行，我可以给你做。";
+		mes "我做的跟商人从许书生那个混蛋那里拿到的正品";
+		mes "一模一样！";
+		next;
+		mes "[贾斯先生]";
+		mes "而且我的执照更好，因为你不用学任何技能。";
+		mes "你要几张？";
+		next;
+		mes "[贾斯先生]";
+		mes "先说好，我一次只能做少量，";
+		mes "最多 10 张。";
+		mes "每张 500 Zeny。";
+		next;
+		while(1) {
+			input .@input;
+			mes "[贾斯先生]";
+			if (.@input == 0) {
+				mes "你不需要这些执照吗？";
+				close;
+			} else if (.@input > 10) {
+				mes "我一次最多只能做 10 张，你知道的。";
+				next;
+			} else {
+				mes "总共要 "+(.@input*500)+" Zeny。";
+				if (Zeny < (.@input*500)) {
+					mes "但你的钱不够。";
+					next;
+					mes "[贾斯先生]";
+					mes "你不懂做生意的基本常识吗？";
+					mes "任何东西都有价格。";
+					mes "想要东西，就得付钱。";
+				} else {
+					mes "哈……哈哈哈！";
+					mes "许书生，执照生意我要抢过来了。走着瞧！";
+					mes "*嘿嘿嘿*";
+					getitem 12548,.@input; //Buy_Market_Permit2
+					set Zeny,Zeny-(.@input*500);
+				}
+				close;
+			}
+		}
+	case 2:
+		mes "[贾斯先生]";
+		mes "我很久以前就离开家乡了。";
+		mes "问我是谁没有意义，因为我现在只剩下仇恨。";
+		next;
+		mes "[贾斯先生]";
+		mes "……";
+		mes "许书生是个毫无商业道德的黑心商人。";
+		mes "我活着唯一的目的就是毁掉许书生。";
+		next;
+		mes "[贾斯先生]";
+		mes "哎呀，我喝多了……（*嗝*）";
+		mes "那都是酒话。";
+		mes "我说过什么，请你都忘掉。";
+		close;
+	case 3:
+		mes "[贾斯先生]";
+		mes "行了行了！不用那么大声。";
+		mes "没生意就离我远点。";
+		close;
+	}
+}
+
+// Purchasing Team (Learn Skill - Merchant Classes)
+//============================================================ 
+alberta_in,58,52,4	script	采购部许书生#Buying	59,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2400) {
+		mes "- 您身上的物品太多，无法进行对话或任务。";
+		mes " -";
+		close;
+	}
+	mes "[许书生先生]";
+	if (BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
+		if (getskilllv("ALL_BUYING_STORE") == 1) {
+			mes "我是采购部的许书生。";
+			mes "今天有什么可以帮您？";
+			next;
+			if(select("购买简易采购商店执照:离开") == 2) {
+				mes "[许书生先生]";
+				mes "需要简易采购商店执照的话，";
+				mes "请随时来找我。请再来~";
+				close;
+			}
+			mes "[许书生先生]";
+			mes "每张简易采购商店执照 200 Zeny，";
+			mes "一次最多可以购买 50 张。";
+			mes "您需要几张执照？";
+			next;
+			while(1) {
+				input .@input;
+				mes "[许书生先生]";
+				if (.@input == 0) {
+					mes "交易取消了。祝您愉快。";
+					close;
+				} else if (.@input > 50) {
+					mes "请输入 50 以内的数字。";
+					next;
+				} else {
+					mes ""+ .@input +" 张执照总共要 "+(.@input*200)+" Zeny。";
+					if (Zeny < (.@input*200)) {
+						mes "但您的钱好像不够。";
+					} else {
+						mes "谢谢惠顾。";
+						getitem 6377,.@input; //Buy_Market_Permit
+						set Zeny,Zeny-(.@input*200);
+					}
+					close;
+				}
+			}
+		} else {
+			mes "我是艾尔贝塔商人公会采购部的许书生。";
+			mes "您是……";
+			next;
+			mes "[许书生先生]";
+			mes "您知道吗？我们公会发行了一种执照，";
+			mes "允许个人从他人手中收购物品。";
+			next;
+			select("我买东西从来没遇到过问题……");
+			mes "[许书生先生]";
+			mes "您说得没错，但请想一想：";
+			mes "您有没有为大批量采购犯过难？";
+			mes "您得一个个找到持有目标物品的人，";
+			mes "挨个去谈。很不方便，不是吗？";
+			next;
+			mes "[许书生先生]";
+			mes "大批量采购对我们商人来说是个重要课题。";
+			mes "所以我基于自己 10 年的采购经验，";
+			mes "向公会提出了一个创新方案。";
+			next;
+			mes "[许书生先生]";
+			mes "''让个人也能开采购商店！''";
+			mes "这就是我提案的标题。";
+			mes "您读一读就知道了……";
+			next;
+			mes "[许书生先生]………";
+			mes "……（许书生先生滔滔不绝地讲起了所有细节。）";
+			next;
+			select("好了，重点是什么？");
+			mes "[许书生先生]";
+			mes "哦，对。总而言之，";
+			mes "您可以通过露天商店批量收购特定物品。";
+			next;
+			mes "[许书生先生]";
+			mes "要开采购商店，需要商人公会发行的执照。";
+			next;
+			mes "[许书生先生]";
+			mes "每次开店都需要它。";
+			mes "我们预计这种新式执照能带来可观的收益。";
+			next;
+			mes "[许书生先生]";
+			mes "这就是我提案的重点！";
+			mes "会长听说能大赚一笔，高兴得不得了！";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "请直接说重点！";
+			next;
+			mes "[许书生先生]";
+			mes "别这么急躁嘛，好不好？";
+			mes "重点是，只要您学会了露天商店，";
+			mes "我们就能让您开采购商店。";
+			next;
+			mes "[许书生先生]";
+			mes "当然，我们要收取 10,000 Zeny";
+			mes "的一次性注册费。";
+			mes "每次开店时您都需要 ^4A4AFF简易采购商店执照^000000。";
+			next;
+			mes "[许书生先生]";
+			mes "怎么样，现在就注册吗？";
+			mes "注册的话，我就教您怎么开采购商店。";
+			next;
+			if(select("学习开采购商店:取消") == 2) {
+				mes "[许书生先生]";
+				mes "唉，真让人失望！";
+				mes "采购功能对您的生意有很多好处，";
+				mes "不过决定权在您。";
+				mes "随时欢迎来咨询！";
+				close;
+			}
+			mes "[许书生先生]";
+			if (Zeny < 10000) {
+				mes "注册费是 10,000 Zeny。";
+				mes "请先备好费用。";
+				close;
+			} else {
+				mes "您做了个明智的决定。";
+				mes "请交注册费，然后在这里签名……";
+				next;
+				input .@name$;
+				mes "[许书生先生]";
+				mes .@name$+"……";
+				mes "您的字写得不错。";
+				mes "好，现在您已获准开采购商店了。";
+				set Zeny,Zeny-10000;
+				getitem 6377,5; //Buy_Stall_Permit
+				skill "ALL_BUYING_STORE",1,SKILL_PERM_GRANT;
+				next;
+				mes "[许书生先生]";
+				mes "目前只有普通物品可以批量收购，";
+				mes "^8C2121不包括^000000装备、特定药水和手工制作品。";
+				mes "不过只要善用，依然对您大有裨益。";
+				next;
+				mes "[许书生先生]";
+				mes "哦，还有，";
+				mes "您物品栏里至少要有一个想收购的物品，";
+				mes "因为要通过商店展示给其他人看。";
+				next;
+				mes "[许书生先生]";
+				mes "技能现在应该已经登记在您的技能栏里了。";
+				mes "如果看不到，可能需要收起技能列表，";
+				mes "查看三转职业页签。";
+				next;
+				mes "[许书生先生]";
+				mes "我送了您 5 张简易采购商店执照供试用。";
+				mes "祝您收购愉快！";
+				close;
+			}
+		}
+	}
+	mes "我是艾尔贝塔商人公会采购部的许书生。";
+	mes "我很想跟您聊聊，但现在实在太忙了。";
+	next;
+	mes "[许书生先生]";
+	mes "我的时间只专门留给商界的客户。";
+	close;
+}

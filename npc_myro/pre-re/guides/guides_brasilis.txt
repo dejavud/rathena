@@ -1,0 +1,85 @@
+//===== rAthena Script =======================================
+//= Brasilis Guide
+//===== Description: =========================================
+//= [Official Conversion based on bRO & jRO servers]
+//= Guide for the city of Brasilis.
+//
+// Note:
+// - Brasilis was introduced in Pre-Renewal only for bRO and
+//   jRO official servers with differences in monster stats,
+//   spawns and quests.
+//   It was added in Renewal for every other official server.
+//   Since we follow kRO this is disabled by default.
+//   You can enable it on npc/pre-re/scripts_athena.conf
+//===== Changelog: ===========================================
+//= 1.0 First Version [Daegaladh]
+//============================================================
+
+brasilis,219,97,3	script	巴西 解说员	478,{
+	mes "[巴西解说员]";
+	mes "欢迎来到^8B4513巴西^000000，";
+	mes "一个如太阳般热情的国度。";
+	mes "有任何问题请尽管问我。";
+	next;
+	switch(select("询问地点:删除小地图上的标记:取消")) {
+	case 1:
+		mes "[巴西解说员]";
+		mes "你想去哪里呢？";
+		next;
+		switch(select("[ 旅馆 ]:[ 丛林缆车 ]:[ 美术馆 ]:[ 市场 ]:[ 维拉斯纪念碑 ]")) {
+		case 1:
+			mes "[巴西解说员]";
+			mes "巴西旅馆就在上方的 ^FF3355+^000000 处。";
+			mes "还有什么我能效劳的吗？";
+			viewpoint 1,274,151,2,0xFF3355;
+			close;
+		case 2:
+			mes "[巴西解说员]";
+			mes "想穿越险峻的丛林吗？";
+			mes "可以在这里乘坐丛林缆车，";
+			mes "位置在 ^CE6300+^000000。";
+			mes "还有什么我能效劳的吗？";
+			viewpoint 1,308,335,3,0xCE6300;
+			close;
+		case 3:
+			mes "[巴西解说员]";
+			mes "巴西的骄傲——世界级的美术馆，";
+			mes "就在 ^A5BAAD+^000000 处。";
+			mes "还有什么我能效劳的吗？";
+			viewpoint 1,137,167,4,0x00FF00;
+			close;
+		case 4:
+			mes "[巴西解说员]";
+			mes "狩猎用的道具";
+			mes "可以在市场买到，";
+			mes "位置在 ^55FF33+^000000。";
+			mes "还有什么我能效劳的吗？";
+			viewpoint 1,254,248,5,0x55FF33;
+			close;
+		case 5:
+			mes "[巴西解说员]";
+			mes "巴西的地标——维拉斯纪念碑，";
+			mes "就矗立在 ^3355FF+^000000 处。";
+			mes "还有什么我能效劳的吗？";
+			viewpoint 1,195,235,6,0x3355FF;
+			close;
+		}
+		end;
+	case 2:
+		mes "[巴西解说员]";
+		mes "我来清除你小地图上的所有标记。";
+		mes "还有什么我能效劳的吗？";
+		viewpoint 0,274,151,2,0x00FF00;
+		viewpoint 0,308,335,3,0x00FF00;
+		viewpoint 0,137,167,4,0x00FF00;
+		viewpoint 0,254,248,5,0x00FF00;
+		viewpoint 0,195,235,6,0x00FF00;
+		close;
+	case 3:
+		mes "[巴西解说员]";
+		mes "随心所欲地漫步，";
+		mes "永远是探索一座城市最好的方式。";
+		mes "总之，路上小心。";
+		close;
+	}
+}

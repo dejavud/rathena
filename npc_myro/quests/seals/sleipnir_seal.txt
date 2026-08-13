@@ -1,0 +1,1994 @@
+//===== rAthena Script ======================================= 
+//= 神器任务 - 斯雷普尼尔封印
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= 解除斯雷普尼尔封印的任务。
+//===== Additional Comments: =================================
+//= 1.0 First version. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Minor Touchups to quest. [L0ne_W0lf]
+//= 1.3 Fixed a typo with a variable. [L0ne_W0lf]
+//= 1.4 Renewal script update. [Euphy]
+//============================================================
+
+yuno,164,200,4	script	诺伊#G	101,{
+	if (BaseLevel < 70) {
+		mes "[诺伊]";
+		mes "你知道从NPC商店买的防具和打怪掉落的防具有什么区别吗";
+		mes "？";
+		next;
+		mes "[诺伊]";
+		mes "朋友，区别就在于防具上的^3355FF插槽^000000数量。";
+		next;
+		mes "[诺伊]";
+		mes "同一种防具的防御力是一样的。";
+		mes "但如果防具有插槽，就可以插入魔物卡片，";
+		mes "给防具附加额外的效果。";
+		next;
+		mes "[诺伊]";
+		mes "魔物卡片和带插槽的防具都很少掉落，";
+		mes "所以都是很贵重的东西。";
+		close;
+	}
+	else {
+		if ($God1 >= $@god_check2) {
+			mes "[诺伊]";
+			mes "你知道从NPC商店买的防具和打怪掉落的防具有什么区别吗";
+			mes "？";
+			next;
+			mes "[诺伊]";
+			mes "朋友，区别就在于防具上的^3355FF插槽^000000数量。";
+			next;
+			mes "[诺伊]";
+			mes "同一种防具的防御力是一样的。";
+			mes "但如果防具有插槽，就可以插入魔物卡片，";
+			mes "给防具附加额外的效果。";
+			next;
+			mes "[诺伊]";
+			mes "魔物卡片和带插槽的防具都很少掉落，";
+			mes "所以都是很贵重的东西。";
+			close;
+		}
+		else {
+			mes "[诺伊]";
+			mes "你知道吗，朱诺有个很有意思的地方，";
+			mes "看起来像是间研究所。";
+			next;
+			mes "[诺伊]";
+			mes "总之，也没人确定到底是不是。";
+			mes "最近那里成了不少传闻的焦点，我也不知道哪些是真的。";
+			close2;
+			if (god_sl_1 == 0) {
+				set god_sl_1,1;
+			}
+		}
+	}
+}
+
+que_god01,98,98,4	script	库库勒#G	69,{
+	if (checkweight(908,500) == 0) {
+		mes "^3355FF等一下！你现在身上的物品太多了。";
+		mes "请把一些物品存进卡普拉仓库之后再来吧。^000000";
+		close;
+	}
+	if (BaseLevel < 70) {
+		mes "[库库勒]";
+		mes "最近工作忙得不可开交，连见朋友、逛街的时间都没有。";
+		next;
+		mes "[库库勒]";
+		mes "等等……！";
+		mes "我都记不得上一次和男生约会是什么时候了！";
+		mes "这样下去，我可能退休前都找不到男朋友。";
+		mes "不要啊，我还年轻呢~！";
+		emotion ET_PROFUSELY_SWEAT;
+		close;
+	}
+	if ($God1 < $@god_check2) {
+		if (god_sl_1 == 0) {
+			mes "[库库勒]";
+			mes "最近工作忙得不可开交，连见朋友、逛街的时间都没有。";
+			next;
+			mes "[库库勒]";
+			mes "等等……！";
+			mes "我都记不得上一次和男生约会是什么时候了！";
+			mes "这样下去，我可能退休前都找不到男朋友。";
+			mes "不要啊，我还年轻呢~！";
+			emotion ET_PROFUSELY_SWEAT;
+			close;
+		}
+		else if (god_sl_1 == 1) {
+			mes "[库库勒]";
+			mes "我们研究的是远古众神留下的神器。";
+			mes "确切地说，我们关注的是众神使用过的用具。";
+			next;
+			mes "[库库勒]";
+			mes "最近研究组里除了几位负责人，很多成员都离开了，";
+			mes "现在人手非常紧缺。";
+			next;
+			mes "[库库勒]";
+			mes "因为人手不足，大部分正在进行的研究项目都没法继续。";
+			mes "说起来……";
+			next;
+			mes "[库库勒]";
+			mes "不知道你介不介意像你这样的冒险者，";
+			mes "来帮我们的研究搭把手？";
+			next;
+			mes "[库库勒]";
+			mes "不会拿你做实验什么的，只需要你帮忙跑跑腿。";
+			mes "当然，会有报酬的。";
+			next;
+			switch(select("我有点忙……:好啊，有何不可？")) {
+			case 1:
+				mes "[库库勒]";
+				mes "哦，这样啊。";
+				mes "那如果你遇到适合做临时研究助手的人，";
+				mes "能帮我们推荐一下吗？";
+				next;
+				mes "[库库勒]";
+				mes "抱歉提出这样的请求，希望你能理解，";
+				mes "我们真的非常缺人手。";
+				close;
+			case 2:
+				cutin "god_kukur02",2;
+				mes "[库库勒]";
+				mes "真的~？！";
+				mes "太好了！";
+				mes "哈哈哈哈！听到这个我太高兴了！";
+				next;
+				mes "[库库勒]";
+				mes "进去和里面的研究员谈谈吧。";
+				mes "他们都忙得不可开交，肯定需要你的帮助。";
+				next;
+				mes "[库库勒]";
+				mes "哦，等等……";
+				mes "我先给你一张临时通行证。非常感谢你的帮忙~";
+				next;
+				mes "^3355FF你收到了一张临时通行证。^000000";
+				set god_sl_1,2;
+				close2;
+				break;
+			}
+		}
+		else if (god_sl_1 < 10) {
+			cutin "god_kukur03",2;
+			mes "[库库勒]";
+			mes "管理一间研究所真不容易。";
+			mes "对手实验室总是想办法挖走我们的人，";
+			mes "或者阻挠我们的研究。";
+			next;
+			mes "[库库勒]";
+			mes "也因为这份工作，我真的很难享受自己的私人生活……";
+			next;
+			cutin "god_kukur02",2;
+			mes "[库库勒]";
+			mes "哈哈哈……";
+			mes "我在说什么啊？";
+			mes "请当我刚才什么都没说。这真的没什么大不了的。^333333*唉……*^000000";
+			close2;
+		}
+		else if (god_sl_1 < 50) {
+			mes "[库库勒]";
+			mes "啊，谢谢你帮我们解决了大麻烦。";
+			mes "希望你能继续助我们一臂之力。";
+			next;
+			mes "[库库勒]";
+			mes "我们的研究员虽然有点怪，但人都挺好的，也没有恶意。";
+			next;
+			mes "[库库勒]";
+			mes "所以如果其中有些人对你显得有点失礼，希望你别介意。";
+			close2;
+		}
+		else if (god_sl_1 == 50) {
+			cutin "god_kukur02",2;
+			mes "[库库勒]";
+			mes "啊……";
+			mes "你真的帮了我们大忙。谢谢你做的一切。";
+			next;
+			mes "[库库勒]";
+			mes "你也知道了，";
+			mes "我们正在研究能否复制众神用过的神器之一「斯雷普尼尔」";
+			mes "。";
+			next;
+			mes "[库库勒]";
+			mes "但是……";
+			mes "目前看来是不可能的，至少以我们现有的技术还做不到。";
+			mes "嗯……";
+			next;
+			mes "[库库勒]";
+			mes "不管怎样，我们会继续研究，";
+			mes "希望有一天能实现复制斯雷普尼尔的目标。";
+			next;
+			mes "[库库勒]";
+			mes "多亏了你，我们完成了对斯雷普尼尔的初步研究。";
+			mes "现在可以计划更深入的研究了。";
+			next;
+			mes "[库库勒]";
+			mes "趁我还没忘，先把协助研究的报酬给你吧。请稍等一下……";
+			next;
+			mes "[库库勒]";
+			mes "啊，在这里。";
+			mes "虽然不算什么厚礼，但希望你不嫌弃，";
+			mes "就当是我的一点心意。祝你旅途顺利！";
+			if ($God1 < $@god_check2)
+				set $God1,$God1+1;
+			if ($God1 == $@god_check1)
+				announce "[斯雷普尼尔] 的第一道神谕出现了。",bc_all;
+			else if ($God1 == $@god_check2) {
+				if ($God1 == $@god_check2 && $God2 == $@god_check2 && $God3 == $@god_check2 && $God4 == $@god_check2)
+					announce "四道神谕与 [斯雷普尼尔] 的神谕同时解除了。",bc_all;
+				else
+					announce "[斯雷普尼尔] 的第一道神谕解除了。",bc_all;
+			}
+			set god_sl_1,51;
+			set .@god_treasure,rand(1,900);
+			set .@god_treasure1,rand(1,1000);
+			if (checkre(0)) {
+				if (.@god_treasure < 101) {
+					     if (.@god_treasure1 < 210) getitem 2102,1; //Guard_
+					else if (.@god_treasure1 < 420) getitem 2104,1; //Buckler_
+					else if (.@god_treasure1 < 630) getitem 2106,1; //Shield_
+					else if (.@god_treasure1 < 840) getitem 2108,1; //Mirror_Shield_
+					else getitem 2109,1; //Memorize_Book
+				}
+				else if (.@god_treasure < 201) {
+					     if (.@god_treasure1 < 48) getitem 2207,1; //Fancy_Flower
+					else if (.@god_treasure1 < 96) getitem 2210,1; //Hair_Band
+					else if (.@god_treasure1 < 150) getitem 2213,1; //Cat_Hairband
+					else if (.@god_treasure1 < 190) getitem 2215,1; //Flower_Hairband
+					else if (.@god_treasure1 < 238) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 290) getitem 2223,1; //Turban_
+					else if (.@god_treasure1 < 340) getitem 2227,1; //Cap_
+					else if (.@god_treasure1 < 348) getitem 2229,1; //Helm_
+					else if (.@god_treasure1 < 400) getitem 2231,1; //Gemmed_Sallet_
+					else if (.@god_treasure1 < 448) getitem 2233,1; //Circlet_
+					else if (.@god_treasure1 < 496) getitem 2236,1; //Santa's_Hat
+					else if (.@god_treasure1 < 544) getitem 2244,1; //Big_Sis'_Ribbon
+					else if (.@god_treasure1 < 592) getitem 2245,1; //Sweet_Gents
+					else if (.@god_treasure1 < 640) getitem 2247,1; //Oldman's_Romance
+					else if (.@god_treasure1 < 688) getitem 2248,1; //Western_Grace
+					else if (.@god_treasure1 < 736) getitem 2250,1; //Fillet
+					else if (.@god_treasure1 < 784) getitem 2251,1; //Holy_Bonnet
+					else if (.@god_treasure1 < 832) getitem 2252,1; //Star_Sparkling
+					else if (.@god_treasure1 < 880) getitem 2253,1; //Sunflower
+					else if (.@god_treasure1 < 940) getitem 2257,1; //Snowy_Horn
+					else getitem 2259,1; //Mini_Propeller
+				}
+				else if (.@god_treasure < 301) {
+					     if (.@god_treasure1 < 160) getitem 2267,1; //Cigar
+					else if (.@god_treasure1 < 320) getitem 2262,1; //Pierrot_Nose
+					else if (.@god_treasure1 < 480) getitem 2263,1; //Gangster_Patch
+					else if (.@god_treasure1 < 540) getitem 2265,1; //Ganster_Mask
+					else if (.@god_treasure1 < 700) getitem 2266,1; //Iron_Cane
+					else if (.@god_treasure1 < 800) getitem 2260,1; //Mini_Glasses
+					else if (.@god_treasure1 < 900) getitem 2269,1; //Centimental_Flower
+					else getitem 2270,1; //Centimental_Leaf
+				}
+				else if (.@god_treasure < 401) {
+					     if (.@god_treasure1 < 70) getitem 2298,1; //Green_Feeler
+					else if (.@god_treasure1 < 140) getitem 2275,1; //Red_Bandana
+					else if (.@god_treasure1 < 210) getitem 2276,1; //Eagle_Eyes
+					else if (.@god_treasure1 < 280) getitem 2277,1; //Nurse_Cap
+					else if (.@god_treasure1 < 350) getitem 2279,1; //Bomb_Wick
+					else if (.@god_treasure1 < 420) getitem 2282,1; //Spirit_Chain
+					else if (.@god_treasure1 < 490) getitem 2299,1; //Viking_Helm
+					else if (.@god_treasure1 < 560) getitem 2287,1; //Pirate_Bandana
+					else if (.@god_treasure1 < 630) getitem 2289,1; //Poo_Poo_Hat
+					else if (.@god_treasure1 < 700) getitem 2290,1; //Funeral_Costume
+					else if (.@god_treasure1 < 770) getitem 2291,1; //Masquerade
+					else if (.@god_treasure1 < 840) getitem 2294,1; //Star_Dust
+					else if (.@god_treasure1 < 900) getitem 2295,1; //Blinker
+					else if (.@god_treasure1 < 950) getitem 2271,1; //Jack_A_Dandy
+					else getitem 2285,1; //Apple_Of_Archer
+				}
+				else if (.@god_treasure < 501) {
+					     if (.@god_treasure1 < 80) getitem 2306,1; //Adventurere's_Suit_
+					else if (.@god_treasure1 < 160) getitem 2308,1; //Mantle_
+					else if (.@god_treasure1 < 240) getitem 2310,1; //Coat_
+					else if (.@god_treasure1 < 320) getitem 2311,1; //Mink_Coat
+					else if (.@god_treasure1 < 400) getitem 2313,1; //Padded_Armor_
+					else if (.@god_treasure1 < 480) getitem 2315,1; //Chain_Mail_
+					else if (.@god_treasure1 < 560) getitem 2329,1; //Wooden_Mail_
+					else if (.@god_treasure1 < 630) getitem 2320,1; //Formal_Suit
+					else if (.@god_treasure1 < 700) getitem 2322,1; //Silk_Robe_
+					else if (.@god_treasure1 < 760) getitem 2324,1; //Scapulare_
+					else if (.@god_treasure1 < 810) getitem 2326,1; //Saint_Robe_
+					else if (.@god_treasure1 < 850) getitem 2342,1; //Full_Plate_Armor_
+					else if (.@god_treasure1 < 900) getitem 2331,1; //Tights_
+					else if (.@god_treasure1 < 950) getitem 2333,1; //Silver_Robe_
+					else getitem 2336,1; //Thief_Clothes_
+				}
+				else if (.@god_treasure < 601) {
+					     if (.@god_treasure1 < 200) getitem 2402,1; //Sandals_
+					else if (.@god_treasure1 < 400) getitem 2404,1; //Shoes_
+					else if (.@god_treasure1 < 600) getitem 2406,1; //Boots_
+					else if (.@god_treasure1 < 800) getitem 2407,1; //Chrystal_Pumps
+					else getitem 2409,1; //Spiky_Heel
+				}
+				else if (.@god_treasure < 701) {
+					     if (.@god_treasure1 < 300) getitem 2502,1; //Hood_
+					else if (.@god_treasure1 < 550) getitem 2504,1; //Muffler_
+					else if (.@god_treasure1 < 750) getitem 2506,1; //Manteau_
+					else getitem 2508,1; //Ragamuffin_Cape
+				}
+				else if (.@god_treasure < 801) {
+					     if (.@god_treasure1 < 110) getitem 2601,1; //Ring
+					else if (.@god_treasure1 < 220) getitem 2602,1; //Earring
+					else if (.@god_treasure1 < 330) getitem 2603,1; //Necklace
+					else if (.@god_treasure1 < 440) getitem 2604,1; //Glove
+					else if (.@god_treasure1 < 550) getitem 2605,1; //Brooch
+					else if (.@god_treasure1 < 660) getitem 2607,1; //Clip
+					else if (.@god_treasure1 < 770) getitem 2608,1; //Rosary
+					else if (.@god_treasure1 < 880) getitem 2617,1; //Mitten_Of_Presbyter
+					else getitem 2618,1; //Matyr's_Flea_Guard
+				}
+				else {
+					     if (.@god_treasure1 < 150) getitem 2288,1; //Mr_Scream
+					else if (.@god_treasure1 < 260) getitem 2297,1; //Goblini_Mask
+					else if (.@god_treasure1 < 370) getitem 5087,1; //Goblin_Mask_01
+					else if (.@god_treasure1 < 480) getitem 5088,1; //Goblin_Mask_02
+					else if (.@god_treasure1 < 590) getitem 5089,1; //Goblin_Mask_03
+					else if (.@god_treasure1 < 700) getitem 5090,1; //Goblin_Mask_04
+					else if (.@god_treasure1 < 810) getitem 5046,1; //Bongun_Hat
+					else if (.@god_treasure1 < 920) getitem 2264,1; //Munak_Turban
+					else getitem 2225,1; //Goggle_
+				}
+			} else {
+				if (.@god_treasure < 101) {
+					     if (.@god_treasure1 < 210) getitem 2102,1; //Guard_
+					else if (.@god_treasure1 < 420) getitem 2104,1; //Buckler_
+					else if (.@god_treasure1 < 630) getitem 2106,1; //Shield_
+					else if (.@god_treasure1 < 840) getitem 2108,1; //Mirror_Shield_
+					else getitem 2109,1; //Memorize_Book
+				}
+				else if (.@god_treasure < 201) {
+					     if (.@god_treasure1 < 48) getitem 2254,1; //Angelic_Chain
+					else if (.@god_treasure1 < 96) getitem 2210,1; //Hair_Band
+					else if (.@god_treasure1 < 150) getitem 2213,1; //Cat_Hairband
+					else if (.@god_treasure1 < 190) getitem 2255,1; //Satanic_Chain
+					else if (.@god_treasure1 < 238) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 290) getitem 2223,1; //Turban_
+					else if (.@god_treasure1 < 340) getitem 2227,1; //Cap_
+					else if (.@god_treasure1 < 348) getitem 2229,1; //Helm_
+					else if (.@god_treasure1 < 400) getitem 2231,1; //Gemmed_Sallet_
+					else if (.@god_treasure1 < 448) getitem 2233,1; //Circlet_
+					else if (.@god_treasure1 < 496) getitem 5053,1; //Spinx_Helm
+					else if (.@god_treasure1 < 544) getitem 5019,1; //Corsair
+					else if (.@god_treasure1 < 592) getitem 2245,1; //Sweet_Gents
+					else if (.@god_treasure1 < 640) getitem 2247,1; //Oldman's_Romance
+					else if (.@god_treasure1 < 688) getitem 2248,1; //Western_Grace
+					else if (.@god_treasure1 < 736) getitem 5166,1; //Spinx_Helm_
+					else if (.@god_treasure1 < 784) getitem 5158,1; //Holy_Bonnet_
+					else if (.@god_treasure1 < 832) getitem 2249,1; //Coronet
+					else if (.@god_treasure1 < 880) getitem 5157,1; //Viking_Helm_
+					else if (.@god_treasure1 < 940) getitem 2285,1; //Apple_Of_Archer
+					else getitem 5093,1; //Blue_Coif_
+				}
+				else if (.@god_treasure < 301) {
+					     if (.@god_treasure1 < 160) getitem 5014,1; //Fin_Helm
+					else if (.@god_treasure1 < 320) getitem 5005,1; //Gas_Mask
+					else if (.@god_treasure1 < 480) getitem 5054,1; //Assasin_Mask
+					else if (.@god_treasure1 < 540) getitem 2265,1; //Ganster_Mask
+					else if (.@god_treasure1 < 700) getitem 2266,1; //Iron_Cane
+					else if (.@god_treasure1 < 800) getitem 2260,1; //Mini_Glasses
+					else if (.@god_treasure1 < 900) getitem 5113,1; //Angry_Mouth
+					else {
+						// Pirate Dagger is iRO only, and requires extra files in client.
+						//getitem 5305,1 //Pirate_Dagger
+						getitem 2270,1; //Centimental_Leaf
+					}
+				}
+				else if (.@god_treasure < 401) {
+					     if (.@god_treasure1 < 70) getitem 2286,1; //Elven_Ears
+					else if (.@god_treasure1 < 140) getitem 5002,1; //Gemmed_Crown
+					else if (.@god_treasure1 < 210) getitem 5147,1; //Baseball_Cap
+					else if (.@god_treasure1 < 280) getitem 2217,1; //Biretta_
+					else if (.@god_treasure1 < 350) getitem 5120,1; //Fedora_
+					else if (.@god_treasure1 < 420) getitem 2261,1; //Prontera_Army_Cap
+					else if (.@god_treasure1 < 490) getitem 5162,1; //Bone_Helm_
+					else if (.@god_treasure1 < 560) getitem 5030,1; //Panda_Cap
+					else if (.@god_treasure1 < 630) getitem 5109,1; //Red_Bonnet
+					else if (.@god_treasure1 < 700) getitem 5084,1; //Lazy_Raccoon
+					else if (.@god_treasure1 < 770) getitem 5168,1; //Bongun_Hat_
+					else if (.@god_treasure1 < 840) getitem 2214,1; //Bunny_Band
+					else if (.@god_treasure1 < 900) getitem 2295,1; //Blinker
+					else if (.@god_treasure1 < 950) getitem 5167,1; //Munak_Turban_
+					else getitem 5018,1; //Feather_Bonnet
+				} else if (.@god_treasure < 501) {
+					     if (.@god_treasure1 < 85) getitem 2310,1; //Coat_
+					else if (.@god_treasure1 < 170) getitem 2311,1; //Mink_Coat
+					else if (.@god_treasure1 < 255) getitem 2313,1; //Padded_Armor_
+					else if (.@god_treasure1 < 340) getitem 2317,1; //Plate_Armor_
+					else if (.@god_treasure1 < 425) getitem 2319,1; //Glittering_Clothes
+					else if (.@god_treasure1 < 510) getitem 2320,1; //Formal_Suit
+					else if (.@god_treasure1 < 595) getitem 2322,1; //Silk_Robe_
+					else if (.@god_treasure1 < 680) getitem 2359,1; //Ninja_Suit_
+					else if (.@god_treasure1 < 765) getitem 2326,1; //Saint_Robe_
+					else if (.@god_treasure1 < 850) getitem 2342,1; //Full_Plate_Armor_
+					else if (.@god_treasure1 < 935) getitem 2331,1; //Tights_
+					else getitem 2336,1; //Thief_Clothes_
+				}
+				else if (.@god_treasure < 601) {
+					     if (.@god_treasure1 < 200) getitem 2422,1; //High_Fashion_Sandals
+					else if (.@god_treasure1 < 400) getitem 2404,1; //Shoes_
+					else if (.@god_treasure1 < 600) getitem 2406,1; //Boots_
+					else if (.@god_treasure1 < 800) getitem 2407,1; //Chrystal_Pumps
+					else getitem 2412,1; //Grave_
+				}
+				else if (.@god_treasure < 701) {
+					     if (.@god_treasure1 < 200) getitem 2513,1; //Celestial_Robe
+					else if (.@god_treasure1 < 400) getitem 2504,1; //Muffler_
+					else if (.@god_treasure1 < 600) getitem 2506,1; //Manteau_
+					else if (.@god_treasure1 < 800) getitem 2514,1; //Pauldron
+					else getitem 2508,1; //Ragamuffin_Cape
+				}
+				else if (.@god_treasure < 801) {
+					     if (.@god_treasure1 < 110) getitem 1122,1; //Ring_
+					else if (.@god_treasure1 < 220) getitem 2622,1; //Earring_
+					else if (.@god_treasure1 < 330) getitem 2623,1; //Necklace_
+					else if (.@god_treasure1 < 440) getitem 2624,1; //Glove_
+					else if (.@god_treasure1 < 550) getitem 2625,1; //Brooch_
+					else if (.@god_treasure1 < 660) getitem 2607,1; //Clip
+					else if (.@god_treasure1 < 770) getitem 2626,1; //Rosary_
+					else if (.@god_treasure1 < 880) getitem 2617,1; //Mitten_Of_Presbyter
+					else getitem 2671,1; //Thimble_Of_Archer_
+				}
+				else {
+					     if (.@god_treasure1 < 150) getitem 2281,1; //Phantom_Of_Opera
+					else if (.@god_treasure1 < 260) getitem 2297,1; //Goblini_Mask
+					else if (.@god_treasure1 < 370) getitem 5087,1; //Goblin_Mask_01
+					else if (.@god_treasure1 < 480) getitem 5088,1; //Goblin_Mask_02
+					else if (.@god_treasure1 < 590) getitem 5089,1; //Goblin_Mask_03
+					else if (.@god_treasure1 < 700) getitem 5090,1; //Goblin_Mask_04
+					else if (.@god_treasure1 < 810) getitem 5086,1; //Alarm_Mask
+					else if (.@god_treasure1 < 920) getitem 2292,1; //Welding_Mask
+					else getitem 5006,1; //Machoman_Glasses
+				}
+			}
+			next;
+			mes "[库库勒]";
+			mes "啊，我还得把之前给你的临时通行证收回来。";
+			mes "抱歉，这是规定，必须照办……";
+			next;
+			mes "[库库勒]";
+			mes "再一次，感谢你的大力帮忙~";
+			close2;
+		}
+		else {
+			cutin "god_kukur02",2;
+			mes "[库库勒]";
+			mes "在你的协助下，我们顺利完成了初步研究。";
+			next;
+			mes "[库库勒]";
+			mes "接下来，我们会根据现有的神器资料，规划更深入的研究。";
+			next;
+			mes "[库库勒]";
+			mes "现在事情总算告一段落了……";
+			next;
+			mes "[库库勒]";
+			mes "我终于可以去约会了！哈哈哈哈哈哈~！";
+			close2;
+		}
+	}
+	else {
+		if (god_sl_1 == 0) {
+			cutin "god_kukur03",2;
+			mes "[库库勒]";
+			mes "最近工作忙得不可开交，连见朋友、逛街的时间都没有。";
+			next;
+			mes "[库库勒]";
+			mes "等等……！";
+			mes "我都记不得上一次和男生约会是什么时候了！";
+			mes "这样下去，我可能退休前都找不到男朋友。";
+			mes "不要啊，我还年轻呢~！";
+			emotion ET_PROFUSELY_SWEAT;
+			close2;
+		}
+		else if (god_sl_1 < 51) {
+			mes "[库库勒]";
+			mes "啊，你回来了。";
+			mes "虽然你说要帮我们，但已经有人来应聘助手的职位了。";
+			next;
+			mes "[库库勒]";
+			mes "总之，目前的研究项目已经结束了。";
+			mes "现在我们正在规划下一阶段的研究……";
+			next;
+			mes "[库库勒]";
+			mes "不过还是要谢谢你。";
+			mes "希望下次项目缺人手的时候，你还能来帮我们。";
+			close2;
+		}
+		else {
+			mes "[库库勒]";
+			mes "初步研究已经完成，";
+			mes "接下来只要规划未来的研究项目就行了。";
+			next;
+			mes "[库库勒]";
+			mes "现在事情总算告一段落了……";
+			next;
+			mes "[库库勒]";
+			mes "我终于可以去约会了！哈哈哈哈哈哈~！";
+			close2;
+		}
+	}
+	cutin "god_kukur01",255;
+	end;
+}
+
+que_god01,66,125,6	script	哈蓝多特#G1	89,{
+	if ($God1 < $@god_check2) {
+		if (god_sl_1 == 2) {
+			set god_sl_1,11;
+		}
+		if ((god_sl_1 == 11) || (god_sl_1 == 22) || (god_sl_1 == 33) || (god_sl_1 == 44)) {
+			if (god_sl_2 == 0) {
+				mes "[哈蓝多特]";
+				mes "啊，你就是基林女士介绍来的人吗？";
+				mes "她说你会来帮我做研究。";
+				next;
+				mes "[哈蓝多特]";
+				mes "坦白说，我们并不急需不专精于我们研究领域的人手。";
+				next;
+				mes "[哈蓝多特]";
+				mes "但如果你不介意帮忙打打下手，多少也能减轻我们的负担。";
+				next;
+				mes "[哈蓝多特]";
+				mes "那么……给你安排个什么活儿好呢？让我想想……";
+				next;
+				mes "[哈蓝多特]";
+				mes "想到了！";
+				mes "替我去拜访一下^FF0000梅托^000000好吗？";
+				mes "他有什么想说的消息，都帮我带回来。";
+				next;
+				mes "[哈蓝多特]";
+				mes "他在做和我类似的项目，也许能帮上我的忙。";
+				mes "梅托就住在朱诺，应该很容易找到。";
+				set god_sl_2,1;
+				close;
+			}
+			else if (god_sl_2 == 1) {
+				if (metto_q == 0) {
+					mes "[哈蓝多特]";
+					mes "看来你还没找到梅托。";
+					mes "他有时候可能热情过头，但人一点都不坏。";
+					next;
+					mes "[哈蓝多特]";
+					mes "我们在同一行干了这么久，是老朋友了。";
+					mes "不知道他现在过得怎么样？";
+					next;
+					mes "[哈蓝多特]";
+					mes "总之，帮我问问他研究的进展。";
+					mes "如果他正好需要你帮忙，也请助他一臂之力。";
+					close;
+				}
+				else if (metto_q < 9) {
+					mes "[哈蓝多特]";
+					mes "嗯……";
+					mes "梅托他怎么样？";
+					mes "嗯？听起来他变了不少……";
+					close;
+				}
+				else {
+					mes "[哈蓝多特]";
+					mes "嗯……";
+					mes "梅托他怎么样？";
+					next;
+					mes "[哈蓝多特]";
+					mes "疯狂科学家？";
+					mes "这听起来不太对劲。";
+					mes "我做梦都没想到，梅托居然会变成那样……";
+					emotion ET_SCRATCH;
+					next;
+					mes "[哈蓝多特]";
+					mes "唉，这……";
+					mes "太可惜了。我都不知道该说什么好。";
+					mes "我们以前还一起看电影、一起过生日呢。";
+					mes "请、请让我静一静……";
+					emotion ET_THINK;
+					set god_sl_2,2;
+					close;
+				}
+			}
+			else if (god_sl_2 == 2) {
+				if (rand(1,10) == 7) {
+					mes "[哈蓝多特]";
+					mes "啊……";
+					mes "你回来了。";
+					mes "好吧，让我说说我研究的要点。";
+					next;
+					mes "[哈蓝多特]";
+					mes "我想更深入了解「^FF0000未知之轮^000000」，";
+					mes "据说它是神器^FF0000斯雷普尼尔^000000的一个部件。";
+					next;
+					mes "[哈蓝多特]";
+					mes "它看起来像一个普通的齿轮……但我搞不懂它是怎么运作的。";
+					next;
+					mes "[哈蓝多特]";
+					mes "这个齿轮最奇特的地方，是它所用的金属。";
+					next;
+					mes "[哈蓝多特]";
+					mes "它看起来、摸起来都像钢铁，但极热和极寒都影响不了它。";
+					mes "我用尽办法也砸不出半点凹痕。";
+					next;
+					mes "[哈蓝多特]";
+					mes "有时我发现未知之轮会和某些物体产生共鸣，";
+					mes "但没法让它每次都发生。";
+					next;
+					mes "[哈蓝多特]";
+					mes "我猜是漏掉了某个特殊条件，";
+					mes "正是它让未知之轮与特定材料产生共鸣。";
+					next;
+					mes "[哈蓝多特]";
+					mes "总之，谢谢你刚才帮我。";
+					mes "我这边基本就这些事了，你去和其他研究员聊聊，";
+					mes "看看他们需不需要帮忙吧。";
+					set god_sl_2,0;
+					if (god_sl_1 == 11) {
+						set god_sl_1,12;
+					}
+					if (god_sl_1 == 22) {
+						set god_sl_1,23;
+					}
+					if (god_sl_1 == 33) {
+						set god_sl_1,34;
+					}
+					if (god_sl_1 == 44) {
+						set god_sl_1,50;
+					}
+					close;
+				}
+				else {
+					mes "[哈蓝多特]";
+					mes "哦，抱歉。";
+					mes "我现在正忙着整理这些资料。";
+					next;
+					mes "[哈蓝多特]";
+					mes "让我看看……该怎么弄呢……";
+					mes "^333333*嘀嘀咕咕*^000000";
+					close;
+				}
+			}
+			else {
+				mes "[哈蓝多特]";
+				mes "嗯……";
+				mes "这东西到底怎么运作？";
+				mes "关于神器，我们不知道的还太多了。^333333*唉*^000000";
+				close;
+			}
+		}
+		else {
+			mes "[哈蓝多特]";
+			mes "一个人做这些不容易。多一双手总是好的。";
+			next;
+			mes "[哈蓝多特]";
+			mes "现在我只需要有人帮我分担工作。";
+			mes "不过，不同的项目适合不同的助手。";
+			next;
+			mes "[哈蓝多特]";
+			mes "一般来说，如果助手受过与我当前研究相关的专业训练，";
+			mes "他会比外行更有用。";
+			next;
+			mes "[哈蓝多特]";
+			mes "当然，也有什么都擅长的人。";
+			mes "但那种人太少了，所以我尽量为每个项目挑选合适的助手。";
+			close;
+		}
+	}
+	else {
+		mes "[哈蓝多特]";
+		mes "一个人做这些不容易。多一双手总是好的。";
+		next;
+		mes "[哈蓝多特]";
+		mes "现在我只需要有人帮我分担工作。";
+		mes "不过，不同的项目适合不同的助手。";
+		next;
+		mes "[哈蓝多特]";
+		mes "一般来说，如果助手受过与我当前研究相关的专业训练，";
+		mes "他会比外行更有用。";
+		next;
+		mes "[哈蓝多特]";
+		mes "当然，也有什么都擅长的人。";
+		mes "但那种人太少了，所以我尽量为每个项目挑选合适的助手。";
+		close;
+	}
+}
+
+que_god01,11,136,6	script	阿丁#G2	742,{
+	if ($God1 < $@god_check2) {
+		if (god_sl_1 == 2) {
+			set god_sl_1,21;
+		}
+		if ((god_sl_1 == 21) || (god_sl_1 == 32) || (god_sl_1 == 43) || (god_sl_1 == 14)) {
+			if (god_sl_2 == 0) {
+				mes "[阿丁]";
+				mes "^333333*哈欠~*^000000";
+				mes "嗯嗯嗯？";
+				mes "啊……";
+				next;
+				mes "[阿丁]";
+				mes "初次见面。";
+				mes "你就是临时助手吧？";
+				mes "太好了，我们人手不足，大家都忙得够呛。";
+				next;
+				mes "[阿丁]";
+				mes "好……让我向你介绍我正在进行的研究项目。";
+				next;
+				mes "[阿丁]";
+				mes "我想尽可能弄清「^FF0000天使之羽^000000」的一切。";
+				mes "据说它是「斯雷普尼尔」的部件之一。";
+				next;
+				mes "[阿丁]";
+				mes "目前，我着重研究这根羽毛背后的故事，";
+				mes "以及它是如何成为神器材料的。";
+				next;
+				mes "[阿丁]";
+				mes "最近我听说斐扬有个人知道这个故事。";
+				mes "世上知道这些的人屈指可数。";
+				next;
+				mes "[阿丁]";
+				mes "现在我们人手不足，没法派人去斐扬。";
+				mes "而且我带着这根羽毛到处跑也不安全。";
+				next;
+				mes "[阿丁]";
+				mes "找到知道斯雷普尼尔来历的人应该不难。";
+				mes "但是，你必须把故事一字一句都记下来。";
+				next;
+				mes "[阿丁]";
+				mes "你转述的内容，可能会影响这项研究的结果。";
+				next;
+				mes "[阿丁]";
+				mes "有劳你了。";
+				mes "这件事没有严格的时限，但越快完成越好。";
+				next;
+				mes "[阿丁]";
+				mes "一路顺风~";
+				set god_sl_2,1;
+				close;
+			}
+			else if (god_sl_2 == 1) {
+				mes "[阿丁]";
+				mes "嗯……？";
+				mes "你还没动身去斐扬找那位知道斯雷普尼尔来历的人吗？";
+				next;
+				mes "[阿丁]";
+				mes "请尽快动身去斐扬，这样我才能拿到研究所需的资料。";
+				mes "谢谢，一路顺风。";
+				close;
+			}
+			else if (god_sl_2 == 2) {
+				mes "[阿丁]";
+				mes "啊，你回来了。故事都记住了吗？";
+				next;
+				mes "[阿丁]";
+				mes "我知道如果这个故事有文字记载就省事多了，但你要明白，";
+				mes "许多关于众神的故事只能口耳相传。";
+				next;
+				mes "[阿丁]";
+				mes "好了，我听着呢。请把你了解到的都告诉我吧。";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				mes "………………";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				mes "………………";
+				mes "……………………";
+				next;
+				mes "[阿丁]";
+				mes "嗯，我明白了。真有意思。";
+				mes "不过，我确定你漏掉了一些重要的细节。";
+				next;
+				mes "[阿丁]";
+				mes "你确定把整个故事听完了吗？";
+				mes "抱歉又要麻烦你，能再去斐扬听一遍这个故事吗？";
+				set god_sl_2,3;
+				close;
+			}
+			else if (god_sl_2 == 3) {
+				mes "[阿丁]";
+				mes "嗯……？";
+				mes "你还没动身去斐扬吗……？";
+				mes "希望你能尽快把剩下的故事讲给我听。";
+				next;
+				mes "[阿丁]";
+				mes "在这期间，我会尽量用你带回来的故事细节，";
+				mes "能完成多少研究就完成多少。";
+				close;
+			}
+			else if (god_sl_2 == 4) {
+				mes "[阿丁]";
+				mes "啊，你回来了。";
+				mes "那么你把故事都记住了吗？";
+				next;
+				mes "[阿丁]";
+				mes "我知道如果这个故事有文字记载就省事多了，但你要明白，";
+				mes "许多关于众神的故事只能口耳相传。";
+				next;
+				mes "[阿丁]";
+				mes "好了，我听着呢。请把你了解到的都告诉我吧。";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				mes "………………";
+				next;
+				mes "[阿丁]";
+				mes "……";
+				mes "…………";
+				mes "………………";
+				mes "……………………";
+				next;
+				mes "[阿丁]";
+				mes "嗯，我明白了。真有意思。你漏掉了一些重要的细节。";
+				next;
+				switch(select("这个，嗯……:不可能！")) {
+				case 1:
+					mes "[阿丁]";
+					mes "嗯。";
+					mes "不，等等……";
+					mes "那就是完整的故事。是我搞错了~";
+					break;
+				case 2:
+					mes "[阿丁]";
+					mes "啊~";
+					mes "是我说错了。";
+					mes "谢谢你指出我判断上的错误。";
+					break;
+				}
+				next;
+				mes "[阿丁]";
+				mes "是的，你刚才讲的故事应该是真实的。";
+				mes "当然，讲故事的人不同，细节上有些出入也可以理解。";
+				next;
+				mes "[阿丁]";
+				mes "你带回来的资料，肯定能帮我解答几个最重要的疑问，";
+				mes "虽然这不会轻松。";
+				next;
+				mes "[阿丁]";
+				mes "毕竟，找到答案往往会引出新的问题。";
+				mes "尽管如此，还是要谢谢你的帮助。";
+				set god_sl_2,0;
+				if (god_sl_1 == 21) {
+					set god_sl_1,22;
+				}
+				if (god_sl_1 == 32) {
+					set god_sl_1,33;
+				}
+				if (god_sl_1 == 43) {
+					set god_sl_1,44;
+				}
+				if (god_sl_1 == 14) {
+					set god_sl_1,50;
+				}
+				close;
+			}
+		}
+		else {
+			mes "[阿丁]";
+			mes "有时候，同一个神话或传说会流传出不同的版本。";
+			next;
+			mes "[阿丁]";
+			mes "神话随着时代变迁，彼此可能会有冲突，";
+			mes "但这些故事的根本内核，正是它们流传千古的原因。";
+			close;
+		}
+	}
+	else {
+		mes "[阿丁]";
+		mes "有时候，同一个神话或传说会流传出不同的版本。";
+		next;
+		mes "[阿丁]";
+		mes "神话随着时代变迁，彼此可能会有冲突，";
+		mes "但这些故事的根本内核，正是它们流传千古的原因。";
+		close;
+	}
+}
+
+que_god01,55,47,3	script	库乐特#G3	803,{
+	if ($God1 < $@god_check2) {
+		if (god_sl_1 == 2) {
+			set god_sl_1,31;
+		}
+		if ((god_sl_1 == 31) || (god_sl_1 == 42) || (god_sl_1 == 13) || (god_sl_1 == 24)) {
+			if (god_sl_2 == 0) {
+				mes "[库乐特]";
+				mes "啊，你一定就是新来的助手了。幸会幸会。";
+				next;
+				mes "[库乐特]";
+				mes "说实话，我本以为会来一位研究经验更丰富的人，";
+				mes "但也能理解。";
+				next;
+				mes "[库乐特]";
+				mes "毕竟我们也没资格指望专业援助。";
+				mes "无论如何，我相信你会给我们的工作带来新的视角。";
+				next;
+				mes "[库乐特]";
+				mes "我的项目已接近完成，不需要多少人手。";
+				mes "不过，最后要完成的那项任务有点难。";
+				next;
+				mes "[库乐特]";
+				mes "我本来打算自掏腰包请外面的机构帮忙，不过既然你来了，";
+				mes "就没必要了~";
+				next;
+				mes "[库乐特]";
+				mes "我想请你帮我收集一些材料，好让我制作「鱼之灵」。";
+				next;
+				mes "[库乐特]";
+				mes "我也不确定能不能真的做出来，但至少可以试一试。";
+				next;
+				mes "[库乐特]";
+				mes "基本上，帮我收集「鱼鳞」、「鱼尾」之类的东西，";
+				mes "总之就是从海洋生物身上能弄到的都行。";
+				next;
+				mes "[库乐特]";
+				mes "我不需要某一种材料多得离谱，";
+				mes "每种物品大概10个应该就够了。上下浮动5个也行……";
+				next;
+				mes "[库乐特]";
+				mes "另外，我需要的海洋类材料种类要尽量多。";
+				mes "没有多样的实验对象，实验可做不起来，对吧？";
+				next;
+				mes "[库乐特]";
+				mes "总之，希望你收集实验材料时别太费劲。祝你好运~";
+				set god_sl_2,1;
+				close;
+			}
+			else if (god_sl_2 == 1) {
+				mes "[库乐特]";
+				mes "啊，你回来了。好，让我看看你都带了什么来。嗯……";
+				next;
+				mes "[库乐特]";
+				mes "哦……这些能用上。这些也行。哦！";
+				mes "你们冒险者随身带的东西还真多，是吧？";
+				if (countitem(918) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(950) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(951) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(956) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(959) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(960) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(961) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(962) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(963) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(964) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(965) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(966) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(7013) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1054) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1053) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1052) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1051) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1050) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1024) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				if (countitem(1023) > 8) {
+					set .@count_sl_1,.@count_sl_1 + 1;
+				}
+				next;
+				if (.@count_sl_1 > 14) {
+					mes "[库乐特]";
+					mes "啊……！";
+					mes "你带来的材料足够我做实验了。万分感谢。";
+					next;
+					mes "[库乐特]";
+					mes "有了这些，我的研究就能顺利继续了。";
+					mes "你干得这么出色，真让我惊喜。";
+					next;
+					mes "[库乐特]";
+					mes "你真的是帮了大忙。太感谢了！哈哈哈……！";
+					next;
+					mes "[库乐特]";
+					mes "现在，说不定还有其他研究员需要你帮忙完成项目。";
+					mes "你不妨四处问问，看他们需不需要什么？";
+					if (countitem(918) > 8) {
+						delitem 918,9;  //Sticky_Webfoot
+					}
+					if (countitem(950) > 8) {
+						delitem 950,9;  //Heart_Of_Mermaid
+					}
+					if (countitem(951) > 8) {
+						delitem 951,9;  //Fin
+					}
+					if (countitem(956) > 8) {
+						delitem 956,9;  //Gill
+					}
+					if (countitem(959) > 8) {
+						delitem 959,9;  //Rotten_Scale
+					}
+					if (countitem(960) > 8) {
+						delitem 960,9;  //Nipper
+					}
+					if (countitem(961) > 8) {
+						delitem 961,9;  //Conch
+					}
+					if (countitem(962) > 8) {
+						delitem 962,9;  //Tentacle
+					}
+					if (countitem(963) > 8) {
+						delitem 963,9;  //Sharp_Scale
+					}
+					if (countitem(964) > 8) {
+						delitem 964,9;  //Crap_Shell
+					}
+					if (countitem(965) > 8) {
+						delitem 965,9;  //Clam_Shell
+					}
+					if (countitem(966) > 8) {
+						delitem 966,9;  //Flesh_Of_Clam
+					}
+					if (countitem(1023) > 8) {
+						delitem 1023,9;  //Fish_Tail
+					}
+					if (countitem(1024) > 8) {
+						delitem 1024,9;  //Chinese_Ink
+					}
+					if (countitem(1050) > 8) {
+						delitem 1050,9;  //Tendon
+					}
+					if (countitem(1051) > 8) {
+						delitem 1051,9;  //Detonator
+					}
+					if (countitem(1052) > 8) {
+						delitem 1052,9;  //Single_Cell
+					}
+					if (countitem(1053) > 8) {
+						delitem 1053,9;  //Tooth_Of_Ancient_Fish
+					}
+					if (countitem(1054) > 8) {
+						delitem 1054,9;  //Lip_Of_Ancient_Fish
+					}
+					if (countitem(7013) > 8) {
+						delitem 7013,9;  //Coral_Reef
+					}
+					set god_sl_2,0;
+					if (god_sl_1 ==31) {
+						set god_sl_1,32;
+					}
+					if (god_sl_1 == 42) {
+						set god_sl_1,43;
+					}
+					if (god_sl_1 == 13) {
+						set god_sl_1,14;
+					}
+					if (god_sl_1 == 24) {
+						set god_sl_1,50;
+					}
+					close;
+				}
+				else {
+					mes "[库乐特]";
+					mes "不过，你带的材料好像还不够我完成研究。";
+					mes "记住，我需要的种类要尽量多。";
+					next;
+					mes "[库乐特]";
+					mes "抱歉又要麻烦你，能再去收集些材料，";
+					mes "好让我尝试复制「鱼之灵」吗？";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[库乐特]";
+			mes "嗯……";
+			mes "资金和人力，对于研究的推进都很重要。";
+			next;
+			mes "[库乐特]";
+			mes "但再多的资金和人手，也替代不了研究中的热情与执着。";
+			next;
+			mes "[库乐特]";
+			mes "有些出资人愚昧得以为，只要往项目里砸更多的钱和人，";
+			mes "科学的奥秘就能更快被解开。";
+			next;
+			mes "[库乐特]";
+			mes "但如果做研究的人没有积极性和灵感，就永远不会有进展。";
+			close;
+		}
+	}
+	else {
+		mes "[库乐特]";
+		mes "嗯……";
+		mes "资金和人力，对于研究的推进都很重要。";
+		next;
+		mes "[库乐特]";
+		mes "但再多的资金和人手，也替代不了研究中的热情与执着。";
+		next;
+		mes "[库乐特]";
+		mes "有些出资人愚昧得以为，只要往项目里砸更多的钱和人，";
+		mes "科学的奥秘就能更快被解开。";
+		next;
+		mes "[库乐特]";
+		mes "但如果做研究的人没有积极性和灵感，就永远不会有进展。";
+		close;
+	}
+}
+
+que_god01,14,47,3	script	帕贝#G4	713,{
+	if ($God1 < $@god_check2) {
+		if (god_sl_1 == 2) {
+			set god_sl_1,41;
+		}
+		if ((god_sl_1 == 41) || (god_sl_1 == 12) || (god_sl_1 == 23) || (god_sl_1 == 34)) {
+			if (god_sl_2 == 0) {
+				mes "[帕贝]";
+				mes "^333333*吸鼻子*……";
+				mes "*阿嚏！*^000000嗯？";
+				mes "你是谁？";
+				next;
+				mes "[帕贝]";
+				mes "哦，抱歉。";
+				mes "你一定就是新来的助——^333333*阿嚏！*^000000呃，^333333*吸鼻子*^000000抱歉。";
+				mes "如你所见，我有点不舒服。";
+				next;
+				mes "[帕贝]";
+				mes "很高兴知道你能来帮我。但是^333333*阿嚏！吸鼻子*^000000";
+				next;
+				mes "[帕贝]";
+				mes "总之，去看看——^333333*阿嚏！*^000000那个^333333*阿嚏！*^000000东西……^333333*吸鼻子*^000000";
+				set god_sl_2,1;
+				close;
+			}
+			else if (god_sl_2 == 1) {
+				mes "[帕贝]";
+				mes "我说过让你去看看——^333333*阿嚏！*^000000那个^333333*阿嚏！阿嚏！咳咳*^000000";
+				close;
+			}
+			else if (god_sl_2 == 2) {
+				mes "[帕贝]";
+				mes "^333333*咳咳*";
+				mes "*吸鼻子……*^000000";
+				mes "那么你去看了吗？也是，就算你看了估计也看不懂。^333333*咳咳*^000000";
+				next;
+				mes "[帕贝]";
+				mes "^333333*阿——嚏！*^000000";
+				mes "那块石板，不对，^333333*阿嚏！*^000000上面刻的文字是古——^333333*阿嚏！";
+				mes "*^000000是现在已经不用的古文字。";
+				next;
+				mes "[帕贝]";
+				mes "我^333333*咳咳*^000000分辨不出那是哪种古——^333333*阿嚏！";
+				mes "*^000000古文字，所以……嗯……";
+				next;
+				mes "[帕贝]";
+				mes "考虑到^333333*阿嚏！";
+				mes "吸鼻子*^000000这块石板的材质不是^333333*吸鼻子*^000000普通的石头，";
+				mes "里面应该装着某种装置吧？^333333*咳嗽*^000000";
+				next;
+				mes "[帕贝]";
+				mes "还有^333333*吸鼻子*^000000那些文字不只是刻上去的。^333333*阿嚏！";
+				mes "*^000000表面还覆盖着^333333*咳嗽*^000000什么东西。";
+				next;
+				mes "[帕贝]";
+				mes "我必须^333333*咳咳*^000000把那个装置拆下来，";
+				mes "这样才能^333333*咳咳*^000000进一步研究^333333*吸鼻子*^000000 但你看我现在这副样";
+				mes "子，虚弱得连^333333*阿嚏！*^000000……话都说不利索。";
+				next;
+				mes "[帕贝]";
+				mes "^333333*吸鼻子*^000000";
+				mes "所以希望你能^333333*阿嚏！*^000000帮我把^333333*咳嗽*^000000那个装置拆下来。";
+				mes "万分感谢。^333333*吸鼻子*^000000";
+				set god_sl_2,3;
+				close;
+			}
+			else if (god_sl_2 == 3) {
+				mes "[帕贝]";
+				mes "^333333*阿——嚏……！*^000000";
+				mes "那个，我想说的是——^333333*阿嚏！*^000000";
+				mes "^333333*吸鼻子……*^000000";
+				close;
+			}
+			else if (god_sl_2 == 4) {
+				mes "[帕贝]";
+				mes "^333333*咳嗽*^000000";
+				mes "哦……^333333*吸鼻子*^000000";
+				mes "原来如此……";
+				mes "^333333*咳咳*^000000";
+				next;
+				mes "[帕贝]";
+				mes "我果然~^333333*阿嚏！*^000000没说错，^333333*阿嚏！";
+				mes "*^000000那块石——^333333*咳嗽*^000000石板里确实装着什么东西。";
+				mes "要不是这该死的^333333*咳——咳咳咳*^000000感冒，我早就亲自去看了。";
+				next;
+				mes "[帕贝]";
+				mes "干得漂亮~";
+				mes "你^333333*吸鼻子*^000000干得不错。多谢你帮我。^333333*阿嚏！阿嚏！*^000000";
+				set god_sl_2,0;
+				if (god_sl_1 == 41) {
+					set god_sl_1,42;
+				}
+				if (god_sl_1 == 12) {
+					set god_sl_1,13;
+				}
+				if (god_sl_1 == 23) {
+					set god_sl_1,24;
+				}
+				if (god_sl_1 == 34) {
+					set god_sl_1,50;
+				}
+				close;
+			}
+		}
+		else {
+			mes "[帕贝]";
+			mes "我们能否探测或感知到精灵并不重要，";
+			mes "首要的是先证明它们的存在。";
+			close2;
+		}
+	}
+	else {
+		mes "[帕贝]";
+		mes "我们能否探测或感知到精灵并不重要，";
+		mes "首要的是先证明它们的存在。";
+		close2;
+	}
+}
+
+que_god01,20,48,0	script	石板#G	111,{
+	if ($God1 < $@god_check2) {
+		if ((god_sl_1 == 41) || (god_sl_1 == 12) || (god_sl_1 == 23) || (god_sl_1 == 34)) {
+			if ((god_sl_2 == 1) || (god_sl_2 == 2)) {
+				mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+				mes "............djswhgks wkdusdnlrnlfn";
+				mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+				mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+				mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+				mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+				set god_sl_2,2;
+				next;
+				mes "^3355FF这块石板上刻着一些文字。";
+				mes "你看不懂，石头也已被岁月风化，看来是用古文字写成的。^000000";
+				next;
+				mes "^3355FF触摸石板表面，你发现它竟然温热得惊人。";
+				mes "这块石板恐怕没那么简单。^000000";
+				close;
+			}
+			else if (god_sl_2 == 3) {
+				mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfn";
+				mes "............djswhgks wkdusdnlrnlfn";
+				mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+				mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+				mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+				mes "^ff00ffghswka^000000gks.........fusjs tmld.........";
+				next;
+				mes "^3355FF凑近细看石板，你发现其中一个词的每个刻痕缝隙里，";
+				mes "都嵌着细小的装置。";
+				next;
+				mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+				mes "............djswhgks wkdusdnlrnlfn";
+				mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+				mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+				mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+				mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+				next;
+				input .@input$;
+				if (.@input$ == "dirdnl") {
+					mes "滋~";
+					mes "^3355FF你按下「^ff0000dirdnl^3355FF」这个词，石板发出奇怪的蜂鸣声，";
+					mes "但没有其他反应。也许你得按下其他一些词。^000000";
+					next;
+					mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+					mes "............djswhgks wkdusdnlrnlfn";
+					mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+					mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+					mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+					mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+					next;
+				}
+				else {
+					mes "^3355FF什么也没发生。也许石板上没有这个词。^000000";
+					close;
+				}
+				input .@input$;
+				if (.@input$ == "tkaryf") {
+					mes "^3355FF你按下「^ff0000tkaryf^3355FF」这个词，石板又发出了一声蜂鸣。^000000";
+					next;
+					mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+					mes "............djswhgks wkdusdnlrnlfn";
+					mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+					mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+					mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+					mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+					next;
+				}
+				else {
+					mes "^3355FF什么也没发生。也许石板上没有这个词。^000000";
+					close;
+				}
+				input .@input$;
+				if (.@input$ == "ghswka") {
+					mes "^3355FF你按下「^ff0000ghswka^3355FF」这个词，传来一声肯定的蜂鸣。";
+					mes "但还是什么都没发生，也许还得再按一个词。^000000";
+					next;
+					mes "....whgks ^ff00ffdirdnl^000000sjs wkrdjswhgks whdtnfb";
+					mes "............djswhgks wkdusdnlrnlfn";
+					mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+					mes "wkdusgks ^ff00fftkaryf^000000dnl durjfflrhsjs wkrdjswhgks ......";
+					mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+					mes "^ff00ffghswka^000000gks ........fusjs tmld.........";
+					next;
+				}
+				else {
+					mes "你按下了 ^ff0000"+.@input+"^000000 这个词，什么也没发生。";
+					mes "你决定换个思路。";
+					close;
+				}
+				mes "^666666*嗡——*^000000";
+				next;
+				mes "^3355FF石板开始震动，刻着的文字慢慢消失，";
+				mes "下面显露出了新的一组词。^000000";
+				next;
+				mes "wkrdjswhgks dirdnlsjs wkrdjswhgks whdtnfh";
+				mes "wkrdjswhgks dldgnsdjs wkrdjswhgks wkdusdnlrnlfn";
+				mes "thfdh duTsjswhsjs rhf tk dmqsjs rj ehddjfn";
+				mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks tkatnfu";
+				mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkrdjswhgks dldgn";
+				mes "s";
+				mes "ghswkagks tkatnfusjs tmldaldgks akrnl";
+				next;
+				mes "^3355FF你还是看不懂石板上写的是什么。^000000";
+				set god_sl_2,4;
+				next;
+				mes "过了一会儿，石板上原有的刻痕重新浮现，";
+				mes "再次遮住了下面的文字。";
+				mes "看来隐藏的文字只能显现一小会儿。";
+				close;
+			}
+			else {
+				mes "....whgks dirdnlsjs wkrdjswhgks whdtnfn";
+				mes "............djswhgks wkdusdnlrnlfn";
+				mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+				mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks ......";
+				mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+				mes "ghswkagks .........fusjs tmld.........";
+				next;
+				mes "^3355FF这块石板已被岁月风化，表面刻着一种奇怪语言的文字。^000000";
+				next;
+				mes "^3355FF奇怪的是，石头表面正散发着热量。^000000";
+				close;
+			}
+		}
+		else {
+			mes "....whgks dirdnlsjs wkrdjswhgks whdtnfn";
+			mes "............djswhgks wkdusdnlrnlfn";
+			mes ".......whsjs rhf tk dmqsjs rj ehddjfn";
+			mes "wkdusgks tkaryfdnl durjfflrhsjs wkrdjswhgks ......";
+			mes "wkrdjswhgks shfh wkrdjswhgks wkdus wkr...";
+			mes "ghswkagks .........fusjs tmld.........";
+			next;
+			mes "^3355FF这块石板上刻着一些文字。";
+			mes "你看不懂，石头也已被岁月风化，看来是用古文字写成的。^000000";
+			next;
+			mes "^3355FF触摸石板表面，你发现它竟然温热得惊人。";
+			mes "这块石板恐怕没那么简单。^000000";
+			close;
+		}
+	}
+	else {
+		mes "^3355FF这块石板上刻着一些文字。";
+		mes "你看不懂，石头也已被岁月风化，看来是用古文字写成的。^000000";
+		close;
+	}
+}
+
+payon,79,171,4	script	拉亚#G5	95,{
+	if ($God1 < $@god_check2) {
+		if ((god_sl_1 == 21) || (god_sl_1 == 32) || (god_sl_1 == 43) || (god_sl_1 == 14)) {
+			if ((god_sl_2 == 1) || (god_sl_2 == 3)) {
+				mes "[拉亚]";
+				mes "无论故事多么古老，你总能在民间传说里找到有益的建议。";
+				next;
+				mes "[拉亚]";
+				mes "任凭时光流逝、人类进步，";
+				mes "生活中有些根本的道理是永恒的，永远不会改变。";
+				next;
+				switch(select("嗯……:我明白了。")) {
+				case 1:
+					mes "[拉亚]";
+					mes "嗯……？";
+					mes "你有什么需要我帮忙的吗？我会尽力帮助你的。";
+					next;
+					mes "[拉亚]";
+					mes "我认为，能力和力量如果不用于正途，就毫无意义。";
+					next;
+					switch(select("哦不，不用了。:斯雷普尼尔的故事。")) {
+					case 1:
+						mes "[拉亚]";
+						mes "一定是我误会了。不过，如果你需要帮助，尽管开口。";
+						next;
+						mes "[拉亚]";
+						mes "我把帮助他人当作修炼自己心灵的方式。";
+						mes "希望你也同样善待他人，慷慨助人。";
+						close;
+					case 2:
+						mes "[拉亚]";
+						mes "啊，这样啊。";
+						mes "我可以把我知道的关于斯雷普尼尔的事告诉你。";
+						mes "让我看看能不能都记起来。";
+						next;
+						mes "[拉亚]";
+						mes "啊，对了。";
+						mes "我想起来了。";
+						mes "是的，斯雷普尼尔是奥丁坐骑的名字。";
+						next;
+						mes "[拉亚]";
+						mes "在众神的世界里，有三匹传说之马：斯雷普尼尔、";
+						mes "斯瓦迪尔法利和古尔法克西。";
+						next;
+						mes "[拉亚]";
+						mes "古尔法克西属于巨人之王赫朗格尼尔。";
+						mes "而斯雷普尼尔的父亲斯瓦迪尔法利，也属于一个巨人。";
+						next;
+						mes "[拉亚]";
+						mes "好，现在来说说「斯雷普尼尔」是怎么诞生的。";
+						mes "这个故事能让我们看到，神和巨人也会犯错。";
+						next;
+						mes "[拉亚]";
+						mes "在众神的国度阿斯加德，曾有一座巨大的防护城墙，";
+						mes "在一场大战中几乎被完全摧毁。";
+						next;
+						mes "[拉亚]";
+						mes "但是……";
+						mes "神毕竟是神，他们可不愿意亲自动手重建城墙。";
+						next;
+						mes "[拉亚]";
+						mes "一天，一个非常瘦削的男人骑着一匹黑马来，";
+						mes "提出愿意重建、甚至加固阿斯加德的防护城墙。";
+						next;
+						mes "[拉亚]";
+						mes "众神正需要一切防护来抵御敌人，这个提议很诱人。";
+						next;
+						mes "[拉亚]";
+						mes "这个男人承诺在短短18个月内重建阿斯加德的城墙，";
+						mes "但作为回报，他要女神芙蕾雅做他的妻子，";
+						mes "还要拥有太阳和月亮。";
+						next;
+						mes "[拉亚]";
+						mes "这个代价对众神来说太不合理了。";
+						mes "阿斯加德的众神都被陌生人的要求激怒了。";
+						mes "但他们确实想让城墙重建起来。";
+						next;
+						mes "[拉亚]";
+						mes "……";
+						mes "你觉得无聊吗？";
+						mes "如果无聊的话，这个故事可以下次再讲。";
+						next;
+						switch(select("是啊，下次再讲吧。:不，请继续。")) {
+						case 1:
+							mes "[拉亚]";
+							mes "我明白我的故事没那么有趣。下次我一定尽力讲得精彩些。";
+							mes "请一路平安。";
+							close;
+						case 2:
+							mes "[拉亚]";
+							mes "哦，好的。";
+							mes "那我继续讲了。";
+							next;
+							break;
+						}
+						mes "[拉亚]";
+						mes "众神对陌生人荒唐的要求怒火中烧。";
+						mes "不过，洛基向奥丁提议，不妨让陌生人来重建防御城墙。";
+						next;
+						mes "[拉亚]";
+						mes "洛基建议，如果陌生人完成了城墙的大部分工程，";
+						mes "却超过了约定的期限，众神就没有义务支付任何报酬。";
+						next;
+						mes "[拉亚]";
+						mes "奥丁决定采纳洛基的建议，";
+						mes "告诉陌生人城墙必须在6个月内修好，";
+						mes "而不是他提出的18个月。而且他不能得到任何人的帮助。";
+						next;
+						mes "[拉亚]";
+						mes "作为交换，如果他能满足这些条件，";
+						mes "就会得到他要求的报酬。";
+						mes "既然他只是个凡人，这看来是不可能的。";
+						next;
+						mes "[拉亚]";
+						mes "嗯……";
+						mes "我知道这个故事很长。你想继续听，还是需要休息一下？";
+						next;
+						switch(select("让我先做点笔记。:我需要休息一下！:不，请继续。")) {
+						case 1:
+							mes "[拉亚]";
+							mes "啊……";
+							mes "我知道这个故事很长，抱歉。好，我等你把笔记写完。";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							mes "...............";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							mes "...............";
+							mes "..................";
+							next;
+							mes "[拉亚]";
+							mes "现在可以继续讲故事了吗？";
+							next;
+							select("可以，请继续。");
+							mes "[拉亚]";
+							mes "好，那么我讲到哪儿了？";
+							next;
+							break;
+						case 2:
+							mes "[拉亚]";
+							mes "我明白斯雷普尼尔的故事确实很长。";
+							mes "但如果你愿意耐心听，我下次再讲给你听。再见~";
+							close;
+						case 3:
+							mes "[拉亚]";
+							mes "哦，太好了。";
+							mes "那就让我继续吧。";
+							next;
+							break;
+						}
+						mes "[拉亚]";
+						mes "陌生人坚持要让他的马帮忙做重建工程。";
+						mes "因为那匹马看起来平平无奇，奥丁同意了。";
+						next;
+						mes "[拉亚]";
+						mes "奥丁没有多想他的请求，";
+						mes "但看到陌生人重建城墙第一天的表现后，";
+						mes "就后悔了这个决定。";
+						next;
+						mes "[拉亚]";
+						mes "奇怪的是，陌生人用他的马驮运材料，";
+						mes "以非凡人所能及的速度重建着城墙。";
+						next;
+						mes "[拉亚]";
+						mes "众神为此不安，因为陌生人其实是一个伪装的强大巨人。";
+						mes "但这并没有违反约定，所以众神也无计可施。";
+						next;
+						mes "[拉亚]";
+						mes "虽然陌生人技艺高超，";
+						mes "但他的马才是大大加快城墙重建的关键。";
+						mes "那就是传说中的神马斯瓦迪尔法利。";
+						next;
+						mes "[拉亚]";
+						mes "眼看城墙就要在约定的六个月之前完工，众神越来越焦虑。";
+						mes "阿斯加德的众神很快对洛基怒火中烧。";
+						next;
+						mes "[拉亚]";
+						mes "尽管如此，洛基依然镇定，向众神保证他有计划。";
+						mes "众神不信任他的狡猾，眼看陌生人的工程飞速推进，";
+						mes "越来越绝望。";
+						next;
+						mes "[拉亚]";
+						mes "接着，城墙的重建突然停滞了。";
+						mes "众神和陌生人都同样吃惊，因为斯瓦迪尔法利不见了。";
+						next;
+						mes "[拉亚]";
+						mes "陌生人只好独自继续他的工程了。";
+						next;
+						mes "[拉亚]";
+						mes "嗯……";
+						mes "你还在听吗？如果你累了，我可以理解，我们就先停一停。";
+						next;
+						switch(select("我累坏了！:不，请继续。")) {
+						case 1:
+							mes "[拉亚]";
+							mes "我知道这个故事可能太长了。";
+							mes "但如果你想坐下来再听一遍，我很乐意再讲一次。";
+							mes "谢谢你的聆听，冒险者。";
+							close;
+						case 2:
+							mes "[拉亚]";
+							mes "哦，好的，那我继续了。";
+							next;
+							break;
+						}
+						mes "[拉亚]";
+						mes "出于好奇，众神决定调查斯瓦迪尔法利失踪的原因。";
+						next;
+						mes "[拉亚]";
+						mes "令人惊讶的是，";
+						mes "他们发现斯瓦迪尔法利爱上一匹美丽的母马，";
+						mes "这就是它不去工地干活的原因。";
+						next;
+						mes "[拉亚]";
+						mes "六个月过去时，陌生人几乎重建完了阿斯加德的城墙。";
+						mes "只剩下城堡大门没有装好。";
+						next;
+						mes "[拉亚]";
+						mes "众神高兴地告诉陌生人，既然他没有按约定完成城墙，";
+						mes "他们就不能支付他要求的报酬。";
+						next;
+						mes "[拉亚]";
+						mes "陌生人勃然大怒，指责众神欺骗他，好不用把太阳、";
+						mes "月亮和美丽的芙蕾雅女神付给他。接着，他露出了真面目。";
+						next;
+						mes "[拉亚]";
+						mes "他是一个可怕的冰霜巨人，也就是人们说的霜巨人。";
+						next;
+						mes "[拉亚]";
+						mes "……";
+						mes "你觉得无聊吗？";
+						mes "如果无聊的话，这件事可以下次再聊。";
+						next;
+						switch(select("我好无聊~:不，请继续。")) {
+						case 1:
+							mes "[拉亚]";
+							mes "这样啊。";
+							mes "故事本来就是要听得开心的，看来你现在没心情坐下来听。";
+							next;
+							mes "[拉亚]";
+							mes "但如果你想听斯雷普尼尔的故事，随时再来找我。";
+							mes "祝你愉快~";
+							close;
+						case 2:
+							mes "[拉亚]";
+							mes "哦，那太好了~";
+							mes "有些人听了这么久，早就睡着了呢~";
+							next;
+							break;
+						}
+						mes "[拉亚]";
+						mes "总之……";
+						mes "陌生人原来是一个修行石工技艺的巨人。";
+						mes "虽然他入侵了阿斯加德，众神却并不担心。";
+						next;
+						mes "[拉亚]";
+						mes "托尔掷出他的神锤妙尔尼尔，巨人的脑袋顿时四分五裂，";
+						mes "当场毙命。";
+						next;
+						mes "[拉亚]";
+						mes "至于斯瓦迪尔法利那匹马，此后很久很久都不见踪影。";
+						next;
+						mes "[拉亚]";
+						mes "……";
+						mes "你觉得无聊吗？";
+						mes "如果无聊的话，我们下次再聊。";
+						next;
+						switch(select("让我做点笔记。:下次再聊。:不，请继续。")) {
+						case 1:
+							mes "[拉亚]";
+							mes "啊……";
+							mes "看来你真的想把每个重要细节都记下来！";
+							next;
+							mes "[拉亚]";
+							mes "抱歉，那我等你把笔记做完。";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							mes "...............";
+							next;
+							mes "……";
+							mes "…………";
+							mes "………………";
+							mes "……………………";
+							mes "...............";
+							mes "..................";
+							next;
+							mes "[拉亚]";
+							mes "现在可以继续讲故事了吗？";
+							next;
+							select("可以，请继续。");
+							mes "[拉亚]";
+							mes "好。嗯……刚才讲到哪儿了？";
+							next;
+							break;
+						case 2:
+							mes "[拉亚]";
+							mes "哦，看来我的故事确实没那么有趣。";
+							mes "但如果你想再听一遍这个故事，请再来找我。";
+							next;
+							mes "[拉亚]";
+							mes "那么，一路平安~";
+							close;
+						case 3:
+							mes "[拉亚]";
+							mes "好。嗯……刚才讲到哪儿了？";
+							next;
+							break;
+						}
+						mes "[拉亚]";
+						mes "过了一阵子，看起来狼狈不堪的洛基，";
+						mes "带着一匹长着八条腿的怪马回到了阿斯加德。";
+						next;
+						mes "[拉亚]";
+						mes "洛基把这匹小马称作「斯雷普尼尔」，";
+						mes "当作礼物献给了奥丁。";
+						next;
+						mes "[拉亚]";
+						mes "实际上，是洛基变成了那匹母马，引诱斯瓦迪尔法利离开，";
+						mes "让它不再去工地干活。";
+						next;
+						mes "[拉亚]";
+						mes "于是，";
+						mes "「斯雷普尼尔」便由传奇骏马斯瓦迪尔法利与化身为马的洛";
+						mes "基所生。";
+						next;
+						mes "[拉亚]";
+						mes "口耳相传的故事，细节上可能会有出入，";
+						mes "这取决于讲故事的人是谁。";
+						next;
+						mes "[拉亚]";
+						mes "不过，故事的主线应该不会差。";
+						next;
+						mes "[拉亚]";
+						mes "我平时没什么机会练习讲故事，";
+						mes "对我讲的这个斯雷普尼尔故事是否真实，我也没什么把握。";
+						next;
+						mes "[拉亚]";
+						mes "但希望你明白我已经尽力了。";
+						mes "这是我能为你做的最大的帮助。";
+						next;
+						mes "[拉亚]";
+						mes "如果你想再听这个故事，随时欢迎。冒险路上注意安全~";
+						if (god_sl_2 == 1) {
+							set god_sl_2,2;
+						} else if (god_sl_2 == 3) {
+							set god_sl_2,4;
+						}
+						close;
+					}
+				case 2:
+					mes "[拉亚]";
+					mes "在痛苦的时候，请回顾自己的过去，";
+					mes "这能帮你找到解决之道。";
+					next;
+					mes "[拉亚]";
+					mes "就像古老的神话传说一样，";
+					mes "你的经历也是能让你学到宝贵经验的故事。";
+					close;
+				}
+			}
+			else {
+				mes "[拉亚]";
+				mes "我把知道的都告诉你了。希望对你有所帮助。";
+				mes "请同样以慷慨和善意对待他人。";
+				close;
+			}
+		}
+		else {
+			mes "[拉亚]";
+			mes "修行不只限于身体和心灵的锻炼。";
+			next;
+			mes "[拉亚]";
+			mes "你为人处世、待人接物的方式，也可以算是修行的一部分。";
+			next;
+			mes "[拉亚]";
+			mes "每个人从日常生活中学到什么、受益多少，都各不相同。";
+			close;
+		}
+	}
+	else {
+		mes "[拉亚]";
+		mes "修行不只限于身体和心灵的锻炼。";
+		next;
+		mes "[拉亚]";
+		mes "你为人处世、待人接物的方式，也可以算是修行的一部分。";
+		next;
+		mes "[拉亚]";
+		mes "每个人从日常生活中学到什么、受益多少，都各不相同。";
+		close;
+	}
+}
+
+que_god01,84,95,0	script	开关#God0	111,{
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",60,88;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,84,92,0	script	god_sl_w0	45,1,1,{
+OnTouch_:
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",60,88;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,49,97,0	script	开关#God1	111,{
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",62,119;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,46,97,0	script	god_sl_w1	45,1,1,{
+OnTouch_:
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",62,119;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,19,97,0	script	开关#God2	111,{
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",12,119;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,16,97,0	script	god_sl_w2	45,1,1,{
+OnTouch_:
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",12,119;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,14,80,0	script	开关#God3	111,{
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",12,52;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,17,80,0	script	god_sl_w3	45,1,1,{
+OnTouch_:
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",12,52;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,44,80,0	script	开关#God4	111,{
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",50,52;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}
+
+que_god01,47,80,0	script	god_sl_w4	45,1,1,{
+OnTouch_:
+	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
+		mes "^3355FF门锁着。";
+		mes "你把临时通行证在门右侧的安保装置上刷了一下，门开了。^000000";
+		next;
+		warp "que_god01",50,52;
+		end;
+	}
+	else {
+		mes "^3355FF门锁着。右侧有一个某种安保装置。";
+		mes "看来需要检测到某种通行证才能进入。^000000";
+		close;
+	}
+}

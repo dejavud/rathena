@@ -1,0 +1,314 @@
+//===== rAthena Script =======================================
+//= 阿尤塔亚城
+//===== By: ==================================================
+//= MasterOfMuppets
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= 阿尤塔亚城脚本
+//===== Additional Comments: =================================
+//= 1.6 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.7 Fixed character's anme bugs [Lupus]
+//= 1.8 Moved Alberta NPC to pre-re/re paths. [Euphy]
+//= 1.9 Updated Renewal warp coordinates.
+//============================================================
+
+// 阿尤塔亚交通
+//============================================================
+-	script	::Aibakthing_ayothaya	-1,{
+	mes "[哎伊拜婷]";
+	mes "呼！哈！呼！哈！";
+	mes "让我带你去";
+	mes "一个遥远的灵性之地，";
+	mes "一片异域神秘的土地，";
+	mes "我的家乡阿尤塔亚！";
+	next;
+	switch(select("关于阿尤塔亚。:去阿尤塔亚。:取消。")) {
+	case 1:
+		mes "[哎伊拜婷]";
+		mes "我们阿尤塔亚人是虔诚的人民，珍视和平与真诚。我们努力过着简单而高尚的生活，与自然和谐相处。";
+		next;
+		mes "[哎伊拜婷]";
+		mes "我们的传统美食举世闻名。当我们端上冬阴功这样的菜肴时毫不奇怪，它由虾、柠檬和辣椒制成，香气和风味诱人得超乎想象。";
+		next;
+		mes "[哎伊拜婷]";
+		mes "对于渴望冒险的人，有一个关于三头虎的古老故事，那是一种出没于我们寺庙遗迹的邪恶生物。";
+		next;
+		mes "[哎伊拜婷]";
+		mes "呼！哈！呼！哈！";
+		mes "没有人能抗拒";
+		mes "这片美丽土地的召唤。";
+		mes "米德加兹人";
+		mes "永远受欢迎！";
+		close;
+	case 2:
+		mes "[哎伊拜婷]";
+		mes "啊，如果你想访问阿尤塔亚，";
+		mes "必须支付 10,000 Zeny。";
+		mes "如果你准备好了，我们";
+		mes "现在就能出发~";
+		next;
+		if (select("我准备好了，走吧！:不。") == 1) {
+			if (Zeny > 9999) {
+				mes "[哎伊拜婷]";
+				mes "呼！哈！呼！哈！";
+				mes "我们出发吧！回到我";
+				mes "美丽的阿尤塔亚！";
+				close2;
+				set Zeny, Zeny-10000;
+				warp "ayothaya",149,71;
+				end;
+			}
+			mes "[哎伊拜婷]";
+			mes "抱歉，但你没有 10,000 Zeny 去阿尤塔亚旅行。这样的价格与等待你的体验相比算不了什么！";
+			close;
+		}
+	case 3:
+		mes "[哎伊拜婷]";
+		mes "你是否梦见过";
+		mes "一个充满";
+		mes "灵性宁静的美丽地方？你";
+		mes "一定梦见的";
+		mes "就是阿尤塔亚，我的朋友。";
+		close;
+	}
+}
+
+ayothaya,152,68,1	script	哎伊拜婷#ayo2	843,{
+	mes "[哎伊拜婷]";
+	mes "呼！哈！嗯！哈！";
+	mes "那么，你觉得阿尤塔亚怎么样？你尝到冬阴功了吗？等你准备好了，我就带你回家。";
+	next;
+	if (select("回艾尔贝塔。:取消。") == 1) {
+		mes "[哎伊拜婷]";
+		mes "欢迎你随时回来。希望我们很快能再见面。谢谢~";
+		close2;
+		if (checkre(0))
+			warp "alberta",245,87;
+		else
+			warp "alberta",235,45;
+		end;
+	}
+	mes "[哎伊拜婷]";
+	mes "啊，是的。我明白离开这么美的地方很难。别担心，";
+	mes "慢慢来。";
+	close;
+}
+
+// 阿尤塔亚普通 NPC
+//============================================================
+ayothaya,189,120,3	script	青年#Thang	843,{
+	mes "[唐]";
+	mes "阿尤塔亚有一座";
+	mes "古老而可怕的";
+	mes "建筑，这里没人";
+	mes "敢靠近……";
+	next;
+	mes "[唐]";
+	mes "过去，有几个好奇的人不顾恐怖故事走了进去，再也没有回来。那个地方里面到底发生了什么？";
+	next;
+	mes "[唐]";
+	mes "不过，如果你想向别人证明你的勇气，面对里面的危险对冒险者来说也许是个值得的挑战……";
+	mes "我想。";
+	close;
+}
+
+ayothaya,171,152,5	script	少女#Lalitha	838,{
+	set .@sit,rand(1,5);
+	if (.@sit > 0 && .@sit < 3) {
+		mes "[拉丽塔]";
+		mes "你好！";
+		mes "我想我们";
+		mes "以前没见过。";
+		next;
+		mes "[拉丽塔]";
+		mes "你一定";
+		mes "来自米德加兹。";
+		mes "毕竟，我认识这个村里住的每一个人。";
+		mes "嘿嘿~";
+		next;
+		mes "[拉丽塔]";
+		mes "嗯……";
+		mes "我能问问你来自的";
+		mes "那片土地吗？我对外面的世界";
+		mes "很多东西都好奇。";
+		next;
+		mes "[拉丽塔]";
+		mes "你知道的，比如其他国家女士穿的裙子和首饰，男人长得帅不帅，你们有什么歌，那边的男孩喜欢什么样的女孩……";
+		emotion ET_QUESTION;
+		next;
+		mes "[" +strcharinfo(0)+ "]";
+		mes ".........";
+		next;
+		mes "[拉丽塔]";
+		mes "..........";
+		emotion ET_SWEAT;
+		next;
+		mes "[拉丽塔]";
+		mes "好啦~！";
+		mes "保重，";
+		mes "旅途愉快！";
+		close;
+	}
+	else if (.@sit > 2 && .@sit < 6) {
+		mes "[拉丽塔]";
+		mes "从这个村子往东走，";
+		mes "你会到达一座古老神殿的遗迹。它现在";
+		mes "是一个满是可怕怪物的巢穴。";
+		next;
+		mes "[拉丽塔]";
+		mes "如果你打算穿越这些遗迹，最好";
+		mes "尽可能做好准备！";
+		next;
+		mes "[拉丽塔]";
+		mes "啊……";
+		mes "我的";
+		mes "黑骑士在哪里~";
+		emotion ET_THROB;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "你不是指……";
+		mes "骑着白马的";
+		mes "闪亮铠甲骑士吗？";
+		next;
+		mes "[拉丽塔]";
+		mes "嗯……？";
+		mes "噢，好吧……";
+		mes "我两个都要！";
+		mes "嘻嘻~！";
+		close;
+	}
+	mes "[拉丽塔]";
+	mes "嗯……？";
+	mes "怎么了？";
+	close;
+}
+
+ayothaya,143,102,5	script	老人#ayothaya	842,{
+	mes "[村民]";
+	mes "嗯。";
+	mes "嗯嗯……";
+	mes "嗯嗯……？";
+	next;
+	mes "[村民]";
+	mes "你一定";
+	mes "是外地人。";
+	mes "是的。确实。";
+	next;
+	mes "[村民]";
+	mes "你刚才是问";
+	mes "我要去哪里吗？";
+	mes "呃，去前面的";
+	mes "钓鱼点。我们老人";
+	mes "就是这样：钓鱼。";
+	next;
+	mes "[村民]";
+	mes "嗯……";
+	mes "你想听点";
+	mes "有趣的事吗？我听说有人在";
+	mes "钓鱼点钓到的鱼里";
+	mes "发现了一枚戒指。";
+	next;
+	mes "[村民]";
+	mes "据说，有很多关于人们在那里";
+	mes "钓到的鱼里发现贵重物品的故事。";
+	next;
+	mes "[村民]";
+	mes "如果你够幸运，";
+	mes "你甚至可能";
+	mes "成为百万富翁。";
+	mes "嘿嘿嘿~";
+	next;
+	mes "[村民]";
+	mes "...!?";
+	mes "啊，我走到鱼市来了！^666666*唉*^000000 看来我走错路了。钓鱼点在村子的另一边。";
+	next;
+	mes "[村民]";
+	mes "既然来了，四处看看也不错。";
+	mes "这个市场的海鲜都很新鲜美味。";
+	mes "如果你不尝尝这些海鲜，";
+	mes "至少尝一次，否则会后悔的。";
+	close;
+}
+
+ayothaya,197,189,5	script	少年#1ayothaya	841,{
+	mes "[关]";
+	mes "呼，今天";
+	mes "好热啊？";
+	next;
+	mes "[关]";
+	mes "你一定";
+	mes "来自米德加兹吧？";
+	mes "最近我看到很多游客";
+	mes "从那里来。";
+	next;
+	mes "[关]";
+	mes "如果你在村子外面旅行，最好真的小心。无论做什么，都不要走进";
+	mes "森林里古老神殿的";
+	mes "遗迹。";
+	next;
+	mes "[关]";
+	mes "那个地方太";
+	mes "危险了，不能去。不过，我听说如果你有某种护身符，";
+	mes "去那里可以少担心一点……";
+	next;
+	mes "[关]";
+	mes "嗯，总之，远离那个地方仍然是个好主意。希望你在阿尤塔亚玩得开心，平平安安~";
+	close;
+}
+
+ayothaya,214,142,5	script	青年#5ayothaya	843,{
+	mes "[德齐]";
+	mes "在阿尤塔亚，我们有自己的传统武术。我们村里的年轻人练习传统武术，为了变得强壮。";
+	next;
+	mes "[德齐]";
+	mes "你何不学学我们的武术？我保证它会在你的旅途中大大帮助你。";
+	close;
+}
+
+ayothaya,241,264,5	script	青年#5ayothaya2	843,{
+	mes "[艾克]";
+	mes "嘿……";
+	mes "你看起来挺强的";
+	mes "你想挑战";
+	mes "我来一场吗？";
+	next;
+	if (select("当然！:不~") == 1) {
+		mes "[艾克]";
+		mes "哎哟哎哟！";
+		mes "我只是";
+		mes "开玩笑的，老兄！";
+		next;
+		mes "[艾克]";
+		mes "我没粗鲁到无缘无故跟陌生人打架！";
+		emotion ET_KEK;
+		close;
+	}
+	mes "[艾克]";
+	mes "真正的实力是在与他人交手数千次后培养出来的。所以，别害怕战斗，好吗？";
+	emotion ET_HNG;
+	close;
+}
+
+//============================================================
+// Old changelog
+//============================================================
+//= 0.1 Added a Sailor NPC to get back to Alberta [ZoDIaC]
+//= 0.2 fixed coords, dialogues
+//= 0.3 Fixed Warp name, ayotaya doesn't exist, even though iRO
+//=     decided to call it Ayotaya, it really is Ayothaya, like
+//=     that Yuno/Juno thing
+//= 0.4 Added the official warp npc for Ayothaya. [MasterOfMuppets]
+//= 1.0 Added most of the official npcs. The following quests were added: [MasterOfMuppets]
+//=     Tom Yum Goong quest, Holy Threads quest and Holier threads quest.
+//= 1.0a some checks, optimization [Lupus]
+//= 1.1 Missing delitem fixed by Poki#3 [Lupus]
+//= 1.1a Fixed a typo and clarified a comment at the bottom of the script [MasterOfMuppets]
+//= 1.2 Fixed exploits [Lupus]
+//= 1.3 Removed Duplicates [Silent]
+//= 1.4 Moved quests to quests/quests_ayothaya.txt [Evera]
+//= 1.5 Moved a few NPC's to quests/quests_ayothaya.txt [MasterOfMuppets]
+//============================================================

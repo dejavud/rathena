@@ -1,0 +1,1544 @@
+//===== rAthena Script =======================================
+//= Gunslinger quests
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.7
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Gunslinger guns and bullet quests
+//===== Additional Comments: =================================
+//= 1.0 Only Garrison Gun done yet [Playtester]
+//= 1.1 Added Garrison[2] [Playtester]
+//= 1.2 Added Drifter, Destroyer and Inferno [Playtester]
+//= 1.3 Added official Gatling quests [Playtester]
+//= 1.4 Updated Destroyer Quest - Credits to Sinoco for first
+//= official version. [SinSloth]
+//= 1.5 Updated Inferno Quest to official version [SinSloth]
+//= 1.6 Updated Garrison Quest - Credits to Lazarus^ for
+//= making the first official version. [SinSloth]
+//= 1.6a Removed .GATs [Lupus]
+//= 1.6b Changed item names to item IDs on some scripts. [Samuray22]
+//= 1.6c Corrected a bad delitem. (bugreport:763) [Samuray22]
+//= 1.7 Removed all 'menu' and 'goto'. [Euphy]
+//============================================================
+
+que_ng,182,85,3	script	加立逊	109,{
+
+	if(BaseJob != Job_Gunslinger)
+	{
+		mes "[加立逊]";
+		mes "你不是枪手。";
+		mes "别妨碍我工作，快走开。";
+		close;
+	}
+	else if(BaseLevel < 55)
+	{
+		mes "[加立逊]";
+		mes "我叫加立逊，是造枪大师。";
+		mes "我造的枪也叫加立逊。";
+		mes "它和我一样又酷又完美，所以用我的名字命名。";
+		next;
+		mes "[加立逊]";
+		mes "要不要向我定制一把加立逊手枪？";
+		next;
+		callsub SubGarrison;
+	}
+	switch(gun_gs)
+	{
+		case 0:
+			if(countitem(13104) < 1)
+			{
+				mes "[加立逊]";
+				mes "我叫加立逊，是造枪大师。";
+				mes "我造的枪也叫加立逊。";
+				mes "它和我一样又酷又完美，所以用我的名字命名。";
+				next;
+				mes "[加立逊]";
+				mes "你是来向我定制加立逊手枪的吗？";
+				next;
+				callsub SubGarrison;
+			}
+			mes "[加立逊]";
+			mes "嗯~ 怎么了？";
+			mes "你是因为需要武器才来的吗？";
+			next;
+			switch( select( "我需要一把加立逊。","才不是。","取消") )
+			{
+				case 1:
+					mes "[加立逊]";
+					mes "喔~ 欢迎欢迎。";
+					mes "大家都需要我~!";
+					mes "这正好证明我的加立逊手枪是最顶尖的。";
+					mes "那么，你现在要拜托我做一把吗？";
+					next;
+					callsub SubGarrison;
+
+				case 2:
+					mes "[加立逊]";
+					mes "嗯~ 你看起来像是没事到处闲逛呢。";
+					mes "有空的话，帮我个忙好吗？";
+					next;
+					mes "["+strcharinfo(0)+"]";
+					mes "什么事？";
+					next;
+					mes "[加立逊]";
+					mes "嗯~ 其实我最近收到一封信。";
+					mes "信上说我的六连发左轮手枪有很多瑕疵品。";
+					next;
+					mes "[加立逊]";
+					mes "我是个完美主义者，但年纪大了，眼神不好。";
+					mes "我可能卖出了一些有瑕疵的六连发左轮。";
+					next;
+					mes "[加立逊]";
+					mes "所以我想拜托有人帮我找些备用零件。";
+					mes "这样我就能替换掉瑕疵枪上的坏零件。";
+					next;
+					mes "[加立逊]";
+					mes "如果你帮我，我就给你手上那把加立逊打个洞。";
+					mes "怎么样？";
+					next;
+					mes "[加立逊]";
+					mes "先说清楚，打洞之后，";
+					mes "现在的精炼度和卡片都会消失。考虑清楚。";
+					next;
+					switch( select( "听起来不太妙。","好，我试试看。") )
+					{
+						case 1:
+							mes "[加立逊]";
+							mes "嗯，我明白了。";
+							mes "我理解。";
+							mes "看来我得另找别人了。";
+							close;
+
+						case 2:
+							mes "[加立逊]";
+							mes "喔，你愿意吗？";
+							mes "真是太感谢了。";
+							mes "这些就是我做备用零件需要的材料...";
+							next;
+							mes "[加立逊]";
+							mes "10 钢铁，1 铝，";
+							mes "10 强化武器金属-级数二，";
+							mes "30 煤矿，还有 10 生锈的螺丝。";
+							mes "数量要刚刚好，别忘记了。";
+							set gun_gs,1;
+							close;
+					}
+
+				case 3:
+					mes "[加立逊]";
+					mes "嗯... 以后再来找我吧。";
+					close;
+			}
+
+		case 1:
+			if((countitem(999) < 10) || (countitem(7317) < 10) || (countitem(1011) < 10) || (countitem(1003) < 30) || (countitem(985) < 1))
+			{
+				mes "[加立逊]";
+				mes "10 钢铁，1 铝，";
+				mes "10 强化武器金属-级数二，";
+				mes "30 煤矿，还有 10 生锈的螺丝。";
+				mes "别忘了--数量要刚刚好。";
+				close;
+			}
+			mes "[加立逊]";
+			mes "喔~ 你带着我要的东西回来了~";
+			mes "太感谢了。";
+			mes "喔.. 还有另一件事想拜托你。呃...";
+			next;
+			mes "[加立逊]";
+			mes "备用零件做好后要交给另一个人，可我这边实在忙不过来。";
+			next;
+			mes "[加立逊]";
+			mes "不好意思，能不能请你把用这些材料做好的东西送给下一个人？";
+			next;
+			mes "[加立逊]";
+			mes "你去送货的时候，我会照约定准备好给你的加立逊打洞。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "-嗯，虽然不太想干，但还是干吧。-";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "好。";
+			next;
+			mes "[加立逊]";
+			mes "喔，太谢谢你了。";
+			mes "把这个送给一个叫拉维的人吧。他住在里希塔乐镇的贫民窟。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "你从加立逊那里收到了要送的货物。";
+			mes "把它们送给住在里希塔乐镇贫民窟的拉维吧。";
+			delitem 999,10;
+			delitem 1011,10;
+			delitem 7317,10;
+			delitem 985,1;
+			delitem 1003,30;
+			set gun_gs,2;
+			close;
+
+		case 2:
+			mes "["+strcharinfo(0)+"]";
+			mes "你从加立逊那里收到了要送的货物。";
+			mes "把它们送给住在里希塔乐镇贫民窟的拉维吧。";
+			close;
+
+		case 3:
+			mes "[加立逊]";
+			mes "喔~ 路上还顺利吗？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "哇啊~";
+			mes "我差点死掉!!!";
+			mes "那家伙一看到我就攻击我。我好不容易才逃出来！";
+			next;
+			mes "[加立逊]";
+			mes "啊~ 糟糕。";
+			mes "没想到写信的人竟然是想暗算我。他大概是哪个敌对公会派来的...";
+			next;
+			mes "[加立逊]";
+			mes "看来我无意中让你去执行了一个非常危险的任务。";
+			next;
+			mes "[加立逊]";
+			mes "真是抱歉。";
+			mes "你可能也知道，到处都有坏家伙想对教授和枪手公会下手。";
+			next;
+			mes "[加立逊]";
+			mes "就把这当作枪手修行的一环吧。";
+			next;
+			mes "[加立逊]";
+			mes "发生这种事我很抱歉。";
+			mes "不过，照约定，我会给你的加立逊打洞...";
+			next;
+			if(countitem(13104) < 1)
+			{
+				mes "[加立逊]";
+				mes "咦？唉。";
+				mes "你不在的时候把枪卖了吗？";
+				mes "我说的是给你的枪打洞，可没说给不在这里的枪打洞。";
+				mes "去把你的加立逊拿来再来找我。";
+				set gun_gs,4;
+				close;
+			}
+			mes "[加立逊]";
+			mes "让我看看~";
+			mes "*叮当* *叮当* *砰* *砰*";
+			mes "这是改造好的加立逊。";
+			mes "好好用吧。";
+			delitem 13104,1;
+			getitem 13105,1;
+			set gun_gs, 5;
+			close;
+		case 4:
+			if(countitem(13104) < 1)
+			{
+				mes "[加立逊]";
+				mes "去把你的加立逊拿来再来找我。";
+				close;
+			}
+			mes "[加立逊]";
+			mes "啊，在这里。";
+			mes "这是改造好的加立逊。";
+			mes "好好用吧。";
+			delitem 13104, 1;
+			getitem 13105, 1;
+			set gun_gs,5;
+			close;
+		case 5:
+			mes "[加立逊]";
+			mes "嗯~ 你又来啦~";
+			mes "怎么了？";
+			mes "是因为需要武器才回来的吗？";
+			mes "你需要什么？";
+			next;
+			switch( select( "加立逊","给加立逊打洞","取消"))
+			{
+				case 1:
+					callsub SubGarrison;
+				case 2:
+					callsub SubGarrison_;
+				case 3:
+					mes "[加立逊]";
+					mes "后会有期~";
+					close;
+			}
+	}
+
+SubGarrison:
+	mes "[加立逊]";
+	mes "要制造加立逊，我需要...";
+	mes "50 钢铁，3 铝，";
+	mes "1 神之金属，50 煤矿，";
+	mes "20 生锈的螺丝，";
+	mes "还要收 30,000 Zeny 的费用。";
+	mes "怎么样，要做一把吗？";
+	next;
+	switch( select( "以后再说。","好，马上帮我做。","取消") )
+	{
+		case 1:
+			mes "[加立逊]";
+			mes "嗯~ 害我白高兴一场~";
+			mes "你考虑考虑，想好了再来找我。";
+			close;
+
+		case 2:
+			if((countitem(999) < 50) || (countitem(7317) < 20) || (countitem(984) < 1) || (countitem(1003) < 50) ||(countitem(985) < 3) )
+			{
+				mes "[加立逊]";
+				mes "你带来的材料不够。";
+				mes "要制造加立逊，我需要...";
+				mes "50 钢铁，3 铝，";
+				mes "1 神之金属，50 煤矿，";
+				mes "50 生锈的螺丝，";
+				mes "还要收 30,000 Zeny 的费用。";
+				mes "别忘记了。";
+				close;
+			}
+			else if(Zeny < 30000)
+			{
+				mes "[加立逊]";
+				mes "你的 Zeny 不够~!";
+				mes "还要更多 Zeny!!";
+				close;
+			}
+			else if(checkweight(13104,1) == 0)
+			{
+				mes "[加立逊]";
+				mes "你的物品栏没有空间放我做的东西了。";
+				mes "先把物品栏整理一下，再来找我吧。";
+				close;
+			}
+			mes "[加立逊]";
+			mes "嗯，材料和 Zeny 的数量都对了。";
+			mes "给你，加立逊~";
+			mes "还需要的话再来找我~";
+			delitem 984,1; //Oridecon
+			delitem 985,3; //Elunium
+			delitem 999,50; //Steel
+			delitem 1003,50; //Coal
+			delitem 7317,20; //Rusty Screw
+			set Zeny,Zeny-30000;
+			getitem 13104,1; //Garrison
+			close;
+
+		case 3:
+			mes "[加立逊]";
+			mes "后会有期~";
+			close;
+	}
+
+SubGarrison_:
+	mes "[加立逊]";
+	mes "要给加立逊打洞，我需要";
+	mes "10 钢铁，1 铝，";
+	mes "10 强化武器金属-级数二，30 煤矿，";
+	mes "10 生锈的螺丝，";
+	mes "还有 1 把加立逊。";
+	mes "怎么样，要打洞吗？";
+	next;
+	switch( select( "以后再说。","好，马上帮我做。","取消" ))
+	{
+		case 1:
+			mes "[加立逊]";
+			mes "害我白高兴一场~";
+			mes "想好了再来找我吧。";
+			close;
+
+		case 2:
+			if((countitem(999) < 10) || (countitem(7317) < 10) || (countitem(1011) < 10) || (countitem(1003) < 30) || (countitem(985) < 1) || (countitem(13104) < 1))
+			{
+				mes "[加立逊]";
+				mes "你带来的材料不够。";
+				mes "要给加立逊打洞，我需要";
+				mes "10 钢铁，1 铝，";
+				mes "10 强化武器金属-级数二，30 煤矿，";
+				mes "10 生锈的螺丝，";
+				mes "还有 1 把加立逊。";
+				mes "别忘记了。";
+				close;
+			}
+			else if(checkweight(13105,1) != 1)
+			{
+				mes "[加立逊]";
+				mes "你的物品栏没有空间放我做的东西了。";
+				mes "先把物品栏整理一下，再来找我吧。";
+				close;
+			}
+			mes "[加立逊]";
+			mes "嗯，材料和 Zeny 的数量都对了。";
+			mes "给你，这是打过洞的改造加立逊。";
+			mes "还需要的话再来找我~";
+			delitem 999, 10;
+			delitem 1011, 10;
+			delitem 7317, 10;
+			delitem 985, 1;
+			delitem 1003, 30;
+			delitem 13104, 1;
+			getitem 13105, 1;
+			close;
+		
+		case 3:
+			mes "[加立逊]";
+			mes "后会有期~";
+			close;
+	}
+}
+
+lighthalzen,322,247,6	script	拉维	86,{
+
+	if(gun_gs == 2)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "打扰了，你好。";
+		mes "我是来送瑕疵枪的替换零件的...";
+		next;
+		mes "[拉维]";
+		mes "你!!!";
+		mes "受死吧~!!";
+		mes "去死!!!";
+		set gun_gs,3;
+		percentheal 100,0;
+		percentheal -90,0;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "- 这个叫拉维的男人一听到枪手几个字，突然就动手攻击...-";
+		mes "差点就没命了。-";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "你头也不回地逃跑了。";
+		mes "赶快回去找加立逊吧。-";
+		close;
+	}
+	if(gun_gs == 3)
+	{
+		mes "["+strcharinfo(0)+"]";
+		mes "- 这个叫拉维的男人一听到枪手几个字，突然就动手攻击...-";
+		mes "差点就没命了。-";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "赶快回去找加立逊吧。-";
+		close;
+	}
+	mes "[拉维]";
+	mes "呜...";
+	mes "呃.. 呃..";
+	mes "......";
+	close;
+}
+
+
+que_ng,187,163,3	script	英格丽	744,{
+
+	if(BaseJob != Job_Gunslinger)
+	{
+		mes "[英格丽]";
+		mes "你好！";
+		mes "我是新任命的枪手武器制造师，我叫英格丽。";
+		next;
+		mes "[英格丽]";
+		mes "不过，你好像不是枪手公会的成员，所以我帮不上什么忙。抱歉。";
+		close;
+	}
+	switch(gun_inf)
+	{
+		case 0:
+			mes "[英格丽]";
+			mes "你好！";
+			mes "我是新任命的枪手武器制造师，";
+			mes "我叫英格丽。";
+			mes "很荣幸为你服务！";
+			next;
+			mes "[英格丽]";
+			mes "我刚开始工作没多久，";
+			mes "但我会尽全力协助你的。";
+			next;
+			mes "[英格丽]";
+			mes "啊... 我心里好紧张。";
+			mes "目前我负责为客户制造一种叫地狱榴弹枪的武器。";
+			next;
+			mes "[英格丽]";
+			mes "地狱榴弹枪是我们公会研究所制造的最先进的武器。";
+			next;
+			mes "[英格丽]";
+			mes "它的威力和射程都非常出色，";
+			mes "而且采用人体工学设计，握持舒适，";
+			mes "开火时的后坐力也大大降低。";
+			mes "它堪称枪手的终极武器。";
+			mes "呼... 呼...";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "你知道得真多啊";
+			mes ".....";
+			next;
+			mes "[英格丽]";
+			mes "啊，那是当然~";
+			mes "因为这把枪就是我设计的..";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "哇~ 好厉害~";
+			next;
+			mes "[英格丽]";
+			mes "啊，糟糕...";
+			mes "我是不是在吹牛了？";
+			mes "跟塞蕾娜教授比起来，我还差得远呢。";
+			next;
+			mes "[英格丽]";
+			mes "其实我也想成为枪手，但因为身体条件不够，意志也不坚定，只好放弃了。";
+			next;
+			mes "[英格丽]";
+			mes "我申请成为枪手的时候，";
+			mes "有幸被塞蕾娜教授看中了我的才能。";
+			mes "在她的帮助下，我现在负责枪手武器的制造和销售。";
+			next;
+			mes "[英格丽]";
+			mes "虽然没能成为枪手让我很遗憾，但至少和我一起参加枪手考试的哥哥合格了。";
+			next;
+			mes "[英格丽]";
+			mes "虽然我倒下了，但哥哥替我们实现了梦想，我很高兴。";
+			next;
+			mes "[英格丽]";
+			mes "哈哈~ 你看我，你都没问，我就说了这么多。";
+			mes "抱歉。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "不，没关系。";
+			mes "虽然你没成为枪手，但我觉得你已经是个很了不起的人了。";
+			next;
+			mes "[英格丽]";
+			mes "真的吗？谢谢你~";
+			mes "我会努力的。";
+			next;
+			mes "[英格丽]";
+			mes "要制造地狱榴弹枪，";
+			mes "我需要 100 老旧的铁板，10 神之金属，";
+			mes "50 生锈的螺丝，100 燃烧的心脏，";
+			mes "还有 200,000 Zeny。";
+			mes "要我帮你制造吗？";
+			next;
+			switch( select( "我再考虑考虑。", "好的，拜托了。" ) )
+			{
+				case 1:
+					mes "[英格丽]";
+					mes "啊~ 这样啊。";
+					mes "我明白了。";
+					mes "好吧，你考虑考虑。";
+					mes "想好了再来找我吧。";
+					close;
+
+				case 2:
+					mes "[英格丽]";
+					mes "我明白了。";
+					mes "我再说一遍材料。";
+					next;
+					mes "[地狱榴弹枪]";
+					mes "要制造地狱榴弹枪，";
+					mes "我需要 100 老旧的铁板，10 神之金属，";
+					mes "50 生锈的螺丝，100 燃烧的心脏，";
+					mes "还有 200,000 Zeny。";
+					mes "材料的数量一定要刚刚好。";
+					mes "请别忘记。";
+					set gun_inf,1;
+					close;
+			}
+
+		case 1:
+			callsub SubInferno;
+
+		case 2:
+			mes "[英格丽]";
+			mes "你好~ 你回来啦~";
+			mes "是因为需要地狱榴弹枪才回来的吗？";
+			next;
+			switch( select( "不是，只是路过..","好，帮我做一把。" ) )
+			{
+				case 1:
+					mes "[英格丽]";
+					mes "啊~ 这样啊。";
+					mes "我明白了。";
+					mes "好吧，你考虑考虑。";
+					mes "想好了再来找我吧。";
+					close;
+
+				case 2:
+					callsub SubInferno;
+			}
+	}
+
+SubInferno:
+	if ((countitem(7319) < 100) || (countitem(7317) < 50) || (countitem(984) < 10) || countitem(7097) < 100)
+	{
+		mes "[英格丽]";
+		mes "嗯，需要的材料是 100 老旧的铁板，";
+		mes "10 神之金属，50 生锈的螺丝，";
+		mes "100 燃烧的心脏，还有 200,000 Zeny。";
+		mes "材料的数量一定要刚刚好。";
+		mes "请别忘记。";
+		close;
+	}
+	else if(Zeny < 200000)
+	{
+		mes "[英格丽]";
+		mes "材料倒是带够了，";
+		mes "但 Zeny 带够了吗？";
+		mes "制造地狱榴弹枪的费用是 200,000 Zeny。";
+		mes "请别忘记。";
+		close;
+	}
+	else if(checkweight(13162,1) != 1)
+	{
+		mes "[英格丽]";
+		mes "你带的东西太多，拿不动我做的东西，所以我没法给你。";
+		mes "等你准备好再来找我吧。";
+		close;
+	}
+	else
+	{
+		mes "[英格丽]";
+		mes "材料和 Zeny 的数量都对了。";
+		mes "这是我为你制造的地狱榴弹枪。";
+		mes "好好用吧。";
+		set Zeny,Zeny-200000;
+		delitem 7319,100;
+		delitem 984,10;
+		delitem 7317,50;
+		delitem 7097,100;
+		getitem 13162,1;
+		if(gun_inf == 1) set gun_inf,2;
+		close;
+	}
+}
+
+que_ng,185,180,3	script	凡妮莎	726,{
+
+	if(BaseJob != Job_Gunslinger)
+	{
+		mes "[凡妮莎]";
+		mes "哈！哈！！";
+		mes "无限制格斗！突击桑博！";
+		mes "摔跤！泰拳！";
+		mes "潘克拉辛！自由摔角！";
+		mes "我要学会世界上所有的徒手格斗技！！";
+		next;
+		mes "[凡妮莎]";
+		mes "嗯？！";
+		mes "你是谁？别打扰我练习！";
+		mes "走开！";
+		close;
+	}
+	switch(gunst)
+	{
+		case 0:
+			mes "[凡妮莎]";
+			mes "哈！哈呀！！";
+			mes "无限制格斗！突击桑博！";
+			mes "摔跤！泰拳！";
+			mes "潘克拉辛！自由摔角！";
+			mes "我要学会世界上";
+			mes "所有的格斗技！！";
+			next;
+			mes "[凡妮莎]";
+			mes "嗯？";
+			mes "你是枪手啊？";
+			mes "站在我旁边打扰我练习干什么？";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "只是看看练习，感觉也不错...";
+			mes ".............";
+			next;
+			mes "[凡妮莎]";
+			mes "哦！你喜欢武术吗？";
+			mes "过来~ 我给你锁个十字固~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "不~ 不用了~";
+			mes "没关系的~";
+			next;
+			mes "[凡妮莎]";
+			mes "什么没关系~";
+			mes "过来~!";
+			mes "-砰！砰！-";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "啊~ 呜~ 不要啊~";
+			mes "啊.. 啊啊啊~~!!";
+			mes "啊~";
+			mes "-什么东西断掉的声音-";
+			mes "好痛~~";
+			mes "*抽泣*~~";
+			next;
+			mes "[凡妮莎]";
+			mes "嗯... 我是不是太用力了。";
+			mes "嗯~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "废话！";
+			mes "笨蛋！笨蛋！！";
+			mes "*抽泣*~";
+			next;
+			mes "[凡妮莎]";
+			mes "嗯~ 嗯~";
+			mes "对不起~";
+			mes "好了好了，别哭了。";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*抽泣*~";
+			next;
+			mes "[凡妮莎]";
+			mes "好啦~ 好啦..";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*抽泣*~";
+			next;
+			mes "[凡妮莎]";
+			mes "停！啊~!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "........";
+			next;
+			mes "[凡妮莎]";
+			mes "好吧，行了。";
+			mes "发生这种事我很抱歉。";
+			mes "如果你能帮我收集一些材料，";
+			mes "我就给你做一把武器...";
+			next;
+			mes "[凡妮莎]";
+			mes "我叫凡妮莎·路易斯。";
+			mes "本来是武术家候选人，";
+			mes "结果走错了路，";
+			mes "只能窝在这里造武器。";
+			mes "天啊~ 我的命好苦啊~";
+			next;
+			mes "[凡妮莎]";
+			mes "言归正传。";
+			mes "我能制造的武器叫做破坏者榴弹枪。";
+			next;
+			mes "[凡妮莎]";
+			mes "这个名字来自我在擂台上用过的招式，";
+			mes "嘿嘿~";
+			mes "接招吧~! 破坏者~";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "*抽泣*~ 拜托~ 住手~";
+			next;
+			mes "[凡妮莎]";
+			mes "啊，呃.. 对不起...";
+			mes "首先，做破坏者榴弹枪";
+			mes "需要先准备材料。";
+			next;
+			mes "[凡妮莎]";
+			mes "需要的东西不少，";
+			mes "你可要考虑清楚。";
+			next;
+			mes "[凡妮莎]";
+			mes "怎么样？这种机会可不多。";
+			mes "要拜托我做一把吗？";
+			next;
+			switch( select( "下次吧。","好。") )
+			{
+				case 1:
+					mes "[凡妮莎]";
+					mes "嗯~ 这样啊~";
+					mes "这可是你的机会哦。";
+					mes "你会后悔的~";
+					mes "那下次见~";
+					mes "拜拜~ 拜拜~";
+					close;
+           
+				case 2:
+					mes "[凡妮莎]";
+					mes "嗯，好。";
+					mes "要做破坏者榴弹枪，";
+					mes "你需要 50 老旧的铁板，";
+					mes "5 神之金属，70 生锈的螺丝，";
+					mes "还有 100,000 Zeny 的费用。";
+					mes "材料数量要刚刚好，明白了吗？";
+					set gunst,1;
+					close;
+			}
+
+		case 1:
+			callsub SubDestroyer;
+			
+		case 2:
+			mes "[凡妮莎]";
+			mes "喔~ 你回来啦。";
+			mes "最近怎么样？";
+			mes "店里有新货哦。";
+			mes "尽管挑吧。";
+			next;
+			switch(select( "破坏者榴弹枪","带洞的破坏者榴弹枪","取消") )
+			{
+				case 1:
+					mes "[凡妮莎]";
+					mes "嗯，不错。";
+					mes "这是普通的破坏者榴弹枪。";
+					mes "需要 50 老旧的铁板，";
+					mes "5 神之金属，70 生锈的螺丝，";
+					mes "还有 100,000 Zeny。";
+					mes "材料数量要刚刚好。";
+					mes "要做吗？";
+					next;
+					switch( select( "下次吧。","好。") )
+					{
+               					case 1:
+							mes "[凡妮莎]";
+							mes "什么~ 真是的。";
+							mes "有什么好考虑的？";
+							mes "好吧，你考虑考虑再来吧...";
+							close;
+							case 2:
+							callsub SubDestroyer;
+					}
+							
+				case 2:
+					mes "[凡妮莎]";
+					mes "喔~ 带洞的破坏者榴弹枪~";
+					mes "跟普通的破坏者榴弹枪不同，";
+					mes "我要你帮我找一样我在收集的稀有物品。";
+					mes "找到了我就给你。";
+					next;
+					mes "[凡妮莎]";
+					mes "我在找鹰爪拳套[2]。";
+					mes "还要 5 神之金属。";
+					mes "材料数量要刚刚好。";
+					mes "你还想要带洞的破坏者榴弹枪吗？";
+					next;
+					switch( select( "我再考虑考虑。","要！我要！") )
+					{
+               					case 1:
+							mes "[凡妮莎]";
+							mes "什么~ 真是的。";
+							mes "有什么好考虑的？";
+							mes "好吧，你考虑考虑再来吧...";
+							close;
+			
+						case 2:
+							callsub SubDestroyer_;
+			
+					}
+           
+				case 3:
+					mes "[凡妮莎]";
+					mes "嗯~ 好吧~";
+					mes "你慢慢考虑。";
+					mes "要不要跟我过两招？";
+					close;
+			}
+	}
+
+SubDestroyer:
+
+	if ((countitem(7319) < 50) || (countitem(7317) < 70) || (countitem(984) < 5))
+	{
+		mes "[凡妮莎]";
+		mes "嗯，需要的材料是 50 老旧的铁板，";
+		mes "5 神之金属，70 生锈的螺丝，还有 100,000 Zeny。";
+		mes "记住，数量要刚刚好。";
+		close;
+	}
+	else if(Zeny < 100000)
+	{
+		mes "[凡妮莎]";
+		mes "材料倒是带够了，";
+		mes "但费用是 100,000 Zeny。";
+		mes "记住了。";
+		close;
+	}
+	else if(checkweight(13160,1) != 1)
+	{
+		mes "[凡妮莎]";
+		mes "就算我做出来，你也拿不动。";
+		mes "去把物品栏整理一下吧。";
+		close;
+	}
+	else
+	{
+		mes "[凡妮莎]";
+		mes "好~ 很好~";
+		mes "都检查过了~";
+		mes "材料和 Zeny 都刚刚好~";
+		mes "这是我提前为你做好的破坏者榴弹枪。";
+		mes "好好用吧。";
+		set Zeny,Zeny-100000;
+		delitem 7319,50;
+		delitem 984,5;
+		delitem 7317,70;
+		getitem 13160,1;
+		if(gunst == 1) set gunst,2;
+		next;
+		mes "[凡妮莎]";
+		mes "以后还需要的话，";
+		mes "随时来找我~";
+		mes "下次我给你表演另一种徒手格斗技。";
+		close;
+	}
+
+SubDestroyer_:
+
+	if ((countitem(1812) < 1) || (countitem(984) < 5))
+	{
+		mes "[凡妮莎]";
+		mes "嗯，需要的材料是 1 个鹰爪拳套[2]";
+		mes "和 5 神之金属。";
+		mes "记住，材料要刚刚好。";
+		close;
+	}
+	else if(checkweight(13161,1) != 1)
+	{
+		mes "[凡妮莎]";
+		mes "你的物品栏没有空间了。";
+		mes "就算我做出来，";
+		mes "你也拿不动。";
+		mes "把物品栏整理一下再来吧。";
+		close;
+	}
+	else
+	{
+		mes "[凡妮莎]";
+		mes "好~ 很好~";
+		mes "都检查过了~";
+		mes "材料和 Zeny 都刚刚好~";
+		mes "这是我提前为你做好的带洞破坏者榴弹枪。";
+		mes "好好用吧。";
+		delitem 1812,1;
+		delitem 984,5;
+		getitem 13161,1;
+		next;
+		mes "[凡妮莎]";
+		mes "以后还需要的话，";
+		mes "随时来找我~";
+		mes "下次我给你表演另一种徒手格斗技。";
+		close;
+	}
+}
+
+que_ng,149,178,4	script	实验室主任	744,{
+
+	if(gun_na == 1){
+		if(countitem(1043) > 999 && countitem(932) > 999){
+			delitem 1043,1000;
+			delitem 932,1000;
+			set gun_na,2;
+			mes "[恩 艾伊]";
+			mes "啊，都齐了！啊，我还一直担心";
+			mes "我造好^ff0000屠杀者^000000之后，";
+			mes "没人能用它呢！";
+			next;
+			mes "[恩 艾伊]";
+			mes "好，那我就把^ff0000屠杀者^000000给你。";
+			mes "不过，我们不是免费干活的，";
+			mes "所以要收你费用。";
+			mes "另外，你还需要从塞琳娜女士那里";
+			mes "获得使用屠杀者的许可。";
+			next;
+			mes "[恩 艾伊]";
+			mes "等你拿到许可，";
+			mes "付了 100000 Zeny 的费用，";
+			mes "我就把屠杀者给你。";
+			close;
+		}else{
+			mes "[恩 艾伊]";
+			mes "你找到^ff00001000 兽人指甲^000000和^ff00001000 死人遗骨^000000了吗？";
+			mes "如果觉得太难，";
+			mes "你可以选择放弃。";
+			next;
+			if(select("我不放弃！:我放弃...") == 1){
+				mes "[恩 艾伊]";
+				mes "好，我相信你。";
+				mes "祝你好运。";
+				close;
+			}else{
+				mes "[恩 艾伊]";
+				mes "你要放弃了吗？";
+				mes "嗯，我承认这个考验确实很难，";
+				mes "但如果你连考验都过不了，";
+				mes "也用不了这把武器。";
+				mes "以后随时可以再来挑战。";
+				set gun_na,0;
+				close;
+			}
+		}
+	}
+	else if(gun_na == 2){
+		mes "[恩 艾伊]";
+		mes "我已经从塞琳娜女士那里";
+		mes "拿到了让你使用屠杀者的许可。";
+		mes "付我 100000 Zeny 就能用了。";
+		mes "现在要付吗？";
+		next;
+		if(select("不付。:付。") == 1){
+			mes "[恩 艾伊]";
+			mes "好吧。我等你带着钱回来。";
+			close;
+		}else{
+			if(Zeny < 100000){
+				mes "[恩 艾伊]";
+				mes "咦，你带的钱好像不够。";
+				mes "把钱带来再来吧，";
+				mes "好吗？";
+				close;
+			}
+			if(checkweight(13158,1) == 0){
+				mes "[恩 艾伊]";
+				mes "你超重了。";
+				mes "就算我把武器给你，";
+				mes "你也拿不动。";
+				mes "请把物品栏整理一下。";
+				close;
+			}
+			set Zeny,Zeny-100000;
+			set gun_na,0;
+			getitem 13158,1;
+			mes "[恩 艾伊]";
+			mes "一、二、三、四、五、";
+			mes "六... 99997、99998、99999...";
+			mes "100000。*叮~!* 很好！";
+			mes "费用没错。你可以拿走";
+			mes "^ff0000屠杀者^000000了！";
+			next;
+			mes "[恩 艾伊]";
+			mes "里希塔乐镇的 F·哈里森先生";
+			mes "对你的新玩具很感兴趣。";
+			mes "有空给他看看吧。";
+			mes "他会很高兴的。";
+			next;
+			mes "[恩 艾伊]";
+			mes "好好用吧！";
+			mes "再见啦！";
+			close;
+		}
+	}
+	else if(gun_na == 10){
+		if (countitem(999) > 69 && countitem(985) > 4 && countitem(984) > 2 && countitem(1003) > 69 && countitem(7317) > 49 && Zeny >= 50000){
+			delitem 999,70;
+			delitem 985,5;
+			delitem 984,3;
+			delitem 1003,70;
+			delitem 7317,50;
+			set Zeny,Zeny-50000;
+			set gun_na,11;
+			mes "[恩 艾伊]";
+			mes "啊哈，材料都给我了。";
+			mes "来，我马上开工！";
+			mes "需要一点时间，";
+			mes "稍等一下...";
+			close;
+		}else{
+			mes "[恩 艾伊]";
+			mes "咦？材料还没带齐吗？";
+			next;
+			mes "[恩 艾伊]";
+			mes "要做漂流者，我需要";
+			mes "70 钢铁，5 铝，";
+			mes "3 神之金属，70 煤矿，";
+			mes "50 生锈的螺丝，";
+			mes "还有 50000 Zeny 的费用。";
+			mes "都准备好之后再来找我。";
+			next;
+			mes "[恩 艾伊]";
+			mes "如果不想要了，";
+			mes "也可以取消委托。";
+			next;
+			if(select("不取消。:取消。") == 1){
+				mes "[恩 艾伊]";
+				mes "好吧，请带着材料回来。";
+				mes "我等着。";
+				close;
+			}else{
+				mes "[恩 艾伊]";
+				mes "好吧，为你制造漂流者的";
+				mes "委托取消了。";
+				mes "祝你今后好运。";
+				set gun_na,0;
+				close;
+			}
+		}
+	}
+	else if(gun_na == 11){
+		if(checkweight(13157,1) == 0){
+			mes "[恩 艾伊]";
+			mes "你超重了。";
+			mes "就算我把武器做出来，";
+			mes "你也拿不动。";
+			mes "请把物品栏整理一下。";
+			close;
+		}
+		set gun_na,0;
+		getitem 13157,1;
+		mes "[恩 艾伊]";
+		mes "啊，这是做好的漂流者。";
+		next;
+		mes "[恩 艾伊]";
+		mes "请好好学会使用格林机枪。";
+		mes "那种疯狂的破坏力，";
+		mes "一定会让你的精神为之一振。";
+		close;
+	}
+	else if(gun_na == 101){
+		mes "[恩 艾伊]";
+		mes "啊，你好？";
+		mes "我是艾音布罗克武器开发的协调员。";
+		mes "我的名字是'实验室主任'。";
+		mes "你有什么事吗？";
+		next;
+		select("我需要一根特殊金属棒。");
+		mes "[恩 艾伊]";
+		mes "咦...? 喂，你不就是刚才";
+		mes "拿着屠杀者走出去的那个人吗？";
+		mes "屠杀者怎么样了？";
+		next;
+		mes "[恩 艾伊]";
+		mes "...... 什么！？你把它弄坏了！？";
+		mes "我还以为你能好好用它呢...";
+		mes "你太让我失望了！！！";
+		next;
+		mes "[恩 艾伊]";
+		mes "你辜负了我对你的信任！";
+		mes "你这个叛徒！叛徒！！叛徒！！！！";
+		next;
+		select("把一切解释给他听。");
+		mes "[恩 艾伊]";
+		mes "...... 呼。";
+		mes "原来是 F·哈里森先生弄坏的啊？";
+		mes "抱歉，我不该怀疑你的。";
+		next;
+		mes "[恩 艾伊]";
+		mes "你要的特殊金属棒在塞琳娜女士那里，";
+		mes "但她现在不在，";
+		mes "别人也不知道放在哪里...";
+		next;
+		mes "[恩 艾伊]";
+		mes "我现在还有别的研究要做，";
+		mes "没时间去找那个... 可恶...";
+		mes "我需要属性子弹才能继续研究...";
+		next;
+		select("向他提个交易。");
+		mes "[恩 艾伊]";
+		mes "交易？什么交易？";
+		next;
+		select("我们互相帮对方找东西。");
+		mes "[恩 艾伊]";
+		mes "嗯... 听起来不错。";
+		mes "好吧，那就按交易说的办，";
+		mes "我帮你找金属棒，";
+		mes "你帮我找属性子弹。";
+		next;
+		mes "[恩 艾伊]";
+		mes "30 毒物子弹，30 火焰子弹，";
+		mes "30 雷击子弹，30 暗盲子弹，";
+		mes "或者 30 冰冻子弹。";
+		mes "每种属性给我找 30 发来。";
+		set gun_na,102;
+		close;
+	}
+	else if(gun_na == 102){
+		mes "[恩 艾伊]";
+		mes "30 毒物子弹，30 火焰子弹，";
+		mes "30 雷击子弹，30 暗盲子弹，";
+		mes "或者 30 冰冻子弹。";
+		mes "每种属性给我找 30 发来。";
+		mes "找到了吗？";
+		next;
+		switch(select("没有。:找到 30 毒物子弹。:找到 30 火焰子弹。:找到 30 雷击子弹。:找到 30 暗盲子弹。:找到 30 冰冻子弹。")){
+		case 1:
+			mes "[恩 艾伊]";
+			mes "你能找到哪种，";
+			mes "就带哪种来吧。";
+			close;
+		case 2:
+			if(countitem(13205) >= 30){
+				delitem 13205,30;
+				set gun_na,103;
+			}
+			break;
+		case 3:
+			if(countitem(13203) >= 30){
+				delitem 13203,30;
+				set gun_na,103;
+			}
+			break;
+		case 4:
+			if(countitem(13204) >= 30){
+				delitem 13204,30;
+				set gun_na,103;
+			}
+			break;
+		case 5:
+			if(countitem(13206) >= 30){
+				delitem 13206,30;
+				set gun_na,103;
+			}
+			break;
+		case 6:
+			if(countitem(13207) >= 30){
+				delitem 13207,30;
+				set gun_na,103;
+			}
+			break;
+		}
+		if (gun_na != 103) {
+			mes "[恩 艾伊]";
+			mes "咦？什么？难道只有我";
+			mes "看不见它们吗？";
+			mes "再多带一些来！";
+			close;
+		}
+		mes "[恩 艾伊]";
+		mes "哇，你都帮我找到了！";
+		mes "为了找这根金属棒，";
+		mes "我把塞琳娜女士的实验室翻了个底朝天。";
+		mes "那我们交换吧！";
+		next;
+		mes "-你把属性子弹交给了研究协调员，";
+		mes "换回了金属棒。-";
+		next;
+		mes "[恩 艾伊]";
+		mes "F·哈里森先生非常厉害。";
+		mes "他一定能帮你修好屠杀者。";
+		mes "那么，再见啦！";
+		close;
+	}
+	else if(gun_na == 103 || gun_na == 104){
+		mes "[恩 艾伊]";
+		mes "F·哈里森先生非常厉害。";
+		mes "他一定能帮你修好屠杀者。";
+		mes "那么，再见啦！";
+		close;
+	}
+	mes "[恩 艾伊]";
+	mes "啊，你好？";
+	mes "我是艾音布罗克武器开发的协调员。";
+	mes "我的名字是'实验室主任'。";
+	mes "你有什么事吗？";
+	next;
+	if (BaseJob != Job_Gunslinger){
+		select("和他聊聊。");
+		mes "[恩 艾伊]";
+		mes "如果你见到枪手，";
+		mes "请告诉他们，我有最新的武器消息。";
+		mes "如果有需要，请把他们带到这里来。";
+		mes "嘿嘿嘿嘿...";
+		close;
+	}
+	if (BaseLevel < 55) {
+		select("交谈。");
+		mes "[恩 艾伊]";
+		mes "... 破坏... 疯狂...";
+		mes "嗯... 攻击速度超过 180...";
+		next;
+		mes "[恩 艾伊]";
+		mes "啊，抱歉，我正在开发新武器。";
+		mes "请不要打扰我。";
+		close;
+	}
+	switch(select(((BaseLevel > 67)?"问问'屠杀者'的事。":"")+":问问'漂流者'的事。:取消")) {
+	case 1:
+		mes "[恩 艾伊]";
+		mes "哦，你是刚开发完就听到消息了吗？";
+		next;
+		mes "[恩 艾伊]";
+		mes "^ff0000屠杀者^000000是我们艾音布罗克枪械研究所";
+		mes "最新开发的武器。";
+		mes "它是最新型的格林机枪。";
+		mes "^ff0000漂流者^000000也是把好枪，";
+		mes "但^ff0000屠杀者^000000的火力";
+		mes "绝对要强得多！";
+		next;
+		mes "[恩 艾伊]";
+		mes "因为火力太强，屠杀者还被冠以'杀人魔'的绰号。";
+		next;
+		mes "[恩 艾伊]";
+		mes "不过，就算是枪手，";
+		mes "要驾驭这么强大的武器";
+		mes "也不容易。";
+		next;
+		mes "[恩 艾伊]";
+		mes "你觉得你能驾驭它吗？";
+		next;
+		if(select("我没把握...:当然能！！") == 1){
+			mes "[恩 艾伊]";
+			mes "^ff0000屠杀者^000000这把武器，";
+			mes "没有坚强的意志是驾驭不了的。";
+			mes "等你有足够的自信";
+			mes "驾驭这头怪物时，";
+			mes "我们再见吧。";
+			close;
+		}else{
+			mes "[恩 艾伊]";
+			mes "啊哈，你真自信！";
+			mes "不过，这么自信的人";
+			mes "我见得多了。";
+			mes "你得证明给我看...";
+			mes "怎么证明呢... 嗯...";
+			next;
+			mes "[恩 艾伊]";
+			mes "嗯......";
+			next;
+			mes "[恩 艾伊]";
+			mes "啊哈！我想到了！";
+			next;
+			mes "[恩 艾伊]";
+			mes "这样吧，给我带^ff00001000 兽人指甲^000000和^ff00001000 死人遗骨^000000来。";
+			mes "如果你能带来这些东西，";
+			mes "我就让你用屠杀者。";
+			next;
+			mes "[恩 艾伊]";
+			mes "很简单吧？那就去证明";
+			mes "你的实力吧！嘿嘿嘿嘿...";
+			set gun_na,1;
+			close;
+		}
+	case 2:
+		mes "[恩 艾伊]";
+		mes "哦，你是来了解^ff0000漂流者^000000的吗？";
+		next;
+		mes "[恩 艾伊]";
+		mes "^ff0000漂流者^000000是塞琳娜女士开发的";
+		mes "众多顶级武器之一。";
+		mes "它是自动格林机枪，";
+		mes "射速极高，在枪手武器中";
+		mes "是最高的。";
+		next;
+		mes "[恩 艾伊]";
+		mes "当然，你需要能驾驭格林机枪的技能。";
+		mes "不过，格林机枪用得好的人";
+		mes "一定能得到^ff0000漂流者^000000";
+		mes "的全力相助。";
+		next;
+		mes "[恩 艾伊]";
+		mes "你想试试用^ff0000漂流者^000000吗？";
+		next;
+		if(select("嗯，不用。:想！") == 1){
+			mes "[恩 艾伊]";
+			mes "以后想试的话，";
+			mes "再来这里吧。";
+			close;
+		}else{
+			set gun_na,10;
+			mes "[恩 艾伊]";
+			mes "因为制造^ff0000漂流者^000000的材料";
+			mes "实在难找，我们只接受预订，";
+			mes "而且要求想用^ff0000漂流者^000000的人";
+			mes "自己带材料来。";
+			next;
+			mes "[恩 艾伊]";
+			mes "我告诉你需要的材料，";
+			mes "你只要带来，";
+			mes "我们就帮你制造。";
+			next;
+			mes "[恩 艾伊]";
+			mes "要做漂流者，我们需要";
+			mes "70 钢铁，5 铝，";
+			mes "3 神之金属，70 煤矿，";
+			mes "50 生锈的螺丝，";
+			mes "还有 50,000 Zeny 的费用。";
+			mes "都找齐了再来吧。";
+			close;
+		}
+	case 3:
+		mes "[恩 艾伊]";
+		mes "我有最新武器的消息，";
+		mes "不过... 看来你太忙了，";
+		mes "没空听。";
+		mes "那下次吧。";
+		close;
+	}
+}
+
+lighthalzen,205,284,6	script	F·哈里森	85,{
+
+	if (gun_na == 100){
+		if(checkweight(13102,1) == 0){
+			mes "[F·哈里森]";
+			mes "你超重了。";
+			mes "就算我把武器给你，";
+			mes "你也拿不动。";
+			mes "请把物品栏整理一下。";
+			close;
+		}
+		mes "[F·哈里森]";
+		mes "嗯... 哦？";
+		mes "啊...... 咦？";
+		next;
+		mes "[F·哈里森]";
+		mes "嘿嘿... 嗯... 啊...?";
+		next;
+		select("现在可以把屠杀者还我了吗？");
+		mes "[F·哈里森]";
+		mes "啊？哦，嗯... 嘿嘿...";
+		next;
+		mes "[F·哈里森]";
+		mes "那、那个嘛，啊... 嘿嘿...";
+		next;
+		mes "[F·哈里森]";
+		mes "啊哈哈哈！我啊...";
+		next;
+		mes "[F·哈里森]";
+		mes "那个东西！砰！";
+		next;
+		mes "[F·哈里森]";
+		mes "砰砰！我本来要开火的！";
+		mes "是啊！";
+		next;
+		mes "[F·哈里森]";
+		mes "可是它反抗！所以我用手'砰'地一下！";
+		mes "哈哈哈哈！！";
+		next;
+		mes "[F·哈里森]";
+		mes "然后它就坏了...... *呜呜*";
+		next;
+		mes "[F·哈里森]";
+		mes "我自称'万事通博士'，";
+		mes "本想自己修好它，";
+		mes "但好像没有修理它的材料...";
+		mes "而且那些材料也很稀有... *呜呜*";
+		next;
+		mes "[F·哈里森]";
+		mes "嗯... 很抱歉弄坏了它，";
+		mes "不过... 你能帮我找来修理需要的材料吗？";
+		mes "把那些东西带来，我就能修好它，";
+		mes "还能帮你改造一下！";
+		mes "我保证！！";
+		next;
+		mes "所以拜托你帮我找来材料吧...";
+		mes "*呜呜呜*";
+		next;
+		mes "[F·哈里森]";
+		mes "我需要的材料是";
+		mes "10 钢铁，2 铝，";
+		mes "1 神之金属，20 煤矿...";
+		mes "还有屠杀者用的特殊金属棒...";
+		mes "我想这种棒子只有塞琳娜女士";
+		mes "才做得出来......";
+		next;
+		mes "[F·哈里森]";
+		mes "不过首先，你得去和塞琳娜女士的助手，";
+		mes "'实验室主任'谈谈，请他帮忙。";
+		mes "那家伙有点歇斯底里，";
+		mes "但只要好好跟她说话，";
+		mes "她会乐意帮忙的...";
+		next;
+		mes "[F·哈里森]";
+		mes "真的很抱歉... 来，我把我的宝贝武器";
+		mes "'鲜红闪电手枪'借给你。";
+		mes "不过你一定要答应我，";
+		mes "找齐所有材料后带回来！";
+		mes "答应我！！！";
+		set gun_na,101;
+		getitem 13102,1;
+		close;
+	}
+	else if(gun_na == 101 || gun_na == 102){
+		mes "[F·哈里森]";
+		mes "我需要的材料是";
+		mes "10 钢铁，2 铝，";
+		mes "1 神之金属，20 煤矿...";
+		mes "还有屠杀者用的特殊金属棒...";
+		mes "去找'实验室主任'，";
+		mes "请他帮你找金属棒。";
+		close;
+	}
+	else if(gun_na == 103){
+		if(countitem(999) >= 10 && countitem(985) >= 2 && countitem(984) >= 1 && countitem(1003) >= 20){
+			if(countitem(13102) > 0){
+				delitem 999,10;
+				delitem 985,2;
+				delitem 984,1;
+				delitem 1003,20;
+				delitem 13102,1;
+				set gun_na,104;
+				mes "[F·哈里森]";
+				mes "啊哈！材料都帮我找齐了！";
+				mes "我马上开始修理，";
+				mes "请稍等...";
+				close;
+			}
+			else{
+				mes "[F·哈里森]";
+				mes "啊哈！材料都帮我找齐了！";
+				mes "... 但我的宝贝'鲜红闪电手枪'呢！？";
+				mes "你不把它还给我，";
+				mes "我就不帮你修屠杀者！！";
+				close;
+			}
+		}
+		else{
+			mes "[F·哈里森]";
+			mes "我需要的材料是：";
+			mes "10 钢铁，2 铝，";
+			mes "1 神之金属，20 煤矿...";
+			mes "还有屠杀者用的特殊金属棒...";
+			mes "还好你已经找到";
+			mes "特殊金属棒了。";
+			close;
+		}
+	}
+	else if(gun_na == 104){
+		if(checkweight(13159,1) == 0){
+			mes "-你已经超重了。-";
+			mes "-先放下一些东西再来吧。-";
+			close;
+		}
+		set gun_na,0;
+		getitem 13159,1;
+		mes "[F·哈里森]";
+		mes "呼... 终于修好了，多亏了你。";
+		mes "弄坏它真的很抱歉，也谢谢你的努力。";
+		mes "光是修好它我觉得还不够，";
+		mes "就给它加了一些额外的威力。";
+		mes "希望它好用。";
+		mes "那么，好好享受吧。";
+		close;
+	}
+	else if(gun_na == 0){
+		if(BaseJob != Job_Gunslinger) {
+			mes "[F·哈里森]";
+			mes "唉，好无聊啊...";
+			mes "有没有什么有趣的事呢...";
+			next;
+			mes "[F·哈里森]";
+			mes "算了... 我还是把玩我的";
+			mes "宝贝'鲜红闪电手枪'吧。";
+			close;
+		}
+		if(BaseLevel > 67 && countitem(13158) > 0){
+			mes "[F·哈里森]";
+			mes "唉，好无聊啊...";
+			mes "有没有什么有趣的事呢...";
+			next;
+			mes "[F·哈里森]";
+			mes "咦？你是枪手吗？";
+			mes "你手上那把武器我从来没见过...";
+			next;
+			mes "[F·哈里森]";
+			mes "让我看看好吗？拜托？";
+			mes "快点，让我看看嘛！";
+			mes "我在这里都快无聊死了！";
+			mes "拜托拜托拜托~?";
+			next;
+			if(select("才不要。:给你...") == 1){
+				mes "[F·哈里森]";
+				mes "哈！你以为只有你有帅气的武器吗！？";
+				mes "我也有漂亮的鲜红闪电手枪！";
+				mes "哼！！";
+				close;
+			}
+			mes "[F·哈里森]";
+			mes "嘿嘿... 这是艾音布罗克枪械研究所";
+			mes "最新开发的东西，";
+			mes "就是所谓无法驾驭的";
+			mes "'破坏者屠杀者'，嗯？";
+			mes "有意思... 非常有意思...";
+			next;
+			mes "[F·哈里森]";
+			mes "嘿，让我试一下下好吗？";
+			mes "别担心，我知道怎么使用武器，";
+			mes "不会弄坏它的！";
+			mes "就这么定了！走~";
+			delitem 13158,1;
+			set gun_na,100;
+			close;
+		}
+	}
+}

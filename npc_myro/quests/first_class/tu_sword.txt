@@ -1,0 +1,2149 @@
+//===== rAthena Script ======================================= 
+//= 剑士职业教程与职业专属任务
+//===== By: ================================================== 
+//= Fix up by Jukka
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= 剑士训练任务。
+//===== Additional Comments: ================================= 
+//= 1.0 Fully working
+//= 1.1 optimized [Lupus]
+//= 1.2 Fixed a typo on NPC name. [SinSloth]
+//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.4 Misc. updates. [L0ne_W0lf]
+//= 1.5 Added Renewal Izlude coordinates.
+//= 1.6 Added Pre-Renewal support. [Euphy]
+//============================================================ 
+
+// Shurank
+//============================================================
+izlude_in,82,163,3	script	修兰克	733,{
+	mes "[修兰克]";
+	if(Class == Job_Novice || Class == Job_Baby){
+		mes "还在为你的未来迷茫吗？";
+		next;
+		mes "[修兰克]";
+		mes "容我斗胆建议，你该走力量之路。成为……一名剑士。";
+		next;
+		mes "[修兰克]";
+		mes "如果你立志将一生奉献给剑道，";
+		mes "就去和左边的剑士协会代表谈谈吧。";
+		next;
+		mes "[修兰克]";
+		mes "无论你做什么，都希望你此生无悔。";
+		mes "如果你真的成了剑士，记得回来找我……";
+		close;
+	}
+	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD))){
+		mes "从你的装束来看，";
+		if(Sex == SEX_MALE)
+			mes "你是一位用剑的男士。";
+		else
+			mes "你是一位用剑的女士。";
+		mes "你的眼神告诉我，你身经百战。";
+		next;
+		mes "[修兰克]";
+		mes "我已经没什么能教你的了。但如果你认识有潜力的";
+		mes "新剑士，";
+		mes "请介绍他们来找我。";
+		close;
+	}
+	if(BaseClass != Job_Swordman){
+		mes "你好，冒险者。如果你认识新剑士，";
+		mes "请介绍他们来找我。";
+		next;
+		mes "[修兰克]";
+		mes "我的专长，就是教导刚转职的新手剑士掌握剑士的";
+		mes "基本功。";
+		next;
+		mes "[修兰克]";
+		mes "虽然人人都会舞剑是好事，但恐怕我教不了你什么。";
+		mes "你的职业路数……我并不了解。";
+		close;
+	}
+	switch(tu_swordman){
+	case 23:
+		mes "你好，朋友。我已经没什么能教你的了……";
+		next;
+		mes "[修兰克]";
+		mes "想要精进技艺，你必须探索这个广阔的世界，";
+		mes "经历各种战斗。永远不要懈怠修行。";
+		close;
+	case 22:
+		mes "这是我最后一次给你授课了。请仔细听我讲解怒爆";
+		mes "的一切。";
+		next;
+		mes "[修兰克]";
+		mes "怒爆最高技能等级10，需要^5D478B狂击 Lv.5^000000。";
+		mes "施展后会对施法者周围的敌人造成溅射伤害。";
+		next;
+		mes "[修兰克]";
+		mes "被怒爆击中的敌人会被火属性攻击击退。";
+		mes "之后你的武器会暂时附带火属性，伤害提升20%。";
+		next;
+		mes "[修兰克]";
+		mes "怒爆最适合在被敌人包围时使用，";
+		mes "但也要注意，它也会对施法者自身造成少量伤害。";
+		next;
+		set .@chk_magnum, getskilllv("SM_MAGNUM");
+		if(.@chk_magnum > 5){
+			mes "[修兰克]";
+			mes "看来你一直在练习怒爆。虽然这是很强的技能，";
+			mes "但并非适合每个剑士。不过学一学也无妨。";
+			next;
+			mes "[修兰克]";
+			mes "这是对你辛勤努力的一点奖励。";
+			mes "但别仗着天赋就骄傲自满！";
+			set tu_swordman, 23;
+			completequest 8228;
+			if (checkre(3))
+				getexp 186,0;
+			else
+				getexp 1860,0;
+			getitem 1113,1; //Scimiter
+			next;
+			mes "[修兰克]";
+			mes "关于剑士技能，我能教的都教了。";
+			mes "希望我已经帮你理清了所有关于职业和技能的疑问。";
+			next;
+			mes "[修兰克]";
+			mes "至于那个杀人犯的事，已经不在我们掌控之中了。";
+			mes "眼下我们无能为力。";
+			next;
+			mes "[修兰克]";
+			mes "不过，我希望你把了解到的信息保密。";
+			mes "这件事属于高度机密……";
+			next;
+			mes "[修兰克]";
+			mes "无论如何，不用再担心了。如果我们需要援助，";
+			mes "会记得请你帮忙。";
+			next;
+			mes "[修兰克]";
+			mes "你做得很好。继续修炼，等达到^5D478B职业等级 40^000000，";
+			mes "就可以晋升为骑士或十字军。";
+			next;
+			mes "[修兰克]";
+			mes "嗯……我们剑士一般不轻易动情，";
+			mes "但很高兴能遇见你。努力成为一名出色的剑士吧。";
+			close;
+		}
+		mes "[修兰克]";
+		mes "关于剑士技能，我能教的都教了。";
+		mes "希望我已经帮你理清了所有关于职业和技能的疑问。";
+		next;
+		mes "[修兰克]";
+		mes "至于那个杀人犯的事，已经不在我们掌控之中了。";
+		mes "眼下我们无能为力。";
+		next;
+		mes "[修兰克]";
+		mes "不过，我希望你把了解到的信息保密。";
+		mes "这件事属于高度机密……";
+		next;
+		mes "[修兰克]";
+		mes "无论如何，不用再担心了。如果我们需要援助，";
+		mes "会记得请你帮忙。";
+		next;
+		mes "[修兰克]";
+		mes "你做得很好。继续修炼，等达到^5D478B职业等级 40^000000，";
+		mes "就可以晋升为骑士或十字军。";
+		next;
+		mes "[修兰克]";
+		mes "嗯……我们剑士一般不轻易动情，";
+		mes "但很高兴能遇见你。努力成为一名出色的剑士吧。";
+		next;
+		mes "[修兰克]";
+		mes "走之前，请收下这个。希望你在不断变强的修炼中";
+		mes "好好用它。";
+		mes "祝你好运。";
+		set tu_swordman, 23;
+		completequest 8228;
+		getitem 1113,1; //Scimiter
+		close;
+	case 21:
+		mes "啊，你回来了。我刚收到德库'伊的来信。";
+		mes "看来你一直很努力，也没有浪费这次历练。";
+		next;
+		mes "[修兰克]";
+		mes "眼下，我认为多学些剑士技能对你有益。";
+		mes "先让我讲讲武器修炼。";
+		next;
+		mes "[修兰克]";
+		mes "修炼分两种：^5D478B单手剑使用熟练度^000000和^5D478B双手剑使用熟练度^000000。";
+		mes "两者都是被动技能，随着技能等级提升，";
+		mes "会增加你的攻击力。";
+		next;
+		mes "[修兰克]";
+		mes "单手剑使用熟练度提升短剑和单手剑的伤害，";
+		mes "双手剑使用熟练度则提升双手剑的伤害。";
+		next;
+		set .@chk_hanson, getskilllv("SM_SWORD");
+		set .@chk_yangson, getskilllv("SM_TWOHAND");
+		if((.@chk_hanson > 9) || (.@chk_yangson > 9)){
+			mes "[修兰克]";
+			mes "啊，从你运剑的方式来看，你已经精通了一种武器";
+			mes "修炼。";
+			mes "我佩服得五体投地。";
+			next;
+			mes "[修兰克]";
+			mes "这点小奖励，就当是表彰你的成就。";
+			set tu_swordman, 22;
+			changequest 8227,8228;
+			if (checkre(3))
+				getexp 186,0;
+			else
+				getexp 1860,0;
+			next;
+			mes "[修兰克]";
+			mes "下次我会给你讲讲怒爆技能。想继续学的时候，";
+			mes "随时来找我。";
+			close;
+		}
+		mes "[修兰克]";
+		mes "下次我会给你讲讲怒爆技能。想继续学的时候，";
+		mes "随时来找我。";
+		set tu_swordman, 22;
+		close;
+	case 13:
+		mes "你该尽快动身去吉芬见德库'伊了。";
+		mes "你还记得去哪里找他吧？";
+		close;
+	case 12:
+		mes "那么，你的霸体修炼得怎么样了？";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if(.@chk_endure > 1){
+			mes "[修兰克]";
+			mes "看你皮肤上透出的坚韧光泽，我就知道这问题问得";
+			mes "多余了。";
+			mes "干得漂亮~";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[修兰克]";
+			mes "啊，又要麻烦你办件事了。请去吉芬找德库'伊，";
+			mes "他似乎有事相求。";
+			next;
+			mes "[修兰克]";
+			mes "快去见德库'伊，办完他交代的事就回来找我。";
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "嗯……你还差得远呢。这段时间，你要加倍努力才行！";
+			close;
+		}
+	case 11:
+		mes "那么，你学会使用霸体了吗？";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if((.@chk_endure > 0) && (.@chk_endure < 2)){
+			mes "[修兰克]";
+			mes "看来你已经会使用霸体了。不过，";
+			mes "让我再复习一下它的基本要点也无妨……";
+			next;
+			mes "[修兰克]";
+			mes "你也注意到了，受到任何伤害都会让你痛苦僵直，";
+			mes "动弹不得。因此，攻速快的敌人很危险，";
+			mes "因为你既难反击也难脱身。";
+			next;
+			mes "[修兰克]";
+			mes "施展霸体可以让你硬扛攻击。虽然仍会受到伤害，";
+			mes "但敌人的攻击不会那么妨碍你。";
+			mes "这意味着你可以反击，或在必要时脱身。";
+			next;
+			mes "[修兰克]";
+			mes "当然，霸体不能无限使用。不过霸体技能等级越高，";
+			mes "效果持续越久。另外记住，霸体也有技能冷却。";
+			next;
+			mes "[修兰克]";
+			mes "既然你已经学会了霸体，我想不必再多解释了。";
+			mes "你做得很好。";
+			erasequest 8221;
+			setquest 8222;
+			set tu_swordman, 13;
+			next;
+			mes "[修兰克]";
+			mes "啊，又要麻烦你办件事了。请去吉芬找德库'伊，";
+			mes "他似乎有事相求。";
+			next;
+			mes "[修兰克]";
+			mes "快去见德库'伊，办完他交代的事就回来找我。";
+			close2;
+			end;
+		} else if(.@chk_endure > 1){
+			mes "[修兰克]";
+			mes "看你皮肤上透出的坚韧光泽，我就知道这问题问得";
+			mes "多余了。";
+			mes "干得漂亮~";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[修兰克]";
+			mes "啊，又要麻烦你办件事了。请去吉芬找德库'伊，";
+			mes "他似乎有事相求。";
+			next;
+			mes "[修兰克]";
+			mes "快去见德库'伊，办完他交代的事就回来找我。";
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "还没有……？";
+			mes "我建议你尽快学会它。霸体对任何剑士来说都是无";
+			mes "价的技能！";
+			close;
+		}
+	case 10:
+		mes "是时候把我所知道的霸体，全都告诉你了。";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if(.@chk_endure == 0){
+			mes "[修兰克]";
+			mes "你也注意到了，受到任何伤害都会让你痛苦僵直，";
+			mes "动弹不得。因此，攻速快的敌人很危险，";
+			mes "因为你既难反击也难脱身。";
+			next;
+			mes "[修兰克]";
+			mes "施展霸体可以让你硬扛攻击。虽然仍会受到伤害，";
+			mes "但敌人的攻击不会那么妨碍你。";
+			mes "这意味着你可以反击，或在必要时脱身。";
+			next;
+			mes "[修兰克]";
+			mes "当然，霸体不能无限使用。不过霸体技能等级越高，";
+			mes "效果持续越久。另外记住，霸体也有技能冷却。";
+			next;
+			mes "[修兰克]";
+			mes "好了。现在我要你修炼霸体。只要你能扛住敌人的";
+			mes "攻击，";
+			mes "就能成为伟大的剑士！";
+			set tu_swordman, 11;
+			changequest 8220,8221;
+			close;
+		} else if((.@chk_endure > 0) && (.@chk_endure < 2)){
+			mes "[修兰克]";
+			mes "看来你已经会使用霸体了。不过，";
+			mes "让我再复习一下它的基本要点也无妨……";
+			next;
+			mes "[修兰克]";
+			mes "你也注意到了，受到任何伤害都会让你痛苦僵直，";
+			mes "动弹不得。因此，攻速快的敌人很危险，";
+			mes "因为你既难反击也难脱身。";
+			next;
+			mes "[修兰克]";
+			mes "施展霸体可以让你硬扛攻击。虽然仍会受到伤害，";
+			mes "但敌人的攻击不会那么妨碍你。";
+			mes "这意味着你可以反击，或在必要时脱身。";
+			next;
+			mes "[修兰克]";
+			mes "当然，霸体不能无限使用。不过霸体技能等级越高，";
+			mes "效果持续越久。另外记住，霸体也有技能冷却。";
+			next;
+			mes "[修兰克]";
+			mes "既然你已经学会了霸体，我想不必再多解释了。";
+			mes "你做得很好。";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			next;
+			mes "[修兰克]";
+			mes "啊，又要麻烦你办件事了。请去吉芬找德库'伊，";
+			mes "他似乎有事相求。";
+			next;
+			mes "[修兰克]";
+			mes "快去见德库'伊，办完他交代的事就回来找我。";
+			close;
+		} else if(.@chk_endure > 1){
+			mes "[修兰克]";
+			mes "嗯。不过看你皮肤上透出的坚韧光泽，";
+			mes "我想教你霸体简直是浪费你的时间。干得漂亮！";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[修兰克]";
+			mes "啊，又要麻烦你办件事了。请去吉芬找德库'伊，";
+			mes "他似乎有事相求。";
+			next;
+			mes "[修兰克]";
+			mes "快去见德库'伊，办完他交代的事就回来找我。";
+			close;
+		}
+	case 9:
+		mes "那么，你对挑衅的运用学得怎么样了？";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[修兰克]";
+			mes "啊，看来你对挑衅已经理解得相当透彻了。";
+			mes "这点小奖励，犒劳你的努力。";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[修兰克]";
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[修兰克]";
+			mes "你、你已经精通挑衅了？了不起！";
+			mes "看得出你下定决心要成为出色的剑士。";
+			mes "这点小奖励送给你……";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[修兰克]";
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "嗯，我认可你的进步，但你还差点火候。";
+			mes "挑衅再熟练一些，我才能继续授课。";
+			close;
+		}
+	case 8:
+		mes "啊，你回来了。那么，你的挑衅修炼得如何了？";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
+			mes "[修兰克]";
+			mes "啊，现在看得出你会用了。比起完全不会，";
+			mes "这已经是巨大的进步。让我帮你复习一下挑衅的细节。";
+			next;
+			mes "[修兰克]";
+			mes "要有效运用挑衅，你必须理解它的原理：挑衅会激怒";
+			mes "对手，";
+			mes "让他们想要攻击你。";
+			next;
+			mes "[修兰克]";
+			mes "被挑衅的敌人攻击力会提升，更加危险，";
+			mes "但防御力也会下降，更容易被击倒。";
+			next;
+			mes "[修兰克]";
+			mes "理想情况下，你可以在敌人足够虚弱时使用挑衅，";
+			mes "以便更快解决他们。不过这由你决定。";
+			next;
+			mes "[修兰克]";
+			mes "另外，挑衅等级越高，目标增加的攻击力和降低的";
+			mes "防御力就越多。";
+			next;
+			mes "[修兰克]";
+			mes "作为主动技能，挑衅和狂击一样会消耗少量 SP。";
+			mes "使用时要小心，别把 SP 耗光了。";
+			next;
+			mes "[修兰克]";
+			mes "好了，等挑衅练得足够熟练再来找我。";
+			mes "在此期间，继续修炼。";
+			set tu_swordman, 9;
+			close;
+		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[修兰克]";
+			mes "啊，看来你对挑衅已经理解得相当透彻了。";
+			mes "这点小奖励，犒劳你的努力。";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[修兰克]";
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[修兰克]";
+			mes "你、你已经精通挑衅了？了不起！";
+			mes "看得出你下定决心要成为出色的剑士。";
+			mes "这点小奖励送给你……";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "还没学会挑衅吗？身为剑士，我认为至少得会用挑";
+			mes "衅才行！";
+			close;
+		}
+	case 7:
+		mes "啊，你回来了。作为新剑士，你表现得相当出色。";
+		mes "那么，德库'伊有什么口信？";
+		next;
+		mes "[修兰克]";
+		mes "我明白了……嗯，既然那件事办完了，";
+		mes "我继续给你讲解剑士技能。这次讲挑衅。";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if(.@chk_provoke == 0){
+			mes "[修兰克]";
+			mes "你还没学挑衅？嗯。那我就更有必要给你讲一讲了。";
+			next;
+			mes "[修兰克]";
+			mes "要有效运用挑衅，你必须理解它的原理：挑衅会激怒";
+			mes "对手，";
+			mes "让他们想要攻击你。";
+			next;
+			mes "[修兰克]";
+			mes "被挑衅的敌人攻击力会提升，更加危险，";
+			mes "但防御力也会下降，更容易被击倒。";
+			next;
+			mes "[修兰克]";
+			mes "理想情况下，你可以在敌人足够虚弱时使用挑衅，";
+			mes "以便更快解决他们。不过这由你决定。";
+			next;
+			mes "[修兰克]";
+			mes "另外，挑衅等级越高，目标增加的攻击力和降低的";
+			mes "防御力就越多。";
+			next;
+			mes "[修兰克]";
+			mes "作为主动技能，挑衅和狂击一样会消耗少量 SP。";
+			mes "使用时要小心，别把 SP 耗光了。";
+			next;
+			mes "[修兰克]";
+			mes "现在我要你去修炼挑衅。等你对挑衅的运用有了足";
+			mes "够的理解，";
+			mes "再来找我。";
+			set tu_swordman, 8;
+			changequest 8217,8218;
+			close;
+		} else if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
+			mes "[修兰克]";
+			mes "嗯。看来你对挑衅有了基本的理解，";
+			mes "但我再讲些细节，帮你更好地运用这个技能。";
+			next;
+			mes "[修兰克]";
+			mes "要有效运用挑衅，你必须理解它的原理：挑衅会激怒";
+			mes "对手，";
+			mes "让他们想要攻击你。";
+			next;
+			mes "[修兰克]";
+			mes "被挑衅的敌人攻击力会提升，更加危险，";
+			mes "但防御力也会下降，更容易被击倒。";
+			next;
+			mes "[修兰克]";
+			mes "理想情况下，你可以在敌人足够虚弱时使用挑衅，";
+			mes "以便更快解决他们。不过这由你决定。";
+			next;
+			mes "[修兰克]";
+			mes "另外，挑衅等级越高，目标增加的攻击力和降低的";
+			mes "防御力就越多。";
+			next;
+			mes "[修兰克]";
+			mes "作为主动技能，挑衅和狂击一样会消耗少量 SP。";
+			mes "使用时要小心，别把 SP 耗光了。";
+			next;
+			mes "[修兰克]";
+			mes "现在我要你去修炼挑衅。等你对挑衅的运用有了足";
+			mes "够的理解，";
+			mes "再来找我。";
+			set tu_swordman, 9;
+			changequest 8218,8219;
+			close;
+		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[修兰克]";
+			mes "啊，看来你对挑衅已经理解得相当透彻了。";
+			mes "这点小奖励，犒劳你的努力。";
+			set tu_swordman, 10;
+			changequest 8219,8220;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[修兰克]";
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[修兰克]";
+			mes "你、你已经精通挑衅了？了不起！";
+			mes "看得出你下定决心要成为出色的剑士。";
+			mes "这点小奖励送给你……";
+			set tu_swordman, 10;
+			completequest 8218;
+			completequest 8219;
+			completequest 8220;
+			setquest 8221;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[修兰克]";
+			mes "下次见面，我会把我所知道的^5D478B霸体^000000讲给你听。";
+			mes "想学的时候，再来找我。";
+			close;
+		}
+	case 6:
+		mes "我要你去^5D478B吉芬^000000找一位名叫^5D478B德库'伊^000000的骑士。";
+		mes "仔细听好，这是我要你带给他的口信。";
+		next;
+		mes "[修兰克]";
+		mes "^0000FF那个杀人犯怎么样了？^000000";
+		mes "^0000FF查出他是谁了吗？如果查出来了，";
+		mes "^0000FF我们接下来该怎么办？^000000";
+		next;
+		mes "[修兰克]";
+		mes "只要你原话照说，德库'伊就会明白你在说什么。";
+		mes "记住他的回应，回来告诉我他的答复。";
+		next;
+		mes "[修兰克]";
+		mes "去吉芬路上的怪物应该不难对付，";
+		mes "但如果遇到太强的，逃跑也不丢人。";
+		next;
+		mes "[修兰克]";
+		mes "不过转念一想，走到吉芬可得花些时间。";
+		mes "我亲自送你过去吧！祝你好运！";
+		next;
+		warp "gef_fild07",35,192;
+		close;
+	case 5:
+		mes "啊，你回来了。我知道我说过要教你我所知道的挑衅，";
+		mes "不过……";
+		next;
+		mes "[修兰克]";
+		mes "其实我有件重要的事想拜托你。";
+		mes "不难：你只要送个口信就行。";
+		next;
+		mes "[修兰克]";
+		mes "我要你去^5D478B吉芬^000000找一位名叫^5D478B德库'伊^000000的骑士。";
+		mes "仔细听好，这是我要你带给他的口信。";
+		next;
+		mes "[修兰克]";
+		mes "^0000FF那个杀人犯怎么样了？^000000";
+		mes "^0000FF查出他是谁了吗？如果查出来了，";
+		mes "^0000FF我们接下来该怎么办？^000000";
+		next;
+		mes "[修兰克]";
+		mes "只要你原话照说，德库'伊就会明白你在说什么。";
+		mes "记住他的回应，回来告诉我他的答复。";
+		next;
+		mes "[修兰克]";
+		mes "去吉芬路上的怪物应该不难对付，";
+		mes "但如果遇到太强的，逃跑也不丢人。";
+		next;
+		mes "[修兰克]";
+		mes "虽然有传送服务，但我建议步行。";
+		mes "不经实战检验、不磨练技艺，你是变不强的！";
+		set tu_swordman, 6;
+		changequest 8215,8216;
+		close;
+	case 4:
+		mes "既然你已经精通狂击，我觉得你可以学习更多剑士";
+		mes "技能了。";
+		next;
+		mes "[修兰克]";
+		mes "现在，你该熟悉一下^5D478B快速回复^000000了。";
+		mes "面对伤害，你既要扛得住，也要打得出。";
+		next;
+		set .@chk_hp, getskilllv("SM_RECOVERY");
+		if(.@chk_hp == 0){
+			mes "[修兰克]";
+			mes "不过看你那瘦弱的身板，你该不会根本没学快速回";
+			mes "复吧……！";
+			next;
+			mes "[修兰克]";
+			mes "快速回复是被动技能，始终生效，不消耗任何 SP。";
+			next;
+			mes "[修兰克]";
+			mes "它能让你的生命恢复速度翻倍。";
+			mes "这看起来不起眼，但能减少你战后休息的时间。";
+			next;
+			mes "[修兰克]";
+			mes "我强烈建议你学这个技能！当然，";
+			mes "其他剑士技能也同样重要……";
+			set tu_swordman, 5;
+			next;
+		} else if(.@chk_hp == 10){
+			mes "[修兰克]";
+			mes "啊！那健康的光泽！看来你已经精通这个技能了。";
+			mes "这点小奖励，犒劳你的刻苦修炼！";
+			set tu_swordman, 5;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+		} else {
+			mes "[修兰克]";
+			mes "啊，看来你已经略知一二了。让我简要讲讲快速回复。";
+			next;
+			mes "[修兰克]";
+			mes "快速回复是被动技能，始终生效，不消耗任何 SP。";
+			next;
+			mes "[修兰克]";
+			mes "它能让你的生命恢复速度翻倍。";
+			mes "这看起来不起眼，但能减少你战后休息的时间。";
+			next;
+			mes "[修兰克]";
+			mes "快速回复是相当重要的技能，但要不要精通它，";
+			mes "就看你自己了。";
+			set tu_swordman, 5;
+			next;
+		}
+		setquest 8215;
+		mes "[修兰克]";
+		mes "到现在，我相信你对快速回复已经了解得够多了。";
+		mes "下次，我教你我所知道的挑衅。";
+		close;
+	case 3:
+		mes "想要发挥狂击的全部威力，你最好精通它。";
+		mes "这样我才认你这个剑士同道。";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if(.@chk_bash == 10){
+			mes "[修兰克]";
+			mes "这老茧……！只有狂击大师才有这样的手。";
+			mes "干得漂亮，剑士。我印象深刻。";
+			next;
+			mes "[修兰克]";
+			mes "这点小奖品，表彰你至今的努力。";
+			mes "但别松懈！要掌握所有基本功，你还有很长的路要走。";
+			set tu_swordman, 4;
+			changequest 8213,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "嗯，你的狂击也许用得不错，但还没到精通的地步。";
+			mes "我鼓励你精通狂击，释放它真正的潜力！";
+			close;
+		}
+	case 2:
+		mes "希望你一直在修炼狂击。想作为剑士成长，";
+		mes "你非常需要精通这个技能。";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[修兰克]";
+			mes "嗯。看来你还没精通狂击，但看得出你很努力。";
+			next;
+			mes "[修兰克]";
+			mes "让我给你复习一下狂击的用法。";
+			mes "如果以前听过，就当温故知新。";
+			next;
+			mes "[修兰克]";
+			mes "狂击是主动技能，最高等级10，能猛击你的目标。";
+			mes "说白了，就是高伤害攻击！";
+			next;
+			mes "[修兰克]";
+			mes "因为是主动技能，狂击每次使用都消耗 SP。";
+			mes "不当心的话，SP 一下子就会耗光……！";
+			next;
+			mes "[修兰克]";
+			mes "这点奖励犒劳你的辛勤修炼。希望你在变强的过程中，";
+			mes "认识到狂击的重要性。";
+			set tu_swordman, 3;
+			changequest 8212,8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[修兰克]";
+			mes "这老茧……！只有狂击大师才有这样的手。";
+			mes "干得漂亮，剑士。我印象深刻。";
+			next;
+			mes "[修兰克]";
+			mes "这点小奖品，表彰你至今的努力。";
+			mes "但别松懈！要掌握所有基本功，你还有很长的路要走。";
+			set tu_swordman, 4;
+			changequest 8212,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "嗯，你的狂击也许用得不错，但还没到精通的地步。";
+			mes "我鼓励你精通狂击，释放它真正的潜力！";
+			close;
+		}
+	case 1:
+		mes "你一直在钻研狂击的运用之道吗？";
+		mes "我坚信，狂击就是剑术的精髓！";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if((.@chk_bash > 0) && (.@chk_bash < 5)){
+			mes "[修兰克]";
+			mes "看来你对狂击有了一点了解。但还不够。";
+			mes "让我详细讲解……";
+			next;
+			mes "[修兰克]";
+			mes "狂击是主动技能，最高等级10，能猛击你的目标。";
+			mes "说白了，就是高伤害攻击！";
+			next;
+			mes "[修兰克]";
+			mes "因为是主动技能，狂击每次使用都消耗 SP。";
+			mes "不当心的话，SP 一下子就会耗光……！";
+			next;
+			mes "[修兰克]";
+			mes "关于狂击，眼下我能讲的就这些。";
+			mes "至于其中的微妙之处，要你在战斗中亲自体会。";
+			next;
+			mes "[修兰克]";
+			mes "不过，这点小奖励犒劳你的修炼。";
+			mes "记住，我们还有更多基本功要学！";
+			set tu_swordman, 2;
+			changequest 8211,8212;
+			if (checkre(3))
+				getexp 58,0;
+			else
+				getexp 580,0;
+			close;
+		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[修兰克]";
+			mes "嗯……还没精通狂击吗？嗯，无论如何，";
+			mes "我觉得你有进步了。";
+			next;
+			mes "[修兰克]";
+			mes "让我给你讲解一下狂击的用法。";
+			mes "如果以前听过，就当温故知新。";
+			next;
+			mes "[修兰克]";
+			mes "看来你对狂击有了一点了解。但还不够。";
+			mes "让我详细讲解……";
+			next;
+			mes "[修兰克]";
+			mes "狂击是主动技能，最高等级10，能猛击你的目标。";
+			mes "说白了，就是高伤害攻击！";
+			next;
+			mes "[修兰克]";
+			mes "因为是主动技能，狂击每次使用都消耗 SP。";
+			mes "不当心的话，SP 一下子就会耗光……！";
+			next;
+			mes "[修兰克]";
+			mes "关于狂击，眼下我能讲的就这些。";
+			mes "至于其中的微妙之处，要你在战斗中亲自体会。";
+			next;
+			mes "[修兰克]";
+			mes "这份小奖励，犒劳你的努力与耐心。";
+			mes "收下它，变得更强吧……";
+			set tu_swordman, 3;
+			changequest 8211,8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			next;
+			mes "[修兰克]";
+			mes "我相信每个真正的剑士都该精通狂击。";
+			mes "如果你以剑士之身精通了它，再来找我。";
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[修兰克]";
+			mes "这老茧……！只有狂击大师才有这样的手。";
+			mes "干得漂亮，剑士。我印象深刻。";
+			next;
+			mes "[修兰克]";
+			mes "这点小奖品，表彰你至今的努力。";
+			mes "但别松懈！要掌握所有基本功，你还有很长的路要走。";
+			set tu_swordman, 4;
+			changequest 8211,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[修兰克]";
+			mes "你还不会用狂击……？剑不用来砸东西还有什么用？";
+			mes "！学会那个技能再来找我！";
+			close;
+		}
+	case 0:
+		mes "啊，战友。请允许我自我介绍。";
+		mes "我是修兰克·尚德利耶，普隆德拉骑士团所属骑士。";
+		next;
+		mes "[修兰克]";
+		mes "如今的剑士可能并不真正理解剑道，";
+		mes "这让我深感忧虑。想到他们日后还可能成为骑士……";
+		next;
+		mes "[修兰克]";
+		mes "你一直在修炼，想成为精通剑道的剑士吗？";
+		mes "如果是，你必须从基本功学起，第一项就是^5D478B狂击^000000。";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if(.@chk_bash == 0){
+			mes "[修兰克]";
+			mes "^333333*倒吸一口气*^000000";
+			mes "这双娇嫩的手！你从没学过狂击，";
+			mes "对吧？！不会狂击，你打算怎么统领战斗？";
+			next;
+			mes "[修兰克]";
+			mes "现在，如果你想成为真正的剑士，";
+			mes "就必须学会狂击。这毫无疑问：这些基本功你必须掌握！";
+			mes "拿着这个，去学会狂击！";
+			set tu_swordman, 1;
+			if (checkre(3))
+				getexp 49,0;
+			else
+				getexp 490,0;
+			setquest 8211;
+			close;
+		} else if((.@chk_bash > 0) && (.@chk_bash < 5)){
+			mes "[修兰克]";
+			mes "看来你对狂击有了一点了解。但还不够。";
+			mes "让我详细讲解……";
+			next;
+			mes "[修兰克]";
+			mes "狂击是主动技能，最高等级10，能猛击你的目标。";
+			mes "说白了，就是高伤害攻击！";
+			next;
+			mes "[修兰克]";
+			mes "因为是主动技能，狂击每次使用都消耗 SP。";
+			mes "不当心的话，SP 一下子就会耗光……！";
+			next;
+			mes "[修兰克]";
+			mes "关于狂击，眼下我能讲的就这些。";
+			mes "至于其中的微妙之处，要你在战斗中亲自体会。";
+			next;
+			mes "[修兰克]";
+			mes "不过，这点小奖励犒劳你的修炼。";
+			mes "记住，我们还有更多基本功要学！";
+			set tu_swordman, 2;
+			setquest 8212;
+			if (checkre(3))
+				getexp 58,0;
+			else
+				getexp 580,0;
+			close;
+		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[修兰克]";
+			mes "看来你的狂击已经有些造诣了。";
+			mes "但还不够。让我讲解一下……";
+			next;
+			mes "[修兰克]";
+			mes "狂击是主动技能，最高等级10，能猛击你的目标。";
+			mes "说白了，就是高伤害攻击！";
+			next;
+			mes "[修兰克]";
+			mes "因为是主动技能，狂击每次使用都消耗 SP。";
+			mes "不当心的话，SP 一下子就会耗光……！";
+			next;
+			mes "[修兰克]";
+			mes "关于狂击，眼下我能讲的就这些。";
+			mes "至于其中的微妙之处，要你在战斗中亲自体会。";
+			next;
+			mes "[修兰克]";
+			mes "不过，这点小奖励犒劳你的修炼。";
+			mes "记住，我们还有更多基本功要学！";
+			set tu_swordman, 3;
+			setquest 8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			next;
+			mes "[修兰克]";
+			mes "但如果你想在我眼中成为精通的剑士，";
+			mes "就必须精通狂击！";
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[修兰克]";
+			mes "这老茧……！只有狂击大师才有这样的手。";
+			mes "干得漂亮，剑士。我印象深刻。";
+			next;
+			mes "[修兰克]";
+			mes "这点小奖品，表彰你至今的努力。";
+			mes "但别松懈！要掌握所有基本功，你还有很长的路要走。";
+			set tu_swordman, 4;
+			// completequest 8211;
+			// completequest 8212;
+			// completequest 8213;
+			setquest 8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		}
+	}
+	mes "……";
+	mes "…………";
+	close;
+}
+
+// Daqu'ee
+//============================================================
+geffen,154,143,3	script	德库'伊	734,{
+	if(BaseJob == Job_Novice){
+		mes "[德库'伊]";
+		mes "嘿。当初心者很憋屈吧？我懂，";
+		mes "我懂，我们都经历过那个阶段。";
+		next;
+		mes "[德库'伊]";
+		mes "想变强的话，何不考虑当一名剑士？";
+		mes "这需要你自律，但这个职业会把你锻造成强悍的战士。";
+		next;
+		mes "[德库'伊]";
+		mes "最终由你决定。我不知道你想过怎样的人生，";
+		mes "但你该认真考虑一下剑士这个职业……";
+		close;
+	}
+	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER))){
+		mes "[德库'伊]";
+		mes "啊……同为用剑之人！你近来可好？";
+		next;
+		mes "[德库'伊]";
+		mes "一定有许多人要仰仗你手中的利刃。";
+		mes "这是沉甸甸的责任，但我们在战斗中绝不能让盟友";
+		mes "失望……";
+		close;
+	}
+	if(BaseClass != Job_Swordman){
+		mes "[德库'伊]";
+		mes "你好。你不喜欢剑，是吧？嗯，";
+		mes "要是喜欢，我们倒有的聊了。";
+		next;
+		mes "[德库'伊]";
+		mes "是啊。这儿没什么好聊的。挺无聊的……";
+		close;
+	}
+	if(tu_swordman > 20){
+		mes "[德库'伊]";
+		mes "希望你继续修炼剑道。挥剑是一门艺术……";
+		close;
+	}
+	if(tu_swordman == 20){
+		mes "[德库'伊]";
+		mes "嗯……？你不是该盯着班克利吗？发生什么事了？";
+		next;
+		mes "[德库'伊]";
+		mes "自杀……？你是认真的？！就算他怀疑自己暴露了，";
+		mes "也没必要自杀啊。这里有蹊跷！";
+		next;
+		mes "[德库'伊]";
+		mes "嗯，你干得不错。至于另外三名嫌疑人，";
+		mes "我会安排剑士协会的人盯紧他们。";
+		next;
+		mes "[德库'伊]";
+		mes "不过，我看那三个人身上也问不出什么新东西了。";
+		mes "这案子暂时就到这里。再次感谢你的帮助。";
+		next;
+		mes "[德库'伊]";
+		mes "你现在回去向修兰克复命吧。我想他还想继续指点";
+		mes "你剑术的门道。";
+		set tu_swordman, 21;
+		changequest 8226,8227;
+		close2;
+		if (checkre(0))
+			warp "izlude",127,100;
+		else
+			warp "izlude",35,78;
+		end;
+	}
+	if(tu_swordman == 19){
+		mes "[德库'伊]";
+		mes "你怎么还在这儿？快去查看班克利！";
+		mes "谁知道他会干出什么事来！";
+		close;
+	}
+	if((tu_swordman == 17) || (tu_swordman == 18)){
+		mes "[德库'伊]";
+		if(tu_swordman == 17){
+			mes "TheisWesomeof";
+			mes "ConBanfoevidehi";
+			mes "victkleyundncem";
+			mes "hekdlfiDrindkelsd";
+			next;
+		} else if(tu_swordman == 18){
+			mes "hekdlfiDrindkelsd";
+			mes "TheisWesomeof";
+			mes "ConBanfoevidehi";
+			mes "victkleyundncem";
+			next;
+		}
+		mes "[德库'伊]";
+		mes "我明白了！这是一种复杂的换位密码，";
+		mes "我们要把其中一个人的密码从其余密码中剔除。";
+		mes "那么，你认为谁是杀人犯？";
+		next;
+		switch(select("汉斯:班克利:盖尔:穆特罗")) {
+		case 1:
+			mes "[德库'伊]";
+			mes "汉斯……？不对啊。这跟我刚编出来的算法对不上。";
+			mes "你得再试一次！";
+			close;
+		case 2:
+			mes "[德库'伊]";
+			mes "班克利……？嘿，你可能说对了。让我验证一下……";
+			next;
+			mes "[德库'伊]";
+			mes "没错，把班克利的密码从其余密码中剔除，";
+			mes "再按正确顺序读出来……";
+			next;
+			mes "[德库'伊]";
+			mes "好！看来班克利就是杀人犯！虽然不能百分百相信，";
+			mes "但这证据已经相当确凿了。";
+			next;
+			mes "[德库'伊]";
+			mes "快回梦罗克盯着班克利，以防他狗急跳墙。";
+			mes "一旦有情况，立刻向我报告！";
+			set tu_swordman, 19;
+			changequest 8224,8225;
+			if (checkre(3))
+				getexp 162,0;
+			else
+				getexp 1620,0;
+			close2;
+			warp "moc_fild07",359,201;
+			end;
+		case 3:
+			mes "[德库'伊]";
+			mes "盖尔……？不对啊。这跟我刚编出来的算法对不上。";
+			mes "你得再试一次！";
+			close;
+		case 4:
+			mes "[德库'伊]";
+			mes "穆特罗……？不对啊。这跟我刚编出来的算法对不上。";
+			mes "你得再试一次！";
+			close;
+		}
+	}
+	if(tu_swordman == 16){
+		mes "[德库'伊]";
+		mes "我想这些密码需要按特定顺序排列，";
+		mes "才能解开其中的秘密。";
+		next;
+		mes "[德库'伊]";
+		mes "嗯，你来猜顺序，我根据你的猜测尝试构建破译。";
+		next;
+		switch(select("穆特罗:汉斯:盖尔:班克利")) {
+		case 1:
+			mes "[德库'伊]";
+			mes "好，先用穆特罗的密码。那么，";
+			mes "你觉得第二个该用谁的？";
+			next;
+			switch(select("汉斯:盖尔:班克利")) {
+			case 1:
+				mes "[德库'伊]";
+				mes "汉斯……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("盖尔:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "穆特罗、汉斯、盖尔、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "穆特罗、汉斯、盖尔、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 2:
+				mes "[德库'伊]";
+				mes "盖尔……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("汉斯:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "穆特罗、盖尔、汉斯、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "穆特罗、盖尔、班克利、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 3:
+				mes "[德库'伊]";
+				mes "班克利……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("Hans:Geil")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "穆特罗、班克利、汉斯、盖尔。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "穆特罗、班克利、盖尔、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			}
+			break;
+		case 2:
+			mes "[德库'伊]";
+			mes "好，先用汉斯的密码。那么，你觉得第二个该用谁的？";
+			next;
+			switch(select("穆特罗:盖尔:班克利")) {
+			case 1:
+				mes "[德库'伊]";
+				mes "穆特罗……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("盖尔:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "汉斯、穆特罗、盖尔、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "汉斯、穆特罗、班克利、盖尔。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 2:
+				mes "[德库'伊]";
+				mes "盖尔……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "汉斯、盖尔、穆特罗、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "汉斯、盖尔、班克利、穆特罗。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 3:
+				mes "[德库'伊]";
+				mes "班克利……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:盖尔")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "汉斯、班克利、穆特罗、盖尔。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "汉斯、班克利、盖尔、穆特罗。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			}
+			break;
+		case 3:
+			mes "[德库'伊]";
+			mes "好，先用盖尔的密码。那么，你觉得第二个该用谁的？";
+			next;
+			switch(select("穆特罗:汉斯:班克利")) {
+			case 1:
+				mes "[德库'伊]";
+				mes "穆特罗……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("汉斯:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "盖尔、穆特罗、汉斯、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。让我试……等等！";
+					next;
+					mes "[德库'伊]";
+					mes "我想我们能搞懂这东西！给我点时间，";
+					mes "让我构思一套算法！";
+					set tu_swordman, 17;
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "盖尔、穆特罗、班克利、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 2:
+				mes "[德库'伊]";
+				mes "汉斯……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:班克利")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "盖尔、汉斯、穆特罗、班克利。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "盖尔、汉斯、班克利、穆特罗。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 3:
+				mes "[德库'伊]";
+				mes "班克利……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:汉斯")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "盖尔、班克利、穆特罗、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "盖尔、班克利、汉斯、穆特罗。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			}
+			break;
+		case 4:
+			mes "[德库'伊]";
+			mes "好，先用班克利的密码。那么，";
+			mes "你觉得第二个该用谁的？";
+			next;
+			switch(select("穆特罗:汉斯:盖尔")) {
+			case 1:
+				mes "[德库'伊]";
+				mes "穆特罗……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("Hans:Geil")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "班克利、穆特罗、汉斯、盖尔。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "班克利、穆特罗、盖尔、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 2:
+				mes "[德库'伊]";
+				mes "汉斯……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:盖尔")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "班克利、汉斯、穆特罗、盖尔。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "班克利、汉斯、盖尔、穆特罗。";
+					mes "那么完整的密码就是……";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			case 3:
+				mes "[德库'伊]";
+				mes "盖尔……？好，那么第三个密码是谁的……？";
+				next;
+				switch(select("穆特罗:汉斯")) {
+				case 1:
+					mes "[德库'伊]";
+					mes "班克利、盖尔、穆特罗、汉斯。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。让我试……等等！";
+					next;
+					mes "[德库'伊]";
+					mes "我想我们能搞懂这东西！给我点时间，";
+					mes "让我构思一套算法！";
+					set tu_swordman, 18;
+					close;
+				case 2:
+					mes "[德库'伊]";
+					mes "班克利、盖尔、汉斯、穆特罗。";
+					mes "那么完整的密码就是……";
+					next;
+					mes "[德库'伊]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[德库'伊]";
+					mes "不行……这样我根本解不出来。换个组合试试。";
+					close;
+				}
+			}
+			break;
+		}
+	}
+	if(tu_swordman == 15){
+		set .@hans$, "victkleyundncem";
+		set .@bang$, "hekdlfiDrindkelsd";
+		set .@mutr$, "ConBanfoevidehi";
+		set .@geil$, "TheisWesomeof";
+		mes "[德库'伊]";
+		mes "啊，你回来了。我刚得到一条新线索，";
+		mes "可能查明凶手的身份。";
+		next;
+		mes "[德库'伊]";
+		mes "我刚听说，所有嫌疑人手里都有某种密码的片段。";
+		mes "只要把密码拼起来破译，就能查出杀人犯是谁。";
+		next;
+		mes "[德库'伊]";
+		mes "你拿到所有嫌疑人的密码了吗？";
+		mes "首先，告诉我汉斯的那段密码。";
+		next;
+		input .@inputstr$;
+		if(.@inputstr$ == .@hans$){
+			mes "[德库'伊]";
+			mes "victkleyundncem?";
+			mes "听起来确实很奇怪。现在，告诉我班克利的。";
+			next;
+			input .@inputstr$;
+			if(.@inputstr$ == .@bang$){
+				mes "[德库'伊]";
+				mes "hekdlfiDrindkelsd..";
+				mes "这到底是什么鬼……？确实够隐晦的。穆特罗的呢？";
+				next;
+				input .@inputstr$;
+				if(.@inputstr$ == .@mutr$){
+					mes "[德库'伊]";
+					mes "ConBanfoevidehi.";
+					mes "这可够难解的。好，现在告诉我盖尔的。";
+					next;
+					input .@inputstr$;
+					if(.@inputstr$ == .@geil$){
+						mes "[德库'伊]";
+						mes "TheisWesomeof...";
+						mes "好，太好了。现在我们要做的，";
+						mes "就是弄明白这一切意味着什么。";
+						next;
+						mes "[德库'伊]";
+						mes "这会非常困难。你有什么想法吗？";
+						mes "我们必须解开它，这是我们唯一的线索……";
+						set tu_swordman, 16;
+						changequest 8223,8224;
+						close;
+					} else {
+						mes "[德库'伊]";
+						mes "……你确定你没听错？要不再去核实一遍？";
+						close;
+					}
+				} else {
+	
+					mes "[德库'伊]";
+					mes "……你确定你没听错？要不再去核实一遍？";
+					close;
+	
+				}
+			} else {
+				mes "[德库'伊]";
+				mes "……你确定你没听错？要不再去核实一遍？";
+				close;
+			}
+		} else {
+	
+			mes "[德库'伊]";
+			mes "你确定没错？不、不，我觉得不对。";
+			mes "你去核对一下密码，必要时再盘问一遍嫌疑人好吗？";
+			close;
+	
+		}
+	}
+	if(tu_swordman == 14){
+		mes "[德库'伊]";
+		mes "我不是让你去梦罗克盘问嫌疑人吗？";
+		mes "我们必须尽快完成这次调查！";
+		close;
+	}
+	if(tu_swordman == 13){
+		mes "[德库'伊]";
+		mes "啊，你来了！一定是修兰克让你来帮我的。";
+		mes "真是太感谢了。";
+		next;
+		mes "[德库'伊]";
+		mes "你大概也看出来了，我正在调查一桩谋杀案。";
+		mes "简单说，我想请你帮我查出凶手是谁。";
+		next;
+		mes "[德库'伊]";
+		mes "至于受害者嘛，那是机密信息。你理解的，对吧？";
+		next;
+		mes "[德库'伊]";
+		mes "现在，我要你去梦罗克盘问四名嫌疑人。";
+		mes "他们的名字是^5D478B穆特罗^000000、^5D478B盖尔^000000、^5D478B汉斯^000000和^5D478B班克利^000000。";
+		mes "应该不难。";
+		next;
+		mes "[德库'伊]";
+		mes "和他们都谈过之后，回来向我报告。";
+		mes "尤其重要的是，记住或写下你从嫌疑人那里得到的";
+		mes "任何重要线索。";
+		next;
+		mes "[德库'伊]";
+		mes "还有，记住这是剑士协会的特别任务。";
+		mes "所以你了解到的一切都要保密。明白吗？";
+		next;
+		mes "[德库'伊]";
+		mes "现在去吧，看能不能从穆特罗、";
+		mes "盖尔、汉斯和班克利那里问到什么。";
+		mes "我们必须尽快查明凶手的身份！";
+		next;
+		mes "[德库'伊]";
+		mes "哦等等……梦罗克有点远。好吧，";
+		mes "我送你到那座城市附近。";
+		next;
+		set tu_swordman, 14;
+		changequest 8222,8223;
+		warp "moc_fild07",359,201;
+		close;
+	}
+	if((tu_swordman > 7) && (tu_swordman < 13)){
+		mes "[德库'伊]";
+		mes "嗯……你还在接受修兰克的特别训练吗？";
+		next;
+		mes "[德库'伊]";
+		mes "那太好了。如今的剑士越来越散漫了。";
+		mes "得有人管管这些新人，让他们绷紧神经！";
+		close;
+	}
+	if(tu_swordman == 7){
+		mes "[德库'伊]";
+		mes "你怎么还在这儿？快去把我的口信带给修兰克。";
+		next;
+		mes "[德库'伊]";
+		mes "告诉他，我们还不确定凶手的身份，";
+		mes "但已经有一份嫌疑人名单了。迟早会查出来的。";
+		close;
+	}
+	if(tu_swordman == 6){
+		mes "[德库'伊]";
+		mes "啊……！你就是修兰克派来的剑士？";
+		mes "好，我一直在等……";
+		next;
+		mes "[德库'伊]";
+		mes "现在告诉我……修兰克带什么口信给我？";
+		next;
+		switch(select("凶手……:杀人犯……")) {
+		case 1:
+			mes "[" + strcharinfo(0) + "]";
+			mes "凶手怎么样了？";
+			next;
+			switch(select("他是谁……:幕后黑手……")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "查出他是谁了吗？如果查出来了……";
+				next;
+				switch(select("我们为什么……:我们该……")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "为什么干坐着，什么都不做？！";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'凶手怎么样了？";
+					mes "查出他是谁了吗？如果查出来了，";
+					mes "我们为什么干坐着什么都不做？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "我们接下来该怎么办？";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'凶手怎么样了？";
+					mes "查出他是谁了吗？如果查出来了，";
+					mes "我们接下来该怎么办？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				}
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "查出这一切的幕后黑手了吗？如果查出来了……";
+				next;
+				switch(select("我们为什么……:我们该……")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "为什么干坐着，什么都不做？！";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'凶手怎么样了？";
+					mes "查出这一切的幕后黑手了吗？如果查出来了，";
+					mes "我们为什么干坐着什么都不做？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "我们接下来该怎么办？";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'凶手怎么样了？";
+					mes "查出这一切的幕后黑手了吗？如果查出来了，";
+					mes "我们接下来该怎么办？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				}
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "那个杀人犯怎么样了？";
+			next;
+			switch(select("他是谁……:幕后黑手……")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "查出他是谁了吗？如果查出来了……";
+				next;
+				switch(select("我们为什么……:我们该……")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "为什么干坐着，什么都不做？！";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'那个杀人犯怎么样了？";
+					mes "查出他是谁了吗？如果查出来了，";
+					mes "我们为什么干坐着什么都不做？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "我们接下来该怎么办？";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'那个杀人犯怎么样了？";
+					mes "查出他是谁了吗？如果查出来了，";
+					mes "我们接下来该怎么办？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……我理解他的担忧。好，现在请把这个答复带";
+					mes "给他。";
+					next;
+					mes "[德库'伊]";
+					mes "我们还没确定杀人犯是谁。不过，";
+					mes "我们已经有一份嫌疑人名单，很快就会查出来。";
+					next;
+					mes "[德库'伊]";
+					mes "感谢你大老远跑这一趟。让我用一些经验值来奖励你。";
+					set tu_swordman, 7;
+					changequest 8216,8217;
+					if (checkre(3))
+						getexp 112,0;
+					else
+						getexp 1120,0;
+					next;
+					mes "[德库'伊]";
+					mes "保重，勇敢的剑士。";
+					next;
+					if (checkre(0))
+						warp "izlude",127,100;
+					else
+						warp "izlude",35,78;
+					close;
+				}
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "查出这一切的幕后黑手了吗？如果查出来了……";
+				next;
+				switch(select("我们为什么……:我们该……")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "为什么干坐着，什么都不做？！";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'那个杀人犯怎么样了？";
+					mes "查出这一切的幕后黑手了吗？如果查出来了，";
+					mes "我们为什么干坐着什么都不做？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "我们接下来该怎么办？";
+					next;
+					mes "[德库'伊]";
+					mes "那么修兰克是在问：'那个杀人犯怎么样了？";
+					mes "查出这一切的幕后黑手了吗？如果查出来了，";
+					mes "我们接下来该怎么办？'";
+					next;
+					mes "[德库'伊]";
+					mes "嗯……这不像是修兰克该带给我的口信。";
+					mes "我需要他的原话，否则我没法答复……";
+					close;
+				}
+			}
+			break;
+		}
+	}
+	
+	mes "嗯……？你找我有事吗？";
+	close;
+}
+
+// Geil
+//============================================================
+morocc_in,51,101,3	script	盖尔	89,{
+	mes "[盖尔]";
+	if(tu_swordman == 15){
+		mes "你是官方派来的吗？别再为难我了！";
+		mes "我不是杀人犯！我连谁被杀了都不知道。";
+		mes "你们要找的人不是我！";
+		next;
+		mes "[盖尔]";
+		mes "没错，有个怪家伙告诉了我一段和这事有关的密码，";
+		mes "但仅此而已！我就知道这么多！";
+		mes "我不是凶手，不是帮凶，什么都不是！";
+		next;
+		mes "[盖尔]";
+		mes "^5D478BTheisWesomeof^000000";
+		mes "那就是密码。真不敢相信我居然忘不掉。";
+		mes "我是说，那家伙告诉我的时候，我应该正喝醉了。";
+		next;
+		mes "[盖尔]";
+		mes "这段密码有什么要紧的，你们为什么老是为了谋杀";
+		mes "案纠缠我？";
+		mes "！";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "你是官方派来的吗？别再为难我了！";
+		mes "我不是杀人犯！我连谁被杀了都不知道。";
+		mes "你们要找的人不是我！";
+		next;
+		mes "[盖尔]";
+		mes "没错，有个怪家伙告诉了我一段和这事有关的密码，";
+		mes "但仅此而已！我就知道这么多！";
+		mes "我不是凶手，不是帮凶，什么都不是！";
+		next;
+		mes "[盖尔]";
+		mes "^5D478BTheisWesomeof^000000";
+		mes "那就是密码。真不敢相信我居然忘不掉。";
+		mes "我是说，那家伙告诉我的时候，我应该正喝醉了。";
+		next;
+		mes "[盖尔]";
+		mes "这段密码有什么要紧的，你们为什么老是为了谋杀";
+		mes "案纠缠我？";
+		mes "！";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "我们都该努力与同胞和平和谐地相处。";
+	next;
+	mes "[盖尔]";
+	mes "但恐惧、猜疑和恐慌总是横插一脚，";
+	mes "把世事搅得一团糟。我们必须从自身做起，";
+	mes "学会与他人相处。你不这么认为吗？";
+	close;
+}
+
+// Meutro
+//============================================================
+morocc,82,292,5	script	穆特罗	84,{
+	mes "[穆特罗]";
+	if(tu_swordman == 15){
+		mes "你跟其他所有人一样。就是想要我知道的密码，对吧？";
+		next;
+		mes "[穆特罗]";
+		mes "^5D478BConBanfoevidehi^000000";
+		mes "满意了吧？现在让我清静点，去抓杀人犯吧。";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "你跟其他所有人一样。就是想要我知道的密码，对吧？";
+		next;
+		mes "[穆特罗]";
+		mes "^5D478BConBanfoevidehi^000000";
+		mes "满意了吧？现在让我清静点，去抓杀人犯吧。";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "^666666*唉*^000000";
+	mes "我试了又试，但有时荒唐的事情就是会发生，";
+	mes "我却无能为力。";
+	next;
+	mes "[穆特罗]";
+	mes "我想这就是命运吧。我无法掌控、";
+	mes "无法理解的东西，逃也逃不掉。";
+	close;
+}
+
+// Hans
+//============================================================
+morocc,240,72,3	script	汉斯	86,{
+	mes "[汉斯]";
+	if(tu_swordman == 15){
+		mes "救救我！求求你救救我！我不是杀人犯！";
+		mes "我几乎是无害的啊！";
+		next;
+		mes "[汉斯]";
+		mes "^5D478Bvictkleyundncem^000000";
+		mes "这是我知道的密码。之前有个怪人告诉我的，";
+		mes "还说我很快就会用得上！";
+		next;
+		mes "[汉斯]";
+		mes "他说这段密码会救我的命。起初我以为他疯了，";
+		mes "但不知为什么，我就是忘不掉。";
+		next;
+		mes "[汉斯]";
+		mes "他好像用了什么魔法，把这段话刻进了我脑子里。";
+		mes "请让我清静点吧，我就知道这么多！";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "救救我！求求你救救我！我不是杀人犯！";
+		mes "我几乎是无害的啊！";
+		next;
+		mes "[汉斯]";
+		mes "^5D478Bvictkleyundncem^000000";
+		mes "这是我知道的密码。之前有个怪人告诉我的，";
+		mes "还说我很快就会用得上！";
+		next;
+		mes "[汉斯]";
+		mes "他说这段密码会救我的命。起初我以为他疯了，";
+		mes "但不知为什么，我就是忘不掉。";
+		next;
+		mes "[汉斯]";
+		mes "他好像用了什么魔法，把这段话刻进了我脑子里。";
+		mes "请让我清静点吧，我就知道这么多！";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "抱歉……但我想我帮不上你什么。";
+	mes "眼下，我自己也自身难保……";
+	close;
+}
+
+// Bankley
+//============================================================
+morocc_in,12,156,3	script	班克利	97,{
+	if(tu_swordman > 19){
+		mes "^3355FF班克利脸上带着可怜的表情。^000000";
+		mes "^3355FF他的尸体已经完全冰冷。胸口有一道又长又深的伤口，";
+		mes "^3355FF右手里紧握着一把浸满鲜血的刀。^000000";
+		close;
+	}
+	if(tu_swordman == 19){
+		mes "……";
+		mes "…………";
+		next;
+		mes "^3355FF他死了！^000000";
+		next;
+		mes "^3355FF班克利脸上带着悲伤可怜的表情。";
+		mes "^3355FF他脸颊血色尚存，看来刚死不久。";
+		mes "^3355FF他胸口有一道又长又深的伤口，";
+		mes "^3355FF右手里紧握着一把浸满鲜血的刀。^000000";
+		set tu_swordman, 20;
+		changequest 8225,8226;
+		close;
+	}
+	mes "[班克利]";
+	if(tu_swordman == 15){
+		mes "我没杀过任何人……！我是清白的，";
+		mes "没有什么可隐瞒的！";
+		next;
+		mes "[班克利]";
+		mes "不过你看……如果有帮助的话，";
+		mes "我把这个怪家伙给我的古怪密码告诉你。";
+		mes "我猜这应该是某种线索。";
+		next;
+		mes "[班克利]";
+		mes "^5D478BhekdlfiDrindkelsd^000000";
+		mes "你明白它的意思吗？我完全不懂，";
+		mes "但我把知道的都告诉你了！";
+		next;
+		mes "[班克利]";
+		mes "我觉得自己受到了冒犯！等你们证明了我的清白，";
+		mes "会赔偿我的精神损失吗？！";
+		next;
+		mes "[班克利]";
+		mes "别再烦我了，也别浪费你的时间。";
+		mes "你还不如去抓真正的凶手！";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "我没杀过任何人……！我是清白的，";
+		mes "没有什么可隐瞒的！";
+		next;
+		mes "[班克利]";
+		mes "不过你看……如果有帮助的话，";
+		mes "我把这个怪家伙给我的古怪密码告诉你。";
+		mes "我猜这应该是某种线索。";
+		next;
+		mes "[班克利]";
+		mes "^5D478BhekdlfiDrindkelsd^000000";
+		mes "你明白它的意思吗？我完全不懂，";
+		mes "但我把知道的都告诉你了！";
+		next;
+		mes "[班克利]";
+		mes "我觉得自己受到了冒犯！等你们证明了我的清白，";
+		mes "会赔偿我的精神损失吗？！";
+		next;
+		mes "[班克利]";
+		mes "别再烦我了，也别浪费你的时间。";
+		mes "你还不如去抓真正的凶手！";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "虽然我现在负担不起，但我的梦想是环游世界，";
+	mes "走遍所有伟大的城市！";
+	next;
+	mes "[班克利]";
+	mes "总有一天，我相信会有机会让梦想成真。";
+	mes "但眼下，我只能尽力过好日子。";
+	close;
+}

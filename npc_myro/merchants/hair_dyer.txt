@@ -1,0 +1,235 @@
+//===== rAthena Script ======================================= 
+//= Hair Dyer
+//===== By: ================================================== 
+//= kobra_k88; L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Hair Dyer with standard palletes
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Bugfix: fixed missing menu label LEnd->M_End [Lupus]
+//= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.3 Fixed problem what "freezes" the NPC. (bugreport:509) [Samuray22]
+//= 1.4 Fixed getlook checking the wrong color. (bugreport:2392) [L0ne_W0lf]
+//= 1.5 Added Lighthalzen Hair Dying NPC. [L0ne_W0lf]
+//= 1.6 Moving NPC Jovovich to Pre-Renewal [JohnnyPlayy]
+//============================================================ 
+
+// Lighthalzen
+lhz_in02,100,134,3	script	实习生 罗莎#lich	850,{
+	mes "[罗莎]";
+	if (Sex == SEX_MALE) {
+		mes "欢迎，请进~";
+		mes "哦，看得出来，";
+		mes "您对头发的保养可比其他男孩子用心多了。";
+		mes "那么，想把头发染成别的颜色吗？";
+	}
+	else {
+		mes "哦，哇~ 您的头发是在哪里做的造型？";
+		mes "我太喜欢了！";
+		mes "不过……要是再染个颜色，";
+		mes "会更漂亮。您觉得怎么样？";
+	}
+	while (.@choose_success != 2) {
+		next;
+		switch(select("染发:染色说明:取消")) {
+		case 1:
+			mes "[罗莎]";
+			mes "呵呵呵呵~";
+			mes "想试试什么颜色呢？";
+			mes "鲜艳的还是深色的？";
+			mes "性感的还是可爱的？";
+			next;
+			while (.@choose_success != 2) {
+				if (.@choose_success == 1) {
+					mes "[罗莎]";
+					mes "哦，我喜欢这个颜色！不过，";
+					mes "要不要再试试别的？";
+					next;
+					switch(select("好:不用")) {
+					case 1:
+						mes "[罗莎]";
+						mes "请再选一个颜色~";
+						next;
+						break;
+					case 2:
+						mes "[罗莎]";
+						mes "选得真棒~";
+						mes "那么，谢谢您光顾我的服务，希望下次再来！";
+						close2;
+						set .@choose_success,2;
+						break;
+					}
+				}
+				while (.@choose_success != 2) {
+					switch(select("红色，谢谢。:黄色，谢谢。:紫色，谢谢。:赤色，谢谢。:绿色，谢谢。:蓝色，谢谢。:白色，谢谢。:深棕色，谢谢。:我喜欢现在的发色。")) {
+					case 1:
+						set .@headpalette,8;
+						break;
+					case 2:
+						set .@headpalette,1;
+						break;
+					case 3:
+						set .@headpalette,2;
+						break;
+					case 4:
+						set .@headpalette,3;
+						break;
+					case 5:
+						set .@headpalette,4;
+						break;
+					case 6:
+						set .@headpalette,5;
+						break;
+					case 7:
+						set .@headpalette,6;
+						break;
+					case 8:
+						set .@headpalette,7;
+						break;
+					case 9:
+						if (.@choose_success != 0) {
+							mes "[罗莎]";
+							mes "您确定吗？";
+							mes "好吧，您最清楚什么最适合自己。";
+							mes "说实话，我同意您的选择~";
+							close2;
+							set .@choose_success,2;
+						}
+						else {
+							mes "[罗莎]";
+							mes "哦，这样啊。";
+							mes "不过，我还是忍不住有点失望。";
+							mes "您染个别的颜色一定会很好看的~";
+							close2;
+							set .@choose_success,2;
+						}
+						break;
+					}
+					if (getlook(VAR_HEADPALETTE) == .@headpalette) {
+						mes "[罗莎]";
+						mes "嗯，您现在的发色还挺好。";
+						mes "如果您是在担心这个的话，";
+						mes "没必要再染一遍同样的颜色。";
+						next;
+					}
+					else {
+						if ((.@headpalette == 8) && (countitem(975) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带红色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 1) && (countitem(976) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带黄色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 2) && (countitem(981) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带紫色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 3) && (countitem(980) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带赤色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 4) && (countitem(979) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的，您没带绿色染料。";
+							mes "拿到之后再来好吗？";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 5) && (countitem(978) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的，您没带蓝色染料。";
+							mes "拿到之后再来好吗？";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 6) && (countitem(982) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带白色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						else if ((.@headpalette == 7) && (countitem(983) == 0)) {
+							mes "[罗莎]";
+							mes "哦，抱歉，亲爱的。";
+							mes "您没带黑色染料的话，";
+							mes "我没法给您染发……";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						if (Zeny < 1000) {
+							mes "[罗莎]";
+							mes "哦，非常抱歉，亲爱的，";
+							mes "我的服务费是 1,000 Zeny。";
+							mes "您是不是忘记带钱了？";
+							close2;
+							set .@choose_success,2;
+							break;
+						}
+						if (.@headpalette == 8) delitem 975,1; //Scarlet_Dyestuffs
+						else if (.@headpalette == 1) delitem 976,1; //Lemon_Dyestuffs
+						else if (.@headpalette == 2) delitem 981,1; //Violet_Dyestuffs
+						else if (.@headpalette == 3) delitem 980,1; //Orange_Dyestuffs
+						else if (.@headpalette == 4) delitem 979,1; //Darkgreen_Dyestuffs
+						else if (.@headpalette == 5) delitem 978,1; //Cobaltblue_Dyestuffs
+						else if (.@headpalette == 6) delitem 982,1; //White_Dyestuffs
+						else if (.@headpalette == 7) delitem 983,1; //Black_Dyestuffs
+						set Zeny, Zeny-1000;
+						setlook VAR_HEADPALETTE,.@headpalette;
+						set .@choose_success,1;
+						break;
+					}
+				}
+			}
+			break;
+		case 2:
+			mes "[罗莎]";
+			mes "心情低落的时候，";
+			mes "想为心上人打扮得漂亮一点的时候，";
+			mes "或者只是想换个形象的时候——何不染个头发呢？";
+			next;
+			mes "[罗莎]";
+			mes "只需要 1 个您想染的对应颜色的染料，";
+			mes "外加 1,000 Zeny 服务费就可以了。";
+			mes "您的美丽，由我守护~";
+			break;
+		case 3:
+			mes "[罗莎]";
+			mes "您知道吗，在外表上花点心思，";
+			mes "不仅看起来更好看，心情也会变得更好。";
+			mes "有道理，对吧？";
+			close;
+		}
+	}
+	close;
+}

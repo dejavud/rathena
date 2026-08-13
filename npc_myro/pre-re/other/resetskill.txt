@@ -1,0 +1,141 @@
+//===== rAthena Script =======================================
+//= Hypnotist
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Permenent first class, base level 40 and under skill resetter.
+//= First Class characters and expanded classes only.
+//= Baby Classes and First Class trans can't use this service.
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================
+
+prontera,146,232,4	script	催眠师#2	124,{
+	mes "[催眠师]";
+	mes "你好，冒险者。我是催眠学院的成员，被派到普隆德拉";
+	mes "为特定的一转职业角色";
+	mes "提供技能与属性点重置服务，价格非常公道：免费！";
+	next;
+	mes "[催眠师]";
+	mes "虽然目前我提供不限次数的重置服务，但有";
+	mes "两个必须满足的条件。第一，你的";
+	mes "基础等级必须低于 ^FF000040 级^000000。";
+	next;
+	mes "[催眠师]";
+	mes "第二，你的职业必须是^FF0000剑士、服事、魔法师、";
+	mes "盗贼、弓箭手、商人、";
+	mes "跆拳道少年、跆拳道少女、枪手或忍者^000000";
+	mes "之一才符合条件。那么，你有什么问题吗？";
+	next;
+	switch(select("什么是重置服务？:我想重置技能:我想重置属性点:没事")) {
+
+	case 1:
+		mes "[催眠师]";
+		mes "技能重置可以让对当前技能不满意的冒险者重新分配";
+		mes "技能点数。";
+		next;
+		mes "[催眠师]";
+		mes "属性点重置则可以让对当前属性不满意的冒险者";
+		mes "重新分配属性点数。";
+		next;
+		mes "[催眠师]";
+		mes "在进行技能重置之前，你必须把随身携带物品的总重量";
+		mes "降为 0。你可以把多余的物品存进卡普拉仓库。";
+		next;
+		mes "[催眠师]";
+		mes "啊，如果你租用了^FF0000手推车^000000，把它退掉也很重要。";
+		mes "否则，催眠会失效甚至适得其反……";
+		close;
+
+	case 2:
+		mes "[催眠师]";
+		mes "你确定要接受我的^FF0000技能重置^000000服务吗？";
+		next;
+		if (select("是:取消") == 1) {
+			if (BaseLevel > 40) {
+				mes "[催眠师]";
+				mes "很抱歉，基础等级高于 40 级的角色不符合我提供的";
+				mes "技能重置服务的条件。";
+				close;
+			}
+			if ((Class > 0 && Class < 7 && Upper == 0) || (Class == Job_Gunslinger) || (Class == Job_Ninja) || (Class == Job_Taekwon)) {
+				if (checkcart()) {
+					mes "[催眠师]";
+					mes "哦！请在接受技能重置服务之前先退掉手推车。感谢配合~";
+					close;
+				}
+				if (Weight) {
+					mes "[催眠师]";
+					mes "如果你是来使用技能重置服务的，请记住在^FF0000随身物品重量";
+					mes "降为 0^000000 之前";
+					mes "无法重置技能。";
+					next;
+					mes "[催眠师]";
+					mes "何不先把你的东西存进卡普拉仓库呢？这样你可以";
+					mes "安全地保管所有物品。";
+					close;
+				}
+				mes "[催眠师]";
+				mes "感谢你使用我的技能重新分配服务。哦，祝你旅途顺利，";
+				mes "冒险者。";
+				ResetSkill;
+				close;
+			}
+			mes "[催眠师]";
+			mes "很抱歉，你的职业不符合我提供的技能重置";
+			mes "服务的条件。我只能为以下职业提供技能重置……";
+			next;
+			mes "[催眠师]";
+			mes "^FF0000剑士、服事、";
+			mes "魔法师、盗贼、弓箭手、商人、跆拳道";
+			mes "少年、跆拳道少女、枪手和忍者^000000。";
+			close;
+		}
+		mes "[催眠师]";
+		mes "谢谢，祝你冒险顺利。请注意安全~";
+		close;
+
+	case 3:
+		mes "[催眠师]";
+		mes "你确定要接受我的^FF0000属性点重置^000000服务吗？";
+		next;
+		if (select("是:取消") == 1) {
+			if (BaseLevel > 40) {
+				mes "[催眠师]";
+				mes "很抱歉，基础等级高于 40 级的角色不符合我提供的";
+				mes "属性点重置服务的条件。";
+				close;
+			}
+			if ((Class > 0 && Class < 7 && Upper == 0) || (Class == Job_Gunslinger) || (Class == Job_Ninja) || (Class == Job_Taekwon)) {
+				mes "[催眠师]";
+				mes "感谢你使用我的属性点重新分配服务。哦，祝你旅途顺利，";
+				mes "冒险者。";
+				ResetStatus;
+				close;
+			}
+			mes "[催眠师]";
+			mes "很抱歉，你的职业不符合我提供的属性点重置";
+			mes "服务的条件。我只能为以下职业提供属性点重置……";
+			next;
+			mes "[催眠师]";
+			mes "^FF0000剑士、服事、";
+			mes "魔法师、盗贼、弓箭手、商人、跆拳道";
+			mes "少年、跆拳道少女、枪手和忍者^000000。";
+			close;
+		}
+		mes "[催眠师]";
+		mes "谢谢，祝你冒险顺利。请注意安全~";
+		close;
+
+	case 4:
+		mes "[催眠师]";
+		mes "谢谢，祝你冒险顺利。请注意安全~";
+		close;
+	}
+
+}

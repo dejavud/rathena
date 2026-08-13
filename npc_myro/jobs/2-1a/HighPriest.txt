@@ -1,0 +1,73 @@
+//===== rAthena Script ======================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== By: ==================================================
+//= Nana
+//= finished, optimized and tested by Lupus
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Advance Class jobchanger after kRO Normals.
+//===== Additional Comments: ================================= 
+//= 1.1 Made all into functions, additional checks, etc. [Lupus]
+//= 1.2 Made numbers into constants. [Vicious]
+//= 1.3 Now saves/restores all the quest skills [Lupus]
+//============================================================ 
+
+valkyrie,44,42,5	script	神官#Valkyrie	60,{
+	if (ADVJOB == 0 || Upper != 1) {
+		set .@karma_d,rand(1,10);
+		if (.@karma_d > 4) {
+			mes "[神官]";
+			mes "恭喜。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		mes "[神官]";
+		mes "愿神圣之力赐予我们";
+		mes "安宁、力量与庇护。";
+		mes "将我们从邪恶势力中拯救出来……";
+		close;
+	}
+	else if (ADVJOB == Job_High_Priest && Class == Job_Acolyte_High && JobLevel > 39) {
+		mes "[神官]";
+		mes "我们的世界需要";
+		mes "有才能、有信念的人。";
+		mes "请继续你的善行，";
+		mes "成为更伟大的神圣英雄……";
+		next;
+		mes "[神官]";
+		mes "你想成为神官吗？";
+		next;
+		if (select("不。:是的。") == 1) {
+			mes "[神官]";
+			mes "等你准备好了，";
+			mes "随时回来吧。";
+			mes "荣耀归于战士们！";
+			close;
+		}
+		if (SkillPoint) {
+			mes "[神官]";
+			mes "你还可以学习更多技能。";
+			mes "请把剩余的技能点全部用完，再来找我。";
+			close;
+		}
+		jobchange Job_High_Priest;
+		set ADVJOB,0;
+		mes "[神官]";
+		mes "恭喜。";
+		mes "作为神官，";
+		mes "愿你引领他人";
+		mes "走上神圣之路……";
+		close;
+	}
+	mes "[神官]";
+	mes "欢迎来到瓦尔哈拉，";
+	mes "荣誉殿堂。";
+	next;
+	mes "[神官]";
+	mes "在这里请随意。";
+	mes "荣耀归于战士们！";
+	close;
+}

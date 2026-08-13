@@ -1,0 +1,92 @@
+//===== rAthena Script =======================================
+//= 艾音布罗克机场职员
+//===== By: ==================================================
+//= L0ne_W0lf, Muad_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= 艾音布罗克机场职员
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+airport,143,43,5	script	机场职员#airport1a::airport1	90,{
+	mes "[机场职员]";
+	mes "欢迎来到艾音布罗克机场，";
+	mes "我们提供直飞朱诺、";
+	mes "里希塔乐镇和毁葛的航线。";
+	next;
+	if (select("搭乘飞空艇:取消") == 1) {
+		mes "[机场职员]";
+		mes "登船费为 1,200 zeny，";
+		mes "使用飞空艇免费搭乘券可以免费。";
+		mes "您要登船吗？";
+		next;
+		if (select("是:否") == 1) {
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "airport",148,51;
+				end;
+			}
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airport",148,51;
+				end;
+			}
+			mes "[机场职员]";
+			mes "抱歉，您没有飞空艇免费搭乘券，";
+			mes "也没有足够的 zeny 支付登船费。";
+			mes "请记住，登船费是 1,200 zeny。";
+			close;
+		}
+	}
+	mes "[机场职员]";
+	mes "谢谢，祝您愉快。";
+	close;
+}
+
+airport,158,43,5	duplicate(airport1)	机场职员#airport1b	90
+airport,126,43,5	duplicate(airport1)	机场职员#airport1c	90
+
+airport,143,49,3	script	到达职员#airport2a::airport2	90,{
+	mes "[到达职员]";
+	mes "欢迎来到艾音布罗克机场。";
+	mes "如果您是刚下飞空艇的旅客，我可以带您前往主航站楼。";
+	mes "否则，请搭乘飞空艇前往朱诺、里希塔乐镇和毁葛。";
+	next;
+	if (select("前往主航站楼。:取消。") == 1) {
+		mes "[到达职员]";
+		mes "一旦进入主航站楼，再次搭乘飞空艇时需要重新付费。";
+		mes "只有当艾音布罗克是您的目的地时才应该出去。";
+		mes "确定前往主航站楼吗？";
+		next;
+		if (select("是:否") == 1) {
+			warp "airport",142,40;
+			end;
+		}
+	}
+	mes "[到达职员]";
+	mes "好的，谢谢惠顾，";
+	mes "祝您旅途愉快~";
+	close;
+}
+
+airport,126,51,3	duplicate(airport2)	到达职员#airport2b	90
+airport,158,50,3	duplicate(airport2)	到达职员#airport2c	90
+
+einbroch,94,267,3	script	飞空艇乘务员#ein01	91,{
+	mes "[飞空艇乘务员]";
+	mes "欢迎来到艾音布罗克机场。";
+	mes "请从这个门搭乘飞空艇，";
+	mes "本次航班途经修发兹共和国的";
+	mes "朱诺、里希塔乐镇和毁葛。";
+	next;
+	mes "[飞空艇乘务员]";
+	mes "如果艾音布罗克是您的目的地，";
+	mes "请走下楼梯，找到达职员";
+	mes "带您前往主航站楼。";
+	mes "谢谢，祝您旅途愉快。";
+	close;
+}

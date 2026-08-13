@@ -1,0 +1,134 @@
+//===== rAthena Script =======================================
+//= Veins Guide
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Veins City guide
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Added second Veins guide NPC. [L0ne_W0lf]
+//= 1.2 Fixed a few small typos. [L0ne_W0lf]
+//============================================================
+
+veins,210,345,5	script	伯仁斯 解说员#1::ve_guide	934,{
+	mes "[伯仁斯解说员]";
+	mes "沙漠之城伯仁斯欢迎前来躲避";
+	mes "猛烈沙暴的冒险者们。";
+	mes "如果是第一次使用导览服务，";
+	mes "不妨先看看……";
+	set .@loop1,1;
+	while(.@loop1) {
+		next;
+		switch(select("城市导览:删除小地图上的标记:注意事项:取消")) {
+		case 1:
+			mes "[伯仁斯解说员]";
+			mes "只要是伯仁斯城里的地方，我都能为您指路。";
+			mes "您想去哪里呢？";
+			if (.@compass_check == 0) {
+				mes "需要我把这些地点";
+				mes "标记到您的小地图上吗？";
+				next;
+				if (select("是:否") == 1) set .@compass_check,1;
+			}
+			set .@loop2,1;
+			while(.@loop2) {
+				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
+				else next;
+
+				switch(select("神殿:旅馆:武器店:道具店:飞空艇:酒馆:地质研究所:取消")) {
+				case 1:
+					mes "[伯仁斯解说员]";
+					mes "我们的神殿位于北边，";
+					mes "总有虔诚的弗雷亚女神信徒";
+					mes "在那里祈祷，络绎不绝。";
+					if (.@compass_check == 1) viewpoint 1,196,258,1,0xFF0000;
+					break;
+				case 2:
+					mes "[伯仁斯解说员]";
+					mes "旅行的疲惫可以在旅馆里消除，";
+					mes "我左手边那栋建筑就是伯仁斯的旅馆。";
+					if (.@compass_check == 1) viewpoint 1,128,266,2,0xFF00FF;
+					break;
+				case 3:
+					mes "[伯仁斯解说员]";
+					mes "是呢，出门在外危险";
+					mes "总要靠自己防备。";
+					mes "去武器店看看吧，那里出售";
+					mes "质优价廉的武器，就在城的西边。";
+					if (.@compass_check == 1) viewpoint 1,150,175,3,0x99FFFF;
+					break;
+				case 4:
+					mes "[伯仁斯解说员]";
+					mes "冒险的必需品都备齐了吗？";
+					mes "如果还没有，建议去市中心的道具店";
+					mes "看看有什么可买的。";
+					if (.@compass_check == 1) viewpoint 1,230,161,4,0x0000FF;
+					break;
+				case 5:
+					mes "[伯仁斯解说员]";
+					mes "请注意，伯仁斯这里";
+					mes "只有货运飞空艇。";
+					if (.@compass_check == 1) viewpoint 1,273,285,5,0x00FF00;
+					break;
+				case 6:
+					mes "[伯仁斯解说员]";
+					mes "想和城里的人们交个朋友的话，";
+					mes "建议去西边的酒馆喝上一杯。";
+					if (.@compass_check == 1) viewpoint 1,150,217,6,0x00FF00;
+					break;
+				case 7:
+					mes "[伯仁斯解说员]";
+					mes "对地质学感兴趣吗？";
+					mes "那就去武器店二楼的";
+					mes "地质研究所看看吧。";
+					if (.@compass_check == 1) viewpoint 1,150,175,7,0x00FF00;
+					break;
+				case 8:
+					mes "[伯仁斯解说员]";
+					mes "如果不想让小地图继续显示位置标记，";
+					mes "再问我一次，选择''删除小地图上的标记''就好。";
+					set .@loop2,0;
+					break;
+				}
+			}
+			break;
+
+		case 2:
+			viewpoint 2,196,258,1,0xFF0000;
+			viewpoint 2,128,266,2,0xFF00FF;
+			viewpoint 2,150,175,3,0x99FFFF;
+			viewpoint 2,230,161,4,0x0000FF;
+			viewpoint 2,273,285,5,0x00FF00;
+			viewpoint 2,150,217,6,0x00FF00;
+			viewpoint 2,150,175,7,0x00FF00;
+			mes "[伯仁斯解说员]";
+			mes "好了，标记已经清除了。";
+			mes "还想了解其他地点的话，请随时告诉我。";
+			mes "祝您在伯仁斯玩得愉快。";
+			break;
+		case 3:
+			mes "[伯仁斯解说员]";
+			mes "使用''城市导览''时，";
+			mes "地点会被标记在屏幕右上角的小地图上。";
+			mes "如果看不到小地图，请按快捷键''ctrl+tab''，";
+			mes "或点击基本信息窗口里的''地图''按钮。";
+			mes "另外，看不全城市全貌时，";
+			mes "可以用''-''按钮缩小小地图。";
+			break;
+		case 4:
+			mes "[伯仁斯解说员]";
+			mes "祝您在伯仁斯玩得愉快。";
+			close2;
+			set .@loop1,0;
+			break;
+		}
+	}
+	close;
+}
+
+veins,189,101,5	duplicate(ve_guide)	伯仁斯 解说员#2	934

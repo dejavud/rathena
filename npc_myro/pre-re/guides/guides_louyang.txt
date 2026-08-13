@@ -1,0 +1,239 @@
+//===== rAthena Script =======================================
+//= Luoyang Guides
+//===== By: ==================================================
+//= jAthena/Tsuyuki; L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Guides for the City of Luoyang
+//===== Additional Comments: =================================
+//= 0.5 Added first, Japanese version [Tsuyuki]
+//= 1.0 Translated to English from iRO NPC Dialogue (100% Official) [Tsuyuki]
+//= 1.1 Rescripted official 10.3 standards. [L0ne_W0lf]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//============================================================
+
+louyang,213,213,3	script	士兵#BA::LouGuide	825,{
+	mes "[士兵]";
+	mes "欢迎来到洛阳，";
+	mes "一座历史悠久、";
+	mes "故事斑斓的城市。";
+	next;
+	mes "[士兵]";
+	mes "近来我们开辟了一条海运航线，";
+	mes "以促进与各国的友好往来。";
+	next;
+	mes "[士兵]";
+	mes "洛阳除了厚重的历史，";
+	mes "还以各式特产闻名，";
+	mes "在这里能找到许多本地的独有之物。";
+	next;
+	mes "[士兵]";
+	mes "请慢慢游览，";
+	mes "尽情享受你的洛阳之行。";
+	next;
+	switch(select("询问建筑位置。:删除小地图上的所有标记。:取消。")) {
+	case 1:
+		mes "[士兵]";
+		mes "你想去哪里？";
+		next;
+		switch(select("龙之城:医馆:官厅:武器店:道具店:酒馆:取消")) {
+		case 1:
+			mes "[士兵]";
+			mes "龙之城就在 ^FF3355+^000000 处，";
+			mes "包括城主大人在内的贵族们都住在那里。";
+			next;
+			mes "[士兵]";
+			mes "你是外来客，";
+			mes "按礼数还是先去拜见城主大人为好。";
+			viewpoint 1,218,255,2,0xFF3355;
+			break;
+		case 2:
+			mes "[士兵]";
+			mes "我们这里有位医术极高明的大夫，";
+			mes "她的医馆就在 ^CE6300+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "据说没有她治不好的病。";
+			mes "当然，是真是假我可不敢打包票。";
+			viewpoint 1,263,94,3,0xCE6300;
+			break;
+		case 3:
+			mes "[士兵]";
+			mes "官厅是联邦政府办公的地方，";
+			mes "位于 ^A5BAAD+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "如果遇到什么麻烦，";
+			mes "可以去找官厅的官员谈一谈。";
+			viewpoint 1,309,80,4,0xA5BAAD;
+			break;
+		case 4:
+			mes "[士兵]";
+			mes "武器店位于 ^55FF33+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "那里陈列着洛阳的老师傅们";
+			mes "打造出的精妙武器，";
+			mes "定会让你大开眼界。";
+			viewpoint 1,145,174,5,0x55FF33;
+			break;
+		case 5:
+			mes "[士兵]";
+			mes "道具店位于 ^3355FF+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "知己知彼，百战不殆！";
+			mes "未雨绸缪总好过事后后悔，";
+			mes "不妨去瞧瞧他们备的货吧？";
+			viewpoint 1,135,98,6,0x3355FF;
+			break;
+		case 6:
+			mes "[士兵]";
+			mes "旅途劳顿时，建议你去酒馆坐坐，";
+			mes "位置就在 ^00FF00+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "酒馆里既能结识各地游客，";
+			mes "也能打听到有用的消息。";
+			viewpoint 1,280,167,7,0x00FF00;
+			break;
+		case 7:
+			mes "[士兵]";
+			mes "如果想清除小地图上的所有标记，";
+			mes "请选择菜单中的''删除小地图上的所有标记。''";
+		}
+		break;
+	case 2:
+		viewpoint 2,218,255,2,0xFF00FF;
+		viewpoint 2,263,94,3,0xFF00FF;
+		viewpoint 2,309,80,4,0xFF00FF;
+		viewpoint 2,145,174,5,0xFF00FF;
+		viewpoint 2,135,98,6,0xFF00FF;
+		viewpoint 2,280,167,7,0xFF00FF;
+		mes "[士兵]";
+		mes "好了，小地图上的标记都已清除。";
+		mes "想了解建筑位置时，随时来问我。";
+		break;
+	case 3:
+		mes "[士兵]";
+		mes "偶尔独自探索";
+		mes "也别有一番乐趣。";
+		mes "路上小心。";
+	}
+	close;
+}
+
+louyang,160,175,3	duplicate(LouGuide)	士兵#BB	825
+
+louyang,224,104,3	script	龙之城 解说员#lou	818,{
+	mes "[龙之城解说员]";
+	mes "欢迎来到洛阳，";
+	mes "这片古老的土地上";
+	mes "流传着无数英勇传说。";
+	next;
+	mes "[龙之城解说员]";
+	mes "如今我们开通了海运航线，";
+	mes "迎接各国旅人，促进文化交流，";
+	mes "让大家共同受益。";
+	next;
+	mes "[龙之城解说员]";
+	mes "洛阳不仅以厚重的历史闻名，";
+	mes "还有本国独有的各式特产。";
+	mes "请慢慢游览，尽情享受旅途。";
+	next;
+	switch(select("询问建筑位置。:删除小地图上的所有标记。:取消。")) {
+	case 1:
+		set .@compass_check,1;
+		mes "[龙之城解说员]";
+		mes "你想去哪里？";
+		next;
+		switch(select("龙之城:医馆:官厅:武器店:道具店:酒馆:取消")) {
+		case 1:
+			mes "[龙之城解说员]";
+			mes "龙之城就在 ^FF3355+^000000 处，";
+			mes "包括城主大人在内的贵族们都住在那里。";
+			next;
+			mes "[龙之城解说员]";
+			mes "你是外来客，";
+			mes "按礼数还是先去拜见城主大人为好。";
+			viewpoint 1,218,255,2,0xFFFF33;
+			break;
+		case 2:
+			mes "[龙之城解说员]";
+			mes "我们这里有位医术极高明的大夫，";
+			mes "她的医馆就在 ^CE6300+^000000 处。";
+			next;
+			mes "[龙之城解说员]";
+			mes "据说没有她治不好的病。";
+			mes "当然，是真是假我可不敢打包票。";
+			viewpoint 1,263,94,3,0xFFCE63;
+			break;
+		case 3:
+			mes "[龙之城解说员]";
+			mes "官厅是联邦政府办公的地方，";
+			mes "位于 ^A5BAAD+^000000 处。";
+			next;
+			mes "[龙之城解说员]";
+			mes "如果遇到什么麻烦，";
+			mes "可以去找官厅的官员谈一谈。";
+			viewpoint 1,309,80,4,0xFF00FF;
+			break;
+		case 4:
+			mes "[龙之城解说员]";
+			mes "武器店位于 ^55FF33+^000000 处。";
+			next;
+			mes "[龙之城解说员]";
+			mes "那里陈列着洛阳的老师傅们";
+			mes "打造出的精妙武器，";
+			mes "定会让你大开眼界。";
+			viewpoint 1,145,174,5,0xFF55FF;
+			break;
+		case 5:
+			mes "[龙之城解说员]";
+			mes "道具店位于 ^3355FF+^000000 处。";
+			next;
+			mes "[龙之城解说员]";
+			mes "知己知彼，百战不殆！";
+			mes "未雨绸缪总好过事后后悔，";
+			mes "不妨去瞧瞧他们备的货吧？";
+			viewpoint 1,135,98,6,0xFF3355;
+			break;
+		case 6:
+			mes "[龙之城解说员]";
+			mes "旅途劳顿时，建议你去酒馆坐坐，";
+			mes "位置就在 ^00FF00+^000000 处。";
+			next;
+			mes "[士兵]";
+			mes "酒馆里既能结识各地游客，";
+			mes "也能打听到有用的消息。";
+			viewpoint 1,280,167,7,0xFF00FF;
+			break;
+		case 7:
+			mes "[龙之城解说员]";
+			mes "如果想清除小地图上的所有标记，";
+			mes "请选择菜单中的''删除小地图上的所有标记。''";
+		}
+		break;
+	case 2:
+		viewpoint 2,218,255,2,0xFF00FF;
+		viewpoint 2,263,94,3,0xFF00FF;
+		viewpoint 2,309,80,4,0xFF00FF;
+		viewpoint 2,145,174,5,0xFF00FF;
+		viewpoint 2,135,98,6,0xFF00FF;
+		viewpoint 2,280,167,7,0xFF00FF;
+		mes "[龙之城解说员]";
+		mes "好了！小地图上的标记已全部清除。";
+		mes "想了解建筑位置时，随时来问我。";
+		break;
+	case 3:
+		mes "[龙之城解说员]";
+		mes "我知道你想亲自探索洛阳、";
+		mes "亲眼看看这里的名胜。";
+		mes "那么，路上小心！";
+		break;
+	}
+	close;
+}

@@ -1,0 +1,4619 @@
+//===== rAthena Script ======================================= 
+//= 梦罗克相关任务 NPC
+//===== By: ================================================== 
+//= kobra_k88
+//===== Current Version: ===================================== 
+//= 3.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= - 停止标志头饰
+//= - 望远镜任务
+//= - 刺客酒吧 NPC/支线任务 NPC. [已禁用]
+//= - 魔王梦罗克复活
+//= - 命运的乌鸦
+//= - 王位继承
+//===== Additional Comments: ================================= 
+//= 1.1 Fixed exploits [Lupus]
+//= 1.2 Added Dandelion's Request / Morocc Invasion quest. [SinSloth]
+//= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
+//= 1.3a added GM lvl check as in other invansion quests [Lupus]
+//= 1.4 Fixed a small bug in Dandelion's Request. [SinSloth]
+//= 1.5 Fixed a little bug with "Job_Alchemist" changed to "Job_Alchem". [Samuray22]
+//= 1.6 Fixed a nasty bug in last part of the quest. [SinSloth]
+//= 1.6a replaced item "names" with item id. [Lupus]
+//= 1.7 Fixed a bug with XP rewards. [SinSloth]
+//= 1.8 Fixed a bug which prevented reset of events. [SinSloth]
+//= 1.9 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 2.0 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
+//= 2.0a Corrected a Typo error ";;". [Samuray22]
+//= 2.1 Assassins will now get their request item. (bugreport:1220) [L0ne_W0lf]
+//= 2.2 Updated Binocular and Stop Post quests. [L0ne_W0lf]
+//= 2.3 Replaced effect numerics with constants. [Samuray22]
+//= 2.4 Implemented Ep. 12.1 Continental Guard Quest. [L0ne_W0lf]
+//=     Moved Dandelion's Request to a it's own file.
+//=     Added support NPCs required to finish Gaebolg quest.
+//= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
+//= 2.6 Added quest log commands for Resurrection of Satan Morocc. [L0ne_W0lf]
+//=     Added the two remaining episode 12.1 quests. 
+//=     Updated Satan Morocc Quest to allow peopel who have
+//=     finished it to return to the previous map.
+//= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
+//= 2.8 Disabled Assassin bar pub NPCs, as they are included in the 13.1 quests file. [L0ne_W0lf]
+//= 2.9 Fixed player dying/logging out during conversation could prevent
+//=     summoning of Satan Morocc until server reboot. [Gepard]
+//= 3.0 Updated RE/Pre-RE EXP. [Euphy]
+//= 3.1 Updated to match the latest official scripts. [Euphy]
+//= 3.2 Added GM management NPC and variable $@re_moc_time$. [Euphy]
+//= 3.3 Renewal script update for ep16.1 [Capuche]
+//============================================================ 
+
+// 停止标志头饰任务
+// ============================================================
+-	script	威廉	89,{
+	mes "[威廉]";
+	mes "欢迎光临麦克米兰的";
+	mes "^3355FF停止标志头饰^000000工坊.";
+	next;
+	mes "[威廉]";
+	mes "我们麦克米兰家族制作专业交通号志牌已经有两百五十多年";
+	mes "了。最近我们接受特别订购，制作独特的装饰品^3355FF停止标志头饰^000000.";
+	next;
+	switch(select("我想订购一个^3355FF停止标志头饰^000000:不用了...")) {
+	case 1:
+		mes "[威廉]";
+		mes "这件独特的装饰品^3355FF停止标志头饰^000000，";
+		mes "是路上的交通号志，也可以当发饰！";
+		mes "我们以百年品质的名义郑重保证.";
+		next;
+		mes "[威廉]";
+		mes "制作一个^3355FF停止标志头饰^000000，需要^3355FF91100 Zeny^000000、^3355FF50个玛哪树枝^000000和^3355FF1个黑色染料^000000.";
+		next;
+		if ((countitem(1019) > 49) && (countitem(983) > 0) && (Zeny > 91099)) {
+			delitem 1019,50;  //Wooden_Block
+			delitem 983,1;  //Black_Dyestuffs
+			set Zeny, Zeny-91100;
+			mes "[威廉]";
+			mes "好了~!";
+			mes "这个^3355FF停止标志头饰^000000";
+			mes "是特别为您";
+			mes "制作的!";
+			mes "谢谢您的'停'顾!";
+			mes "...您听懂这个双关了吗?";
+			getitem 2272,1; // Stop_Post
+			close;
+		}
+		else {
+			mes "[威廉]";
+			mes "那么...";
+			mes "等您准备好那些材料再来，我们就给您一个停止标志头饰.";
+			close;
+		}
+	case 2:
+		mes "[威廉]";
+		mes "总之，谢谢您光临'麦克米兰工坊'。下次记得买点东西再走吧?";
+		close;
+	}
+}
+
+// 望远镜任务
+// ============================================================
+-	script	马里乌斯	64,{
+	mes "[马里乌斯]";
+	mes "你好啊，新顾客!!";
+	mes "我知道你要说什么。你是想要我的魔法眼镜，对吧~~?";
+	next;
+	switch(select("那是什么?:制作:不理他")) {
+	case 1:
+		mes "[马里乌斯]";
+		mes "嗯~!";
+		mes "它的正式名称是^3355FF望远镜^000000！是一种像双筒镜一样工作的光学仪器，";
+		mes "设计成双眼同时使用!";
+		next;
+		mes "[马里乌斯]";
+		mes "它由两个小望远镜和一个调焦装置组成。";
+		mes "调整镜片就能获得立体视觉.";
+		next;
+		mes "[马里乌斯]";
+		mes "怎么样?";
+		mes "很厉害吧?";
+		mes " ";
+		mes "木哈哈哈哈哈哈!";
+		mes ". . . . .";
+		next;
+		mes "[马里乌斯]";
+		mes "嗯?你好像";
+		mes "不相信我刚才说的话?";
+		mes "喂，混蛋。这是真的!!";
+		next;
+		mes "[马里乌斯]";
+		mes "我来告诉你";
+		mes "我需要的东西...";
+		mes "1个^3355FF旋转眼镜^000000！100个^3355FF钢铁^000000!";
+		mes "还有^3355FF50000 Zeny^000000!";
+		close;
+	case 2:
+		if ((countitem(2243) > 0) && (countitem(999) > 99) && (Zeny > 49999)) {
+			mes "[马里乌斯]";
+			mes "完美，完美!";
+			mes "我的杰作就要完成了!";
+			mes "木哈哈哈!";
+			next;
+			delitem 2243,1;  //Spinning_Eyes
+			delitem 999,100;  //Steel
+			set Zeny, Zeny-50000;
+			mes "[马里乌斯]";
+			mes "好了!";
+			mes "望远镜!";
+			getitem 2296,1; // Binoculars
+			next;
+			mes "[马里乌斯]";
+			mes "记住...";
+			mes "不要偷看不该看的东西。嗯，至少尽量别那样做.";
+			close;
+		}
+		else {
+			mes "[马里乌斯]";
+			mes "啊~~~~!!";
+			mes "你带来的";
+			mes "材料不够!!!!";
+			mes "你竟敢";
+			mes "侮辱我!!!";
+			mes "太坏了!!";
+			close;
+		}
+	case 3:
+		mes "[马里乌斯]";
+		mes "喂，你~!";
+		mes "你现在站在炼金术士中的炼金术士马里乌斯面前。";
+		mes "竟敢无视我？过来，我揍死你!";
+		close;
+	}
+}
+
+// 梦罗克刺客公会酒吧 [已禁用]
+// ============================================================
+/*
+morocc,43,108,5	script	印象犀利的少年#dan_07	82,{
+	if (BaseClass == Job_Assassin) {
+		mes "[杰克]";
+		mes "尽管城里一片混乱，";
+		mes "还是有人来这里.";
+		mes "也许这里真的是独一无二的地方..";
+		close;
+	}
+	else {
+		if (countitem(7416) > 0) {
+			mes "[杰克]";
+			mes "推荐信?";
+			mes "哦，天哪。看来你带来了一件非常非常古老的过去遗物.";
+			mes "好吧，我想你该进去见见老板了.";
+			close;
+		}
+		else {
+			mes "[杰克]";
+			mes "喂，你在偷看什么?";
+			mes "你没有更好的事可做吗？最好去避难所保命吧.";
+			close;
+		}
+	}
+}
+
+morocc,45,110,0	script	que_job01#01	45,2,2,{
+OnTouch_:
+	if (BaseClass == Job_Assassin) {
+		warp "que_job01",9,94;
+		end;
+	}
+	else {
+		mes "[杰克]";
+		mes "等等，那是禁区....";
+		mes "......";
+		mes "哦，算了.";
+		next;
+		mes "[杰克]";
+		mes "时代变了.";
+		mes "你想干什么就干什么吧!";
+		close2;
+		warp "que_job01",9,94;
+		end;
+	}
+}
+
+que_job01,6,94,0	warp	morocc#01	2,2,morocc,45,103
+que_job01,17,48,0	warp	que_job01#02	2,2,que_job01,68,92
+que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53
+
+que_job01,80,77,0	script	que_job01#04	45,2,2,{
+OnTouch_:
+	if (BaseClass == Job_Assassin) {
+		warp "que_job01",61,50;
+		end;
+	}
+	else if (mao_request > 0) {
+		warp "que_job01",61,50;
+		end;
+	}
+	else {
+		mes "[里瑟隆]";
+		mes "哇，你不能";
+		mes "来这里.";
+		mes "喂，老板！你认识";
+		mes "这家伙吗?";
+		next;
+		if (prt_curse == 24) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "不管你怎么说，我都要进去!!!";
+			next;
+			mes "[里瑟隆]";
+			mes "喂，老板-！这家伙怎么办?";
+			mes "他看起来很难缠!";
+			next;
+			mes "[老板]";
+			mes "嗯。让他做他想做的事吧.";
+			mes "过一道门也没什么大不了的.";
+			next;
+			mes "[里瑟隆]";
+			mes "哈！你听到了吧?";
+			mes "好吧，这样如何?";
+			mes "你请我喝一杯，我就让你进去.";
+			mes "而且，你在这里惹不起麻烦：这里";
+			mes "到处都是致命的刺客.";
+			next;
+			switch(select("好啊:凭什么?!")) {
+			case 1:
+				if (Zeny > 999) {
+					mes "[里瑟隆]";
+					mes "嘿，这才对嘛!";
+					mes " ";
+					mes "喂，酒保！老规矩!";
+					mes "我喜欢你的风格，";
+					mes "冒险家...";
+					set Zeny, Zeny-1000;
+					next;
+					mes "[里瑟隆]";
+					mes "好了，你可以进去了.";
+					mes "但千万别把这个酒吧的事";
+					mes "告诉任何人.";
+					mes " ";
+					close2;
+					warp "que_job01",61,50;
+					end;
+				}
+				else {
+					mes "[里瑟隆]";
+					mes "啊...";
+					mes "哦，你连在这里";
+					mes "买水的钱都没有.";
+					mes "天哪...";
+					mes "如果你真的想进去，";
+					mes "就准备好钱!";
+					close2;
+					warp "que_job01",85,77;
+					end;
+				}
+			case 2:
+				mes "[里瑟隆]";
+				mes "你不是那种精明的人，";
+				mes "是吧...？好吧，好吧.";
+				mes "既然你不帮我，";
+				mes "我为什么要帮你?";
+				mes "走开!";
+				close2;
+				warp "que_job01",85,77;
+				end;
+			}
+		}
+		else {
+			mes "[老板]";
+			mes "完全不认识.";
+			mes "别让这家伙";
+			mes "进来.";
+			mes " ";
+			next;
+			mes "[里瑟隆]";
+			mes "你听到了吧.";
+			mes "趁你还有腿，";
+			mes "赶紧离开";
+			mes "这里吧...";
+			close2;
+			warp "que_job01",85,77;
+			end;
+		}
+	}
+}
+
+que_job01,65,50,0	warp	que_job01#05	2,2,que_job01,84,77
+
+que_job01,81,79,5	script	发呆的骑士#dan_08	733,{
+	mes "[里瑟隆]";
+	mes "怎么了?";
+	mes "哦，我明白了...你大概";
+	mes "在奇怪为什么";
+	mes "我这样的骑士会在";
+	mes "刺客的秘密酒吧里吧.";
+	if (BaseClass == Job_Knight) {
+		mes "那你呢?";
+	}
+	next;
+	mes "[里瑟隆]";
+	mes "你知道..我只是来喘口气的。这些修复工作快把我累死了.";
+	mes "现在几乎找不到能安静喝一杯的地方了，如果你懂我意思的话.";
+	close;
+}
+
+que_job01,82,95,3	script	酒吧老板#moc_main01	46,{
+	if (checkweight(908,200) == 0) {
+		mes "^3355FF等一下!";
+		mes "你现在带的";
+		mes "东西太多了.";
+		mes "请先利用卡普拉服务";
+		mes "存放一些物品";
+		mes "再回来.^000000";
+		close;
+	}
+	if (BaseClass == Job_Assassin) {
+		mes "[老板]";
+		mes "请进.";
+		mes "要喝一杯吗?";
+	}
+	else if ((BaseJob == Job_Thief) && (BaseClass != Job_Assassin)) {
+		mes "[老板]";
+		mes "......哼。你这样的家伙怎么进来的?";
+		mes "好吧，看来杰克没在干活.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "喂，老板，别这么凶嘛。我们认识的，对吧?";
+		mes "你不想伤害老朋友的感情吧~";
+		next;
+		mes "[老板]";
+		mes "随你怎么说.";
+		mes "那么，你想喝什么?";
+	}
+	else {
+		mes "[老板]";
+		mes "....嗯...";
+		mes "你想喝什么?";
+	}
+	next;
+	switch(select("点酒:询问任务:取消")) {
+	case 1:
+		mes "[老板]";
+		mes "这里我只卖两种酒.";
+		mes "你要热带的苏克拉特";
+		mes "还是赤色海滩?";
+		next;
+		switch(select("热带的苏克拉特:赤色海滩:有免费的酒吗?")) {
+		case 1:
+			if (checkweight(908,200) == 0) {
+				mes "[老板]";
+				mes "喂，你为什么";
+				mes "带这么多东西?";
+				mes "如果你没地方放，";
+				mes "我就不能";
+				mes "给你酒.";
+				mes "清理一下你的物品栏!";
+				close;
+			}
+			else {
+				if (BaseClass == Job_Assassin) {
+					if (Zeny < 800) {
+						mes "[老板]";
+						mes "你知道吗...";
+						mes "这杯酒我本来要收你";
+						mes "800 Zeny，但";
+						mes "看来你现在";
+						mes "付不起。等你有钱了";
+						mes "再来，好吗?";
+					}
+					else {
+						mes "[老板]";
+						mes "大多数酒保";
+						mes "通常收1,000 Zeny，";
+						mes "但我只";
+						mes "收你800。好好享用吧，";
+						mes "朋友，像品味人生一样";
+						mes "细细品味它.";
+						set Zeny, Zeny-800;
+						getitem 12112,1; //Tropical_Sograt
+					}
+					close;
+				}
+				else {
+					if (Zeny < 1000) {
+						mes "[老板]";
+						mes "喂，你的钱";
+						mes "不够买这杯酒.";
+						mes "如果你想让我调酒，";
+						mes "就带1,000 Zeny";
+						mes "回来，好吗?";
+						close;
+					}
+					else {
+						mes "[老板]";
+						mes "刺客我收";
+						mes "800 Zeny，但你嘛，";
+						mes "我要收1,000。";
+						mes "别见怪，你能来这里";
+						mes "已经很幸运了.";
+						mes "嘿，慢慢享用吧~";
+						set Zeny, Zeny-1000;
+						getitem 12112,1; //Tropical_Sograt
+						close;
+					}
+				}
+			}
+		case 2:
+			if (checkweight(908,200) == 0) {
+				mes "[老板]";
+				mes "喂，你为什么";
+				mes "带这么多东西?";
+				mes "如果你没地方放，";
+				mes "我就不能";
+				mes "给你酒.";
+				mes "清理一下你的物品栏!";
+				close;
+			}
+			else {
+				if (BaseClass == Job_Assassin) {
+					if (Zeny < 800) {
+						mes "[老板]";
+						mes "你知道吗...";
+						mes "这杯酒我本来要收你";
+						mes "800 Zeny，但";
+						mes "看来你现在";
+						mes "付不起。等你有钱了";
+						mes "再来，好吗?";
+					}
+					else {
+						mes "[老板]";
+						mes "大多数酒保";
+						mes "通常收1,000 Zeny，";
+						mes "但我只";
+						mes "收你800。好好享用吧，";
+						mes "朋友，像品味人生一样";
+						mes "细细品味它.";
+						set Zeny, Zeny-800;
+						getitem 12113,1; //Vermilion_The_Beach
+					}
+					close;
+				}
+				else {
+					if (Zeny < 1000) {
+						mes "[老板]";
+						mes "喂，你的钱";
+						mes "不够买这杯酒.";
+						mes "如果你想让我调酒，";
+						mes "就带1,000 Zeny";
+						mes "回来，好吗?";
+						close;
+					}
+					else {
+						mes "[老板]";
+						mes "刺客我收";
+						mes "800 Zeny，但你嘛，";
+						mes "我要收1,000。";
+						mes "别见怪，你能来这里";
+						mes "已经很幸运了.";
+						mes "嘿，慢慢享用吧~";
+						set Zeny, Zeny-1000;
+						getitem 12113,1; //Vermilion_The_Beach
+						close;
+					}
+				}
+			}
+		case 3:
+			mes "[老板]";
+			mes "你说什么...?";
+			mes "我刚说过";
+			mes "我只卖两种酒.";
+			mes "想喝水的话，";
+			mes "去别的地方";
+			mes "吧.";
+			close;
+		}
+	case 2:
+		if (mao_request == 1) {
+			if (BaseClass == Job_Assassin) {
+				mes "[老板]";
+				mes "任务...";
+				mes "你不觉得太晚了吗?";
+				mes "所有委托都取消了，没什么可做的了.";
+				mes "而且，当务之急是城市的修复工作.";
+				close;
+			}
+			else {
+				mes "[老板]";
+				mes "啊?";
+				next;
+				select("给他看推荐信.");
+				if (countitem(7416) > 0) {
+					mes "[老板]";
+					mes "啊..我想你来得太晚了.";
+					mes "如果是关于发给各公会的委托，我没什么可说的.";
+					mes "抱歉让你白跑一趟.";
+					close;
+				}
+				else {
+					mes "[老板]";
+					mes "你在说什么?";
+					next;
+					mes "[老板]";
+					mes "................你现在看起来非常可疑.";
+					mes " ";
+					mes "小的们，把这家伙赶出去!!";
+					next;
+					mes "[酒客少年]";
+					mes "- 是，老板!";
+					next;
+					mes "- 你被赶了出去。 -";
+					close2;
+					warp "morocc",45,106;
+					end;
+				}
+			}
+		}
+		else {
+			if (BaseClass == Job_Assassin) {
+				mes "[老板]";
+				mes "让我猜猜。你没从这里接到任何任务，是吧?";
+				mes "对了，你喜欢这个地方吗?";
+				next;
+				mes "[老板]";
+				mes "你知道吗，我有点...";
+				mes "非常爱我这个小酒吧..";
+				mes "这里会进行一些秘密生意..";
+				next;
+				mes "[老板]";
+				mes "如果你愿意，我可以";
+				mes "向公会长推荐你";
+				mes "执行任务。在那之前，";
+				mes "你要专心训练.";
+				mes "在训练之前...";
+				mes "为什么不先喝一杯呢?";
+				close;
+			}
+			else {
+				mes "[老板]";
+				mes "任务...?";
+				mes "喂，你在说什么?";
+				mes " ";
+				mes "别胡说八道了，";
+				mes "点杯酒吧.";
+				close;
+			}
+		}
+	case 3:
+		mes "[老板]";
+		mes "嗯.";
+		close;
+	}
+}
+
+que_job01,49,49,5	script	小桃#dan_09	877,{
+	if (BaseClass == Job_Assassin) {
+		mes "[小桃]";
+		mes "欢迎，喵~";
+		mes "外面怎么样，喵?";
+		next;
+		if (prt_curse == 24) {
+			switch(select("玛尔佳娜在吗?:我是来找你的，小桃.")) {
+			case 1:
+				mes "[小桃]";
+				mes "她在左边房间里，喵~";
+				mes "不过，你怎么知道她在这里，喵?";
+				close;
+			case 2:
+				mes "[小桃]";
+				mes "这里不是玩的地方，喵..";
+				mes "...喂，你那样看着我，很尴尬的，喵..";
+				close;
+			}
+		}
+		else {
+			mes "[小桃]";
+			mes "都是因为那个叫莱扬 摩尔还是摩尔什么的家伙吗..还是..喵?";
+			mes "...喵..";
+			next;
+			mes "[小桃]";
+			mes "哼，你没事做就消失吧，喵?!";
+			mes "你知道这里是禁区，喵.";
+			mes "反正你也进不了那个房间，喵~.";
+			next;
+			mes "[小桃]";
+			mes "或者..你能进去?..哦，谁知道呢，喵..";
+			mes "小桃不想再看门了，喵~喵~";
+			close;
+		}
+	}
+	else {
+		mes "[小桃]";
+		mes "怎么了，喵!";
+		next;
+		switch(select("就你一个人吗，小鬼?:你怎么了?!:喂，别喵了?!")) {
+		case 1:
+			mes "[小桃]";
+			mes "你在说什么啊，喵!";
+			mes "小桃是最棒的守门人!";
+			mes "千万别小看人，喵!";
+			next;
+			mes "[小桃]";
+			mes "看来你是有事而来，但别指望我会帮你，喵!!";
+			mes "你以为我笨到会告诉你";
+			mes "老板和玛尔佳娜在右边那个房间里吗？喵，喵，喵~~";
+			close;
+		case 2:
+			mes "[小桃]";
+			mes "你因为我是守门人就看不起我?!";
+			mes "呜...";
+			next;
+			mes "[小桃]";
+			mes "趁还有机会，快滚!!!!";
+			close;
+		case 3:
+			mes "[小桃]";
+			mes "喵，喵.";
+			mes "说来话长，喵.";
+			mes "那天，小桃真的很想要一个大蝴蝶结，喵.";
+			next;
+			mes "[小桃]";
+			mes "所以我出去找野玫瑰了，喵...";
+			mes "...喵？等等，我为什么要说这个，喵?!";
+			next;
+			mes "[小桃]";
+			mes "呜!";
+			mes "你到底是谁!";
+			next;
+			mes "[小桃]";
+			mes "快出去，喵!!!";
+			close;
+		}
+	}
+}
+
+que_job01,51,55,0	script	que_job01#room_1	45,1,1,{
+
+OnReset:
+	set $@maobar_room,0;
+	end;
+
+OnTouch_:
+	if (prt_curse == 24) {
+		if ($@maobar_room == 0) {
+			set $@maobar_room,1;
+			donpcevent " #room1timer::OnEnable";
+			donpcevent "玛尔佳娜#poison::OnEnable";
+			mes "[小桃]";
+			mes "啊，那个地方有";
+			mes "警戒魔法保护，所以你";
+			mes "只能在那里待^4D4DFF4分钟^000000.";
+			mes "别浪费时间，喵!";
+			close2;
+			warp "que_job01",11,7;
+			end;
+		}
+		else {
+			mes "[小桃]";
+			mes "非常抱歉，喵~";
+			mes "已经有人";
+			mes "在里面了。晚点";
+			mes "再来吧，喵?";
+			close2;
+			warp "que_job01",52,50;
+			end;
+		}
+	}
+	else if (mao_request > 0) {
+		if ($@maobar_room == 0) {
+			set $@maobar_room,1;
+			donpcevent " #room1timer::OnEnable";
+			donpcevent "巴尔德斯#moc_master_1::OnEnable";
+			mes "[小桃]";
+			mes "啊，那个地方有";
+			mes "警戒魔法保护，所以你";
+			mes "只能在那里待^4D4DFF4分钟^000000.";
+			mes "别浪费时间，喵!";
+			close2;
+			warp "que_job01",11,7;
+			end;
+		}
+		else {
+			mes "[小桃]";
+			mes "非常抱歉，喵~";
+			mes "已经有人";
+			mes "在里面了。晚点";
+			mes "再来吧，喵?";
+			close2;
+			warp "que_job01",52,50;
+			end;
+		}
+	}
+	else {
+		mes "[小桃]";
+		mes "你-你是谁?";
+		mes "这里是禁区，";
+		mes "喵！如果你";
+		mes "没有许可，就马上";
+		mes "离开，喵!";
+		close2;
+		warp "que_job01",52,50;
+		end;
+	}
+}
+
+que_job01,1,1,0	script	 #room1timer	844,{
+OnEnable:
+	initnpctimer;
+	mapannounce "que_job01","现在进入主人区域第1区.",bc_map,"0x70DBDB";
+	end;
+
+OnStop:
+	mapannounce "que_job01","主人区域第1区的警戒魔法已解除.",bc_map,"0x70DBDB";
+	donpcevent "#room1_warp::OnDisable";
+	donpcevent "巴尔德斯#moc_master_1::OnDisable";
+	donpcevent "玛尔佳娜#poison::OnInit";
+	donpcevent "que_job01#room_1::OnReset";
+	stopnpctimer;
+	end;
+
+OnTimer240000:
+	donpcevent "#room1_warp::OnEnable";
+	end;
+
+OnTimer245000:
+	donpcevent "#room1_warp::OnDisable";
+	donpcevent "巴尔德斯#moc_master_1::OnDisable";
+	donpcevent "玛尔佳娜#poison::OnInit";
+	end;
+
+OnTimer250000:
+	mapannounce "que_job01","主人区域第1区的警戒魔法已启动.",bc_map,"0x70DBDB";
+	donpcevent "que_job01#room_1::OnReset";
+	stopnpctimer;
+	end;
+}
+
+que_job01,12,13,0	script	#room1_warp	-1,15,15,{
+OnInit:
+	disablenpc "#room1_warp";
+	end;
+
+OnEnable:
+	enablenpc "#room1_warp";
+	end;
+
+OnDisable:
+	disablenpc "#room1_warp";
+	end;
+
+OnTouch_:
+	warp "que_job01",52,50;
+	end;
+}
+
+que_job01,51,44,0	warp	que_job01#room_2	1,1,que_job01,80,23
+
+que_job01,11,4,0	script	que_job01#room1_out	45,1,1,{
+OnTouch_:
+	warp "que_job01",52,50;
+	donpcevent " #room1timer::OnStop";
+	end;
+}
+
+que_job01,80,27,0	warp	que_job01#room2_1_out	1,1,que_job01,52,50
+
+que_job01,16,21,5	script	巴尔德斯#moc_master_1	55,{
+	if (BaseClass == Job_Assassin) {
+		mes "[巴尔德斯]";
+		mes "什么事？我没什么要你做的.";
+		mes "能让我安静一下吗？我头疼得厉害.";
+		next;
+		mes "[巴尔德斯]";
+		mes "改天我再请你帮忙.";
+		mes "毕竟你看起来很有干劲.";
+	}
+	else {
+		mes "[巴尔德斯]";
+		mes "....抱歉，你能离开吗?";
+		mes "我现在压力很大.";
+		mes "如果你是为了我们之前的委托而来，就忘了它吧.";
+	}
+	if (countitem(7417) > 0) {
+		delitem 7417,countitem(7417); //Mission_ScrollA
+	}
+	if (countitem(7418) > 0) {
+		delitem 7418,countitem(7418); //Mission_ScrollB
+	}
+	if (countitem(7416) > 0) {
+		delitem 7416,countitem(7416); //Letter_Of_Recommend
+	}
+	close;
+
+OnInit:
+	disablenpc "巴尔德斯#moc_master_1";
+	end;
+
+OnEnable:
+	enablenpc "巴尔德斯#moc_master_1";
+	end;
+
+OnDisable:
+	disablenpc "巴尔德斯#moc_master_1";
+	end;
+}
+*/
+
+yuno_in04,180,106,3	script	看书的女孩#moc_girl1	73,{
+	mes "[" + strcharinfo(0) + "]";
+	mes "打扰一下，可以";
+	mes "问个问题吗?";
+	next;
+	mes "[于妮亚]";
+	mes "啊？哦，对不起，我刚才";
+	mes "看书太入迷了!";
+	mes "那么，你想问我";
+	mes "什么?";
+	next;
+	select("你在看什么书?");
+	mes "[于妮亚]";
+	mes "啊！这是约书亚 范赛的畅销书之一.";
+	mes "主角是个作家，他写了自己情人的故事，非常感人...";
+	next;
+	mes "[于妮亚]";
+	mes "哦..我迫不及待想看惠仁特辑了..";
+	mes "这本你想看的话可以看一眼.";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "哦，不，这不太好吧.";
+	mes "封面是圆的，还有一条红带子，";
+	mes "看起来..我觉得这是成人看的.";
+	mes "打..打扰了~!";
+	close;
+}
+
+morocc_in,46,125,5	script	瑟菲特#moc_ex1	729,{
+	mes "[瑟菲特]";
+	mes "我一直相信撒旦..";
+	mes "哈...活着真好啊.";
+	next;
+	mes "[瑟菲特]";
+	mes "谁想到活着的时候还能见到撒旦.....?";
+	close;
+}
+
+que_job01,70,84,1	script	女孩#moc_ex002	882,{
+	mes "[女孩]";
+	mes "哦，世界..世界要完了..";
+	mes "-抽泣-";
+	mes "现在一切都无济于事了..";
+	emotion ET_CRY;
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "....啧..啧...";
+	mes "天哪..真不敢相信这个小女孩在借酒浇愁....";
+	close;
+}
+
+// 魔王梦罗克复活
+// ============================================================
+moc_fild20,354,183,3	script	大陆卫队 警备兵#01::MocConGuard	707,3,3,{
+	if ((rebirth_moc_edq == 0) && (rebirth_moc_edq < 4)) {
+		mes "[大陆卫队 警备兵]";
+		mes "此处之后禁止平民进入.";
+		mes "这个地方非常危险，限制进入.";
+		next;
+		switch(select("取消对话:询问发生了什么")) {
+		case 1:
+			close;
+		case 2:
+			mes "[大陆卫队 警备兵]";
+			mes "你还不知道吗？魔王梦罗克复活了，";
+			mes "并从囚禁他的梦罗克村逃了出来.";
+			next;
+			mes "[大陆卫队 警备兵]";
+			mes "他的复活给村庄和周围的沙漠造成了无法挽回的破坏，";
+			mes "现在他已经移动到苏克拉特沙漠.";
+			next;
+			mes "[大陆卫队 警备兵]";
+			mes "我们奉普隆德拉王国的命令，";
+			mes "阻止除梦罗克讨伐队成员以外的平民进入该地区.";
+			next;
+			mes "[大陆卫队 警备兵]";
+			mes "如果你想了解更多信息，";
+			mes "建议你去和梦罗克村事故现场的大陆卫队谈谈.";
+			next;
+			switch(select("结束对话:询问卫队的位置")) {
+			case 1:
+				close;
+			case 2:
+				mes "[大陆卫队 警备兵]";
+				mes "你想找的卫队在梦罗克村中央搭建的营地里.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "如果你愿意，我可以直接送你过去.";
+				next;
+				switch(select("不用了，谢谢.:麻烦你了.")) {
+				case 1:
+					mes "[大陆卫队 警备兵]";
+					mes "我明白了。那么为了你的安全，请尽快离开这个危险区域.";
+					close;
+				case 2:
+					mes "[大陆卫队 警备兵]";
+					mes "很好。我这就送你去梦罗克村的事故现场.";
+					close2;
+					warp "morocc",160,61;
+					end;
+				}
+			}
+		}
+	}
+	else if ((rebirth_moc_edq > 3) && (rebirth_moc_edq < 8)) {
+		mes "[大陆卫队 警备兵]";
+		mes "此处之后禁止平民进入.";
+		mes "这个地方非常危险，限制进入.";
+		next;
+		switch(select("取消对话:进入野外调查:前往梦罗克事故现场")) {
+		case 1:
+			close;
+		case 2:
+			if ($@re_moc < 3) {
+				getpartymember getcharid(1), 1, .@partymembercid;
+				.@partymembercount = $@partymembercount;
+				for (.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+						.@onlinemembers++;
+				}
+				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+					mes "[大陆卫队 警备兵]";
+					mes "......";
+					next;
+					mes "[大陆卫队 警备兵]";
+					mes "好的，我确认你是大陆卫队的成员。祝你顺利完成任务.";
+					next;
+					mes "[大陆卫队 警备兵]";
+					mes "我这就送你去野外。请使用野外入口的传送点回到这个区域.";
+					close2;
+					warp "moc_fild21",38,193;
+					end;
+				}
+				else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+					mes "[大陆卫队 警备兵]";
+					mes "欢迎，大陆卫队的成员。";
+					mes "我有巴尔洛将军的特别命令要传达给你们，让我来宣读一下.";
+					next;
+					mes "[大陆卫队 警备兵]";
+					mes "'鉴于该区域的危险性，特此禁止大陆卫队成员单独调查。";
+					mes "今后必须组成至少2人的队伍才能执行任务.'";
+					next;
+					mes "[大陆卫队 警备兵]";
+					mes "...你们明白了吧？请回到现场，组成至少2人的队伍再来。谢谢.";
+					close;
+				}
+				else if (countitem(7826) < 1) {
+					mes "[大陆卫队 警备兵]";
+					mes "只有持有大陆卫队证明书的大陆卫队成员才能继续前进.";
+					close;
+				}
+				else {
+					close;
+				}
+			}
+			else {
+				mes "[大陆卫队 警备兵]";
+				mes "我们接到总部命令，由于梦罗克野外检测到异常的时空现象，";
+				mes "要封锁这个区域.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "我们需要等现象结束，然后再让你们进去调查.";
+				close;
+			}
+		case 3:
+			mes "[大陆卫队 警备兵]";
+			mes "很好。我这就送你去梦罗克村的事故现场.";
+			close2;
+			warp "morocc",160,61;
+			end;
+		}
+	}
+	else if (rebirth_moc_edq == 8) {
+		mes "[大陆卫队 警备兵]";
+		mes "啊，你是为大陆卫队工作的冒险家。幸会。需要帮助尽管找我.";
+		next;
+		getpartymember getcharid(1), 1, .@partymembercid;
+		.@partymembercount = $@partymembercount;
+		for (.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (convertpcinfo(.@partymembercid[.@i], CPC_ACCOUNT))
+				.@onlinemembers++;
+		}
+		switch(select("进入第一片野外调查:进入第二片野外调查:返回梦罗克事故现场:取消对话")) {
+		case 1:
+			if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+				mes "[大陆卫队 警备兵]";
+				mes "......";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "好的，我确认你是大陆卫队的成员。祝你顺利完成任务.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "我这就送你去野外。请使用野外入口的传送点回到这个区域.";
+				close2;
+				warp "moc_fild21",38,193;
+				end;
+			}
+			else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+				mes "[大陆卫队 警备兵]";
+				mes "欢迎，大陆卫队的成员。";
+				mes "我有巴尔洛将军的特别命令要传达给你们，让我来宣读一下.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "'鉴于该区域的危险性，特此禁止大陆卫队成员单独调查。";
+				mes "今后必须组成至少2人的队伍才能执行任务.'";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "...你们明白了吧？请回到现场，组成至少2人的队伍再来。谢谢.";
+				close;
+			}
+			else if (countitem(7826) < 1) {
+				mes "[大陆卫队 警备兵]";
+				mes "只有持有大陆卫队证明书的大陆卫队成员才能继续前进.";
+				close;
+			}
+			else {
+				close;
+			}
+		case 2:
+			if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
+				mes "[大陆卫队 警备兵]";
+				mes "......";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "好的，我确认你是大陆卫队的成员。祝你顺利完成任务.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "我这就送你去野外。请使用野外入口的传送点回到这个区域.";
+				close2;
+				warp "moc_fild22",38,193;
+				end;
+			}
+			else if ((.@onlinemembers < 2) && (countitem(7826) > 0)) {
+				mes "[大陆卫队 警备兵]";
+				mes "欢迎，大陆卫队的成员。";
+				mes "我有巴尔洛将军的特别命令要传达给你们，让我来宣读一下.";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "'鉴于该区域的危险性，特此禁止大陆卫队成员单独调查。";
+				mes "今后必须组成至少2人的队伍才能执行任务.'";
+				next;
+				mes "[大陆卫队 警备兵]";
+				mes "...所以请回到现场，组成至少2人的队伍再来。谢谢.";
+				close;
+			}
+			else if (countitem(7826) < 1) {
+				mes "[大陆卫队 警备兵]";
+				mes "只有持有大陆卫队证明书的大陆卫队成员才能继续前进.";
+				close;
+			}
+			else {
+				close;
+			}
+		case 3:
+			mes "[大陆卫队 警备兵]";
+			mes "很好。我这就送你去梦罗克村的事故现场.";
+			close2;
+			warp "morocc",160,61;
+			end;
+		case 4:
+			close;
+		}
+	}
+	else {
+		end;
+	}
+
+OnTouch:
+	mes "[大陆卫队 警备兵]";
+	mes "此处之后禁止平民进入.";
+	mes "这个地方非常危险，限制进入.";
+	close;
+	end;
+}
+
+moc_fild20,354,174,3	duplicate(MocConGuard)	大陆卫队 警备兵#02	707,3,3
+moc_fild20,38,174,5	duplicate(MocConGuard)	大陆卫队 警备兵#03	707,3,3
+moc_fild20,38,183,5	duplicate(MocConGuard)	大陆卫队 警备兵#04	707,3,3
+moc_fild20,189,21,7	duplicate(MocConGuard)	大陆卫队 警备兵#05	707,3,3
+moc_fild20,200,21,7	duplicate(MocConGuard)	大陆卫队 警备兵#06	707,3,3
+moc_fild20,203,336,5	duplicate(MocConGuard)	大陆卫队 警备兵#07	707,3,3
+moc_fild20,215,336,3	duplicate(MocConGuard)	大陆卫队 警备兵#08	707,3,3
+
+-	script	大陆卫队 传令兵#00::ConMessenger	997,3,3,{
+	set .@area$,strnpcinfo(2);
+	if (.@area$ == "01") { set .@area$,"普隆德拉"; }
+	else if (.@area$ == "02") { set .@area$,"吉芬"; }
+	else if (.@area$ == "03") { set .@area$,"斐扬"; }
+	else if (.@area$ == "04") { set .@area$,"艾尔贝塔"; }
+	else if (.@area$ == "05") { set .@area$,"艾尔帕兰"; }
+	if (BaseLevel > 79) {
+		mes "[大陆卫队 传令兵]";
+		mes "你好，"+ strcharinfo(0) +"。事态紧急，我们没有多少时间，我就长话短说了.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "我是从梦罗克大陆卫队总部派到" + .@area$ + "的传令兵。";
+		mes "我的职责是把重要消息传达给尽可能多的知名冒险家。";
+		mes "很高兴终于找到你了，"+ strcharinfo(0) +".";
+		next;
+		select("梦罗克大陆卫队总部?");
+		mes "[大陆卫队 传令兵]";
+		mes "时间紧迫，我只能给你简要说明一下.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "魔王梦罗克，那个被囚禁在梦罗克地下数百年的邪恶魔王，";
+		mes "复活并逃了出来.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "魔王梦罗克的复活彻底摧毁了梦罗克村及其周边地区.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "所有的死亡和痛苦...与梦罗克及其周边发生的一切相比，";
+		mes "任何地方都像是天堂.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "梦罗克大陆卫队是为了讨伐魔王梦罗克、";
+		mes "缓解这场危机而立即组建的。";
+		mes "我来这里是为了向卢恩·米德加兹王国的所有人通报这场灾难";
+		mes ".";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "我们需要你的帮助，"+ strcharinfo(0) +"。";
+		mes "我们需要像你这样优秀的冒险家再次封印魔王梦罗克.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "更多信息，请和梦罗克大陆卫队的队长谈谈。他在等你，"+ strcharinfo(0) +".";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "大陆卫队总部就在梦罗克中央宫殿附近，请尽快去和长官谈谈.";
+		close;
+	}
+	else {
+		mes "[大陆卫队 传令兵]";
+		mes "我是梦罗克大陆卫队总部的传令兵，";
+		mes "我带着紧急消息来到" + .@area$ + "，";
+		mes "要告诉卢恩·米德加兹王国的所有人.";
+		next;
+		select("梦罗克大陆卫队总部?");
+		mes "[大陆卫队 传令兵]";
+		mes "时间紧迫，我只能给你简要说明一下.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "魔王梦罗克，那个被囚禁在梦罗克地下数百年的邪恶魔王，";
+		mes "复活并逃了出来.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "魔王梦罗克的复活彻底摧毁了梦罗克村及其周边地区.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "所有的死亡和痛苦...与梦罗克及其周边发生的一切相比，";
+		mes "任何地方都像是天堂.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "梦罗克大陆卫队是为了讨伐魔王梦罗克、";
+		mes "缓解这场危机而立即组建的。";
+		mes "我来这里是为了向卢恩·米德加兹王国的所有人通报这场灾难";
+		mes ".";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "我的职责之一是帮助招募世界各地的冒险家，";
+		mes "协助把魔王梦罗克重新封印起来。";
+		mes "这不容易，但他以前被打败过一次。魔王梦罗克可以再次被封印.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "梦罗克村至少70%的地区被魔王梦罗克复活的余波摧毁了.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "梦罗克周围的沙漠也被魔王梦罗克及其强大的幻影和手下占";
+		mes "据，变成了死地.";
+		mes "所以听从我的警告，除非是梦罗克大陆卫队组织的任务，";
+		mes "否则请远离梦罗克地区.";
+		close;
+	}
+
+OnTouch_:
+	if (BaseLevel > 79) {
+		mes "[大陆卫队 传令兵]";
+		mes "你是..."+ strcharinfo(0) +"吗?";
+		mes "啊，很好。我有一条极其重要的消息要告诉你.";
+		next;
+		mes "[大陆卫队 传令兵]";
+		mes "情况紧急，请仔细听我说.";
+		close;
+	}
+	end;
+}
+
+prontera,164,304,3	duplicate(ConMessenger)	大陆卫队 传令兵#01	997,3,3
+geffen,128,90,3	duplicate(ConMessenger)	大陆卫队 传令兵#02	997,3,3
+payon,200,113,3	duplicate(ConMessenger)	大陆卫队 传令兵#03	997,3,3
+alberta,127,64,3	duplicate(ConMessenger)	大陆卫队 传令兵#04	998,3,3
+aldebaran,135,128,3	duplicate(ConMessenger)	大陆卫队 传令兵#05	998,3,3
+
+-	script	大陆卫队 行政官	-1,{
+	if (rebirth_moc_edq > 3) {
+		mes "[大陆卫队 行政官]";
+		mes "我谨代表大陆卫队感谢你的努力。";
+		mes "现在，让我看看总部有没有什么你应该知道的新消息...";
+		next;
+		mes "[大陆卫队 行政官]";
+		mes "嗯...";
+		next;
+		mes "[大陆卫队 行政官]";
+		mes "还没有。请继续执行你现在的任务。再次感谢你.";
+		close;
+	}
+	else if (rebirth_moc_edq == 0) {
+		mes "[大陆卫队 行政官]";
+		mes "欢迎来到梦罗克讨伐信息中心。有什么可以帮你的?";
+		next;
+		switch(select("这里是做什么的?:我是来报名的.:告诉我村里的情况.")) {
+		case 1:
+			mes "[大陆卫队 行政官]";
+			mes "我驻扎在这里，协助希望志愿加入大陆卫队、";
+			mes "讨伐魔王梦罗克的冒险家.";
+			next;
+			mes "[大陆卫队 行政官]";
+			mes "我相信你已经知道，";
+			mes "魔王梦罗克的复活威胁着卢恩·米德加兹王国的和平，";
+			mes "如果任由魔王梦罗克横行，他将吞噬整个世界.";
+			next;
+			mes "[大陆卫队 行政官]";
+			mes "大陆卫队目前正在王国的命令下筹划各种对策来压制撒旦莫";
+			mes "罗克.";
+			next;
+			mes "[大陆卫队 行政官]";
+			mes "如果你收到我们传令兵的邀请，";
+			mes "或者对自己的实力有信心，我们鼓励你志愿加入大陆卫队，";
+			mes "让这片大陆重归和平.";
+			close;
+		case 2:
+			if (BaseLevel > 79) {
+				mes "[大陆卫队 行政官]";
+				mes "欢迎，" + strcharinfo(0) +"。我一直在等你。我想我们的传令兵已经告诉你情况了.";
+				next;
+				mes "[大陆卫队 行政官]";
+				mes "我马上为你办理登记。请稍等.";
+				next;
+				mes "[大陆卫队 行政官]";
+				mes "现在请去和大陆卫队的巴尔洛将军谈谈。你可以在中央找到他.";
+				set rebirth_moc_edq,1;
+				setquest 3050;
+				close;
+			}
+			else {
+				mes "[大陆卫队 行政官]";
+				mes "我赞赏你的勇气，但要帮助我们，光有勇气是不够的.";
+				next;
+				mes "[大陆卫队 行政官]";
+				mes "魔王梦罗克是凡间最强大的邪恶存在。";
+				mes "他要取你的性命易如反掌.";
+				next;
+				mes "[大陆卫队 行政官]";
+				mes "我强烈建议你现在只考虑自己的安全。";
+				mes "当决战来临时，我相信没有任何地方是安全的.";
+				close;
+			}
+		case 3:
+			mes "[大陆卫队 行政官]";
+			mes "如你所见，情况再糟不过了。";
+			mes "村庄和周边地区都被魔王梦罗克的复活破坏得无法挽回.";
+			next;
+			mes "[大陆卫队 行政官]";
+			mes "由于王国到处派遣了大陆卫队传令兵，";
+			mes "许多有能力的冒险家聚集到这里，";
+			mes "但...恐怕他们仍不足以打败魔王.";
+			next;
+			mes "[大陆卫队 行政官]";
+			mes "请听从我们的指示，至少在这个区域内，暂时远离危险.";
+			close;
+		}
+	}
+	else {
+		mes "[大陆卫队 行政官]";
+		mes "你的申请已经登记了。请去和巴尔洛将军谈谈.";
+		close;
+	}
+}
+
+morocc,159,113,3	script	将军 巴尔洛	752,{
+	if (rebirth_moc_edq == 0) {
+		mes "[将军 巴尔洛]";
+		mes "你来得不巧，但幸会。我是大陆卫队将军巴尔洛。";
+		mes "我们被派到梦罗克来压制魔王梦罗克...我们需要一切能聚集的";
+		mes "力量和运气.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "抱歉，我正忙着审核这些大陆卫队的申请，";
+		mes "没法一一招呼你们这些冒险家.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "听着，也许你先和其他人谈谈更有帮助。";
+		mes "我相信其他大陆卫队成员或我们的传令兵能更好地帮助你.";
+		close;
+	}
+	else if (rebirth_moc_edq == 1) {
+		mes "[将军 巴尔洛]";
+		mes "你来得不巧，但幸会。我是大陆卫队将军巴尔洛。";
+		mes "我们被派到梦罗克来压制魔王梦罗克...我们需要一切能聚集的";
+		mes "力量和运气.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "看来你有事找我。请长话短说，我时间不多。我还有很多事要处理...";
+		next;
+		switch(select("询问大陆卫队的事:我想加入大陆卫队.:结束对话")) {
+		case 1:
+			mes "[将军 巴尔洛]";
+			mes "魔王梦罗克复活造成的破坏，只要看看这周围就知道了.";
+			mes "可怕的是，这一切还只是他突破囚笼造成的。";
+			mes "想想如果他自由横行会造成多大的破坏吧...";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "梦罗克村已经彻底荒废，魔王梦罗克现在占据了苏克拉特沙漠.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我毫不怀疑，如果放任不管，";
+			mes "魔王梦罗克将占领整个米德加兹大陆。";
+			mes "我们必须现在就阻止他，否则整个世界都会遭殃.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "所以王国命令我们这些精英士兵组建大陆卫队，";
+			mes "并招募世界各地的知名冒险家，";
+			mes "这样我们才能团结起来对抗魔王梦罗克.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "当然，这将无比艰难...我们要做出牺牲...我甚至不确定我们能否获";
+			mes "胜。然而，世界的命运危在旦夕，我们必须做点什么。";
+			mes "黑暗的时代真的降临了...";
+			close;
+		case 2:
+			mes "[将军 巴尔洛]";
+			mes "啊？你想加入我们，志愿加入大陆卫队?";
+			next;
+			if (BaseLevel > 79) {
+				mes "[将军 巴尔洛]";
+				mes "你叫什么名字？" + strcharinfo(0) +"？哦，是的，我听说过你.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "嗯，我想你还不明白这其中涉及的危险。";
+				mes "你知道魔王梦罗克有多强大吗?";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "如果你不完全了解风险，就帮不了我们。";
+				mes "我见过成千上万鲁莽的冒险家自以为能凭一己之力打败撒旦";
+				mes "莫罗克而送命.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "我们面对的是决定世界未来的威胁，";
+				mes "不懂团队合作的傻瓜只会成为累赘，而不是助力.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "抱歉，没有经验的冒险家只会碍事。";
+				mes "希望你能理解。如果你真的想帮我们，现在就专心训练吧.";
+				next;
+				switch(select("结束对话:再问一次")) {
+				case 1:
+					close;
+				case 2:
+					mes "[将军 巴尔洛]";
+					mes "听着，我理解你的热情，但如果你以为能帮上我们，";
+					mes "那就错了。我没时间详细解释我们面临的危险.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "魔王梦罗克和你遇到过的怪物完全不一样。";
+					mes "你最好也只是送命而已，";
+					mes "但也有可能因为你的失误和无能害死我的部下。那不行!";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "请明白这是为你好。去打打波利之类的、适合你等级的怪物吧.";
+					next;
+					switch(select("结束对话:你就让我加入吧!")) {
+					case 1:
+						close;
+					case 2:
+						mes "[将军 巴尔洛]";
+						mes "唉...你为什么这么固执？难道你听不懂拒绝就是拒绝吗？";
+						mes "我再说一遍.";
+						next;
+						mes "[将军 巴尔洛]";
+						mes "我们忙着对抗魔王梦罗克，没空照顾你这样的新手。";
+						mes "你只会白白送命.";
+						next;
+						mes "[将军 巴尔洛]";
+						mes "别再烦我了。你只会是个负担.";
+						next;
+						switch(select("放弃:给我一个证明自己的机会!")) {
+						case 1:
+							close;
+						case 2:
+							mes "[将军 巴尔洛]";
+							mes "啊？你想要一个证明自己的机会?";
+							next;
+							mes "[" + strcharinfo(0) + "]";
+							mes "是的，我愿意付出一切加入大陆卫队!";
+							next;
+							mes "[将军 巴尔洛]";
+							mes "嗯...";
+							next;
+							mes "[将军 巴尔洛]";
+							mes "有意思。你引起了我的注意。好吧，";
+							mes "如果你能帮我办件事，我就承认你的实力，这样才公平.";
+							next;
+							mes "[将军 巴尔洛]";
+							mes "大陆卫队一直在村庄和沙漠周围保持全面警戒。";
+							mes "我们必须防备魔王梦罗克冲击防线.";
+							next;
+							mes "[将军 巴尔洛]";
+							mes "士兵们需要木柴让篝火整夜燃烧，但我们一直缺木柴.";
+							next;
+							mes "[将军 巴尔洛]";
+							mes "我碰巧听说熔岩洞窟的怪物身上有不灭的火焰，";
+							mes "可以解决我们的篝火问题。我要你为我们收集那些火焰.";
+							next;
+							switch(select("太难了!让我考虑一下!:没问题.")) {
+							case 1:
+								mes "[将军 巴尔洛]";
+								mes "哼，果然。我就知道你连这么简单的任务都完成不了。";
+								mes "我不该在你身上浪费时间.";
+								close;
+							case 2:
+								mes "[将军 巴尔洛]";
+								mes "很好！带回^0000FF30个火种^000000。我等你回来.";
+								set rebirth_moc_edq,2;
+								changequest 3050,3051;
+								close;
+							}
+						}
+					}
+				}
+			}
+			else {
+				mes "[将军 巴尔洛]";
+				mes "什么？你连真本事都没有，怎么还想加入我们?";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "我保证你只会拖累我的士兵。";
+				mes "你只会在梦里对魔王梦罗克构成威胁。放弃吧.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "如果你不完全了解风险，就帮不了我们。";
+				mes "我见过成千上万鲁莽的冒险家自以为能凭一己之力打败撒旦";
+				mes "莫罗克而送命.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "我们面对的是决定世界未来的威胁，";
+				mes "不懂团队合作的傻瓜只会成为累赘，而不是助力.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "抱歉，没有经验的冒险家只会碍事。";
+				mes "希望你能理解。如果你真的想帮我们，现在就专心训练吧.";
+				close;
+			}
+		case 3:
+			close;
+		}
+	}
+	else if (rebirth_moc_edq == 2) {
+		mes "[将军 巴尔洛]";
+		mes "那么，你找到^0000FF30个火种^000000了吗？你不会空手回来的，对吧?";
+		next;
+		if (countitem(7098) > 29) {
+			mes "[将军 巴尔洛]";
+			mes "让我看看...一、二、三...三十，你全带来了。";
+			mes "好吧，这是个相当简单的任务。只要花点时间和一点力气，";
+			mes "谁都能做到.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "总之，谢谢你带来火种。看来你比我想象的要强.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "现在可以让我加入大陆卫队了吗?";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "不行，和我们要做的事相比，收集这些火焰只是小菜一碟.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我还是不相信你够格加入我们。让我想想...嗯...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "我知道你不会轻易接受我。我准备好了。尽管考验我吧.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "啊，我有个主意。由于这是联合作战，";
+			mes "我们接受了一些来自修发兹共和国共和国的佣兵加入大陆卫队.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "这些佣兵从没见过沙漠，他们在炎热、";
+			mes "干燥和沙暴中执行任务很吃力。";
+			mes "这不是他们的错，但他们离开了熟悉的环境，需要一点帮助.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "（这家伙看起来挺吓人，但心地似乎不错。）";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "现在，我记得北方的冰洞窟里的怪物有冰冻的心脏。";
+			mes "那些心脏也许能帮士兵们解暑.";
+			next;
+			switch(select("太难了!:没问题。你要多少?")) {
+			case 1:
+				mes "[将军 巴尔洛]";
+				mes "我就知道那对你太难了。";
+				mes "我很高兴你终于在为时未晚之前认清了自己的极限。";
+				mes "认清自己的弱点需要智慧.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你最好收拾东西回你来的地方去。";
+				mes "魔王梦罗克进攻时，你要离这里远远的.";
+				close;
+			case 2:
+				mes "[将军 巴尔洛]";
+				mes "啊？！你确定你能带来？嗯...";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "好吧...如果你坚持要试试，那么...我至少需要50个那种冰冻的心脏.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "请给我带^0000FF50个冰块心脏^000000来。越快拿来越好.";
+				delitem 7098,30; //Live_Coal
+				set rebirth_moc_edq,3;
+				changequest 3051,3052;
+				close;
+			}
+		}
+		else {
+			mes "[将军 巴尔洛]";
+			mes "嗯...你没听见我说什么吗？我说30个火种，30个.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "现在快点。如果你想放弃，也没关系。不过要告诉我一声!";
+			close;
+		}
+	}
+	else if (rebirth_moc_edq == 3) {
+		mes "[将军 巴尔洛]";
+		mes "那么，你找到50个冰块心脏了吗?";
+		next;
+		if (countitem(7561) > 49) {
+			mes "[将军 巴尔洛]";
+			mes "谢谢。我相信我的士兵们会很感激的...那些人不习惯沙漠，";
+			mes "正好可以解暑.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "好吧...看来这是你应得的.";
+			delitem 7561,50; //Ice_Heart
+			getitem 7826,1; //Continental_Guard_Paper
+			set rebirth_moc_edq,4;
+			changequest 3052,3053;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "这是什么?";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "你读了就知道了。这是证明你是大陆卫队成员的证明书。";
+			mes "我承认，你的实力和魄力让我印象深刻.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "欢迎加入大陆卫队，朋友。";
+			mes "你准备好为世界的和平冒生命危险了吗?";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "从现在起，你的任务很简单，但也极其艰难：";
+			mes "你将和其他大陆卫队成员一起，";
+			mes "阻止魔王梦罗克完全恢复他的真正力量.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我的士兵们正冒着生命危险与莫罗克的幻影和手下战斗，";
+			mes "好让战友们能更安全地前往莫罗克的巢穴.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "看来你的帮助确实有用。是时候出力了。祝你好运.";
+			close;
+		}
+		else {
+			mes "[将军 巴尔洛]";
+			mes "嗯...你没听见我说什么吗？我说50个冰块心脏，50个.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "现在快点。如果你想放弃，也没关系。不过要告诉我一声!";
+			close;
+		}
+	}
+	else if (rebirth_moc_edq == 4) {
+		mes "[将军 巴尔洛]";
+		mes "我想你需要一次全面的局势简报。要我现在给你做简报吗?";
+		next;
+		switch(select("是:否")) {
+		case 1:
+			mes "[将军 巴尔洛]";
+			mes "我来告诉你一些作为大陆卫队成员对抗魔王梦罗克的基本信";
+			mes "息.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "你还记得事情发生之前的梦罗克是什么样子吗？";
+			mes "如果你以前来过这里，你就会记得.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "目前，梦罗克的所有入口和通往其他村庄的野外都在我们的控";
+			mes "制之下.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "主要原因是有人在苏克拉特沙漠发现了魔王梦罗克，";
+			mes "但还有另一个重要原因.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "魔王梦罗克的力量一直在我们的时空连续体上造成不自然的";
+			mes "裂缝。";
+			mes "目前裂缝还局限在这个区域，但我们无法确定它们是否会扩散.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "由于时空裂缝，苏克拉特沙漠的地形发生了变化，";
+			mes "沙漠的一些部分已经消失了.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "此外，自从魔王梦罗克的幻影开始出现，";
+			mes "情况变得更糟了，其他怪物也受到了他力量的影响.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "这就是我们目前所知道的一切。";
+			mes "如果你出去，";
+			mes "就会明白我的意思...你甚至可能看到我们尚未发现的恐怖事物";
+			mes "。如果你需要更多信息，请和大陆卫队行政官谈谈.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "请尽全力阻止魔王梦罗克。别忘了，";
+			mes "大陆的未来掌握在我们手中。解散.";
+			close;
+		case 2:
+			mes "[将军 巴尔洛]";
+			mes "我明白了。继续努力对抗魔王梦罗克吧。";
+			mes "别忘了，大陆的未来掌握在我们手中.";
+			close;
+		}
+	}
+	else if (rebirth_moc_edq == 5) {
+		mes "[将军 巴尔洛]";
+		mes "哇...什么？你真的打败魔王梦罗克了?";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "怎么做到的？你有胜利的证据吗?";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "...不，我不能仅凭你的口述就相信。";
+		mes "我的意思是，如果你完成了这么重要的任务，";
+		mes "必须给我带一些证据来.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "回去，带上你胜利的证据，然后再回来.";
+		close;
+	}
+	else if (rebirth_moc_edq == 6) {
+		mes "[将军 巴尔洛]";
+		mes "什么？你真的打败魔王梦罗克了?";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "怎么做到的？你有胜利的证据吗?";
+		next;
+		if (countitem(7820) > 0) {
+			mes "[将军 巴尔洛]";
+			mes "这...这不是...?";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "哇...我想这真的是魔王梦罗克的皮肤。";
+			mes "恭喜你，士兵。你刚刚拯救了这个世界和人民，";
+			mes "使他们免于毁灭和邪恶的吞噬.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我想你重伤了魔王梦罗克，他退到了时空裂缝里。";
+			mes "毫无疑问，他正试图恢复力量.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我唯一的遗憾是我们无法跨越这个维度去追击莫罗克。";
+			mes "不过，我很高兴你打败了魔王梦罗克，";
+			mes "阻止了他恢复全部力量。至少现在是...";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我们的研究人员也许能从这块皮肤上学到一些重要的新东西";
+			mes "...如果我们的世界未来想要和平，就必须尽可能了解那个怪物.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "我再次代表大陆卫队和卢恩·米德加兹王国感谢你的卓越贡献。";
+			mes "我会立刻向国王陛下禀报你的伟大成就.";
+			next;
+			delitem 7820,1; //Morocc_Skin
+			getexp (checkre(3))?200000:2000000,0;
+			set rebirth_moc_edq,7;
+			changequest 3055,3056;
+			mes "[将军 巴尔洛]";
+			mes "我准备了几样东西作为给你的奖励。";
+			mes "让我看看...我有三样物品。你想得到哪一样?";
+			next;
+			switch(select("1. 皇家卫士的徽章:2. 咒语符文石:3. 死亡挂坠")) {
+			case 1:
+				mes "[将军 巴尔洛]";
+				mes "皇家卫士的徽章是王国宫廷直接赐予的极其珍贵的奖励。";
+				mes "它是力量的象征.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "这个饰品的选项是：^0000FF MHP+50，攻击速度+3%^000000.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你真的想要皇家卫士的徽章吗?";
+				next;
+				switch(select("1. 是.:2. 否.")) {
+				case 1:
+					mes "[将军 巴尔洛]";
+					mes "很好，那我就把皇家卫士的徽章奖励给你。恭喜.";
+					next;
+					getitem 2730,1; //Morocc_Seal
+					set rebirth_moc_edq,8;
+					completequest 3056;
+					mes "[将军 巴尔洛]";
+					mes "希望你记住，我们的战斗远未结束。";
+					mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "享受你的胜利吧，但要时刻保持警惕。";
+					mes "我会一直在这里帮助你，奖励你的贡献.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+					close;
+				case 2:
+					mes "[将军 巴尔洛]";
+					mes "没问题。慢慢考虑，然后再来找我谈.";
+					close;
+				}
+			case 2:
+				mes "[将军 巴尔洛]";
+				mes "咒语符文石是王国宫廷直接赐予的极其珍贵的奖励，";
+				mes "它是繁荣与法力的象征.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "这个饰品的选项是：^0000FF MSP+50，咏唱速度-1%^000000.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你真的想要咒语符文石吗?";
+				next;
+				switch(select("1. 是.:2. 否.")) {
+				case 1:
+					mes "[将军 巴尔洛]";
+					mes "很好，那我就把咒语符文石奖励给你。恭喜.";
+					next;
+					getitem 2731,1; //Morocc_Charm_Stone
+					set rebirth_moc_edq,8;
+					completequest 3056;
+					mes "[将军 巴尔洛]";
+					mes "希望你记住，我们的战斗远未结束。";
+					mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "享受你的胜利吧，但要时刻保持警惕。";
+					mes "我会一直在这里帮助你，奖励你的贡献.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+					close;
+				case 2:
+					mes "[将军 巴尔洛]";
+					mes "没问题。慢慢考虑，然后再来找我谈.";
+					close;
+				}
+			case 3:
+				mes "[将军 巴尔洛]";
+				mes "死亡挂坠是王国宫廷直接赐予的极其珍贵的奖励，";
+				mes "它象征着暴击之力.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "这个饰品的选项是：^0000FF CRI + 5^000000.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你真的想要死亡挂坠吗?";
+				next;
+				switch(select("1. 是.:2. 否.")) {
+				case 1:
+					mes "[将军 巴尔洛]";
+					mes "很好，那我就把死亡挂坠奖励给你。恭喜.";
+					next;
+					getitem 2732,1; //Morocc_Ring
+					set rebirth_moc_edq,8;
+					completequest 3056;
+					mes "[将军 巴尔洛]";
+					mes "希望你记住，我们的战斗远未结束。";
+					mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "享受你的胜利吧，但要时刻保持警惕。";
+					mes "我会一直在这里帮助你，奖励你的贡献.";
+					next;
+					mes "[将军 巴尔洛]";
+					mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+					close;
+				case 2:
+					mes "[将军 巴尔洛]";
+					mes "没问题。慢慢考虑，然后再来找我谈.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[将军 巴尔洛]";
+			mes "...不，我不能仅凭你的口述就相信。";
+			mes "我的意思是，如果你完成了这么重要的任务，";
+			mes "必须给我带一些证据来.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "回去，带上你胜利的证据，然后再回来.";
+			close;
+		}
+	}
+	else if (rebirth_moc_edq == 7) {
+		mes "[将军 巴尔洛]";
+		mes "我准备了几样东西作为给你的奖励。";
+		mes "让我看看...我有三样物品。你想得到哪一样?";
+		next;
+		switch(select("1. 皇家卫士的徽章:2. 咒语符文石:3. 死亡挂坠")) {
+		case 1:
+			mes "[将军 巴尔洛]";
+			mes "皇家卫士的徽章是王国宫廷直接赐予的极其珍贵的奖励。";
+			mes "它是力量的象征.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "这个饰品的选项是：^0000FF MHP+50，攻击速度+3%^000000.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "你真的想要皇家卫士的徽章吗?";
+			next;
+			switch(select("1. 是.:2. 否.")) {
+			case 1:
+				mes "[将军 巴尔洛]";
+				mes "很好，那我就把皇家卫士的徽章奖励给你。恭喜.";
+				next;
+				getitem 2730,1; //Morocc_Seal
+				set rebirth_moc_edq,8;
+				completequest 3056;
+				mes "[将军 巴尔洛]";
+				mes "希望你记住，我们的战斗远未结束。";
+				mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "享受你的胜利吧，但要时刻保持警惕。";
+				mes "我会一直在这里帮助你，奖励你的贡献.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+				close;
+			case 2:
+				mes "[将军 巴尔洛]";
+				mes "没问题。慢慢考虑，然后再来找我谈.";
+				close;
+			}
+		case 2:
+			mes "[将军 巴尔洛]";
+			mes "咒语符文石是王国宫廷直接赐予的极其珍贵的奖励，";
+			mes "它是繁荣与法力的象征.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "这个饰品的选项是：^0000FF MSP+50，咏唱速度-1%^000000.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "你真的想要咒语符文石吗?";
+			next;
+			switch(select("1. 是.:2. 否.")) {
+			case 1:
+				mes "[将军 巴尔洛]";
+				mes "很好，那我就把咒语符文石奖励给你。恭喜.";
+				next;
+				getitem 2731,1; //Morocc_Charm_Stone
+				set rebirth_moc_edq,8;
+				completequest 3056;
+				mes "[将军 巴尔洛]";
+				mes "希望你记住，我们的战斗远未结束。";
+				mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "享受你的胜利吧，但要时刻保持警惕。";
+				mes "我会一直在这里帮助你，奖励你的贡献.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+				close;
+			case 2:
+				mes "[将军 巴尔洛]";
+				mes "没问题。慢慢考虑，然后再来找我谈.";
+				close;
+			}
+		case 3:
+			mes "[将军 巴尔洛]";
+			mes "死亡挂坠是王国宫廷直接赐予的极其珍贵的奖励，";
+			mes "它象征着暴击之力.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "这个饰品的选项是：^0000FF CRI + 5^000000.";
+			next;
+			mes "[将军 巴尔洛]";
+			mes "你真的想要死亡挂坠吗?";
+			next;
+			switch(select("1. 是.:2. 否.")) {
+			case 1:
+				mes "[将军 巴尔洛]";
+				mes "很好，那我就把死亡挂坠奖励给你。恭喜.";
+				next;
+				getitem 2732,1; //Morocc_Ring
+				set rebirth_moc_edq,8;
+				completequest 3056;
+				mes "[将军 巴尔洛]";
+				mes "希望你记住，我们的战斗远未结束。";
+				mes "我们的敌人是魔王...我怕魔王梦罗克很快就会回来.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "享受你的胜利吧，但要时刻保持警惕。";
+				mes "我会一直在这里帮助你，奖励你的贡献.";
+				next;
+				mes "[将军 巴尔洛]";
+				mes "你现在该去休息了。别担心，这里剩下的事交给我们.";
+				close;
+			case 2:
+				mes "[将军 巴尔洛]";
+				mes "没问题。慢慢考虑，然后再来找我谈.";
+				close;
+			}
+		}
+	}
+	else if (rebirth_moc_edq == 8) {
+		mes "[将军 巴尔洛]";
+		mes "我听说王国计划派出一大批研究人员，";
+		mes "去调查魔王梦罗克逃往的另一个世界.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "也就是说，是时候让我们俩——你和我——开始工作了。";
+		mes "谁知道莫罗克什么时候会回来折磨我们?";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "请继续努力，别忘了大陆和王国的未来都寄托在我们身上.";
+		close;
+	}
+	else {
+		mes "[将军 巴尔洛]";
+		mes "你来得不巧，但幸会。我是大陆卫队将军巴尔洛。";
+		mes "我们被派到梦罗克来压制魔王梦罗克...我们需要一切能聚集的";
+		mes "力量和运气.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "抱歉，我正忙着审核这些大陆卫队的申请，";
+		mes "没法一一招呼你们这些冒险家.";
+		next;
+		mes "[将军 巴尔洛]";
+		mes "听着，也许你先和其他人谈谈更有帮助。";
+		mes "我相信其他大陆卫队成员或我们的传令兵能更好地帮助你.";
+		close;
+	}
+}
+
+moc_fild21,38,193,0	script	Morocc Timer#edq	-1,6,6,{
+//OnInit:
+//	set $@re_moc,0;
+//	set $@re_moc_time$,"";
+//	end;
+
+OnTouch_:
+	if ($@re_moc == 0) {
+		set $@re_moc,1;
+		donpcevent "Satan Broadcast#edq::OnEnable";
+	}
+	end;
+}
+
+moc_fild21,1,1,0	script	Satan Broadcast#edq	844,{
+OnInit:
+	disablenpc "Satan Broadcast#edq";
+	end;
+
+OnEnable:
+	enablenpc "Satan Broadcast#edq";
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	mapannounce "moc_fild21","魔王梦罗克 : 你们这些弱者，倒让我刮目相看.",bc_map,"0xFFFF00";
+	end;
+
+OnTimer15000:
+	mapannounce "moc_fild21","魔王梦罗克 : 趁现在把遗憾都处理好吧。我很快就送你们上路!",bc_map,"0xFFFF00";
+	end;
+
+OnTimer25000:
+	mapannounce "moc_fild21","魔王梦罗克 : 抓到你们只是时间问题，你们这些没用的虫子。再稍微等一下...",bc_map,"0xFFFF00";
+	stopnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "Satan Broadcast#edq";
+	end;
+}
+
+moc_fild21,178,239,0	script	黑暗之徒#edq	844,1,1,{
+	if (((rebirth_moc_edq == 4) || (rebirth_moc_edq == 7)) && ($@re_moc == 1)) {
+		mes "黑暗获得了生命的时空裂缝令人敬畏，你本能地后退了一步.";
+		next;
+		mes "你能感觉到黑暗的力量从光与暗交织的裂缝中升起.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "哇...!";
+		close2;
+		if($@re_moc == 1) {
+			set $@re_moc,2;
+			donpcevent "Satan Summon#edq::OnEnable";
+		}
+		end;
+	}
+	else {
+		mes "黑暗获得了生命的时空裂缝令人敬畏，你本能地后退了一步.";
+		next;
+		mes "你能感觉到黑暗的力量从光与暗交织的裂缝中升起.";
+		close;
+	}
+
+OnEnable:
+	enablenpc "黑暗之徒#edq";
+	set $@re_moc_time$,"";
+	end;
+}
+
+moc_fild21,177,239,0	script	时空的裂缝#edq	844,1,1,{
+	if ((rebirth_moc_edq == 4) && ($@re_moc == 3)) {
+		mes "随着魔王梦罗克消失，时空裂缝那可怕的黑暗似乎也消散了.";
+		next;
+		mes "你能看到漂浮在裂缝中的碎片，放射的光芒也渐渐慢了下来.";
+		next;
+		mes "你伸出手，捡起了一块没有光泽的碎片.";
+		getitem 7820,1; //Morocc_Skin
+		set rebirth_moc_edq,6;
+		changequest 3053,3055;
+		close;
+	}
+	else {
+		mes "缓慢而不规则地，一层神秘的黑暗帷幕笼罩了你的双眼，";
+		mes "你凝视着时空裂缝.";
+		next;
+		mes "你觉得再靠近就太危险了.";
+		close;
+	}
+
+OnInit:
+	disablenpc "时空的裂缝#edq";
+	end;
+
+OnEnable:
+	initnpctimer;
+	enablenpc "时空的裂缝#edq";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	disablenpc "时空的裂缝#edq";
+	donpcevent "黑暗之徒#edq::OnEnable";
+	set $@re_moc,0;
+	end;
+
+OnTimer1800000:
+	set $@re_moc,4;
+	end;
+
+OnTimer21600000:
+	donpcevent "时空的裂缝#edq::OnDisable";
+	end;
+}
+
+moc_fild21,3,1,0	script	Satan Summon#edq	844,{
+OnInit:
+	disablenpc "Satan Summon#edq";
+	end;
+
+OnEnable:
+	enablenpc "Satan Summon#edq";
+	initnpctimer;
+	monster "moc_fild21",177,217,"魔王梦罗克",1916,1,"Satan Summon#edq::OnMyMobDead";
+	end;
+
+OnDisable:
+	stopnpctimer;
+	killmonster "moc_fild21","Satan Summon#edq::OnMyMobDead";
+	set $@re_moc,0;
+	disablenpc "Satan Summon#edq";
+	end;
+
+OnMyMobDead:
+	set $@re_moc,3;
+	set $@re_moc_time$, gettimestr("%H%M%S",7);
+	mapannounce "moc_fild21","我暂时让你们苟延残喘一下吧，你们是找不到透过时空裂缝的我的!",bc_map,"0xFFFF00";
+	donpcevent "时空的裂缝#edq::OnEnable";
+	donpcevent "Satan Broadcast#edq::OnDisable";
+	disablenpc "黑暗之徒#edq";
+	stopnpctimer;
+	killmonster "moc_fild21","Satan Summon#edq::OnMyMobDead";
+	disablenpc "Satan Summon#edq";
+	end;
+
+OnTimer5400000:
+	mapannounce "moc_fild21","你们这些弱者连挠痒痒都做不到!",bc_map,"0xFFFF00";
+	end;
+
+OnTimer5415000:
+	mapannounce "moc_fild21","我没时间陪你们玩!滚开!",bc_map,"0xFFFF00";
+	donpcevent "Satan Summon#edq::OnDisable";
+	end;
+}
+
+sec_in02,14,43,5	script	梦罗克状态管理员::MoroccAdmin_sec	971,{
+	callfunc "F_GM_NPC";
+	mes "[助手]";
+	mes "请输入密码并按#键.";
+	next;
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "[助手]";
+		mes "请按我们常唱的那个数字.";
+		close;
+	} else {
+		mes "[助手]";
+		mes "你好。我是邮局的.";
+		mes "我正在检查梦罗克的状态.";
+		next;
+		mes "=============";
+		mes "当前状态";
+		mes "=============";
+		mes "^3131FF<魔王梦罗克>^000000";
+		if ($@re_moc == 0) {
+			mes "已重置。可以召唤魔王梦罗克.";
+			mes "^3131FF<大陆卫队>^000000";
+			mes "可以进入moc_fild21野外.";
+		} else if ($@re_moc == 1) {
+			mes "^3131FF<魔王梦罗克>^000000";
+			mes "重置后有战士进入了。但该战士还没有开始任务.";
+			mes "rebirth_moc_edq为4和7的战士现在可以召唤魔王梦罗克了.";
+			mes "^3131FF<大陆卫队>^000000";
+			mes "rebirth_moc_edq为4~7的战士现在可以进入moc_fild21.";
+		} else if ($@re_moc == 2) {
+			mes "^3131FF<魔王梦罗克>^000000";
+			mes "魔王梦罗克已被召唤。90分钟后将恢复为重置状态.";
+			mes "^3131FF<大陆卫队>^000000";
+			mes "rebirth_moc_edq为4~7的战士现在可以进入moc_fild21.";
+		} else if ($@re_moc == 3) {
+			mes "^3131FF<魔王梦罗克>^000000";
+			mes "魔王梦罗克已被击杀。死亡时间是 "+$@re_moc_time$+"(00时/00分/00秒).";
+			mes "从死亡时间起6小时后重置.";
+			mes "仍留在野外的战士可以通过时空裂缝继续任务.";
+			mes "^3131FF<大陆卫队>^000000";
+			mes "禁止从野外外部进入moc_fild21.";
+		} else {
+			mes "^3131FF<魔王梦罗克>^000000";
+			mes "魔王梦罗克已被击杀。死亡时间是 "+$@re_moc_time$+"(00时/00分/00秒).";
+			mes "从死亡时间起6小时后重置.";
+			mes "魔王梦罗克死后已经过了30分钟，";
+			mes "战士们即使点击时空裂缝也无法继续任务了.";
+			mes "^3131FF<大陆卫队>^000000";
+			mes "禁止从野外外部进入moc_fild21.";
+		}
+		next;
+		mes "[助手]";
+		mes "你想做什么?";
+		next;
+		switch(select("取消.:重置")) {
+		case 1:
+			mes "[助手]";
+			mes "好的.";
+			close;
+		case 2:
+			if (strnpcinfo(4) == "sec_in02")
+				mes "你可以在moc_fild21 5 5处重置.";
+			else {
+				mes "开始重置.";
+				next;
+				donpcevent "黑暗之徒#edq::OnEnable";
+				mes "黑暗之徒NPC已出现.";
+				mes "时空的裂缝NPC已消失.";
+				mes "6小时定时器已停止.";
+				donpcevent "Satan Summon#edq::OnDisable";
+				mes "魔王梦罗克90分钟存活定时器已停止.";
+				mes "魔王梦罗克正在被击杀.";
+				mes "现在，大陆卫队将允许玩家进入.";
+			}
+			close;
+		}
+	}
+}
+moc_fild21,5,5,5	duplicate(MoroccAdmin_sec)	梦罗克状态管理员::MoroccAdmin_moc	971
+
+// 命运的乌鸦
+// ============================================================
+moc_ruins,137,70,3	script	抚摸书的男子#garas	48,{
+	if (BaseLevel > 59) {
+		if (checkweight(703,3) == 0) {
+			mes "- 你的物品太多，无法进行这个任务。 -";
+			close;
+		}
+		if (barmunt_crow == 0) {
+			mes "^660000沙漠之城梦罗克，已被魔王梦罗克彻底摧毁.^000000";
+			next;
+			mes "^660000梦罗克的人们足够坚韧，能忍受这里恶劣的天气，";
+			mes "但他们面对魔王梦罗克给城市带来的破坏时，";
+			mes "那份坚韧却毫无用处.^000000";
+			next;
+			mes "^660000这个男人，看起来像被太阳晒干的鱼一样干瘦，";
+			mes "脸上却挂着让你想起慈祥神明的笑容，正抚摸着手中的一本书.^000000";
+			next;
+			mes "^660000看着他，你不禁窃笑。他看起来和金字塔里的干尸没什么两样，";
+			mes "但他显然是活人，也不像是怪物。";
+			mes "不知为何，你不由自主地想接近这个有趣的男人.^000000";
+			next;
+			emotion ET_THROB;
+			mes "[抚摸书的男子]";
+			mes "啊...麻米...";
+			next;
+			mes "[抚摸书的男子]";
+			mes "你健康的金色肌肤，在梦罗克受祝福的阳光下闪闪发光.";
+			next;
+			emotion ET_CRY;
+			mes "[抚摸书的男子]";
+			mes "你的笑容胜过英灵殿诸神的光辉。";
+			mes "你是活着的福音。";
+			mes "你的笑容甚至让女神菲依雅自惭形秽地躲进阴影里！";
+			mes "啊....麻米，我的麻米!";
+			next;
+			mes "^660000你在他脸附近挥了挥手想引起他的注意。";
+			mes "然而他似乎沉浸在自己的梦里，完全没有察觉到你的存在.^000000";
+			next;
+			switch(select("搭话:从他旁边走过")) {
+			case 1:
+				mes "["+ strcharinfo(0) +"]";
+				mes "你在自言自语吗?";
+				next;
+				emotion ET_HUK;
+				mes "[抚摸书的男子]";
+				mes "哇！哦，天哪，你一定是想打断我感受麻米的恶魔使者!";
+				mes "我不怕你，放马过来吧!";
+				next;
+				mes "^660000你的声音吓了他一跳，他冲你大喊，这看起来很奇怪.";
+				mes "你纳闷他刚才只是看着和抚摸一本书，说的'感受她'是什么意思.^000000";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "麻米是谁?";
+				next;
+				emotion ET_HUK;
+				mes "[抚摸书的男子]";
+				mes "什么？你不知道麻米？她可是卢恩·米德加兹三大偶像之一啊?";
+				next;
+				emotion ET_OHNO;
+				mes "[抚摸书的男子]";
+				mes "老兄，你什么都不知道，是吧？好吧，";
+				mes "看你那副傻样，我猜你是个到处替人跑腿的冒险家。嘿嘿!";
+				next;
+				mes "^660000嗯...你现在后悔跟他搭话了.^000000";
+				next;
+				mes "[抚摸书的男子]";
+				mes "我的麻米和那些只靠美貌、没有真才实学的名人不一样.";
+				mes "她不管行程多忙，总是随身带着书。";
+				mes "光凭这一点，她就比其他所有人都聪明！啊...麻米...";
+				next;
+				mes "[抚摸书的男子]";
+				mes "她甚至在《梦罗克时报》的采访中提到，她想找一个爱书的男人.";
+				next;
+				emotion ET_COOL;
+				mes "[抚摸书的男子]";
+				mes "也就是说...她在等我这样的人。呵呵呵!";
+				mes "你看，卢恩·米德加兹图书馆里的每一本书上都写着班杰明的名";
+				mes "字...那就是我!";
+				next;
+				mes "^660000这个班杰明似乎是一位名叫麻米的女明星的超级粉丝。";
+				mes "他一会儿不停地赞美她的美貌，";
+				mes "一会儿又突然停下来，看起来很沮丧.^000000";
+				next;
+				mes "[班杰明]";
+				mes "我有个问题....";
+				next;
+				mes "[班杰明]";
+				mes "我的麻米说，她爱上了修发兹共和国的^FF0000'奥利弗 ";
+				mes "希尔帕特'^000000写的一本书：^FF0000'命运的乌鸦'^000000，可我连看一眼的机会都没有!";
+				next;
+				mes "^660000命运的乌鸦^000000?";
+				next;
+				mes "[班杰明]";
+				mes "只要你不瞎，就知道现在的梦罗克有多糟糕.";
+				next;
+				mes "[班杰明]";
+				mes "我真的很想读那本书，然后告诉她我在这里支持她，";
+				mes "但眼下的状况让我连喘口气的时间都没有!";
+				next;
+				emotion ET_CRY;
+				mes "[班杰明]";
+				mes "我的麻米枕头套被埋在瓦砾下了...天哪!";
+				mes "麻米，我来了！你可千万别死啊!";
+				next;
+				mes "^660000他似乎看到了麻米的幻影，焦急地喘着气，";
+				mes "呼喊着她的名字。你为他的痛苦感到难过.^000000";
+				next;
+				mes "^660000他深吸了一口气，然后突然转过头来看着你.^000000";
+				next;
+				emotion ET_AHA;
+				mes "[班杰明]";
+				mes "....你...就是你!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "啊?";
+				emotion ET_PROFUSELY_SWEAT, playerattached();
+				next;
+				mes "[班杰明]";
+				mes "你看起来很闲。你一定在等别人给你找点事做!";
+				mes "帮我牵线麻米吧。谁知道呢？";
+				mes "我也许能让你和全卢恩·米德加兹都崇拜的麻米说上话.";
+				next;
+				mes "^660000你刚才不是还说我是到处替人跑腿的冒险家吗...?^000000";
+				next;
+				mes "[班杰明]";
+				mes "我只求你帮我去普隆德拉图书馆借一本书。听起来很简单，对吧?";
+				mes "好吧，你看起来不像爱读书的人，";
+				mes "但我希望你至少知道怎么从图书馆借书.";
+				next;
+				if (Sex == SEX_MALE) {
+					mes "[班杰明]";
+					mes "如果你帮我，我就给你看麻米的限量写真集...一次。呵呵呵呵.";
+					mes "怎么样？你愿意帮我，对吧?";
+					next;
+				}
+				else {
+					mes "[班杰明]";
+					mes "如果你帮我，我就给你看麻米的限量写真集...一次。呵呵呵呵.";
+					mes "那么，你不想看看别的女孩子的照片吗？";
+					mes "嗯，如果你愿意，我可以给你介绍梦罗克一个帅气的守卫...";
+					mes "怎么样？你愿意帮我，对吧?";
+					next;
+				}
+				mes "^660000你想怎么做?^000000";
+				next;
+				switch(select("帮他:不帮他")) {
+				case 1:
+					mes "[班杰明]";
+					mes "哇，你真的愿意帮我?";
+					next;
+					mes "[班杰明]";
+					mes "太感谢你了！那么记住这个书名：";
+					mes "'奥利弗 希尔帕特'写的'命运的乌鸦'。";
+					mes "我相信你能在普隆德拉图书馆找到它.";
+					mes "呵呵呵，麻米！我快成功了!";
+					set barmunt_crow,1;
+					setquest 2063;
+					close;
+				case 2:
+					mes "[班杰明]";
+					mes "什么，你不知道怎么从图书馆借书？哦，天哪...";
+					close;
+				}
+			case 2:
+				mes "[班杰明]";
+				mes "哦...麻米...我的麻米...";
+				close;
+			}
+		}
+		else if (barmunt_crow == 1) {
+			mes "[班杰明]";
+			mes "别忘了这个书名：'奥利弗 希尔帕特'写的'命运的乌鸦'。";
+			mes "我相信你能在普隆德拉图书馆找到它.";
+			close;
+		}
+		else if (barmunt_crow == 10) {
+			mes "[班杰明]";
+			mes "哦...麻米...我的麻米...";
+			next;
+			mes "^660000就像你上次见到他时一样，班杰明活在自己的梦里，";
+			mes "用一本书蹭着自己的脸.^000000";
+			next;
+			mes "^660000你小心翼翼地走近他，然后拍了拍他的肩膀.^000000";
+			next;
+			emotion ET_HUK;
+			mes "[班杰明]";
+			mes "呜！谁敢碰我?!";
+			next;
+			mes "^660000...嗯...显然你还不够小心...^000000";
+			next;
+			mes "[班杰明]";
+			mes "谁敢打扰我感受麻米？你想尝尝我的厉害吗...呃?";
+			mes "天哪，是你啊。怎么去了这么久？";
+			mes "普隆德拉图书馆不是只要五分钟路程吗?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "阿嚏！都怪你，我在图书馆没找到。";
+			mes "所以我大老远跑到了修发兹共和国...阿嚏!";
+			specialeffect2 EF_VENOMDUST;
+			next;
+			mes "^660000你生他的气，夸张地打了一阵早就有的喷嚏.^000000";
+			next;
+			mes "[班杰明]";
+			mes "哦...你去啦?";
+			mes "呵呵呵，你比我想象的可靠。谢谢你借的书...等等，";
+			mes "这么说我得去修发兹共和国还书？天哪!";
+			next;
+			mes "[班杰明]";
+			mes "...不，为了麻米我什么都愿意做。嘿嘿，你是个善良的冒险家。谢谢.";
+			mes "上面冷吗？我想也是，修发兹共和国在这里的北边.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "..................";
+			next;
+			mes "[班杰明]";
+			mes "让我想想。如果这本书在普隆德拉图书馆还借不到，";
+			mes "那就说明卢恩·米德加兹没多少人读过这本书.";
+			next;
+			mes "[班杰明]";
+			mes "呜...麻米！我在这里，追随你高雅的品味，读这样一本稀有的书！麻米...!";
+			emotion ET_BIGTHROB;
+			next;
+			mes "[班杰明]";
+			mes "一想到能和麻米深入探讨文学，我就好激动！耶!";
+			mes "我应该马上去读这本书。呵呵呵!";
+			emotion ET_DELIGHT;
+			next;
+			mes "[班杰明]";
+			mes "哎呀，我不能忘了报答你。你知道，我是个有礼貌的人.";
+			next;
+			mes "[班杰明]";
+			mes "看，这就是我跟你说的麻米写真集.";
+			next;
+			cutin "mami01",4;
+			mes "[班杰明]";
+			mes "啊...你看这张她戴着卷起的小狗耳朵的照片！";
+			mes "她难道不像一只独自徘徊在情侣之城克魔岛的悲伤小狗吗?!";
+			mes "看到这张悲伤的照片，谁能不掉一滴眼泪呢？";
+			mes "！啊，麻米！我要去让你成为世界上最幸福的女人!";
+			next;
+			cutin "mami02",4;
+			mes "["+ strcharinfo(0) +"]";
+			mes "'她戴着这副眼镜、扎着马尾辫，";
+			mes "看起来和我想的不一样...她真的很像一个热爱文学的人.";
+			mes "等等，人们是什么时候开始把克魔岛叫作情侣之城的？";
+			mes "嗯...这家伙的想法真奇怪!'";
+			next;
+			mes "[班杰明]";
+			mes "我决定把这本充满她美丽照片的<天使麻米特别写真集：";
+			mes "在克魔岛>送给你，以报答你的恩情。咳咳...怎么样?";
+			next;
+			mes "^660000他傲慢地盯着你。显然，他不在乎你喜不喜欢这本书.^000000";
+			next;
+			switch(select("我收下.:不用了，谢谢.")) {
+			case 1:
+				mes "'^660000好吧，既然是免费的，留着也没什么坏处.'^000000";
+				next;
+				break;
+			case 2:
+				mes "["+ strcharinfo(0) +"]";
+				mes "不用了，谢谢。我没你那么迷恋她.";
+				next;
+				mes "...^660000你本来想这么说，但你没法拒绝他。";
+				mes "看着他那双燃烧着爱意的狂热眼睛，连奥丁都没法拒绝...^000000";
+				next;
+				break;
+			}
+			mes "^660000他眨着眼睛，迅速把麻米的写真集塞到你怀里，";
+			mes "并要求你必须把书包好，以免损坏.^000000";
+			set barmunt_crow,11;
+			getitem 7795,1; //Mami_Photo_Album
+			next;
+			mes "[班杰明]";
+			mes "哦，对了。如果你对这位作家奥利弗 希尔帕特感兴趣，";
+			mes "我建议你读一读<命运的乌鸦>的前传^3131FF<命运的痕迹>^000000，还有续集.";
+			next;
+			mes "[班杰明]";
+			mes "那也是一本畅销书.";
+			next;
+			mes "[班杰明]";
+			mes "现在我要开始为见到我的麻米的那一刻读这本书了，";
+			mes "所以请让我一个人静一静.";
+			next;
+			mes "^660000他一说完，就又回到对麻米的幻想中，逃避现实去了.^000000";
+			next;
+			mes "^660000命运的痕迹，嗯?";
+			mes "好吧，反正我也没别的事做。我也许可以读读那本书...^000000";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "等等，这是说我得回朱诺图书馆去?";
+			next;
+			mes "^660000一想到要回朱诺，你就沮丧地叹了口气.^000000";
+			changequest 2067,2068;
+			close2;
+			cutin "",255;
+			end;
+		}
+		else if (barmunt_crow == 11) {
+			mes "^660000你踏上了前往朱诺的旅程，去读<命运的乌鸦>的前传：<命运的痕迹>.^000000";
+			close;
+		}
+		else if (barmunt_crow == 15) {
+			if ((countitem(7797) == 1) && (countitem(7796) == 1)) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "嘿，班杰明!";
+				mes "我有绝佳的东西能帮你打动麻米。你想看吗?";
+				next;
+				mes "[班杰明]";
+				mes "什...什么?!";
+				mes "是什么？给我看看!?";
+				next;
+				mes "^660000你给他看了奥利弗 希尔帕特的亲笔签名和一张便条.^000000";
+				next;
+				mes "[班杰明]";
+				mes "哦，天哪!";
+				mes "这些一定能帮我更接近麻米!";
+				mes "把它们给我!";
+				next;
+				switch(select("给:不给")) {
+				case 1:
+					mes "[班杰明]";
+					mes "哦，"+ strcharinfo(0) +"!";
+					mes "你是最棒的！谢谢!";
+					next;
+					mes "[班杰明]";
+					mes "麻~~米~~!";
+					mes "明天一早我就要去见她！麻米，我来了!";
+					delitem 7797,1; //Author_Memo
+					delitem 7796,1; //Author_Autograph
+					set barmunt_crow,16;
+					if (checkre(3))
+						getexp 90000,90000;
+					else
+						getexp 900000,900000;
+					close;
+				case 2:
+					mes "[班杰明]";
+					mes "啊？什么，你在开玩笑吗?";
+					close;
+				}
+			}
+			else {
+				mes "[班杰明]";
+				mes "哦...麻米...哦...";
+				close;
+			}
+		}
+		else {
+			mes "[班杰明]";
+			mes "哦...麻米...哦...";
+			close;
+		}
+	}
+	else {
+		mes "那个男人用梦幻般的眼神低头看着手中的书.";
+		close;
+	}
+}
+
+prt_in,179,92,3	script	图书馆管理员#garas	57,{
+	if (barmunt_crow == 0) {
+		mes "[图书馆管理员]";
+		mes "我们图书馆的怪物百科全书收录了卢恩·米德加兹王国所有的";
+		mes "怪物，按地下城分类，方便读者查找.";
+		mes "我们还有很多冒险家必备的书。要不要看一看?";
+		next;
+		mes "[图书馆管理员]";
+		mes "街对面的图书馆也有怪物百科全书.";
+		mes "如果你有兴趣，也可以去那家图书馆看看.";
+		close;
+	}
+	else if (barmunt_crow == 1) {
+		mes "[图书馆管理员]";
+		mes "我们图书馆的怪物百科全书收录了卢恩·米德加兹王国所有的";
+		mes "怪物，按地下城分类，方便读者查找.";
+		mes "我们还有很多冒险家必备的书。要不要看一看?";
+		next;
+		switch(select("找书.:在图书馆里转转.")) {
+		case 1:
+			mes "[图书馆管理员]";
+			mes "你心里有特定的书吗?";
+			mes "没问题，我在这里协助你.";
+			mes "你在找什么样的书?";
+			next;
+			switch(select("说书名.:说作者.:按关键词搜索.")) {
+			case 1:
+				mes "[图书馆管理员]";
+				mes "哦，你知道书名?";
+				mes "好的，那叫什么名字?";
+				input .@input$;
+				next;
+				if (compare(.@input$,"命运的乌鸦") == 1) {
+					mes "[图书馆管理员]";
+					mes ""+.@input$+"...?";
+					mes "好的，让我看看...";
+					next;
+				}
+				else {
+					mes "[图书馆管理员]";
+					mes "嗯...抱歉。我在这里工作了几十年，但我想我从没见过这样的书.";
+					close;
+				}
+				break;
+			case 2:
+				mes "[图书馆管理员]";
+				mes "哦，你知道作者?";
+				mes "好的，那叫什么名字?";
+				input .@input$;
+				next;
+				if (compare(.@input$,"奥利弗") == 1) {
+					mes "[图书馆管理员]";
+					mes ""+.@input$+"...?";
+					mes "好的，让我看看...";
+					next;
+				}
+				else {
+					mes "[图书馆管理员]";
+					mes "嗯...抱歉。我在这里工作了几十年，";
+					mes "但我想我从没听说过这样的作者.";
+					close;
+				}
+				break;
+			case 3:
+				mes "[图书馆管理员]";
+				mes "你一定很难想起这本书的书名或作者吧.";
+				mes "没问题；至少告诉我一点你还记得的东西吧?";
+				next;
+				input .@input$;
+				if ((compare(.@input$,"命运") == 1) || (compare(.@input$,"乌鸦") == 1) || (compare(.@input$,"奥利弗") == 1) || (compare(.@input$,"希尔帕特") == 1)) {
+					mes "[图书馆管理员]";
+					mes ""+.@input$+"...?";
+					mes "好的，让我看看...";
+					next;
+				}
+				else {
+					mes "[图书馆管理员]";
+					mes "嗯...抱歉。我在这里工作了几十年，";
+					mes "但我想我从没见过书名接近你所说词语的书.";
+					close;
+				}
+				break;
+			}
+			emotion ET_AHA;
+			mes "[图书馆管理员]";
+			mes "哦，对了！我想我知道这本书：";
+			next;
+			mes "[图书馆管理员]";
+			mes "^3131FF奥利弗 希尔帕特的";
+			mes "<命运的乌鸦>^000000!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "没错！就是我要找的!";
+			next;
+			mes "[图书馆管理员]";
+			mes "哈哈...但我有个坏消息要告诉你.";
+			mes "这本书太受欢迎了，";
+			mes "你甚至在作者的祖国修发兹共和国都找不到它.";
+			mes "我们试着进这本书，但太晚了。下一版还要一段时间才能出版，";
+			mes "你为什么不先读读别的书呢?";
+			next;
+			mes "[图书馆管理员]";
+			mes "如果你不忙，又真的很想读这本书，";
+			mes "我有个建议：去朱诺图书馆试试.";
+			mes "你可以在那个图书馆找到修发兹共和国出版的所有书。";
+			mes "说不定你能在那里找到它.";
+			next;
+			mes "[图书馆管理员]";
+			mes "嗯，朱诺离这里很远，但如果你真心想读这么受欢迎的书，";
+			mes "应该是值得的.";
+			next;
+			mes "^660000书不是为你借的，但你信奉百分之百的顾客满意。";
+			mes "现在就出发去朱诺图书馆吧.^000000";
+			set barmunt_crow,2;
+			changequest 2063,2064;
+			close;
+		case 2:
+			mes "[图书馆管理员]";
+			mes "每一本书都在向你讲述生命、智慧、幸福和感动的故事.";
+			mes "四处看看吧！它们是人类的见证者。";
+			mes "每一天，都有新的伙伴加入它们.";
+			close;
+		}
+	}
+	else if (barmunt_crow == 2) {
+		mes "[图书馆管理员]";
+		mes "^3131FF命运的乌鸦^000000在我们进到一本书之前就已经售罄了。";
+		mes "你在卢恩·米德加兹王国任何地方都找不到这本书.";
+		mes "如果你真的想读这本书，应该去朱诺图书馆试试.";
+		close;
+	}
+	else {
+		mes "[图书馆管理员]";
+		mes "我们图书馆的怪物百科全书收录了卢恩·米德加兹王国所有的";
+		mes "怪物，按地下城分类，方便读者查找.";
+		mes "我们还有很多冒险家必备的书。要不要看一看?";
+		next;
+		mes "[图书馆管理员]";
+		mes "街对面的图书馆也有怪物百科全书.";
+		mes "如果你有兴趣，也可以去那家图书馆看看.";
+		close;
+	}
+}
+
+yuno,333,210,5	script	图书馆馆长#garas	57,{
+	if (barmunt_crow == 2) {
+		mes "[狗]";
+		mes "汪汪!";
+		mes "呜...汪汪!";
+		next;
+		mes "^660000一只狗在图书馆门口大声吠叫.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "你这只臭鸟！飞走，离开!";
+		next;
+		mes "^660000一个男人也在图书馆门口大喊大叫.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "这里发生什么事了?";
+		next;
+		mes "[图书馆馆长]";
+		mes "没什么，只是有一只巨大的乌鸦落在这座图书馆的屋顶上，";
+		mes "已经叫了至少几个小时了.";
+		mes "我正想把它赶走，因为...总觉得不太吉利.";
+		next;
+		mes "[图书馆馆长]";
+		mes "走！飞走，你这只臭鸟！离开!!";
+		next;
+		mes "^660000你抬起头，发现一只巨大的乌鸦落在图书馆的屋顶上，";
+		mes "仿佛它是这里的主人.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "离开！天哪，它不肯走!";
+		mes "我怕那只吓人的鸟会把我的读者吓跑!";
+		next;
+		mes "[图书馆馆长]";
+		mes "嗯...哦，好吧.";
+		mes "（捡起一颗小石子）";
+		mes "我说走开，你这只笨鸟!";
+		next;
+		mes "（嗖-）";
+		next;
+		mes "（砰！）";
+		specialeffect EF_PIERCE;
+		next;
+		mes "（哗）";
+		next;
+		mes "^660000被男人扔出的石子击中后，乌鸦迅速飞上了天空.^000000";
+		mes "^660000但随后它开始在屋顶上空盘旋，看起来更吓人了.^000000";
+		specialeffect EF_BAT;
+		next;
+		mes "[图书馆馆长]";
+		mes "呜...你就不能走开吗?!";
+		next;
+		mes "^660000他开始冲着乌鸦大喊，但它似乎并不在意。";
+		mes "相反，它飞得更高了一点.";
+		mes "最终他转过头去，放弃了赶走它的念头。然后狗也不叫了.^000000";
+		next;
+		mes "^660000你低头看向地面，发现了几根乌鸦被石子击中时掉落的羽毛.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "哇，看看这些羽毛有多大。我想这么大的乌鸦需要大羽毛才能飞.";
+		next;
+		mes "[图书馆馆长]";
+		mes "我年轻时听说，鸟的羽毛会引来奥丁的仆人祝福它的主人，";
+		mes "所以很多诗人都用它们做书签.";
+		next;
+		mes "[图书馆馆长]";
+		mes "我以前也有一根小羽毛。";
+		mes "我想我成为图书馆馆长也是理所当然的。哈哈哈!";
+		next;
+		mes "[图书馆馆长]";
+		mes "你知道那句老话吗，'在图书馆工作三年就能背下艾达诗集.'";
+		mes "你何不留下其中一根羽毛呢？谁知道呢？它也许会给你带来好运.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "我想也是.";
+		next;
+		mes "^660000你从地上捡起了一根黑色的大羽毛.";
+		mes "看着这根有光泽的羽毛，你不知为何感到非常开心，";
+		mes "仿佛得到了宝藏.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[图书馆馆长]";
+		mes "上帝保佑你。哦，你感冒了吗?";
+		mes "你应该好好照顾自己，尤其是你是个冒险家.";
+		next;
+		mes "^660000你开始觉得冷，浑身发抖.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "试试喝热的杰勒比结晶汤加蜂蜜。";
+		mes "我以前感冒时，我母亲总是做给我喝.";
+		mes "我保证你很快就会好起来.";
+		next;
+		mes "^660000他说得很诚恳，但那种汤听起来根本不像是有效的...^000000";
+		emotion ET_THINK, playerattached();
+		set barmunt_crow,3;
+		close;
+	}
+	else {
+		mes "[图书馆馆长]";
+		mes "小心别感冒了!";
+		close;
+	}
+}
+
+yuno,336,203,0	script	#garas_catch	139,3,3,{
+OnTouch:
+	if (barmunt_crow == 2) {
+		mes "[狗]";
+		mes "汪汪!";
+		mes "呜...汪汪!";
+		next;
+		mes "^660000一只狗在图书馆门口大声吠叫.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "你这只臭鸟！飞走，离开!";
+		next;
+		mes "^660000一个男人也在图书馆门口大喊大叫.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "这里发生什么事了?";
+		next;
+		mes "[图书馆馆长]";
+		mes "没什么，只是有一只巨大的乌鸦落在这座图书馆的屋顶上，";
+		mes "已经叫了至少几个小时了.";
+		mes "我正想把它赶走，因为...总觉得不太吉利.";
+		next;
+		mes "[图书馆馆长]";
+		mes "走！飞走，你这只臭鸟！离开!!";
+		next;
+		mes "^660000你抬起头，发现一只巨大的乌鸦落在图书馆的屋顶上，";
+		mes "仿佛它是这里的主人.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "离开！天哪，它不肯走!";
+		mes "我怕那只吓人的鸟会把我的读者吓跑!";
+		next;
+		mes "[图书馆馆长]";
+		mes "嗯...哦，好吧.";
+		mes "（捡起一颗小石子）";
+		mes "我说走开，你这只笨鸟!";
+		next;
+		mes "（嗖-）";
+		next;
+		mes "（砰！）";
+		specialeffect EF_PIERCE;
+		next;
+		mes "（哗）";
+		next;
+		mes "^660000被男人扔出的石子击中后，乌鸦迅速飞上了天空.^000000";
+		mes "^660000但随后它开始在屋顶上空盘旋，看起来更吓人了.^000000";
+		specialeffect EF_BAT;
+		next;
+		mes "[图书馆馆长]";
+		mes "呜...你就不能走开吗?!";
+		next;
+		mes "^660000他开始冲着乌鸦大喊，但它似乎并不在意。";
+		mes "相反，它飞得更高了一点.";
+		mes "最终他转过头去，放弃了赶走它的念头。然后狗也不叫了.^000000";
+		next;
+		mes "^660000你低头看向地面，发现了几根乌鸦被石子击中时掉落的羽毛.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "哇，看看这些羽毛有多大。我想这么大的乌鸦需要大羽毛才能飞.";
+		next;
+		mes "[图书馆馆长]";
+		mes "我年轻时听说，鸟的羽毛会引来奥丁的仆人祝福它的主人，";
+		mes "所以很多诗人都用它们做书签.";
+		next;
+		mes "[图书馆馆长]";
+		mes "我以前也有一根小羽毛。";
+		mes "我想我成为图书馆馆长也是理所当然的。哈哈哈!";
+		next;
+		mes "[图书馆馆长]";
+		mes "你知道那句老话吗，'在图书馆工作三年就能背下艾达诗集.'";
+		mes "你何不留下其中一根羽毛呢？谁知道呢？它也许会给你带来好运.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "我想也是.";
+		next;
+		mes "^660000你从地上捡起了一根黑色的大羽毛.";
+		mes "看着这根有光泽的羽毛，你不知为何感到非常开心，";
+		mes "仿佛得到了宝藏.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[图书馆馆长]";
+		mes "上帝保佑你。哦，你感冒了吗?";
+		mes "你应该好好照顾自己，尤其是你是个冒险家.";
+		next;
+		mes "^660000你开始觉得冷，浑身发抖.^000000";
+		next;
+		mes "[图书馆馆长]";
+		mes "试试喝热的杰勒比结晶汤加蜂蜜。";
+		mes "我以前感冒时，我母亲总是做给我喝.";
+		mes "我保证你很快就会好起来.";
+		next;
+		mes "^660000他说得很诚恳，但那种汤听起来根本不像是有效的...^000000";
+		emotion ET_THINK, playerattached();
+		set barmunt_crow,3;
+		close;
+	}
+	end;
+}
+
+yuno,343,204,1	script	#garas_eff	111,{
+	end;
+}
+
+yuno,335,208,5	script	狗#garas	81,{
+	mes "[狗]";
+	mes "汪汪!";
+	close;
+}
+
+yuno_in04,111,57,3	script	图书馆兼职人员#garas	862,{
+	if (barmunt_crow == 3) {
+		mes "[图书馆兼职人员]";
+		mes "人们应该学会把书抽出来后放回原处.";
+		mes "推车上堆着的这些书让我感到很沮丧，你知道吗？唉...";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "...那么有什么可以帮你的?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "我在找一本叫<命运的乌鸦>的书，奥利弗 希尔帕特写的...阿嚏!";
+		emotion ET_KEK, playerattached();
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[图书馆兼职人员]";
+		mes "啊，我记得那本...它是最常被丢在推车里的书.";
+		mes "请进^3131FF右边^000000的房间。你可以在畅销书角找到它.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "谢谢.";
+		close;
+	}
+	else if (barmunt_crow == 7) {
+		mes "[图书馆兼职人员]";
+		mes "有什么可以帮你的?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "是的，嗯...阿嚏！哪里可以找到旧报纸的文章...？阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[图书馆兼职人员]";
+		mes "哦，你可以在右边房间的角落里找到它们.";
+		mes "翻动它们时请小心，因为它们大多很古老了.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "谢谢...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		close;
+	}
+	else if (barmunt_crow == 11) {
+		mes "[图书馆兼职人员]";
+		mes "人们应该学会把书抽出来后放回原处.";
+		mes "推车上堆着的这些书让我感到很沮丧，你知道吗？唉...";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "...有什么可以帮你的?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "咳嗽...我在找一本叫<命运的乌鸦>的书，奥利弗 希尔帕特写的.";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[图书馆兼职人员]";
+		mes "啊，我记得那本...它是最常被丢在推车里的书.";
+		mes "上^3131FF楼^000000，看看左边的书架.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "谢谢.";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "奥利弗 希尔帕特尽管年轻，却已声名大噪.";
+		mes "他的<命运的痕迹>我至少读过好几遍。";
+		mes "我是说，那本书太吸引人了，我读不腻.";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "嗯...印象最深的场景是...呃...";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "对了！当主角在燃烧的大宅中走向生命的尽头时...^FF0000-- 哔 --^000000";
+		specialeffect2 EF_BASH3D2;
+		close2;
+		warp "que_ba",264,186;
+		end;
+	}
+	else if (barmunt_crow == 12) {
+		mes "[图书馆兼职人员]";
+		mes "打扰一下，你没事吧？我是说，你刚才突然就恍惚了.";
+		mes "你看起来有点苍白.";
+		next;
+		mes "[图书馆兼职人员]";
+		mes "你何不进去休息一下？读读<命运的痕迹>什么的.";
+		mes "你可以在楼上的左边书架找到那本书.";
+		close;
+	}
+	end;
+}
+
+yuno_in04,100,5,3	script	畅销书的角落	111,{
+	if (barmunt_crow == 3) {
+		mes "^660000塞满这个房间的无数书籍，";
+		mes "告诉你为什么这里被称为学者之都朱诺最伟大的图书馆.^000000";
+		next;
+		mes "^660000标着'本月畅销书'的书，放在与你视线齐平的书架中间.^000000";
+		next;
+		mes "^660000找到'命运的乌鸦'并不难，";
+		mes "因为它是空书架上唯一一本靠着墙的书.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊，幸好还有一本...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "吸吸鼻子...所以现在我要做的就是把这本书借出去，";
+		mes "送给那个麻米狂粉.";
+		next;
+		mes "^FF0000-- 哔 --^000000";
+		next;
+		mes "^660000你一边抱怨一边嘟囔着正要抽出那本书，";
+		mes "突然感觉大脑像要炸开一样。你眼前一黑...^000000";
+		set barmunt_crow,4;
+		close2;
+		specialeffect2 EF_BASH3D2;
+		warp "que_ba",247,33;
+		end;
+	}
+	else if (barmunt_crow == 4) {
+		mes "^660000塞满这个房间的无数书籍，";
+		mes "告诉你为什么这里被称为学者之都朱诺最伟大的图书馆.^000000";
+		next;
+		mes "^660000标着'本月畅销书'的书，放在与你视线齐平的书架中间.^000000";
+		next;
+		mes "^660000找到'命运的乌鸦'并不难，";
+		mes "因为它是空书架上唯一一本靠着墙的书.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊，幸好还有一本...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "吸吸鼻子...所以现在我要做的就是把这本书借出去，";
+		mes "送给那个麻米狂粉.";
+		next;
+		mes "^FF0000-- 哔 --^000000";
+		next;
+		mes "^660000你一边抱怨一边嘟囔着正要抽出那本书，";
+		mes "突然感觉大脑像要炸开一样。你眼前一黑...^000000";
+		close2;
+		specialeffect2 EF_BASH3D2;
+		warp "que_ba",247,33;
+		end;
+	}
+	else if (barmunt_crow == 5) {
+		mes "^660000塞满这个房间的无数书籍，";
+		mes "告诉你为什么这里被称为学者之都朱诺最伟大的图书馆.^000000";
+		next;
+		mes "^660000标着'本月畅销书'的书，放在与你视线齐平的书架中间.^000000";
+		next;
+		mes "^660000找到'命运的乌鸦'并不难，";
+		mes "因为它是空书架上唯一一本靠着墙的书.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊，幸好还有一本...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "吸吸鼻子...所以现在我要做的就是把这本书借出去，";
+		mes "送给那个麻米狂粉.";
+		next;
+		mes "^FF0000-- 哔 --^000000";
+		next;
+		mes "^660000你一边抱怨一边嘟囔着正要抽出那本书，";
+		mes "突然感觉大脑像要炸开一样。你眼前一黑...^000000";
+		close2;
+		specialeffect2 EF_BASH3D2;
+		warp "que_ba",247,33;
+		end;
+	}
+	end;
+}
+
+yuno_in04,100,3,0	script	#garas_path	139,1,1,{
+OnTouch:
+	if (barmunt_crow == 6) {
+		mes "...................................";
+		next;
+		mes "...................................";
+		mes "...................................";
+		next;
+		mes "...................................";
+		mes "...................................";
+		mes "...................................";
+		next;
+		mes "^660000你还在图书馆里，";
+		mes "但你不知道这是梦还是现实.^000000";
+		next;
+		mes "^660000你转头看向书架，发现了那个有空位的书架.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "呼...我好像做了个梦什么的...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "^660000那是一个无法形容的梦：";
+		mes "修发兹共和国某个未知地方的一座燃烧的实验室.";
+		mes "你努力回想，却想不出这个梦意味着什么.^000000";
+		next;
+		mes "^660000你小心翼翼地再次打开书，但什么也没发生.^000000";
+		next;
+		mes "<....在煤烟般的迷雾和混乱的尖叫声尽头，";
+		mes "有一个看起来根本不像是人类的生物...>";
+		next;
+		mes "...................................";
+		next;
+		mes "<- 伊娃，你在做什么？快过来！快点!-";
+		mes "-我不能把他丢在这里!-";
+		mes "伊娃不顾正在坍塌的实验室天花板，";
+		mes "走近一个试管，小心翼翼地取出什么东西，";
+		mes "然后塞进了她的外套里。>";
+		next;
+		mes "^660000...................................^000000";
+		next;
+		mes "^660000书中讲述的正是你在梦里见过的场景.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "似曾相识？我产生了似曾相识的感觉?";
+		next;
+		mes "^660000当然，那只是个梦，但仍然是一次非常神秘的体验.^000000";
+		next;
+		mes "...................................";
+		next;
+		mes "...................................";
+		next;
+		mes "'^660000现在我想知道，这个场景描述的是不是过去真实发生过的事故。";
+		mes "如果真的有过这么大的火灾，我一定能在报纸上查证.";
+		mes "...我只是出于好奇想知道而已...^000000'";
+		set barmunt_crow,7;
+		changequest 2064,2065;
+		close;
+	}
+	else if (barmunt_crow == 7) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "如果我想读关于火灾的新闻报道，应该去哪个区域?";
+		close;
+	}
+	end;
+}
+
+yuno_in04,117,102,3	script	旧新闻剪贴簿	844,{
+	if (barmunt_crow == 7) {
+		mes "^660000这是一个木框文件夹，里面夹着一厚叠旧报纸.^000000";
+		next;
+		mes "^660000你小心翼翼地翻阅报纸，看能否找到关于火灾事故的报道.^000000";
+		next;
+		while(1) {
+			mes "...................................";
+			next;
+			mes "...................................";
+			next;
+			set .@newspp,rand(1,10);
+			if ((.@newspp == 1) || (.@newspp == 2)) {
+				mes "- 第1版 -";
+				mes "著名刺客齐格琳德：'我只为你服务.'";
+				mes " ";
+				mes " 齐格琳德凭借其专业精神，";
+				mes "获得了最伟大刺客的称号，";
+				mes "并在女士们中间声名远扬，";
+				mes "她以磨得锋利的拳刃塑造出坏男孩的形象：";
+				mes "一个过着浪漫而孤独生活的英俊男人.";
+				mes "最近，这位成为名人的刺客";
+				mes "面带微笑坦承了真心：";
+				mes "他一直在秘密地与一位女士交往，";
+				mes "他们计划明年结婚.";
+				mes " 据悉那位女士被称为牧师M小姐，";
+				mes "她在普隆德拉教会工作，但他拒绝透露";
+				mes "更多关于未婚妻的信息，以保护她的安全.";
+				mes "消息一传开，";
+				mes "他的女粉丝们反应消极，";
+				mes "她们说：'这太荒谬了.";
+				mes "刺客必须独自在阴影下生活.'";
+				mes "希望粉丝们的反应不会给";
+				mes "齐格琳德和他即将过门的妻子带来太多困扰.";
+				mes " ";
+				next;
+			}
+			else if ((.@newspp == 3) || (.@newspp == 4)) {
+				mes "- 第4版 -";
+				mes "朱诺街头斗殴";
+				mes " ";
+				mes "昨晚，有人目击两名年轻男子";
+				mes "在朱诺广场激烈斗殴.";
+				mes "据逮捕他们的朱诺士兵说，";
+				mes "B先生一直对A先生";
+				mes "随随便便的行为不满，看来";
+				mes "他的耐心昨晚终于耗尽了.";
+				mes "据说斗殴的起因是A先生把汗津津的光脚架在了B先生的大腿上，";
+				mes "还说他的脚汗太多了.'";
+				mes "大家要怪就怪这炎热的天气吧!";
+				mes " ";
+				next;
+			}
+			else if (.@newspp == 5) {
+				mes "神的警告：秘密实验室化为灰烬";
+				mes " ";
+				mes " 昨晚笼罩朱诺天空的浓烟，";
+				mes "原来来自";
+				mes "一座起火的秘密实验室.";
+				mes " 关于该实验室的更多信息";
+				mes "尚未公布，但据目击者称，";
+				mes "发现实验室时里面空无一人，";
+				mes "除了破碎的试管碎片外";
+				mes "没有任何人和东西，";
+				mes "那些碎片证明这里曾被用作实验室.";
+				mes " 事故现场调查员、科学家西昂，";
+				mes "从里面的机器残骸推测，";
+				mes "该实验室一定曾被用于";
+				mes "生物技术项目的试验，";
+				mes "并表示他相信这场火灾是神的愤怒，";
+				mes "是对玩弄其造物的正义惩罚.";
+				mes " ";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...........................";
+				mes "...........................";
+				mes "这就是我在梦里见过的地方!";
+				next;
+				mes "等等，那他们逃去的地方呢...?";
+				next;
+				mes "你赶紧查看了新闻的日期。那是很久以前的事了，";
+				mes "你无法再从新闻报道中找到更多信息.";
+				next;
+				mes "要是他们有后代或传人呢?";
+				next;
+				mes "你激动得心跳加速.";
+				mes "你现在确信这不只是你的梦或幻觉。";
+				mes "你看到了过去真实发生的事情.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "真不敢相信这是真的!";
+				mes "好好想想...那是^FF0000一个与北方洞窟相连的区域^000000.";
+				set barmunt_crow,8;
+				changequest 2065,2066;
+				close;
+			}
+			else if ((.@newspp == 6) || (.@newspp == 7)) {
+				mes "- 文化版 -";
+				mes "- 请救救我的水 -";
+				mes " ";
+				mes "最近备受赞誉的年轻作家、";
+				mes "珍妮 卡多克的新系列";
+				mes "'请救救我的水'已登上";
+				mes "图书馆借阅榜的榜首.";
+				mes "'请救救我的水'讲述了一个叫乌婕尔的女孩，";
+				mes "她受到大自然母亲的祝福.";
+				mes "她的父亲在临终前留下遗嘱，";
+				mes " 要她'保护水源'对抗邪恶，";
+				mes "她正与一群污染自然的";
+				mes "邪恶反派战斗，以便净化水源.";
+				mes "这本书很快将被选为";
+				mes "修发兹共和国共和国的必备读物，";
+				mes "用于弘扬道德、";
+				mes "在全国推广环境保护.";
+				mes " ";
+				next;
+			}
+			else {
+				mes "艾音贝赫矿坑塌方（2）";
+				mes " ";
+				mes "据一直主导艾音贝赫采矿业的";
+				mes "雷根贝勒公司的一名员工说，";
+				mes "已发现三具尸体，";
+				mes "但有一名幸存者被送进了医院.";
+				mes "他情况危急，";
+				mes "他还告诉我们，他们";
+				mes "仍在搜寻幸存者，";
+				mes "并已聘请专家调查";
+				mes "事故原因.";
+				mes " ";
+				next;
+			}
+		}
+	}
+	else {
+		mes "^660000这是一个木框文件夹，里面夹着一厚叠旧报纸.^000000";
+		close;
+	}
+}
+
+yuno_in04,169,123,3	script	可疑的男人#oliver_h	407,{
+	if (checkweight(617,3) == 0) {
+		mes "- 你的物品太多，无法进行这个任务。 -";
+		close;
+	}
+	if (barmunt_crow > 14) {
+		mes "^660000那位作家正以极快的速度在笔记本上写着什么.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "我们别打扰他，尤其是当他充满创作灵感的时候。";
+		mes "那种时候可不常见.";
+		close;
+	}
+	else if (barmunt_crow == 13) {
+		cutin "oliver_pre",2;
+		if (countitem(7795) < 1) {
+			mes "[奥利弗 希尔帕特]";
+			mes "麻米小姐...";
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "[奥利弗 希尔帕特]";
+		mes "你改变主意，愿意把麻米小姐的写真集卖给我了吗?";
+		next;
+		switch(select("是:否")) {
+		case 1:
+			cutin "oliver_smile",2;
+			mes "[奥利弗 希尔帕特]";
+			mes "哇，谢谢!";
+			next;
+			mes "[奥利弗 希尔帕特]";
+			mes "嗯...我还没收到预付稿费，你不介意先收下这个吧?";
+			next;
+			break;
+		case 2:
+			mes "[奥利弗 希尔帕特]";
+			mes "好吧...我明白了...";
+			emotion ET_CRY;
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "[奥利弗 希尔帕特]";
+		mes "我还没机会打开它，但我的出版商说里面有非常稀有的东西。";
+		mes "希望它足以抵偿你的写真集.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "哈哈，谢谢.";
+		mes "你知道吗，在梦罗克...阿嚏！...有个和你一样崇拜麻米的人...阿嚏！";
+		mes "你何不去见见他?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "那本书就是他送给我的。他也许还有更多她的稀有书...阿嚏!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哦，太感谢你提供这么有价值的信息了!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哇！我必须趁还没忘记，把昨晚在梦里看到的故事写下来!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "希望你会喜欢我的下一本书。那么我得走了...谢谢你送我写真集!";
+		next;
+		cutin "oliver_smile",255;
+		mes "^660000他像无头苍蝇一样四处乱跑。他迅速打开包，";
+		mes "掏出笔记本，跑到一张桌子前，然后飞快地写起东西来.";
+		mes "起初，他看起来很傻，但现在你觉得他是个对写作非常认真的人.^000000";
+		next;
+		mes "^660000你正要离开时，发现地上有一张纸.^000000";
+		next;
+		mes "^660000那张纸上涂满了潦草的字迹，顶部写着<命运的乌鸦>。";
+		mes "一定是奥利弗掉了这张关于他小说<命运的乌鸦>的便条.^000000";
+		next;
+		mes "^3131FF古代武器 = 某种能量来源^000000";
+		mes "^3131FF隐居 - 一位女弟子的信^000000";
+		mes "^3131FF继母 = 前世的恋人?!^000000";
+		close2;
+		specialeffect2 EF_ENHANCE;
+		delitem 7795,1; //Mami_Photo_Album
+		set barmunt_crow,14;
+		getitem 7796,1; //Author_Autograph
+		getitem 7797,1; //Author_Memo
+		getitem 617,1; //Old_Violet_Box
+		warp "que_ba",270,270;
+		end;
+	}
+	else if (barmunt_crow == 14) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "这个梦似乎颇有深意.";
+		mes "我最好把这张便条还给他.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "打扰一下，希尔帕特先生.";
+		next;
+		cutin "oliver_think",2;
+		mes "[奥利弗 希尔帕特]";
+		mes ".................";
+		mes ".................";
+		mes "...........啊?";
+		next;
+		cutin "oliver_think",255;
+		mes "打断他写作让你感到抱歉.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "我想你掉了这个.";
+		next;
+		mes "^660000你翻找口袋想找出便条，";
+		mes "结果不小心带出了你在图书馆外捡的乌鸦羽毛。然后突然...^000000";
+		next;
+		mes "（啪）";
+		specialeffect EF_VENOMDUST;
+		specialeffect2 EF_DETOXICATION;
+		next;
+		mes "^660000奥利弗比你更快地捡起羽毛，";
+		mes "在你还没来得及说话之前就把它撕成了碎片.^000000";
+		next;
+		mes "^660000你生气地看着他，发现他变成了完全不同的人；";
+		mes "他看起来既不傻也不认真，而是极其冷酷.^000000";
+		next;
+		cutin "oliver_hum",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "呃?!";
+		mes "这根羽毛怎么了?";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		emotion ET_KEK;
+		mes "哇！这是我做的吗?";
+		mes "哦，天哪，对不起！太对不起了!";
+		next;
+		mes "^660000他恢复了原样，开始为自己突然的暴怒向你道歉.^000000";
+		next;
+		emotion ET_CRY;
+		mes "[奥利弗 希尔帕特]";
+		mes "我...我不知道该怎么道歉...";
+		mes "只是...我太生气了，以至于我--！啊，对不起!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "嗯，没关系。我只是碰巧从街上捡来的。你不必道歉.";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "既然你这么说，谢谢你的体谅.";
+		mes "呼，我感到很内疚...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "给，拿回你的便条.";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哦，你把它扔掉就行。它已经没用了.";
+		mes "呼...";
+		next;
+		cutin "oliver_pre",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "我现在灵感泉涌。抱歉，我该走了.";
+		next;
+		cutin "oliver_pre",255;
+		mes "^660000他刚和你讲完话，就回去继续写作，完全沉浸在工作中.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "他的专注力真惊人.";
+		mes "看来不是每个人都能写出畅销书的，是吧?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...等等，我不打喷嚏了...";
+		mes "头疼和胸闷的感觉也消失了!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "如果这一切都是那根乌鸦羽毛引起的呢？如果...?";
+		next;
+		switch(select("是被石子诅咒了.:那只乌鸦和奥利弗有关系.")) {
+		case 1:
+			mes "["+ strcharinfo(0) +"]";
+			mes "啊，我明白了.";
+			mes "我想当乌鸦被石子击中时，它的智慧一定变成了灾难.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "啊，那都是因为图书馆馆长!";
+			mes "幸好羽毛没了，希望我不会再倒霉了.";
+			next;
+			break;
+		case 2:
+			mes "["+ strcharinfo(0) +"]";
+			mes "我记得兹德先生说过，伊娃离开时留下了一根黑羽毛.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "还有，那个女助手变成一只乌鸦飞走了，";
+			mes "然后那根乌鸦羽毛让我又打喷嚏又咳嗽.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "..................";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "没错，希尔帕特先生的灵魂被乌鸦诅咒了!";
+			mes "不知道他是不是也像图书馆馆长那样朝乌鸦扔过石头...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "..................";
+			mes "我想这是个愚蠢的念头.";
+			next;
+			break;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "哦，算了，管它呢.";
+		mes "重要的是我的病好了!";
+		mes "如果我再做梦，到时候再说吧~";
+		next;
+		mes "^660000离开图书馆时，你想，";
+		mes "把奥利弗先生当作你的知己也许是个更好的主意.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "那挺有趣的，但也挺累人的。我的下一次冒险该去哪里呢?";
+		set barmunt_crow,15;
+		completequest 2068;
+		close2;
+		cutin "",255;
+		end;
+	}
+	else {
+		mes "^660000一个可疑的年轻人正在过往的人群中搜寻面孔，";
+		mes "仿佛在找什么人.^000000";
+		close;
+	}
+}
+
+yuno_in04,167,120,3	script	破旧的书#garas	111,{
+	if (checkweight(617,3) == 0) {
+		mes "- 你的物品太多，无法进行这个任务。 -";
+		close;
+	}
+	if (barmunt_crow == 12) {
+		if (countitem(7795) < 1) {
+			mes "- 你感觉好像遗忘了什么重要的东西。 -";
+			close;
+		}
+		mes "^660000考虑到这本书出版不久，它的封面已经破损严重。";
+		mes "一定有很多人翻过它.^000000";
+		next;
+		mes "^660000你小心翼翼地翻开第一页，担心自己又会做一个疯狂的梦.^000000";
+		next;
+		mes ".........................";
+		mes ".........................";
+		mes ".........................";
+		next;
+		mes "< 他从小——早到他自己都记不清究竟多小——他的梦就用浩瀚的知识";
+		mes "填满他的大脑，那些知识他从未见过，也从未从别处学过.";
+		mes "他外表是个小男孩，却比任何成年贤者都睿智。";
+		mes "他能流利地说许多种语言，听起来就像奥丁吟诵的艾达诗集.";
+		mes "对他来说，那个狭小黑暗的地下村庄是一座监狱，";
+		mes "阻碍着他满足好奇心和自由的渴望.";
+		mes "他向继母伊娃表达了想学习更多外界知识的愿望，";
+		mes "但她总是用严厉的目光无视他的心愿.";
+		mes "最终，她蛮横的阻拦再也无法阻止他逃离现实.";
+		mes " ";
+		mes "- 呼！呼！ -";
+		mes "他在似乎没有尽头的黑暗中奔跑。";
+		mes "他在逃离一切试图束缚他的东西。>";
+		next;
+		mes ".........................";
+		mes ".........................";
+		mes ".........................";
+		next;
+		mes "< - 嗯...-";
+		mes "-...他醒了.-";
+		mes "- 你好，能看见我吗？感觉怎么样？ -";
+		mes "一位老人慢慢走进房间。他面带微笑，";
+		mes "在椅子上坐下。小男孩第一次见到村庄以外的人，害怕了一会儿，";
+		mes "但随后他强撑着从床上坐起来，环顾四周.";
+		mes " ";
+		mes "- 我在哪里？我为什么在这里？ - ";
+		mes "- 我昨晚乘马车时，发现你躺在街上。";
+		mes "我的名字叫海智。你可以叫我海智先生，孩子.-";
+		mes "-.......-";
+		mes "- 你叫什么名字？ -";
+		mes "-......阿尔.-";
+		mes "- 你知道你为什么会在街上吗？你住在哪里？";
+		mes "你的父母一定急着想见你.-";
+		mes "海智的话立刻让阿尔的脑海中浮现出伊娃那怪物般的身影。";
+		mes "他在内心恐惧地尖叫.";
+		mes "- 我无家可归，也没有父母。 -";
+		mes "阿尔想，不管要多久，他都必须说谎。";
+		mes "老人似乎理解他：他的眼神里流露出对小男孩的同情。";
+		mes "海智坚持让阿尔想住多久就住多久.";
+		mes "后来，得知海智是朱诺大学的教授后，";
+		mes "阿尔相信命运站在他这一边。>";
+		next;
+		mes ".........................";
+		mes ".........................";
+		mes ".........................";
+		next;
+		mes "^660000你感觉有人盯着你看书。你转过头，";
+		mes "发现一个时髦却神情可疑的年轻人.^000000";
+		next;
+		cutin "oliver_pre",2;
+		mes "^660000那个年轻人走近来，咧嘴笑着握住你的手.^000000";
+		next;
+		mes "[可疑的男人]";
+		mes "嘿，你在读<命运的痕迹>!";
+		mes "哈哈哈，幸会。我就是那本书的作者。";
+		mes "我来看看我的新书<命运的乌鸦>卖得怎么样，";
+		mes "能见到我的粉丝真是莫大的荣幸！";
+		mes "我有点不好意思，但还是谢谢！呵呵.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "咳咳，不，我不是粉...";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哦，对了！你想要我的签名吗?";
+		next;
+		mes "（沙沙写字声）";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "^660000他从包里掏出一大张纸，飞快地画了些什么，然后递给你.^000000";
+		next;
+		mes "哈哈，你看。我把签名写得尽可能大，";
+		mes "这样你就可以向朋友们炫耀了!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "你知道吗，我只是把梦里看到的写了下来；";
+		mes "我没想到人们会这么喜欢我的故事！这让我很惊讶.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "梦?";
+		next;
+		cutin "oliver_think",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "是的，我一直做着非常生动的梦，生动得像现实一样.";
+		mes "有人告诉我，伟大的作家通常从梦中寻找灵感。";
+		mes "我想我天生就是其中之一。哈哈哈!";
+		next;
+		mes "你对这个所谓的梦感到有些不安。";
+		mes "你想弄明白读书时所看到的一切意味着什么.";
+		mes "如果奥利弗做的梦和你完全一样，";
+		mes "那可能意味着他和你共享着梦境。";
+		mes "话说回来，你发现书中的洞穴村是真实存在的.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "主角阿尔也在做梦...";
+		next;
+		cutin "oliver_pre",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "哇!";
+		mes "那不是在那边吗?!";
+		emotion ET_HUK;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊?";
+		next;
+		mes "^660000你顺着他的目光迅速转过头去。那里除了你的包什么也没有.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊...阿嚏！希尔帕特先生，你对我的包感兴趣吗？";
+		mes "这只是我从新手训练场得到的一个普通包...";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "不，不!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "我是在看包的翻盖下面那个闪闪发光的东西!";
+		next;
+		mes "^660000你检查了包里那个东西是什么，原来是...^000000";
+		next;
+		cutin "oliver_smile",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "麻米小姐!";
+		emotion ET_BIGTHROB;
+		next;
+		mes "^660000没错，那是麻米的写真集，";
+		mes "梦罗克的班杰明坚称她是卢恩·米德加兹王国最伟大的三大偶";
+		mes "像之一。这一定是奥利弗高兴得尖叫的原因.^000000";
+		emotion ET_THINK, playerattached();
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "阿嚏！你也是麻米的粉丝吗?";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "你在开玩笑吗？！当然是!";
+		mes "你说说，哪里还能找到像她这样聪明又美丽的女人?";
+		mes "我相信她是智慧女神的转世，";
+		mes "那位女神被嫉妒的女神们驱逐到了米德加兹大陆.";
+		next;
+		mes "^660000麻米似乎拥有一种你永远无法理解的奇特人气.^000000";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "能给我看看吗?";
+		next;
+		mes "^660000你把麻米的写真集给了他.^000000";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes ".................";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "...哦!";
+		cutin "mami01",4;
+		emotion ET_THROB;
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "...哦~~!";
+		cutin "mami02",4;
+		emotion ET_THROB;
+		next;
+		cutin "oliver_smile",2;
+		mes "[奥利弗 希尔帕特]";
+		mes "啊...这就是我爱上麻米小姐的原因.";
+		mes "冒险家，你一定也是她的狂热粉丝。";
+		mes "你从哪里找到这本稀有的写真集的?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "不，是别人送给我的...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "什么？现在我震惊了!";
+		mes "看到你对麻米小姐的美貌无动于衷，我很震惊，";
+		mes "但更震惊的是，上帝竟然把这么稀有的一本她的写真集";
+		mes "给了像你这样不懂它价值的人!";
+		mes "我乘着最早的飞空艇飞到卢恩·米德加兹王国，";
+		mes "想在这本书发售当天买到它，但书已经售罄了。";
+		mes "排在我前面的那个人买走了最后一本!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...............";
+		mes "我...我明白了...";
+		emotion ET_SWEAT, playerattached();
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "嗯...";
+		mes "如果你真的不喜欢那本书，何不卖给我呢?";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "正如我之前告诉你的，那是我愿意跨越大陆去得到的东西。";
+		mes "求你了?";
+		mes "我真的很想买你的书!";
+		next;
+		switch(select("卖:不卖")) {
+		case 1:
+			mes "[奥利弗 希尔帕特]";
+			mes "哇，谢谢!";
+			next;
+			mes "[奥利弗 希尔帕特]";
+			mes "嗯...我还没收到预付稿费，你不介意先收下这个吧?";
+			next;
+			break;
+		case 2:
+			mes "[奥利弗 希尔帕特]";
+			mes "好吧...我明白了...";
+			emotion ET_CRY;
+			set barmunt_crow,13;
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "[奥利弗 希尔帕特]";
+		mes "我还没机会打开它，但我的出版商说里面有非常稀有的东西。";
+		mes "希望它足以抵偿你的写真集.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "哈哈，谢谢.";
+		mes "你知道吗，在梦罗克...阿嚏！...有个和你一样崇拜麻米的人...阿嚏！";
+		mes "你何不去见见他?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "那本书就是他送给我的。他也许还有更多她的稀有书...阿嚏!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哦，太感谢你提供这么有价值的信息了!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "哇！我必须趁还没忘记，把昨晚在梦里看到的故事写下来!";
+		next;
+		mes "[奥利弗 希尔帕特]";
+		mes "希望你会喜欢我的下一本书。那么我得走了...谢谢你送我写真集!";
+		cutin "oliver_smile",255;
+		next;
+		mes "^660000他像无头苍蝇一样四处乱跑。他迅速打开包，";
+		mes "掏出笔记本，跑到一张桌子前，然后飞快地写起东西来.";
+		mes "起初，他看起来很傻，但现在你觉得他是个对写作非常认真的人.^000000";
+		next;
+		mes "^660000你正要离开时，发现地上有一张纸.^000000";
+		next;
+		mes "^660000那张纸上涂满了潦草的字迹，顶部写着<命运的乌鸦>。";
+		mes "一定是奥利弗掉了这张关于他小说<命运的乌鸦>的便条.^000000";
+		next;
+		mes "^3131FF古代武器 = 某种能量来源^000000";
+		mes "^3131FF隐居 - 一位女弟子的信^000000";
+		mes "^3131FF继母 = 前世的恋人?!^000000";
+		close2;
+		specialeffect2 EF_ENHANCE;
+		delitem 7795,1; //Mami_Photo_Album
+		set barmunt_crow,14;
+		getitem 7796,1; //Author_Autograph
+		getitem 7797,1; //Author_Memo
+		getitem 617,1; //Old_Violet_Box
+		warp "que_ba",270,270;
+		cutin "",255;
+		end;
+	}
+	else {
+		mes "^660000考虑到这本书出版不久，它的封面已经破损严重。";
+		mes "一定有很多人翻过它.^000000";
+		close;
+	}
+}
+
+que_ba,247,33,0	script	#bpast_1_1	-1,1,1,{
+OnTouch:
+	if (barmunt_crow < 4) {
+		warp "ama_dun03",119,110;
+	}
+	else {
+		sc_end SC_Blind;
+		mes "[???]";
+		mes "哇啊啊啊!";
+		next;
+		mes "^660000你被一声可怕的尖叫惊醒，恢复了意识。";
+		mes "看来你已经在时光中迷失了好一会儿了.^000000";
+		next;
+		mes "^660000你手忙脚乱地站起身，";
+		mes "循着尖叫声来到一座古老而废弃的建筑前.^000000";
+		next;
+		mes "^660000那座古老、巨大而令人生畏的建筑，";
+		mes "正从破碎敞开的窗户里冒出暗红色的浓烟.^000000";
+		close;
+	}
+}
+
+que_ba,257,39,3	script	女研究员#bpast	744,{
+	if (barmunt_crow < 4) {
+		warp "ama_dun03",119,110;
+	}
+	else if (barmunt_crow == 4) {
+		mes "^660000你努力回想发生了什么，这时遇到一个从你身边经过的女人。";
+		mes "你本能地伸手去抓她的肩膀想引起她的注意.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "阿嚏！阿嚏！天哪...";
+		mes "喂，我在哪里...?";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "- 嘶嘶 -";
+		specialeffect EF_CLOAKING;
+		next;
+		mes "^660000令人惊讶的是，你的手穿过了她的身体.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...我到底在哪里?";
+		close;
+	}
+	else {
+		warp "yuno_in04",100,3;
+	}
+	end;
+}
+
+que_ba,265,34,0	warp	#bpast_1to2	1,1,que_ba,156,37
+
+que_ba,176,43,7	script	男研究员#bpast_2_1	402,{
+	specialeffect EF_CLOAKING;
+	mes "[研究员]";
+	mes "着火了!";
+	mes "大家快动，快动!";
+	close;
+}
+
+que_ba,181,14,7	script	研究员#bpast_2_2	865,{
+	specialeffect EF_CLOAKING;
+	mes "[研究员]";
+	mes "咳，咳!";
+	mes "啊...我喘不过气了...我得出去...";
+	close;
+}
+
+que_ba,183,25,0	warp	#bpast_2to3_1	1,1,que_ba,72,25
+que_ba,183,52,0	warp	#bpast_2to3_2	1,1,que_ba,72,51
+
+que_ba,102,56,0	script	#3room_barmunt	-1,3,3,{
+OnTouch:
+	if (barmunt_crow < 4) {
+		warp "yuno_in04",100,3;
+	}
+	else {
+		mes "^660000你穿过被火焰吞没的走廊，来到一个即将坍塌的房间前，";
+		mes "就像这个地方的其他地方一样.^000000";
+		next;
+		mes "^660000因为浓烟，你看不清房间里有什么，但你知道那里有东西.^000000";
+		next;
+		mes "^660000你眯起眼睛，侧耳倾听。你能听到人声，";
+		mes "但说话者的轮廓却不像人形.^000000";
+		next;
+		mes "[女人]";
+		mes "咳！火...咳!";
+		mes "该死的人类...咳，咳!";
+		next;
+		mes "^660000随着火焰的咆哮越来越响，她的咳嗽也越来越厉害.^000000";
+		next;
+		mes "[男人]";
+		mes "他们逃跑了，把我们丢在这里等死!";
+		next;
+		mes "[女人]";
+		mes "...我们要死了吗?";
+		next;
+		mes "[男人]";
+		mes "死？...哈哈.";
+		mes "^3131FF'伊娃'^000000，我们不会死的...我们本来就不算真正活着.";
+		next;
+		mes "- 崩塌声 -";
+		next;
+		mes "[男人]";
+		mes "啊!";
+		next;
+		mes "^660000唯一的出口被钢筋封住；谁也逃不出这个被火焰包围的房间。";
+		mes "接着，墙角被大火的高温烧得崩塌了.^000000";
+		next;
+		mes "^660000那个男性的轮廓迅速靠近墙壁，开始挖掘崩塌的墙角.^000000";
+		next;
+		mes "[男人]";
+		mes "...挖通了!";
+		next;
+		mes "[男人]";
+		mes "我们走，伊娃!";
+		next;
+		mes "[伊娃]";
+		mes "等等，我们必须带上孩子们.";
+		next;
+		mes "^660000那个被称为伊娃的女性轮廓走近靠墙排成一排的试管.^000000";
+		next;
+		mes "[男人]";
+		mes "伊娃！！我们没时间救下所有人！快过来!";
+		if (barmunt_crow == 4) {
+			set barmunt_crow,5;
+		}
+		sc_start SC_Blind,600000,0,10000;
+		close2;
+		warp "que_ba",53,232;
+		end;
+	}
+	end;
+}
+
+que_ba,104,55,3	script	奇形怪状的女子#eva1	980,{
+	specialeffect EF_CLOAKING;
+	end;
+}
+
+que_ba,99,51,7	script	奇形怪状的男子#zid1	999,{
+	specialeffect EF_CLOAKING;
+	end;
+}
+
+que_ba,53,232,0	script	#garas_f_yume	139,1,1,{
+OnTouch:
+	if (barmunt_crow == 5) {
+		//GetHEALTHSTATE VAR_HEALTHSTATENORMAL 0
+		mes "^660000突然一道闪光刺痛了你的眼睛。";
+		mes "几秒钟后，你睁开眼睛，发现自己身处修发兹共和国的某处.^000000";
+		next;
+		mes "^660000而且你不是一个人：";
+		mes "你现在可以清楚地看到那对逃出实验室的男女.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "嗯...";
+		next;
+		mes "[奇形怪状的男子]";
+		mes "我们该去哪里?";
+		mes "没有人会欢迎我们...我们看起来像怪物!";
+		next;
+		mes "[伊娃]";
+		mes "...";
+		mes "我知道北方有一个隐蔽的洞窟.";
+		mes "我们可以在那里待一阵子.";
+		next;
+		mes "^660000他们似乎完全没有察觉到你的存在，径直向北走去.^000000";
+		next;
+		mes "^660000你望着他们离去的背影，";
+		mes "然后注意到自己手里正捧着刚才在读的那本书。接着....^000000";
+		set barmunt_crow,6;
+		specialeffect2 EF_FLASHER;
+		close2;
+		warp "yuno_in04",100,3;
+	}
+	else {
+		warp "yuno_in04",100,3;
+	}
+	end;
+}
+
+que_ba,50,238,1	script	奇形怪状的女子#eva2	980,{
+	specialeffect EF_CLOAKING;
+	end;
+}
+
+que_ba,48,227,7	script	奇形怪状的男子#zid2	999,{
+	specialeffect EF_CLOAKING;
+	end;
+}
+
+que_ba,264,186,0	script	#barmut_room1	139,2,2,{
+OnTouch:
+	if (barmunt_crow == 11) {
+		mes "^660000你醒来，环顾四周。不知怎的，你现在身处一座巨大的宅邸.^000000";
+		next;
+		mes "^660000你突然感到胸口一阵剧痛，仿佛有人在挤压你的心脏.^000000";
+		next;
+		mes "^660000这座宅邸看起来优雅而昂贵，但它着火了，";
+		mes "就像你第一个梦里的实验室一样.^000000";
+		next;
+		mes "^660000胸痛和烈火让你难以思考，但你知道这座宅邸撑不了多久。";
+		mes "你四处寻找出口，看到一个男人站在楼下的火焰中央.^000000";
+		next;
+		mes "^660000他似乎并不在意自己会和宅邸一起毁灭，";
+		mes "正用低沉而悲伤的声音缓缓说着.^000000";
+		next;
+		mes "[神秘男子]";
+		mes ".....................";
+		mes "终究，是上帝愚弄了我...";
+		mes "这一切都是他的计划...";
+		mes "连我最好的朋友都是他的傀儡...";
+		next;
+		mes "[神秘男子]";
+		mes "我强烈地怨恨我的命运...";
+		mes "但我已准备好接受终结...接受一切...";
+		next;
+		mes "^660000他还没说完，火焰就把他吞没了。与此同时，你...^000000";
+		specialeffect EF_METEORSTORM;
+		set barmunt_crow,12;
+		close2;
+		warp "yuno_in04",108,57;
+	}
+	else {
+		warp "yuno_in04",108,57;
+	}
+	end;
+}
+
+que_ba,270,181,3	script	#barmunt_fire	755,{
+	end;
+}
+
+que_ba,270,270,0	script	#barmunt_living	139,1,1,{
+OnTouch:
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	next;
+	mes "[神秘男子]";
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	mes "伊...伊娃，不!";
+	next;
+	mes "[神秘男子]";
+	mes "那是梦吗?";
+	mes "..................";
+	mes "...天哪，真奇怪.";
+	next;
+	mes "[神秘男子]";
+	mes "母亲是...她是个普通人类.";
+	mes "我当时站在她身边吗?";
+	mes "..................";
+	next;
+	mes "^660000他自言自语，用颤抖的手把汗湿的头发向后捋.^000000";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "又是一个梦.";
+	mes "我想他也看不见、听不到我，就像其他人一样.";
+	next;
+	mes "^660000你放下戒心，盯着他看.";
+	mes "突然，他转过头直视着你，脸因愤怒而扭曲.^000000";
+	next;
+	mes "[神秘男子]";
+	mes "你到底是怎么找到我的?!";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "...哇！他能看见我！他能看见我!";
+	next;
+	enablenpc "#barmut_onna";
+	mes "[神秘女子]";
+	mes "先生，你不必对我发这么大的火.";
+	next;
+	mes "^660000你一听到她的声音，";
+	mes "就转过身，发现一个女人站在那里.^000000";
+	next;
+	mes "[神秘女子]";
+	mes "一切就快完成了，";
+	mes "但你毁掉了他们所有人——连^FF00FF哔^000000和^FF00FF哔^000000也不放过——然后躲在这里.";
+	next;
+	mes "[神秘男子]";
+	mes "他们本不该存在于这个世界!";
+	next;
+	mes "[神秘女子]";
+	mes "那是他的决定。你的命运掌握在他...";
+	next;
+	mes "[神秘男子]";
+	mes "闭嘴!";
+	next;
+	mes "^660000暴怒的男人拔出剑，指向她。她随即突然变成一只乌鸦飞走了。";
+	mes "窗外回荡着她的笑声.^000000";
+	disablenpc "#barmut_onna";
+	specialeffect EF_BAT;
+	next;
+	mes "[回荡的声音]";
+	mes "无论你多么努力地逃避，你都被命运束缚着...";
+	soundeffect "loli_ruri_stand.wav",0;
+	next;
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	next;
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	mes "..................";
+	close2;
+	warp "yuno_in04",165,122;
+	end;
+}
+
+que_ba,263,276,3	script	#barmut_room2	755,{
+	end;
+}
+
+que_ba,266,268,3	script	#barmut_onna	982,{
+OnInit:
+	disablenpc "#barmut_onna";
+	end;
+}
+
+cave,82,97,3	script	洞穴村民#g1	996,3,3,{
+	if (barmunt_crow == 8) {
+		mes "[洞穴村民]";
+		mes "此处之后外人不得进入.";
+		next;
+		switch(select("退后.:不，听我说!")) {
+		case 1:
+			mes "[洞穴村民]";
+			mes "哈，我就知道你会怕我!";
+			close2;
+			warp "cave",81,92;
+			end;
+		case 2:
+			mes "["+ strcharinfo(0) +"]";
+			mes "啊...阿嚏!";
+			mes "'我和其他外人不一样...阿嚏!";
+			mes "我在这里有目标要达成...阿嚏!";
+			specialeffect2 EF_VENOMDUST;
+			next;
+			mes "^660000虽然你被这个守卫吓得有点发怵，";
+			mes "你的喷嚏也绝对帮不上忙，但你还是继续说.^000000";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "我是来找人的!";
+			input .@input$;
+			mes "她的名字是^FF0000"+.@input$+"^000000!";
+			next;
+			if (compare(.@input$,"伊娃") == 0) {
+				mes "[洞穴村民]";
+				mes "你在开玩笑吗？如果你要找失踪的孩子，去朱诺警察局!";
+				close2;
+				warp "cave",81,92;
+				end;
+			}
+			else {
+				mes "[洞穴村民]";
+				mes "............!!!!";
+				next;
+				mes "[洞穴村民]";
+				mes "你刚才是说伊娃吗?";
+				mes "嗯...";
+				mes "在这里等着.";
+				next;
+				emotion ET_COMEON;
+				mes "[洞穴村民]";
+				mes "嘿，杰宜达!";
+				enablenpc "杰宜达#garas1";
+				next;
+				mes "[洞穴村民]";
+				mes "上去告诉伊娃，有客人来访.";
+				disablenpc "杰宜达#garas1";
+				next;
+				mes "^660000令人惊讶的是，他似乎知道伊娃是谁。";
+				mes "你仍然不敢相信她真的存在！这一切都太奇怪了.^000000";
+				next;
+				mes "^660000你能感觉到内心的兴奋和期待。";
+				mes "也许你正越来越接近弄清你的梦究竟意味着什么.^000000";
+				enablenpc "杰宜达#garas1";
+				next;
+				mes "[洞穴村民]";
+				mes "嗯...是吗？我明白了.";
+				next;
+				disablenpc "杰宜达#garas1";
+				mes "[洞穴村民]";
+				mes "嘿，你可以过去了。上去吧，但最好别耍什么花样，";
+				mes "三思而后行。明白吗?";
+				next;
+				mes "^660000那个神情严肃的男人打量了你一番，然后侧身让开，让你通过.";
+				mes "你紧张地握紧拳头，然后走上了黑暗的楼梯.^000000";
+				set barmunt_crow,9;
+				close2;
+				warp "cave",82,105;
+				end;
+			}
+		}
+	}
+	else if (barmunt_crow < 8) {
+		mes "[洞穴村民]";
+		mes "此处之后外人不得进入.";
+		next;
+		mes "^660000他的声音和他的外表一样严厉而令人生畏.^000000";
+		close2;
+		warp "cave",81,92;
+		end;
+	}
+	else {
+		mes "[洞穴村民]";
+		mes "你还有事要找兹德吗?";
+		mes "你最好快点办完，因为我们不喜欢外人在村子里乱跑.";
+		close;
+	}
+
+OnTouch:
+	if (barmunt_crow == 8) {
+		mes "[洞穴村民]";
+		mes "此处之后外人不得进入.";
+		next;
+		switch(select("退后.:不，听我说!")) {
+		case 1:
+			mes "[洞穴村民]";
+			mes "哈，我就知道你会怕我!";
+			close2;
+			warp "cave",81,92;
+			end;
+		case 2:
+			mes "["+ strcharinfo(0) +"]";
+			mes "啊...阿嚏!";
+			mes "'我和其他外人不一样...阿嚏!";
+			mes "我在这里有目标要达成...阿嚏!";
+			specialeffect2 EF_VENOMDUST;
+			next;
+			mes "^660000虽然你被这个守卫吓得有点发怵，";
+			mes "你的喷嚏也绝对帮不上忙，但你还是继续说.^000000";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "我是来找人的!";
+			input .@input$;
+			mes "她的名字是^FF0000"+.@input$+"^000000!";
+			next;
+			if (compare(.@input$,"伊娃") == 0) {
+				mes "[洞穴村民]";
+				mes "你在开玩笑吗？如果你要找失踪的孩子，去朱诺警察局!";
+				close2;
+				warp "cave",81,92;
+				end;
+			}
+			else {
+				mes "[洞穴村民]";
+				mes "............!!!!";
+				next;
+				mes "[洞穴村民]";
+				mes "你刚才是说伊娃吗?";
+				mes "嗯...";
+				mes "在这里等着.";
+				next;
+				emotion ET_COMEON;
+				mes "[洞穴村民]";
+				mes "嘿，杰宜达!";
+				enablenpc "杰宜达#garas1";
+				next;
+				mes "[洞穴村民]";
+				mes "上去告诉伊娃，有客人来访.";
+				disablenpc "杰宜达#garas1";
+				next;
+				mes "^660000令人惊讶的是，他似乎知道伊娃是谁。";
+				mes "你仍然不敢相信她真的存在！这一切都太奇怪了.^000000";
+				next;
+				mes "^660000你能感觉到内心的兴奋和期待。";
+				mes "也许你正越来越接近弄清你的梦究竟意味着什么.^000000";
+				enablenpc "杰宜达#garas1";
+				next;
+				mes "[洞穴村民]";
+				mes "嗯...是吗？我明白了.";
+				next;
+				disablenpc "杰宜达#garas1";
+				mes "[洞穴村民]";
+				mes "嘿，你可以过去了。上去吧，但最好别耍什么花样，";
+				mes "三思而后行。明白吗?";
+				next;
+				mes "^660000那个神情严肃的男人打量了你一番，然后侧身让开，让你通过.";
+				mes "你紧张地握紧拳头，然后走上了黑暗的楼梯.^000000";
+				set barmunt_crow,9;
+				close2;
+				warp "cave",82,105;
+				end;
+			}
+		}
+	}
+	else if (barmunt_crow < 8) {
+		mes "[洞穴村民]";
+		mes "此处之后外人不得进入.";
+		next;
+		mes "^660000他的声音和他的外表一样严厉而令人生畏.^000000";
+		close2;
+		warp "cave",81,92;
+	}
+	end;
+}
+
+cave,85,101,3	script	杰宜达#garas1	401,{
+OnInit:
+	disablenpc "杰宜达#garas1";
+	end;
+}
+
+ein_fild01,28,261,0	warp	cave_in1	1,1,cave,97,24
+cave,97,21,0	warp	case_out1	1,1,ein_fild01,28,255
+
+cave,86,167,0	warp	zid_in	1,1,cave,77,185
+cave,79,180,0	warp	zid_out	3,3,cave,90,162
+
+cave,22,186,3	script	兹德#zid	999,{
+	if (barmunt_crow == 9) {
+		mes "^660000你看着一个像怪物一样丑陋的男人.";
+		mes "他就是你在梦里见过的、和伊娃在一起的那个男人。";
+		mes "当然，他现在老了，岁月在他的脸上和皮肤上留下了痕迹.^000000";
+		next;
+		mes "（嗖）";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "啊...";
+		next;
+		mes "^660000你的胸口突然一阵剧痛...";
+		mes "最近饱受咳嗽和喷嚏折磨，你的肺似乎虚弱了许多.^000000";
+		next;
+		mes "^660000你揉着胸口缓解疼痛，惊讶地盯着他看.^000000";
+		next;
+		mes "^660000谢天谢地，他先开口了.^000000";
+		next;
+		mes "[怪物长相的男子]";
+		mes "我的外表让你不安吗?";
+		next;
+		mes "[怪物长相的男子]";
+		mes "这么说，你认识伊娃...啊?";
+		next;
+		mes "^660000他听起来很虚弱，仿佛没有足够的力气说话.^000000";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "嗯...阿嚏!";
+		specialeffect2 EF_VENOMDUST;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "你认识一个叫奥利弗 希尔帕特的男人吗?";
+		next;
+		mes "[怪物长相的男子]";
+		mes "奥利弗？嗯，我不认识.";
+		mes "他和这一切有什么关系?";
+		next;
+		mes "^660000你把奥利弗的小说<命运的乌鸦>给了他，";
+		mes "并向他解释发生在你身上的怪事.^000000";
+		next;
+		mes "....................";
+		next;
+		mes "....................";
+		mes "....................";
+		next;
+		mes "....................";
+		mes "....................";
+		mes "....................";
+		next;
+		mes "^660000他好奇地眯起眼睛，静静地翻了几页书。";
+		mes "然后把书递还给你时，他开口了.^000000";
+		next;
+		mes "[怪物长相的男子]";
+		mes "我很惊讶这本书里的故事...它和我的人生经历很相似。非常相似.";
+		next;
+		while(1) {
+			mes "[兹德]";
+			mes "我的名字是兹德。告诉我你想从我这里得到什么。";
+			mes "我想知道更多关于这本书的事.";
+			next;
+			switch(select("关于洞穴村:关于他自己:关于伊娃:结束对话")) {
+			case 1:
+				mes "[兹德]";
+				mes "你注意到我们村民长得与众不同了吗?";
+				next;
+				mes "[兹德]";
+				mes "人类的好奇心带来了伟大的成就和贡献，";
+				mes "但到了某个地步，知识可能多得无法掌控.";
+				mes "这个村里的每个人都是逃亡者...我们是人类扮演上帝、";
+				mes "追求禁忌知识、玩弄生命的受害者.";
+				next;
+				mes "[兹德]";
+				mes "我们别无选择，只能躲在这里，因为他们太强大，";
+				mes "我们无法公开反抗...我们知道那是不对的.";
+				next;
+				break;
+			case 2:
+				mes "[兹德]";
+				mes "我也曾是个普通人，但贫穷让我失去了骄傲、自尊和身份.";
+				mes "我厌倦了每天为食物发愁，就自愿成为某个实验的试验对象.";
+				mes "我不再需要担心挨饿，但我作为'人类'的人生在那天结束了.";
+				next;
+				mes "[兹德]";
+				mes "起初，这里只有我和伊娃，但后来其他人加入了我们，";
+				mes "我们形成了一个小定居点.";
+				mes "现在我是村里最年长的人，深感保护他人的责任重大.";
+				next;
+				break;
+			case 3:
+				mes "[兹德]";
+				mes "我和伊娃接受试验的那座实验室并不寻常.";
+				mes "它是为了试验和复制上帝的创造之力而建的.";
+				next;
+				mes "[兹德]";
+				mes "他们没能达成目标，还引发了一系列不幸的事件，";
+				mes "因为他们试图操纵那些甚至难以研究的物质.";
+				mes "他们相信他们的研究会为人类打开一个全新的世界...";
+				next;
+				mes "[兹德]";
+				mes "伊娃是他们中的一员...虽然她并不和善，";
+				mes "但至少同情我，因为我是为了摆脱贫穷才卖身的.";
+				next;
+				mes "[兹德]";
+				mes "她有一个深爱她的男人...";
+				mes "他的名字叫瑟法基斯特，他一直支持她的研究.";
+				next;
+				mes "[兹德]";
+				mes "他...在伊娃变成像我一样的变异人后，";
+				mes "绝望地自杀了...她想让他把自己当作试验对象.";
+				mes "谁也没想到，作为最热忱的研究者，";
+				mes "他会如此轻易地结束自己的生命.";
+				next;
+				mes "[兹德]";
+				mes "然后有人放火烧了实验室。我想你在梦里见过那一幕。";
+				mes "大火把整栋建筑烧毁了.";
+				next;
+				mes "[兹德]";
+				mes "我和伊娃在被发现之前逃了出来，";
+				mes "然后在这里定居。毕竟，我们无法和普通人类混在一起.";
+				next;
+				mes "[兹德]";
+				mes "伊娃设法救出了一个试验对象，";
+				mes "他长大后外表和正常人无异，但实际上他是完美的.";
+				next;
+				mes "[兹德]";
+				mes "那个男孩大约10岁时逃走了。";
+				mes "我想他是到了青春期...你知道那个年纪的少男少女.";
+				next;
+				mes "[兹德]";
+				mes "伊娃忘不了他。她在这个黑暗的洞窟里等待他归来。";
+				mes "有一阵子，他寄来没有地址的信，";
+				mes "但后来信不再来了。那时伊娃就消失了.";
+				mes "她离开后，我在她的房间里发现了^3131FF一根巨大的黑羽毛^000000.";
+				next;
+				mes "[兹德]";
+				mes "我不知道为什么，但...我相信伊娃已经不存在了...";
+				next;
+				break;
+			case 4:
+				set .@exitloop,1;
+				break;
+			}
+			if (.@exitloop) break;
+		}
+		mes "[兹德]";
+		mes "嗯...";
+		mes "也许奥利弗就是伊娃的那个男孩...";
+		next;
+		mes "[兹德]";
+		mes "不，他太年轻了，不可能是他，因为那是很久以前的事了...";
+		next;
+		mes "[兹德]";
+		mes ".........................";
+		next;
+		mes "[兹德]";
+		mes "我想那只是一段古老的回忆...我何必在意？谁又何必在意?";
+		next;
+		mes "^660000兹德停止说话，低下了头。沉默片刻后，他又开口了.^000000";
+		next;
+		mes "[兹德]";
+		mes "现在我太老了，连伊娃或那个男孩都快记不清了.";
+		mes "我人生的目的就是保护其他村民。";
+		mes "他们住在这个黑暗的洞窟里，还有自己的人生要走.";
+		next;
+		mes "[兹德]";
+		mes "这本书很有趣，但我相信那个叫奥利弗的家伙，";
+		mes "经历了和你一样的事.";
+		next;
+		mes "[兹德]";
+		mes "即使他和伊娃有什么关系，现在为她做什么都太晚了.";
+		next;
+		mes "[兹德]";
+		mes "想想看：即使伊娃或那个男孩还活着，";
+		mes "谁能把我们从这个黑暗的洞窟里救出去？答案是没有人.";
+		next;
+		mes "[兹德]";
+		mes ".................................";
+		next;
+		mes "[兹德]";
+		mes "很抱歉帮不上什么忙.";
+		mes "你最好从梦中醒来，继续你的人生.";
+		mes "...可悲的是，一切都只是梦...";
+		next;
+		mes "[兹德]";
+		mes "如果你真的同情我们，请不要让别人知道我们在哪里.";
+		next;
+		mes "^660000兹德把头转开，不再看你。你仍不确定这一切是否真的在发生。";
+		mes "一切都太不真实了...^000000";
+		next;
+		mes "^660000与兹德的谈话让你感到沮丧，你决定回到梦罗克，忘掉一切.^000000";
+		set barmunt_crow,10;
+		changequest 2066,2067;
+		close;
+	}
+	else if (barmunt_crow == 10) {
+		mes "兹德似乎对这本书失去了兴趣.";
+		mes "你决定把这本书送给梦罗克的班杰明.";
+		close;
+	}
+	else {
+		mes "[怪物长相的男子]";
+		mes "别看我的脸...";
+		close;
+	}
+}
+
+cave,91,43,3	script	洞穴村民#f_cave1	870,{
+	mes "[洞穴村民]";
+	mes "（吓了一跳）";
+	next;
+	mes "[洞穴村民]";
+	mes "嘟囔...嘟囔...";
+	close;
+}
+
+cave,72,71,5	script	洞穴村民#m_cave2	981,{
+	mes "[洞穴村民]";
+	mes "嘿...";
+	mes "你想要...这个?";
+	next;
+	mes "- 她向你展示了怪物饲料。 -";
+	close;
+}
+
+cave,134,62,1	script	洞穴村民#m_cave3	981,{
+	mes "[洞穴村民]";
+	mes "饰品!";
+	mes "我漂亮的饰品!";
+	mes "哇啊啊!";
+	mes "我的饰品不见了!";
+	close;
+}
+
+cave,113,74,5	script	洞穴村民#f_cave4	401,{
+	mes "[洞穴村民]";
+	mes "这个村里没有人欢迎你。回去吧.";
+	next;
+	mes "[洞穴村民]";
+	mes "你的眼睛真诱人...我想吃掉它们！嘿嘿!";
+	close;
+}
+
+cave,76,39,5	shop	洞穴中的女孩#f_cave5	62,712:-1
+
+cave,108,34,3	script	洞穴村民#f_cave6	979,{
+	mes "[洞穴村民]";
+	mes "呵呵，他昨天真的那么说了吗...?";
+	mes "哇!";
+	next;
+	mes "[洞穴村民]";
+	mes "是人类...";
+	next;
+	mes "（窃窃私语）";
+	mes "（窃窃私语）";
+	close;
+}
+
+cave,105,32,7	script	洞穴村民#f_cave7	979,{
+	mes "[洞穴村民]";
+	mes "呵呵，他昨天真的那么说了吗...?";
+	mes "哇!";
+	next;
+	mes "[洞穴村民]";
+	mes "是人类...";
+	next;
+	mes "（窃窃私语）";
+	mes "（窃窃私语）";
+	close;
+}

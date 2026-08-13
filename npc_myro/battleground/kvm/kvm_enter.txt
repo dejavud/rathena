@@ -1,0 +1,249 @@
+//===== rAthena Script =======================================
+//= BattleGround System - KvM Entrance NPCs
+//===== Description: =========================================
+//= [Official Conversion]
+//= Kreiger Von Midgard Battleground Entrance NPCs
+//= Original NPCs scrapped from bg_common.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Corrected some typos, and shifted messages around.
+//=     Corrected iRO style quest log entries, however it's
+//=     advisable that you not use them, as they conflict.
+//= 1.2 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
+
+// KvM Officer - Guillaume
+//============================================================
+bat_room,164,178,5	script	KVM佣兵军官#1	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	/*
+	set .@kvm,checkquest(6026,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
+		close;
+	}
+	else if (.@kvm == 2) erasequest 6026;
+	*/
+	set .@permit,checkquest(6025,PLAYTIME);
+	if ((.@permit == 0) || (.@permit == 1)) {
+		mes "[纪尧姆佣兵军官]";
+		mes "你似乎刚参加过一场KVM战斗。必须等待5分钟才能再次报名。";
+		close;
+	}
+	else if (.@permit == 2) erasequest 6025;
+	mes "[纪尧姆佣兵军官]";
+	mes "让他们见识一下纪尧姆真正的实力！";
+	next;
+	switch(select("我愿与你并肩作战。:结束对话。")) {
+	case 1:
+		mes "[纪尧姆佣兵军官]";
+		mes "让他们看看我们有多强。";
+		mes "今天，所有人都将听到纪尧姆胜利的呐喊！";
+		close2;
+		//setquest 6025;
+		if (BaseLevel > 79)  warp "bat_room",169,223;
+		else if (BaseLevel < 60) warp "bat_room",197,223;
+		else warp "bat_room",225,223;
+		end;
+	case 2:
+		mes "[纪尧姆佣兵军官]";
+		mes "我们会赢！";
+		close;
+	}
+}
+
+// Guillaume Knight - KvM
+//============================================================
+bat_room,167,178,5	script	纪尧姆骑士#kvm	417,{
+	mes "[纪尧姆骑士]";
+	mes "你好。";
+	mes "你想知道什么？";
+	next;
+	switch(select("申请参加KVM。:KVM是什么？:怎样参加KVM？:我想查询我的克瑞格点数。")) {
+	case 1:
+		mes "[纪尧姆骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "如果已经准备好战斗，点击^0000FF界面上的战斗按钮^000000即可申请参加KVM战斗！";
+		else {
+			mes "现在还不能申请。";
+			mes "要申请的话，请到KVM佣兵军官那里去。";
+		}
+		close;
+	case 2:
+		mes "[纪尧姆骑士]";
+		mes "KVM是克瑞格·冯·米德加兹的缩写。";
+		mes "冒险者，你知道通往新世界的道路已经开启了吗？";
+		next;
+		mes "[纪尧姆骑士]";
+		mes "我们纪尧姆政权，为进军新世界制定了若干计划。";
+		mes "KVM就是其中之一。";
+		next;
+		mes "[纪尧姆骑士]";
+		mes "也就是说，作为米德加兹大陆的众多国家之一，";
+		mes "我们决定招募大批冒险者，为立即进军新世界做准备。";
+		next;
+		mes "[纪尧姆骑士]";
+		mes "因此，为了选拔最优秀的冒险者，我们举办了KVM。";
+		mes "我们期待众多冒险者的响应。";
+		next;
+		mes "[纪尧姆骑士]";
+		mes "参战者还将获得奖励！";
+		mes "奖励相关事项，请咨询KVM后勤军官。";
+		close;
+	case 3:
+		mes "[纪尧姆骑士]";
+		if (getbattleflag("feature.bgqueue")) {
+			mes "KVM基本上是3对3的战斗。";
+			mes "点击^0000FF界面上的战斗按钮^000000申请，可以组队申请，也可以个人申请。";
+		} else {
+			mes "KVM基本上是5对5的战斗。";
+			mes "首先，到KVM接待员那里申请，可以组队申请，也可以个人申请。";
+		}
+		next;
+		mes "[纪尧姆骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "组队申请适用于你想和队伍成员或公会成员一起进入KVM的情况，";
+		else
+			mes "组队申请适用于你想和队伍成员一起进入KVM的情况，";
+		mes "个人申请则适用于你想独自进入KVM的情况。";
+		next;
+		mes "[纪尧姆骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000。";
+		else {
+			mes "请到KVM军官那里申请，之后当你在普隆德拉时，他会与你联系。";
+			next;
+			mes "[纪尧姆骑士]";
+			mes "然后进入战场，按战场内的指示行动即可。";
+			next;
+			mes "[纪尧姆骑士]";
+			mes "不过请注意，除非你在KVM办事处内，否则他是无法与你联系的。";
+		}
+		close;
+	case 4:
+		mes "[纪尧姆骑士]";
+		mes "你的克瑞格点数是：";
+		mes ""+kvm_point+"。";
+		close;
+	}
+}
+
+// KvM Officer - Croix
+//============================================================
+bat_room,164,121,1	script	KVM佣兵军官#2	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
+	/*
+	set .@kvm,checkquest(6025,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
+		close;
+	}
+	else if (.@kvm == 2) erasequest 6025;
+	*/
+	set .@permit,checkquest(6025,PLAYTIME);
+	if ((.@permit == 0) || (.@permit == 1)) {
+		mes "[克罗伊佣兵军官]";
+		mes "你似乎刚参加过一场KVM战斗。必须等待5分钟才能再次报名。";
+		close;
+	}
+	else if (.@permit == 2) erasequest 6025;
+	mes "[克罗伊佣兵军官]";
+	mes "让他们见识一下克罗伊真正的实力！";
+	next;
+	switch(select("我愿与你并肩作战。:结束对话。")) {
+	case 1:
+		mes "[克罗伊佣兵军官]";
+		mes "让他们看看我们有多强。";
+		mes "今天，所有人都将听到克罗伊胜利的呐喊！";
+		close2;
+		//setquest 6026;
+		if (BaseLevel > 79) warp "bat_room",169,207;
+		else if (BaseLevel < 60) warp "bat_room",197,207;
+		else warp "bat_room",225,207;
+		end;
+	case 2:
+		mes "[克罗伊佣兵军官]";
+		mes "我们会赢！";
+		close;
+	}
+}
+
+// Croix Knight - KvM
+//============================================================
+bat_room,167,121,1	script	克罗伊骑士#kvm	413,{
+	mes "[克罗伊骑士]";
+	mes "你好。";
+	mes "你想知道什么？";
+	next;
+	switch(select("申请参加KVM。:KVM是什么？:怎样参加KVM？:我想查询我的克瑞格点数。")) {
+	case 1:
+		mes "[克罗伊骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "如果已经准备好战斗，点击^0000FF界面上的战斗按钮^000000即可申请参加KVM战斗！";
+		else {
+			mes "现在还不能申请。";
+			mes "要申请的话，请到KVM佣兵军官那里去。";
+		}
+		close;
+	case 2:
+		mes "[克罗伊骑士]";
+		mes "KVM是克瑞格·冯·米德加兹的缩写。";
+		mes "冒险者，你知道通往新世界的道路已经开启了吗？";
+		next;
+		mes "[克罗伊骑士]";
+		mes "我们克罗伊政权，为进军新世界制定了若干计划。";
+		mes "KVM就是其中之一。";
+		next;
+		mes "[克罗伊骑士]";
+		mes "也就是说，作为米德加兹大陆的众多国家之一，";
+		mes "我们决定招募大批冒险者，为立即进军新世界做准备。";
+		next;
+		mes "[克罗伊骑士]";
+		mes "因此，为了选拔最优秀的冒险者，我们举办了KVM。";
+		mes "我们期待众多冒险者的响应。";
+		next;
+		mes "[克罗伊骑士]";
+		mes "参战者还将获得奖励！";
+		mes "奖励相关事项，请咨询KVM后勤军官。";
+		close;
+	case 3:
+		mes "[克罗伊骑士]";
+		if (getbattleflag("feature.bgqueue")) {
+			mes "KVM基本上是3对3的战斗。";
+			mes "点击^0000FF界面上的战斗按钮^000000申请，可以组队申请，也可以个人申请。";
+		} else {
+			mes "KVM基本上是5对5的战斗。";
+			mes "首先，到KVM接待员那里申请，可以组队申请，也可以个人申请。";
+		}
+		next;
+		mes "[克罗伊骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "组队申请适用于你想和队伍成员或公会成员一起进入KVM的情况，";
+		else
+			mes "组队申请适用于你想和队伍成员一起进入KVM的情况，";
+		mes "个人申请则适用于你想独自进入KVM的情况。";
+		next;
+		mes "[克罗伊骑士]";
+		if (getbattleflag("feature.bgqueue"))
+			mes "请注意，一旦取消申请，^0000FF1分钟内不能再次申请^000000。";
+		else {
+			mes "请到KVM军官那里申请，之后当你在普隆德拉时，他会与你联系。";
+			next;
+			mes "[克罗伊骑士]";
+			mes "然后进入战场，按战场内的指示行动即可。";
+			next;
+			mes "[克罗伊骑士]";
+			mes "不过请注意，除非你在KVM办事处内，否则他是无法与你联系的。";
+		}
+		close;
+	case 4:
+		mes "[克罗伊骑士]";
+		mes "你的克瑞格点数是：";
+		mes ""+kvm_point+"。";
+		close;
+	}
+}
